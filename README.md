@@ -9,16 +9,19 @@
 The following installation assumes [Node.js](https://nodejs.org/en/download/) has already been installed which comes with [Node Package Manager (NPM)](https://www.npmjs.com/).
 
 To install globally so you can run `tx2uml` from anywhere
+
 ```bash
 npm link tx2uml --only=production
 ```
 
 To upgrade run
+
 ```bash
 npm upgrade tx2uml -g
 ```
 
 To see which version you are using
+
 ```bash
 npm ls tx2uml
 ```
@@ -59,12 +62,14 @@ npx puml generate ConditionalMultiSigWallet.puml -o .
 # UML Syntax
 
 Good online resources for learning UML
-* [UML 2 Sequence Diagramming Guidelines](http://www.agilemodeling.com/style/sequenceDiagram.htm)
-* [PlantUML Sequence diagrams](https://plantuml.com/sequence-diagram)
+
+- [UML 2 Sequence Diagramming Guidelines](http://www.agilemodeling.com/style/sequenceDiagram.htm)
+- [PlantUML Sequence diagrams](https://plantuml.com/sequence-diagram)
 
 # Similar transaction visualisation tools
-* (Parity Trace Decoder)[https://github.com/k06a/parity-trace-decoder]
-* (Tenderly)[https://dashboard.tenderly.dev/]
-* (EthTx info)[http://ethtx.info/] 
-* (Bloxy)[https://bloxy.info/]
-* (Etherscan)[https://etherscan.io/txs]
+
+- (Parity Trace Decoder)[https://github.com/k06a/parity-trace-decoder]
+- (Tenderly)[https://dashboard.tenderly.dev/]
+- (EthTx info)[http://ethtx.info/]
+- (Bloxy)[https://bloxy.info/]
+- (Etherscan)[https://etherscan.io/txs]

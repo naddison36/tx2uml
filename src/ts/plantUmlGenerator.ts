@@ -1,7 +1,9 @@
-import {Contracts, Message, MessageType, Param} from "./transaction"
+import { Contracts, Message, MessageType, Param } from "./transaction"
 
-export const genPlantUml = (messages: Message[], contracts: Contracts): string => {
-
+export const genPlantUml = (
+  messages: Message[],
+  contracts: Contracts
+): string => {
   let plantUml = "@startuml\n"
   plantUml += genParticipants(contracts)
   plantUml += genMessages(messages)
@@ -16,9 +18,13 @@ export const genParticipants = (contracts: Contracts): string => {
 
   for (const [address, names] of Object.entries(contracts)) {
     if (names.contractName) {
-      plantUml += `participant "${shortAddress(address)}" as ${participantId(address)} <<${names.contractName}>>\n`
+      plantUml += `participant "${shortAddress(address)}" as ${participantId(
+        address
+      )} <<${names.contractName}>>\n`
     } else {
-      plantUml += `participant "${shortAddress(address)}" as ${participantId(address)}\n`
+      plantUml += `participant "${shortAddress(address)}" as ${participantId(
+        address
+      )}\n`
     }
   }
 
@@ -33,11 +39,14 @@ export const shortAddress = (address: string): string => {
   return address.substr(0, 6) + ".." + address.substr(-4, 4)
 }
 
-export const genMessages = (messages: Message[], params: boolean = false): string => {
+export const genMessages = (
+  messages: Message[],
+  params: boolean = false
+): string => {
   if (!messages?.length) {
     return ""
   }
-  const contractCallStack: string[] = []  // array of contract addresses
+  const contractCallStack: string[] = [] // array of contract addresses
   let previousMessage: Message | undefined
   let plantUml = "\n"
   for (const message of messages) {
@@ -53,7 +62,9 @@ export const genMessages = (messages: Message[], params: boolean = false): strin
       }
     }
     if (message.type !== MessageType.Selfdestruct) {
-      plantUml += `${participantId(message.from)} ${genArrow(message)} ${participantId(message.to)}: ${genMessageText(message, params)}\n`
+      plantUml += `${participantId(message.from)} ${genArrow(
+        message
+      )} ${participantId(message.to)}: ${genMessageText(message, params)}\n`
       plantUml += `activate ${participantId(message.to)}\n`
       contractCallStack.push(message.from)
     } else {

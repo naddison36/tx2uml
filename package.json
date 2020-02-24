@@ -7,8 +7,8 @@
   "scripts": {
     "build": "tsc --build ./tsconfig.json",
     "clean": "tsc --build --clean ./tsconfig.json",
-    "prettier:check": "prettier --check '**/*.{ts,md}'",
-    "prettier:fix": "prettier --write '**/*.{ts,md}'",
+    "prettier:check": "prettier --check --no-semi '**/*.{ts,md}'",
+    "prettier:fix": "prettier --write --no-semi '**/*.{ts,md}'",
     "test": "npx jest"
   },
   "author": "Nick Addison",

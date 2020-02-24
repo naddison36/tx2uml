@@ -1,7 +1,7 @@
 import { getContractMessages, getTransactionDetails } from "./AlethioClient"
 import { getContract } from "./EtherscanClient"
 
-const debug = require('debug')('tx2uml')
+const debug = require("debug")("tx2uml")
 
 export enum MessageType {
   Value,
@@ -11,39 +11,39 @@ export enum MessageType {
 }
 
 export type Param = {
-  name: string;
-  type: string;
-  value: string;
+  name: string
+  type: string
+  value: string
 }
 
 export type Payload = {
-  funcName: string;
-  funcSelector: string;
-  inputs: Param[];
-  outputs: Param[];
+  funcName: string
+  funcSelector: string
+  inputs: Param[]
+  outputs: Param[]
 }
 
 export type Message = {
-  id: number;
-  type:  MessageType;
-  from: string;
-  to: string;
-  value: bigint;
+  id: number
+  type: MessageType
+  from: string
+  to: string
+  value: bigint
   payload?: Payload
-  gasUsed: bigint;
-  gasLimit: bigint;
-  callDepth: number;
-  status: boolean;
-  error?: string;
+  gasUsed: bigint
+  gasLimit: bigint
+  callDepth: number
+  status: boolean
+  error?: string
 }
 
 export type Contract = {
-  contractName?: string;
-  appName?: string;
-  balance?: number;
+  contractName?: string
+  appName?: string
+  balance?: number
 }
 
-export type Contracts = {[address: string]: Contract}
+export type Contracts = { [address: string]: Contract }
 
 export interface TransactionDetails {
   hash: string
@@ -64,13 +64,26 @@ export interface DataSourceOptions {
   network?: Networks
 }
 
-export const getTransaction = async (txHash: string, options: DataSourceOptions = {}): Promise<[Message[], Contracts, TransactionDetails]> => {
-
+export const getTransaction = async (
+  txHash: string,
+  options: DataSourceOptions = {}
+): Promise<[Message[], Contracts, TransactionDetails]> => {
   const network = options.network || "mainnet"
-  const txDetailsPromise = getTransactionDetails(txHash, options.alethioApiKey, network)
-  const messagesPromise = getContractMessages(txHash, options.alethioApiKey, network)
+  const txDetailsPromise = getTransactionDetails(
+    txHash,
+    options.alethioApiKey,
+    network
+  )
+  const messagesPromise = getContractMessages(
+    txHash,
+    options.alethioApiKey,
+    network
+  )
 
-  const [[details, firstMessage], contractMessages] = await Promise.all([txDetailsPromise, messagesPromise])
+  const [[details, firstMessage], contractMessages] = await Promise.all([
+    txDetailsPromise,
+    messagesPromise
+  ])
 
   const messages: Message[] = [firstMessage, ...contractMessages]
 
@@ -80,7 +93,11 @@ export const getTransaction = async (txHash: string, options: DataSourceOptions 
   debug(`${uniqueAddresses.size} participants in the transaction`)
   for (const address of uniqueAddresses) {
     if (!contracts[address]) {
-      contracts[address] = await getContract(address, options.etherscanApiKey, network)
+      contracts[address] = await getContract(
+        address,
+        options.etherscanApiKey,
+        network
+      )
     }
   }
 
