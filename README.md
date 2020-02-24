@@ -50,6 +50,8 @@ Options:
   -h, --help                    output usage information
 ```
 
+# Data Source
+
 ## Alethio
 
 All the contract calls are sourced from [Alethio](https://aleth.io/). Specifically, the [Contract Messages API](https://docs.aleth.io/api#tag/Contracts/paths/~1contracts~1{address}~1contractMessages/get) which as already done the hard work of parsing the transaction trace to extract the contract call details.
@@ -64,18 +66,7 @@ The contract names are sourced from the verified contracts on [Etherscan](https:
 
 [PlantUML](http://plantuml.com) is used to render the UML sequence diagrams.
 
-The PlantUML files have the `.puml` file extension.
-
-To generate files, use the [node-plantuml](https://www.npmjs.com/package/node-plantuml) package in the dev dependencies. Install from the project root
-
-```
-npm install node-plantuml
-```
-
-```
-cd docs
-npx puml generate ConditionalMultiSigWallet.puml -o .
-```
+This tool uses the [node-plantuml](https://www.npmjs.com/package/node-plantuml) package to convert Plant UML into png and svg files which it does by using the Plant UML Java archive file.
 
 ### VS Code extension
 

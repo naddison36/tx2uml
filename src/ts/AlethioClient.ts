@@ -28,14 +28,18 @@ export const getTransactionDetails = async (
       `Transaction hash "${txHash}" must be 32 bytes in hexadecimal format with a 0x prefix`
     )
   }
+  const url = `${alethioBaseUrls[network]}/transactions/${txHash}`
 
   try {
-    if (apiKey) {
-      axios.defaults.headers.common["Authorization"] = apiKey
-    }
-    const response = await axios.get(
-      `${alethioBaseUrls[network]}/transactions/${txHash}`
-    )
+    const getOptions = apiKey
+      ? {
+          auth: {
+            username: apiKey,
+            password: ""
+          }
+        }
+      : {}
+    const response = await axios.get(url, getOptions)
 
     if (!response?.data?.data?.attributes) {
       throw new Error(
@@ -84,7 +88,7 @@ export const getTransactionDetails = async (
   } catch (err) {
     throw new VError(
       err,
-      `Failed to get transaction details for hash ${txHash} from Alethio`
+      `Failed to get transaction details for hash ${txHash} from Alethio using url ${url}`
     )
   }
 }
@@ -99,21 +103,25 @@ export const getContractMessages = async (
       `Transaction hash "${txHash}" must be 32 bytes in hexadecimal format with a 0x prefix`
     )
   }
+  const url = `${alethioBaseUrls[network]}/transactions/${txHash}/contractMessages`
 
   let messages: Message[] = []
   try {
-    if (apiKey) {
-      axios.defaults.headers.common["Authorization"] = apiKey
+    const params = {
+      "page[limit]": 100
     }
-    // get the contract messages
-    const response = await axios.get(
-      `${alethioBaseUrls[network]}/transactions/${txHash}/contractMessages`,
-      {
-        params: {
-          "page[limit]": 100
+    const getOptions = apiKey
+      ? {
+          auth: {
+            username: apiKey,
+            password: ""
+          },
+          params
         }
-      }
-    )
+      : {
+          params
+        }
+    const response = await axios.get(url, getOptions)
 
     if (!Array.isArray(response?.data?.data)) {
       throw new Error(
@@ -158,7 +166,7 @@ export const getContractMessages = async (
   } catch (err) {
     throw new VError(
       err,
-      `Failed to get contract messages for transaction hash ${txHash} from Alethio`
+      `Failed to get contract messages for transaction hash ${txHash} from Alethio at url ${url}`
     )
   }
 }
@@ -178,21 +186,26 @@ const getContractMessagesRecursive = async (
   if (!cursor) {
     throw new TypeError(`Missing Alethio pagination cursor "${cursor}"`)
   }
+  const url = `${alethioBaseUrls[network]}/transactions/${txHash}/contractMessages`
 
   let cursorMessages: Message[] = []
   try {
-    if (apiKey) {
-      axios.defaults.headers.common["Authorization"] = apiKey
+    const params = {
+      "page[limit]": 100,
+      "page[next]": cursor
     }
-    const response = await axios.get(
-      `${alethioBaseUrls[network]}/transactions/${txHash}/contractMessages`,
-      {
-        params: {
-          "page[limit]": 100,
-          "page[next]": cursor
+    const getOptions = apiKey
+      ? {
+          auth: {
+            username: apiKey,
+            password: ""
+          },
+          params
         }
-      }
-    )
+      : {
+          params
+        }
+    const response = await axios.get(url, getOptions)
 
     if (!Array.isArray(response?.data?.data)) {
       throw new Error(

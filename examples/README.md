@@ -1,6 +1,5 @@
 # Example UML Sequence Diagrams
 
-
 ## Kyber
 
 [Kyber network](https://kyber.network/) transaction.
