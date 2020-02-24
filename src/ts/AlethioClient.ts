@@ -4,9 +4,10 @@ import {
   Message,
   MessageType,
   Networks,
+  Token,
   TransactionDetails
 } from "./transaction"
-import { transactionHash } from "./regEx"
+import { ethereumAddress, transactionHash } from "./regEx"
 import { stringify } from "./utils"
 
 const debug = require("debug")("tx2uml")
@@ -23,7 +24,7 @@ export const getTransactionDetails = async (
   apiKey?: string,
   network: Networks = "mainnet"
 ): Promise<[TransactionDetails, Message]> => {
-  if (!txHash.match(transactionHash)) {
+  if (!txHash?.match(transactionHash)) {
     throw new TypeError(
       `Transaction hash "${txHash}" must be 32 bytes in hexadecimal format with a 0x prefix`
     )
@@ -31,15 +32,10 @@ export const getTransactionDetails = async (
   const url = `${alethioBaseUrls[network]}/transactions/${txHash}`
 
   try {
-    const getOptions = apiKey
-      ? {
-          auth: {
-            username: apiKey,
-            password: ""
-          }
-        }
-      : {}
-    const response = await axios.get(url, getOptions)
+    if (apiKey) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${apiKey}`
+    }
+    const response = await axios.get(url)
 
     if (!response?.data?.data?.attributes) {
       throw new Error(
@@ -98,7 +94,7 @@ export const getContractMessages = async (
   apiKey?: string,
   network: Networks = "mainnet"
 ): Promise<Message[]> => {
-  if (!txHash.match(transactionHash)) {
+  if (!txHash?.match(transactionHash)) {
     throw new TypeError(
       `Transaction hash "${txHash}" must be 32 bytes in hexadecimal format with a 0x prefix`
     )
@@ -107,21 +103,10 @@ export const getContractMessages = async (
 
   let messages: Message[] = []
   try {
-    const params = {
-      "page[limit]": 100
+    if (apiKey) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${apiKey}`
     }
-    const getOptions = apiKey
-      ? {
-          auth: {
-            username: apiKey,
-            password: ""
-          },
-          params
-        }
-      : {
-          params
-        }
-    const response = await axios.get(url, getOptions)
+    const response = await axios.get(url)
 
     if (!Array.isArray(response?.data?.data)) {
       throw new Error(
@@ -178,7 +163,7 @@ const getContractMessagesRecursive = async (
   apiKey?: string,
   network: Networks = "mainnet"
 ): Promise<Message[]> => {
-  if (!txHash.match(transactionHash)) {
+  if (!txHash?.match(transactionHash)) {
     throw new TypeError(
       `Transaction hash "${txHash}" must be 32 bytes in hexadecimal format with a 0x prefix`
     )
@@ -190,22 +175,15 @@ const getContractMessagesRecursive = async (
 
   let cursorMessages: Message[] = []
   try {
-    const params = {
-      "page[limit]": 100,
-      "page[next]": cursor
+    if (apiKey) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${apiKey}`
     }
-    const getOptions = apiKey
-      ? {
-          auth: {
-            username: apiKey,
-            password: ""
-          },
-          params
-        }
-      : {
-          params
-        }
-    const response = await axios.get(url, getOptions)
+    const response = await axios.get(url, {
+      params: {
+        "page[limit]": 100,
+        "page[next]": cursor
+      }
+    })
 
     if (!Array.isArray(response?.data?.data)) {
       throw new Error(
@@ -263,4 +241,53 @@ const convertType = (msgType: string): MessageType => {
     type = MessageType.Selfdestruct
   }
   return type
+}
+
+export const getToken = async (
+  contractAddress: string,
+  apiKey?: string,
+  network: Networks = "mainnet"
+): Promise<Token | null> => {
+  if (!contractAddress?.match(ethereumAddress)) {
+    throw new TypeError(
+      `Contract address "${contractAddress}" must be 20 bytes in hexadecimal format with a 0x prefix`
+    )
+  }
+  const url = `${alethioBaseUrls[network]}/tokens/${contractAddress}`
+
+  try {
+    if (apiKey) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${apiKey}`
+    }
+    const response = await axios.get(url)
+
+    if (!response?.data?.data?.attributes) {
+      throw new Error(
+        `no token attributes in Alethio response: ${response?.data}`
+      )
+    }
+
+    const attributes = response.data.data.attributes
+
+    const token: Token = {
+      address: contractAddress,
+      name: attributes.name,
+      symbol: attributes.symbol,
+      decimals: attributes.decimals,
+      totalSupply: BigInt(attributes.totalSupply)
+    }
+
+    debug(`Got token from Alethio: ${stringify(token)}`)
+
+    return token
+  } catch (err) {
+    if (err?.response?.status === 404) {
+      debug(`Could not find token details for contract ${contractAddress}`)
+      return null
+    }
+    throw new VError(
+      err,
+      `Failed to get token for address ${contractAddress} from Alethio using url ${url}`
+    )
+  }
 }

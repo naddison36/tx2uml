@@ -1,5 +1,5 @@
-import { Contracts, Message, Param } from "./transaction";
-export declare const genPlantUml: (messages: Message[], contracts: Contracts) => string;
+import { Contracts, Message, Param, TransactionDetails } from "./transaction";
+export declare const genPlantUml: (messages: Message[], contracts: Contracts, details: TransactionDetails) => string;
 export declare const genParticipants: (contracts: Contracts) => string;
 export declare const participantId: (address: string) => string;
 export declare const shortAddress: (address: string) => string;

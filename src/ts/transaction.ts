@@ -45,6 +45,14 @@ export type Contract = {
 
 export type Contracts = { [address: string]: Contract }
 
+export type Token = {
+  address: string
+  name: string
+  symbol: string
+  decimals?: number
+  totalSupply?: bigint
+}
+
 export interface TransactionDetails {
   hash: string
   nonce: number

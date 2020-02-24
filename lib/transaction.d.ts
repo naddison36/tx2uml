@@ -36,6 +36,13 @@ export declare type Contract = {
 export declare type Contracts = {
     [address: string]: Contract;
 };
+export declare type Token = {
+    address: string;
+    name: string;
+    symbol: string;
+    decimals?: number;
+    totalSupply?: bigint;
+};
 export interface TransactionDetails {
     hash: string;
     nonce: number;

@@ -1,4 +1,8 @@
-import { getContractMessages, getTransactionDetails } from "../AlethioClient"
+import {
+  getContractMessages,
+  getToken,
+  getTransactionDetails
+} from "../AlethioClient"
 import { getTransaction } from "../transaction"
 
 jest.setTimeout(60000) // timeout for each test in milliseconds
@@ -52,6 +56,22 @@ describe("Alethio parser", () => {
       expect(tx.gasPrice).toEqual(BigInt(5000000000))
       expect(firstMessage.gasUsed).toEqual(BigInt(60000))
       expect(firstMessage.gasLimit).toEqual(BigInt(60000))
+    })
+  })
+
+  describe("get token details", () => {
+    test("Tether USD", async () => {
+      const token = await getToken("0xdac17f958d2ee523a2206206994597c13d831ec7")
+      expect(token.address).toEqual(
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      )
+      expect(token.symbol).toEqual("USDT")
+      expect(token.name).toEqual("Tether USD")
+      expect(token.decimals).toEqual(6)
+    })
+    test("Failed as ENS contract", async () => {
+      const token = await getToken("0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e")
+      expect(token).toEqual(null)
     })
   })
 })

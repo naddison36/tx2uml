@@ -46,13 +46,13 @@ const tx2uml = async () => {
   }
   const txHash = program.args[0]
 
-  const [messages, contracts] = await getTransaction(txHash, {
+  const [messages, contracts, details] = await getTransaction(txHash, {
     alethioApiKey: program.alethioApiKey,
     etherscanApiKey: program.etherscanApiKey,
     network: program.network
   })
 
-  const plantUml = genPlantUml(messages, contracts)
+  const plantUml = genPlantUml(messages, contracts, details)
 
   await generateFile(plantUml, {
     format: program.outputFormat,

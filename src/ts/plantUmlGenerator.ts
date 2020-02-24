@@ -1,12 +1,21 @@
-import { Contracts, Message, MessageType, Param } from "./transaction"
+import {
+  Contracts,
+  Message,
+  MessageType,
+  Param,
+  Payload,
+  TransactionDetails
+} from "./transaction"
+import BigNumber from "bignumber.js"
 
 const debug = require("debug")("tx2uml")
 
 export const genPlantUml = (
   messages: Message[],
-  contracts: Contracts
+  contracts: Contracts,
+  details: TransactionDetails
 ): string => {
-  let plantUml = "@startuml\n"
+  let plantUml = `@startuml\ntitle ${details.hash}`
   plantUml += genParticipants(contracts)
   plantUml += genMessages(messages)
 
@@ -53,6 +62,7 @@ export const genMessages = (
   let contractCallStack: string[] = [] // array of contract addresses
   let previousMessage: Message | undefined
   let plantUml = "\n"
+  // for each contract call
   for (const message of messages) {
     if (previousMessage && message.from !== previousMessage.to) {
       // reserve() is mutable so need to copy the array wih a spread operator
@@ -65,19 +75,41 @@ export const genMessages = (
         }
       }
     }
-    if (message.type !== MessageType.Selfdestruct) {
+    if (
+      message.type === MessageType.Call ||
+      message.type === MessageType.Create
+    ) {
+      // output call message
       plantUml += `${participantId(message.from)} ${genArrow(
         message
-      )} ${participantId(message.to)}: ${genMessageText(message, params)}\n`
+      )} ${participantId(message.to)}: ${genFunctionText(
+        message.payload,
+        params
+      )}\n`
       plantUml += `activate ${participantId(message.to)}\n`
+
+      // If a successful transaction
       if (message.status === true) {
         contractCallStack.push(message.from)
       } else {
+        // a failed transaction so end the lifeline
         plantUml += `destroy ${participantId(message.to)}\n`
+        if (message.error) {
+          plantUml += `note right: ${message.error}\n`
+        }
+        // clear callstack as we don't want to output any more returns
         contractCallStack = []
       }
-    } else {
-      plantUml += `return ${genMessageText(message, params)} \n`
+    } else if (message.type === MessageType.Value) {
+      // convert wei to Ethers which is to 18 decimal places
+      const ethers = new BigNumber(message.value.toString()).div(
+        new BigNumber(10).pow(18)
+      )
+      plantUml += `${participantId(message.from)} ${genArrow(
+        message
+      )} ${participantId(message.to)}: ${ethers.toFormat(2)} ETH\n`
+    } else if (message.type === MessageType.Selfdestruct) {
+      plantUml += `return selfdestruct\n`
       // selfdestruct is the return so pop the previous contract call
       contractCallStack.pop()
     }
@@ -107,21 +139,18 @@ const genArrow = (message: Message): string => {
   return "->"
 }
 
-const genMessageText = (message: Message, params: boolean = false): string => {
-  if (message.type === MessageType.Value) {
-    return `<< ${message.value} wei >>`
+const genFunctionText = (payload: Payload, params: boolean = false): string => {
+  if (!payload) {
+    return ""
   }
-  if (message.type === MessageType.Selfdestruct) {
-    return "selfdestruct"
-  }
-  if (message.payload?.funcName) {
-    const funcName = message.payload.funcName || "fallback"
+  if (payload.funcName) {
+    const funcName = payload.funcName || "fallback"
     if (params) {
-      return `${funcName}(${genParams(message.payload.inputs)})`
+      return `${funcName}(${genParams(payload.inputs)})`
     }
     return funcName
   }
-  return `${message.payload?.funcSelector}`
+  return `${payload.funcSelector}`
 }
 
 export const genParams = (params: Param[]): string => {
