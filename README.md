@@ -4,7 +4,7 @@
 
 [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language) sequence diagram generator for Ethereum transaction.
 
-![1inch](./examples/1inch.png)
+![Kyber](./examples/kyber.png)
 
 # Install
 
