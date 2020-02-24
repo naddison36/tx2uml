@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "esModuleInterop": true,
+    "lib": [
+      "es2015",
+      "es5",
+      "es6",
+      "dom",
+      "esnext.bigint"
+    ],
+    "module": "commonjs",
+    "target": "ES2018",
+    "moduleResolution": "node",
+    "declaration": true,
+    "preserveSymlinks": true,
+    "preserveWatchOutput": true,
+    "pretty": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "outDir": "lib",
+    "rootDir": "./src/ts"
+  },
+  "include": ["src/ts/*"],
+  "exclude": [
+    "**/lib/*"
+  ]
+}
