@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import { getTransaction } from "./transaction"
 import { genPlantUml } from "./plantUmlGenerator"
 import { transactionHash } from "./regEx"
@@ -10,7 +12,8 @@ program
   .usage(
     `<txHash> [options]
 
-Generates a UML sequence diagram for an Ethereum transaction.`
+Ethereum transaction visualizer.
+Generates a UML sequence diagram for a transaction's contract calls.`
   )
   .option(
     "-f, --outputFormat <value>",
@@ -35,7 +38,7 @@ if (program.verbose) {
 }
 
 const tx2uml = async () => {
-  if (!program.args[0].match(transactionHash)) {
+  if (!program.args[0]?.match(transactionHash)) {
     console.error(
       `Must pass a transaction hash in hexadecimal format with a 0x prefix`
     )

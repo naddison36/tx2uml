@@ -4,6 +4,8 @@
 
 [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language) sequence diagram generator for Ethereum transaction.
 
+![1inch](./examples/1inch.png)
+
 # Install
 
 The following installation assumes [Node.js](https://nodejs.org/en/download/) has already been installed which comes with [Node Package Manager (NPM)](https://www.npmjs.com/).
@@ -24,6 +26,28 @@ To see which version you are using
 
 ```bash
 npm ls tx2uml
+```
+
+# Usage
+
+## Command Line Interface (CLI)
+
+Use the `-h` option to see the `tx2uml` CLI usage options
+
+```
+$ tx2uml -h
+Usage: tx2uml <txHash> [options]
+
+Generates a UML sequence diagram for an Ethereum transaction.
+
+Options:
+  -f, --outputFormat <value>    output file format: png, svg or puml (default: "png")
+  -o, --outputFileName <value>  output file name
+  -n, --network <network>       mainnet, ropsten, kovan or rinkeby (default: "mainnet")
+  -e, --etherscanApiKey <key>   Etherscan API Key
+  -a, --alethioApiKey <key>     Alethio API Key
+  -v, --verbose                 run with debugging statements (default: false)
+  -h, --help                    output usage information
 ```
 
 ## Alethio
@@ -68,8 +92,8 @@ Good online resources for learning UML
 
 # Similar transaction visualisation tools
 
-- (Parity Trace Decoder)[https://github.com/k06a/parity-trace-decoder]
-- (Tenderly)[https://dashboard.tenderly.dev/]
-- (EthTx info)[http://ethtx.info/]
-- (Bloxy)[https://bloxy.info/]
-- (Etherscan)[https://etherscan.io/txs]
+- [Parity Trace Decoder](https://github.com/k06a/parity-trace-decoder)
+- [Tenderly](https://dashboard.tenderly.dev/)
+- [EthTx info](http://ethtx.info/)
+- [Bloxy](https://bloxy.info/)
+- [Etherscan](https://etherscan.io/txs)
