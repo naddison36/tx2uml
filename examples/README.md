@@ -19,3 +19,13 @@ When the ABI and function signatures are not known, the function selector is sho
 ```
 tx2uml 0x7aca0414c3c04e58c11ad6b7d13bbfe1c6d4500fbe402900da9abf6bb6f53a8d
 ```
+
+## Failed transaction
+
+See which contract call failed a transaction
+
+![failed](./failedTx.png)
+
+```
+tx2uml 0x0a99314379caf3dcbbc6e1f5b0dda8a41e3a8b5a0d9b1c1ec744be1f1cf781ea
+```

@@ -97,3 +97,16 @@ Good online resources for learning UML
 - [EthTx info](http://ethtx.info/)
 - [Bloxy](https://bloxy.info/)
 - [Etherscan](https://etherscan.io/txs)
+
+## Development
+
+npm test, build and publish commands
+
+```bash
+npm run test
+npm run prettier:fix
+npm run build
+# make tx2uml globally available
+npm link
+npm publish
+```

@@ -1,5 +1,7 @@
 import { Contracts, Message, MessageType, Param } from "./transaction"
 
+const debug = require("debug")("tx2uml")
+
 export const genPlantUml = (
   messages: Message[],
   contracts: Contracts
@@ -9,6 +11,8 @@ export const genPlantUml = (
   plantUml += genMessages(messages)
 
   plantUml += "\n@endumls"
+
+  debug(plantUml)
 
   return plantUml
 }
@@ -46,7 +50,7 @@ export const genMessages = (
   if (!messages?.length) {
     return ""
   }
-  const contractCallStack: string[] = [] // array of contract addresses
+  let contractCallStack: string[] = [] // array of contract addresses
   let previousMessage: Message | undefined
   let plantUml = "\n"
   for (const message of messages) {
@@ -66,7 +70,12 @@ export const genMessages = (
         message
       )} ${participantId(message.to)}: ${genMessageText(message, params)}\n`
       plantUml += `activate ${participantId(message.to)}\n`
-      contractCallStack.push(message.from)
+      if (message.status === true) {
+        contractCallStack.push(message.from)
+      } else {
+        plantUml += `destroy ${participantId(message.to)}\n`
+        contractCallStack = []
+      }
     } else {
       plantUml += `return ${genMessageText(message, params)} \n`
       // selfdestruct is the return so pop the previous contract call
@@ -82,9 +91,6 @@ export const genMessages = (
 }
 
 const genArrow = (message: Message): string => {
-  if (!message.status) {
-    return "-x"
-  }
   if (message.type === MessageType.Call) {
     return "->"
   }
