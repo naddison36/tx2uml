@@ -65,18 +65,18 @@ export const genMessages = (
   if (!messages?.length) {
     return ""
   }
-  let contractCallStack: string[] = [] // array of contract addresses
+  let contractCallStack: Message[] = [] // array of contract addresses
   let previousMessage: Message | undefined
   let plantUml = "\n"
-  // for each contract call
+  // for each contract message
   for (const message of messages) {
     if (previousMessage && message.from !== previousMessage.to) {
       // reserve() is mutable so need to copy the array wih a spread operator
       const reservedCallStack = [...contractCallStack].reverse()
-      for (const contractAddress of reservedCallStack) {
-        plantUml += `return\n`
+      for (const callStack of reservedCallStack) {
+        plantUml += genEndLifeline(callStack)
         contractCallStack.pop()
-        if (message.from === contractAddress) {
+        if (message.from === callStack.from) {
           break
         }
       }
@@ -95,18 +95,7 @@ export const genMessages = (
       )}\n`
       plantUml += `activate ${participantId(message.to)}\n`
 
-      // If a successful transaction
-      if (message.status === true) {
-        contractCallStack.push(message.from)
-      } else {
-        // a failed transaction so end the lifeline
-        plantUml += `destroy ${participantId(message.to)}\n`
-        if (message.error) {
-          plantUml += `note right: ${message.error}\n`
-        }
-        // clear callstack as we don't want to output any more returns
-        contractCallStack = []
-      }
+      contractCallStack.push(message)
     } else if (message.type === MessageType.Value) {
       // convert wei to Ethers which is to 18 decimal places
       const ethers = new BigNumber(message.value.toString()).div(
@@ -126,10 +115,24 @@ export const genMessages = (
 
     previousMessage = message
   }
-  contractCallStack.reverse().forEach(() => {
-    plantUml += `return\n`
+  contractCallStack.reverse().forEach(callStack => {
+    plantUml += genEndLifeline(callStack)
   })
 
+  return plantUml
+}
+
+const genEndLifeline = (message: Message): string => {
+  let plantUml = ""
+  if (message.status) {
+    plantUml += `return\n`
+  } else {
+    // a failed transaction so end the lifeline
+    plantUml += `destroy ${participantId(message.to)}\n`
+  }
+  if (message.error) {
+    plantUml += `note right of ${participantId(message.to)}: ${message.error}\n`
+  }
   return plantUml
 }
 
