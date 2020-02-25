@@ -22,14 +22,19 @@ const basePayload: Payload = {
 }
 
 const testContracts: Contracts = {
-  "0x0000324fd7df8b2a969969bcc3663d74f0581111": {},
+  "0x0000324fd7df8b2a969969bcc3663d74f0581111": {
+    address: "0x0000324fd7df8b2a969969bcc3663d74f0581111"
+  },
   "0x11116FECD516Ecc3849DAf6845e3EC8680872222": {
+    address: "0x11116FECD516Ecc3849DAf6845e3EC8680872222",
     contractName: "KyberNetworkProxy"
   },
   "0x22226FECD516Ecc3849DAf6845e3EC8680873333": {
+    address: "0x22226FECD516Ecc3849DAf6845e3EC8680873333",
     contractName: "KyberNetwork"
   },
   "0x333365fe5446d880f8ec261d9224166909124444": {
+    address: "0x333365fe5446d880f8ec261d9224166909124444",
     contractName: "Tether USD"
   }
 }

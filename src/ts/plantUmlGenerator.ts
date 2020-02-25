@@ -29,16 +29,22 @@ export const genPlantUml = (
 export const genParticipants = (contracts: Contracts): string => {
   let plantUml = "\n"
 
-  for (const [address, names] of Object.entries(contracts)) {
-    if (names.contractName) {
-      plantUml += `participant "${shortAddress(address)}" as ${participantId(
-        address
-      )} <<${names.contractName}>>\n`
-    } else {
-      plantUml += `participant "${shortAddress(address)}" as ${participantId(
-        address
-      )}\n`
+  for (const [address, contract] of Object.entries(contracts)) {
+    let name: string = ""
+    if (contract.tokenName) {
+      if (contract.symbol) {
+        name = `<<${contract.tokenName} (${contract.symbol})>>`
+      } else {
+        name = `<<${contract.tokenName}>>`
+      }
     }
+    if (contract.contractName) {
+      name += `<<${contract.contractName}>>`
+    }
+
+    plantUml += `participant "${shortAddress(address)}" as ${participantId(
+      address
+    )} ${name}\n`
   }
 
   return plantUml

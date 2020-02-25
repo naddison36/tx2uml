@@ -36,6 +36,7 @@ export const getContract = async (
     if (response.data.result[0].ABI === "Contract source code not verified") {
       debug(`Contract ${contractAddress} is not verified on Etherscan`)
       return {
+        address: contractAddress,
         contractName: null
       }
     }
@@ -45,6 +46,7 @@ export const getContract = async (
     )
 
     return {
+      address: contractAddress,
       contractName: response.data.result[0].ContractName
     }
   } catch (err) {

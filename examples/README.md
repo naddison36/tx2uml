@@ -2,7 +2,7 @@
 
 ## Uniswap
 
-This is example is removing liquidity from the Uniswap MKR pool
+This is example is removing liquidity from the Uniswap MKR pool. The 69.75 ETH is a value transfer, not a contract call.
 
 ![UniswapMKRRemove](./uniswapMKRRemove.png)
 
@@ -52,7 +52,7 @@ tx2uml 0xe2e3ef2513c8e3da306cb427c03ae0114062fd09568bec559d5880c490ff743a
 
 The [1inch exchange](https://1inch.exchange/) aggregates the exchange of Ether and tokens across on-chain liquidity providers so does lots of calls to different contracts.
 
-![1inch](./1inch.png)
+![1inch Synth](./1inchSynth.png)
 
 ```
 tx2uml 0x34e4f8b86b5c3fe5a9e30e7cf75b242ed3e6e4eeea68cfaf3ca68ef1edb93ed1 -o 1inch

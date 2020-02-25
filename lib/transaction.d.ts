@@ -29,9 +29,13 @@ export declare type Message = {
     error?: string;
 };
 export declare type Contract = {
+    address: string;
     contractName?: string;
     appName?: string;
     balance?: number;
+    tokenName?: string;
+    symbol?: string;
+    decimals?: number;
 };
 export declare type Contracts = {
     [address: string]: Contract;

@@ -1,4 +1,4 @@
-import { getContractMessages, getTransactionDetails } from "./AlethioClient"
+import {getContractMessages, getToken, getTransactionDetails} from "./AlethioClient"
 import { getContract } from "./EtherscanClient"
 
 const debug = require("debug")("tx2uml")
@@ -38,9 +38,13 @@ export type Message = {
 }
 
 export type Contract = {
+  address: string
   contractName?: string
   appName?: string
   balance?: number
+  tokenName?: string
+  symbol?: string
+  decimals?: number
 }
 
 export type Contracts = { [address: string]: Contract }
@@ -100,12 +104,15 @@ export const getTransaction = async (
   const uniqueAddresses = new Set([firstMessage.from, ...contractAddresses])
   debug(`${uniqueAddresses.size} participants in the transaction`)
   for (const address of uniqueAddresses) {
-    if (!contracts[address]) {
-      contracts[address] = await getContract(
-        address,
-        options.etherscanApiKey,
-        network
-      )
+    contracts[address] = await getContract(
+      address,
+      options.etherscanApiKey,
+      network
+    )
+    const token = await getToken(address, options.alethioApiKey, network)
+    if (token) {
+      contracts[address].tokenName = token.name
+      contracts[address].symbol = token.symbol
     }
   }
 
