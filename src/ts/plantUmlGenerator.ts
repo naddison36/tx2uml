@@ -10,14 +10,20 @@ import BigNumber from "bignumber.js"
 
 const debug = require("debug")("tx2uml")
 
+export interface PumlGenerationOptions {
+  gas?: boolean
+  params?: boolean
+}
+
 export const genPlantUml = (
   messages: Message[],
   contracts: Contracts,
-  details: TransactionDetails
+  details: TransactionDetails,
+  options: PumlGenerationOptions = {}
 ): string => {
   let plantUml = `@startuml\ntitle ${details.hash}`
   plantUml += genParticipants(contracts)
-  plantUml += genMessages(messages)
+  plantUml += genMessages(messages, options)
 
   plantUml += "\n@endumls"
 
@@ -60,7 +66,7 @@ export const shortAddress = (address: string): string => {
 
 export const genMessages = (
   messages: Message[],
-  params: boolean = false
+  options: PumlGenerationOptions
 ): string => {
   if (!messages?.length) {
     return ""
@@ -91,8 +97,8 @@ export const genMessages = (
         message
       )} ${participantId(message.to)}: ${genFunctionText(
         message.payload,
-        params
-      )}\n`
+        options.params
+      )}${genGasUsage(message, options.gas)}\n`
       plantUml += `activate ${participantId(message.to)}\n`
 
       contractCallStack.push(message)
@@ -103,7 +109,10 @@ export const genMessages = (
       )
       plantUml += `${participantId(message.from)} ${genArrow(
         message
-      )} ${participantId(message.to)}: ${ethers.toFormat(2)} ETH\n`
+      )} ${participantId(message.to)}: ${ethers.toFormat(2)} ETH${genGasUsage(
+        message,
+        options.gas
+      )}\n`
       // we want to avoid a return in the next loop so setting previous message from field so no returns are printed
       previousMessage.to = message.from
       continue
@@ -174,7 +183,7 @@ export const genParams = (params: Param[]): string => {
 
   let plantUml = ""
   for (const param of params) {
-    if (param.type === " address") {
+    if (param.type === "address") {
       plantUml += `${param.name}: ${shortAddress(param.value)}, `
     } else {
       plantUml += `${param.name}: ${param.value}, `
@@ -182,4 +191,11 @@ export const genParams = (params: Param[]): string => {
   }
 
   return plantUml.slice(0, -2)
+}
+
+const genGasUsage = (message: Message, gasUsage: boolean = false): string => {
+  if (!gasUsage) {
+    return ""
+  }
+  return ` [${message.gasUsed}]`
 }

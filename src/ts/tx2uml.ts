@@ -28,8 +28,8 @@ Generates a UML sequence diagram for a transaction's contract calls.`
   )
   .option("-e, --etherscanApiKey <key>", "Etherscan API Key")
   .option("-a, --alethioApiKey <key>", "Alethio API Key")
-  // .option('-p, --params', 'show function params and return values', false)
-  // .option('-g, --gas', 'show gas usages', false)
+  .option("-p, --params", "show function params and return values", false)
+  .option("-g, --gas", "show gas usages", false)
   .option("-v, --verbose", "run with debugging statements", false)
   .parse(process.argv)
 
@@ -52,7 +52,10 @@ const tx2uml = async () => {
     network: program.network
   })
 
-  const plantUml = genPlantUml(messages, contracts, details)
+  const plantUml = genPlantUml(messages, contracts, details, {
+    params: program.params,
+    gas: program.gas
+  })
 
   await generateFile(plantUml, {
     format: program.outputFormat,

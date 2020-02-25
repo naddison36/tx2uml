@@ -40,7 +40,7 @@ Use the `-h` option to see the `tx2uml` CLI usage options
 $ tx2uml -h
 Usage: tx2uml <txHash> [options]
 
-Generates a UML sequence diagram for an Ethereum transaction.
+Generates a UML sequence diagram for a transaction's contract calls.
 
 Options:
   -f, --outputFormat <value>    output file format: png, svg or puml (default: "png")
@@ -48,6 +48,8 @@ Options:
   -n, --network <network>       mainnet, ropsten, kovan or rinkeby (default: "mainnet")
   -e, --etherscanApiKey <key>   Etherscan API Key
   -a, --alethioApiKey <key>     Alethio API Key
+  -p, --params                  show function params and return values (default: false)
+  -g, --gas                     show gas usages (default: false)
   -v, --verbose                 run with debugging statements (default: false)
   -h, --help                    output usage information
 ```

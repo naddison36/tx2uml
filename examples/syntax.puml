@@ -4,20 +4,20 @@ participant "0x0000..1111" as 00001111
 participant "0x1111..2222" as 11112222 <<Token Name>>
 participant "0x2222..3333" as 22223333 <<Token Name>><<Contract Name>>
 
-00001111 -> 11112222: call
+00001111 -> 11112222: call [gas usage]
 note left: first contract call
 activate 11112222
 11112222 ->> 00001111: 1 ETH
 note left: value transfer
-11112222 ->o 22223333: create
+11112222 ->o 22223333: create [gas usage]
 note right: create contract
 activate 22223333
 return
-11112222 -> 22223333: call
+11112222 -> 22223333: call [gas usage]
 note right: call a function on another contract
 activate 22223333
 return
-11112222 -> 22223333: call
+11112222 -> 22223333: call [gas usage]
 activate 22223333
 return selfdestruct
 note right: selfdestruct contract and return ETH

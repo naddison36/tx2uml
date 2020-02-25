@@ -1,5 +1,14 @@
 # Example UML Sequence Diagrams
 
+## Maker DAO
+
+Locking more ETH in a CDP
+![Maker DAO](./makerDao.png)
+
+```
+tx2uml 0x4d953a8c531624e8336df5060239b7c0462b3d4d0cc5dcbb61af679ba81d161a -g -o makerDao.png
+```
+
 ## Decentraland
 
 ![Decentraland](./decentraland.png)
@@ -31,6 +40,9 @@ tx2uml 0x0a99314379caf3dcbbc6e1f5b0dda8a41e3a8b5a0d9b1c1ec744be1f1cf781ea -o fai
 ## Uniswap
 
 This is example is removing liquidity from the Uniswap MKR pool. The 69.75 ETH is a value transfer, not a contract call.
+This transaction is also a little tricky in the second `removeLiquidity` call is actually a `delegatecall`. The subsequent `balanceOf`, ETH transfer and `transfer` calls are executed by the third contract but made to appear to be executed from the second contract. The ETH transfer is from the second contract even though the third contract executed the code.
+
+At the moment there is no way to identify delegate calls on Alethio so this will have to do for now. Logically it's correct, it's just the gas usage is hard to read as the gas from the `balanceOf` and `transfer` calls is included in the second `removeLiquidity` call.
 
 ![UniswapMKRRemove](./uniswapMKRRemove.png)
 
