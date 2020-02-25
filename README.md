@@ -6,7 +6,7 @@
 
 ![Uniswap MKR remove](./examples/uniswapMKRRemove.png)
 
-See more examples under the [examples](./examples) folder.
+See more examples under the [examples](./examples/README.md#example-uml-sequence-diagrams)
 
 # Install
 

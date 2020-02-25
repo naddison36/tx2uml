@@ -5,6 +5,7 @@ import { genPlantUml } from "./plantUmlGenerator"
 import { transactionHash } from "./regEx"
 import { generateFile } from "./fileGenerator"
 
+const debug = require("debug")("tx2uml")
 const program = require("commander")
 
 program
@@ -54,7 +55,8 @@ const tx2uml = async () => {
 
   const plantUml = genPlantUml(messages, contracts, details, {
     params: program.params,
-    gas: program.gas
+    gas: program.gas,
+    network: program.network
   })
 
   await generateFile(plantUml, {
@@ -63,8 +65,10 @@ const tx2uml = async () => {
   })
 }
 
-try {
-  tx2uml()
-} catch (err) {
-  console.error(`Failed to generate UML diagram ${err.message}`)
-}
+tx2uml()
+  .then(() => {
+    debug("Done!")
+  })
+  .catch(err => {
+  console.error(`Failed to generate UML diagram ${err.stack}`)
+})

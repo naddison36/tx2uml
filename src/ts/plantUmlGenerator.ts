@@ -13,6 +13,7 @@ const debug = require("debug")("tx2uml")
 export interface PumlGenerationOptions {
   gas?: boolean
   params?: boolean
+  network?: string
 }
 
 export const genPlantUml = (
@@ -21,7 +22,7 @@ export const genPlantUml = (
   details: TransactionDetails,
   options: PumlGenerationOptions = {}
 ): string => {
-  let plantUml = `@startuml\ntitle ${details.hash}`
+  let plantUml = `@startuml\ntitle ${options.network || ""} ${details.hash}`
   plantUml += genParticipants(contracts)
   plantUml += genMessages(messages, options)
 
