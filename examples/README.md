@@ -15,7 +15,7 @@ tx2uml 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca -o uni
 ![Decentraland](./decentraland.png)
 
 ```
-tx2uml 0x11b8cedc62bcf4a838d973645cca67e8956cfd65d3ad5e3aab1fc53e2339291d
+tx2uml 0x11b8cedc62bcf4a838d973645cca67e8956cfd65d3ad5e3aab1fc53e2339291d -o decentraland.png
 ```
 
 ## Unknown function names
@@ -25,7 +25,7 @@ When the ABI and function signatures are not known, the function selector is sho
 ![FuncSelectors](./funcSelectors.png)
 
 ```
-tx2uml 0x7aca0414c3c04e58c11ad6b7d13bbfe1c6d4500fbe402900da9abf6bb6f53a8d
+tx2uml 0x7aca0414c3c04e58c11ad6b7d13bbfe1c6d4500fbe402900da9abf6bb6f53a8d -o funcSelectors.png
 ```
 
 ## Failed transactions
@@ -35,7 +35,7 @@ See which contract call failed a transaction. The error message will also be sho
 ![failed](./failedTx.png)
 
 ```
-tx2uml 0x0a99314379caf3dcbbc6e1f5b0dda8a41e3a8b5a0d9b1c1ec744be1f1cf781ea
+tx2uml 0x0a99314379caf3dcbbc6e1f5b0dda8a41e3a8b5a0d9b1c1ec744be1f1cf781ea -o failedTx.png
 ```
 
 ## Kyber
@@ -45,7 +45,7 @@ tx2uml 0x0a99314379caf3dcbbc6e1f5b0dda8a41e3a8b5a0d9b1c1ec744be1f1cf781ea
 ![Kyber](./kyber.png)
 
 ```
-tx2uml 0xe2e3ef2513c8e3da306cb427c03ae0114062fd09568bec559d5880c490ff743a
+tx2uml 0xe2e3ef2513c8e3da306cb427c03ae0114062fd09568bec559d5880c490ff743a -o kyber.png
 ```
 
 ## 1inch Exchange
@@ -56,4 +56,13 @@ The [1inch exchange](https://1inch.exchange/) aggregates the exchange of Ether a
 
 ```
 tx2uml 0x34e4f8b86b5c3fe5a9e30e7cf75b242ed3e6e4eeea68cfaf3ca68ef1edb93ed1 -o 1inch
+```
+
+## bZx attack 2
+
+The second attack on the [bZx netwok](https://bzx.network/). This is a large file as there are 1203 messages and 28 contracts.
+![bZx2](./bZx2.png)
+
+```
+tx2uml 0x762881b07feb63c436dee38edd4ff1f7a74c33091e534af56c9f7d49b5ecac15 -o bZx2.png
 ```

@@ -52,6 +52,26 @@ Options:
   -h, --help                    output usage information
 ```
 
+# Syntax
+
+![Syntax](./examples/syntax.png)
+
+## Participants
+
+The participant names are shortened contract addresses. Basically, the first and last 2 bytes in hexadecimal format with a 0x prefix.
+
+Stereotypes are added for the contract and token name if they can be sourced. The contract name comes from Etherscan's verified contracts. The token name comes from Alethio.
+
+## Messages
+
+There are five types of messages
+
+- **Call** an external contract call shown as a filled arrow head at the to contract.
+- **Return** of a call shown as a dotted line with the filled arrow head.
+- **Value** transfer of Ether shown as an open arrow head with the amount in Ethers
+- **Create** a new contract with
+- **Selfdestruct** shown as a dotted lined with a filled arrow head
+
 # Data Source
 
 ## Alethio
@@ -69,6 +89,13 @@ The contract names are sourced from the verified contracts on [Etherscan](https:
 [PlantUML](http://plantuml.com) is used to render the UML sequence diagrams.
 
 This tool uses the [node-plantuml](https://www.npmjs.com/package/node-plantuml) package to convert Plant UML into png and svg files which it does by using the Plant UML Java archive file.
+
+To manually convert a puml file to png, run
+
+```
+cd examples
+puml generate syntax.puml -o syntax.png
+```
 
 ### VS Code extension
 

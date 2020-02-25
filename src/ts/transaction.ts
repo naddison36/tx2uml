@@ -1,4 +1,8 @@
-import {getContractMessages, getToken, getTransactionDetails} from "./AlethioClient"
+import {
+  getContractMessages,
+  getToken,
+  getTransactionDetails
+} from "./AlethioClient"
 import { getContract } from "./EtherscanClient"
 
 const debug = require("debug")("tx2uml")
