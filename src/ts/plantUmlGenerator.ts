@@ -81,6 +81,7 @@ export const genMessages = (
         }
       }
     }
+
     if (
       message.type === MessageType.Call ||
       message.type === MessageType.Create
@@ -114,11 +115,15 @@ export const genMessages = (
       plantUml += `${participantId(message.from)} ${genArrow(
         message
       )} ${participantId(message.to)}: ${ethers.toFormat(2)} ETH\n`
+      // we want to avoid a return in the next loop so setting previous message from field so no returns are printed
+      previousMessage.to = message.from
+      continue
     } else if (message.type === MessageType.Selfdestruct) {
       plantUml += `return selfdestruct\n`
       // selfdestruct is the return so pop the previous contract call
       contractCallStack.pop()
     }
+
     previousMessage = message
   }
   contractCallStack.reverse().forEach(() => {
