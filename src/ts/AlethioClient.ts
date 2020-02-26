@@ -115,11 +115,16 @@ export const getContractMessages = async (
     }
 
     for (const contractMessage of response.data.data) {
+      const parentId = contractMessage.relationships.parentContractMessage?.data?.id
+        ?.split(':')
+        ?.pop()
+
       messages.push({
         id: contractMessage.attributes.cmsgIndex,
         type: convertType(contractMessage.attributes.msgType),
         from: contractMessage.relationships.from.data.id,
         to: contractMessage.relationships.to.data.id,
+        parentId: parentId ? parseInt(parentId) : parentId,
         value: BigInt(contractMessage.attributes.value),
         payload: contractMessage.attributes.msgPayload,
         gasUsed: BigInt(contractMessage.attributes.msgGasUsed),
@@ -282,7 +287,7 @@ export const getToken = async (
     return token
   } catch (err) {
     if (err?.response?.status === 404) {
-      debug(`Could not find token details for contract ${contractAddress}`)
+      debug(`Could not find token details for contract ${contractAddress} from Alethio`)
       return null
     }
     throw new VError(

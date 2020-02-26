@@ -147,20 +147,21 @@ const genEndLifeline = (message: Message): string => {
 }
 
 const genArrow = (message: Message): string => {
+  const delegateColor = message.parentId ? "[#3471CD]" : ""
   if (message.type === MessageType.Call) {
-    return "->"
+    return `-${delegateColor}>`
   }
   if (message.type === MessageType.Value) {
-    return "->>"
+    return `-${delegateColor}>>`
   }
   if (message.type === MessageType.Create) {
-    return "->o"
+    return `-${delegateColor}>o`
   }
   if (message.type === MessageType.Selfdestruct) {
-    return "-\\"
+    return `-${delegateColor}\\`
   }
 
-  return "->"
+  return `-${delegateColor}>`
 }
 
 const genFunctionText = (payload: Payload, params: boolean = false): string => {

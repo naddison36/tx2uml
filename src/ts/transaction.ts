@@ -32,6 +32,7 @@ export type Message = {
   type: MessageType
   from: string
   to: string
+  parentId?: number  // message id of a delegatecall
   value: bigint
   payload?: Payload
   gasUsed: bigint

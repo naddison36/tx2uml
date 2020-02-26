@@ -99,7 +99,11 @@ cd examples
 puml generate syntax.puml -o syntax.png
 ```
 
-### VS Code extension
+### PlantText
+
+[PlantText](https://www.planttext.com/) is an online tool that generates diagrams from PlantUML.
+
+### PlantUML extension for VS Code
 
 [Jebbs PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml) extension for VS Code is used to authoring the PlantUML diagrams.
 
@@ -109,8 +113,8 @@ puml generate syntax.puml -o syntax.png
 
 Good online resources for learning UML
 
-- [UML 2 Sequence Diagramming Guidelines](http://www.agilemodeling.com/style/sequenceDiagram.htm)
 - [PlantUML Sequence diagrams](https://plantuml.com/sequence-diagram)
+- [UML 2 Sequence Diagramming Guidelines](http://www.agilemodeling.com/style/sequenceDiagram.htm)
 
 # Similar transaction visualisation tools
 
