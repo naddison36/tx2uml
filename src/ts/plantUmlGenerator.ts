@@ -86,7 +86,7 @@ export const genMessages = (
         message.from
       )}, to ${shortAddress(message.to)}, ${message?.payload?.funcName} [${
         message.gasUsed
-      }] ${message?.payload?.funcSelector}`
+      }] ${message?.payload?.funcSelector}, type ${message.type}`
     )
     // return from lifeline if processing has moved to a different contract
     if (previousMessage && message.from !== previousMessage.to) {

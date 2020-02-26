@@ -3,11 +3,12 @@
 ## Maker DAO
 
 Locking more ETH in a CDP
-![Maker DAO](./makerDao.png)
 
 ```
 tx2uml 0x4d953a8c531624e8336df5060239b7c0462b3d4d0cc5dcbb61af679ba81d161a -g -o makerDao
 ```
+
+![Maker DAO](./makerDao.png)
 
 ## Delegate calls
 

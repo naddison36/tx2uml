@@ -12,6 +12,8 @@ See more examples under the [examples](./examples/README.md#example-uml-sequence
 
 The following installation assumes [Node.js](https://nodejs.org/en/download/) has already been installed which comes with [Node Package Manager (NPM)](https://www.npmjs.com/).
 
+tx2uml needs [Java](https://www.java.com/en/download/) installed as that's required by [PlantUML](https://plantuml.com/) to generate the diagrams.
+
 To install globally so you can run `tx2uml` from anywhere
 
 ```bash

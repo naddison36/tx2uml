@@ -238,7 +238,7 @@ const convertType = (msgType: string): MessageType => {
   if (msgType === "ValueContractMsg" || msgType === "ValueTx") {
     type = MessageType.Value
   } else if (msgType === "CreateContractMsg" || msgType === "CreateTx") {
-    type = MessageType.Value
+    type = MessageType.Create
   } else if (
     msgType === "SelfdestructContractMsg" ||
     msgType === "SelfdestructTx"
