@@ -70,5 +70,5 @@ tx2uml()
     debug("Done!")
   })
   .catch(err => {
-  console.error(`Failed to generate UML diagram ${err.stack}`)
-})
+    console.error(`Failed to generate UML diagram ${err.stack}`)
+  })

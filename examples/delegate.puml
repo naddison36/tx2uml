@@ -1,0 +1,40 @@
+
+@startumls
+
+title delegatecall example
+participant "0x0000..1111" as 00001111 
+participant "0x1111..2222" as 11112222 <<Controller>>
+participant "0x2222..3333" as 22223333 <<Proxy>>
+participant "0x3333..4444" as 33334444 <<DeFiApp>>
+participant "0x4444..5555" as 44445555 <<Hacker>>
+participant "0x5555..6666" as 55556666 <<Oracle>>
+
+00001111 -> 11112222: first call
+activate 11112222
+11112222 -> 22223333: second call
+activate 22223333
+22223333 -> 33334444: delegate call
+activate 33334444 #809ECB
+22223333 -[#3471CD]> 44445555: 1st delegated call from 0x2222..3333
+activate 44445555
+44445555 -> 55556666: not a delegate call
+activate 55556666
+return
+return
+22223333 -[#3471CD]> 44445555: 2nd delegated call from 0x2222..3333
+activate 44445555
+return
+return
+22223333 -> 44445555: not a delegate call
+activate 44445555
+return
+return
+11112222 -> 22223333: not a delegate call
+activate 22223333
+22223333 -> 44445555: not a delegate call
+activate 44445555
+return
+return
+return
+
+@endumls

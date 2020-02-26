@@ -97,6 +97,7 @@ To manually convert a puml file to png, run
 ```
 cd examples
 puml generate syntax.puml -o syntax.png
+puml generate delegate.puml -o delegate.png
 ```
 
 ### PlantText

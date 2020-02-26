@@ -16,6 +16,9 @@ export interface PumlGenerationOptions {
   network?: string
 }
 
+const DelegateLifelineColor = "#809ECB"
+const DelegateMessageColor = "#3471CD"
+
 export const genPlantUml = (
   messages: Message[],
   contracts: Contracts,
@@ -67,26 +70,65 @@ export const shortAddress = (address: string): string => {
 
 export const genMessages = (
   messages: Message[],
-  options: PumlGenerationOptions
+  options: PumlGenerationOptions = {}
 ): string => {
   if (!messages?.length) {
     return ""
   }
-  let contractCallStack: Message[] = [] // array of contract addresses
+  let contractCallStack: Message[] = []
+  let delegateMessages: { [parentId: string]: number } = {}
   let previousMessage: Message | undefined
   let plantUml = "\n"
   // for each contract message
   for (const message of messages) {
+    debug(
+      `id ${message.id}, parent ${message.parentId}, from ${shortAddress(
+        message.from
+      )}, to ${shortAddress(message.to)}, ${message?.payload?.funcName} [${
+        message.gasUsed
+      }] ${message?.payload?.funcSelector}`
+    )
+    // return from lifeline if processing has moved to a different contract
     if (previousMessage && message.from !== previousMessage.to) {
-      // reserve() is mutable so need to copy the array wih a spread operator
-      const reservedCallStack = [...contractCallStack].reverse()
-      for (const callStack of reservedCallStack) {
-        plantUml += genEndLifeline(callStack)
+      // don't return if this message is the first delegate call
+      // this return will be moved to once all the delegate calls have been generated
+      if (message.parentId && !delegateMessages[message.parentId]) {
+        // replace old activate lifeline line with coloured activate lifeline for the previous delegate call
+        plantUml = plantUml.replace(/\n.*\n$/, "\n")
+        plantUml += `activate ${participantId(
+          previousMessage.to
+        )} ${DelegateLifelineColor}\n`
+
+        // Remove previous delegate call from the call stack as we'll handle the delegate lifeline separately
         contractCallStack.pop()
-        if (message.from === callStack.from) {
-          break
+
+        // remember the last call in the delegated lifeline
+        const lifelineMessages = messages.filter(
+          m => m.parentId === message.parentId
+        )
+        // get the id of the last delegate message
+        delegateMessages[message.parentId] = lifelineMessages.slice(-1)[0].id
+      } else {
+        // reserve() is mutable so need to copy the array wih a spread operator
+        const reservedCallStack = [...contractCallStack].reverse()
+        for (const callStack of reservedCallStack) {
+          plantUml += genEndLifeline(callStack)
+          contractCallStack.pop()
+          // stop returns when the callstack is back to this message's lifeline
+          if (message.from === callStack.from) {
+            break
+          }
         }
       }
+    }
+
+    // if the previous message was the last delegated message
+    if (
+      previousMessage &&
+      previousMessage.id === delegateMessages[previousMessage?.parentId]
+    ) {
+      // return from the delegated lifeline
+      plantUml += "return\n"
     }
 
     if (
@@ -147,7 +189,7 @@ const genEndLifeline = (message: Message): string => {
 }
 
 const genArrow = (message: Message): string => {
-  const delegateColor = message.parentId ? "[#3471CD]" : ""
+  const delegateColor = message.parentId ? `[${DelegateMessageColor}]` : ""
   if (message.type === MessageType.Call) {
     return `-${delegateColor}>`
   }

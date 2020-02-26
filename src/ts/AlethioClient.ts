@@ -116,7 +116,7 @@ export const getContractMessages = async (
 
     for (const contractMessage of response.data.data) {
       const parentId = contractMessage.relationships.parentContractMessage?.data?.id
-        ?.split(':')
+        ?.split(":")
         ?.pop()
 
       messages.push({
@@ -287,7 +287,9 @@ export const getToken = async (
     return token
   } catch (err) {
     if (err?.response?.status === 404) {
-      debug(`Could not find token details for contract ${contractAddress} from Alethio`)
+      debug(
+        `Could not find token details for contract ${contractAddress} from Alethio`
+      )
       return null
     }
     throw new VError(

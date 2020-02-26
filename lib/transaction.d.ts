@@ -20,6 +20,7 @@ export declare type Message = {
     type: MessageType;
     from: string;
     to: string;
+    parentId?: number;
     value: bigint;
     payload?: Payload;
     gasUsed: bigint;
