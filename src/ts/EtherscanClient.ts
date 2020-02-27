@@ -52,7 +52,7 @@ export const getContract = async (
   } catch (err) {
     throw new VError(
       err,
-      `Failed to get contract details for contract ${contractAddress} from Etherscan`
+      `Failed to get contract details for contract ${contractAddress} from Etherscan using url ${etherscanBaseUrls[network]}`
     )
   }
 }

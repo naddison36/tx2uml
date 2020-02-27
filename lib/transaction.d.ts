@@ -2,7 +2,8 @@ export declare enum MessageType {
     Value = 0,
     Call = 1,
     Create = 2,
-    Selfdestruct = 3
+    Selfdestruct = 3,
+    Delegatecall = 4
 }
 export declare type Param = {
     name: string;
@@ -15,12 +16,17 @@ export declare type Payload = {
     inputs: Param[];
     outputs: Param[];
 };
+export declare type DelegatedDetails = {
+    id: number;
+    last: boolean;
+};
 export declare type Message = {
     id: number;
     type: MessageType;
     from: string;
     to: string;
     parentId?: number;
+    delegatedCall?: DelegatedDetails;
     value: bigint;
     payload?: Payload;
     gasUsed: bigint;
