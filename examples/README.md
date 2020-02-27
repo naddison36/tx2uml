@@ -18,9 +18,30 @@ In the sequence diagram, the lifeline of the delegated call will be in blue and 
 
 ![Delegate example](./delegate.png)
 
-## 0xUniverse
+## Uniswap with delegatecall
 
-Creating a sale auction on [0xUniverse](https://0xuniverse.com/).
+This is example is removing liquidity from the [Uniswap](https://uniswap.exchange/) MKR pool. The 69.75 ETH is a value transfer, not a contract call.
+This transaction is also a little tricky in the second `removeLiquidity` call is a `delegatecall`. The subsequent `balanceOf`, ETH transfer and `transfer` calls in blue are executed by the third contract but made to appear to be executed from the second contract. The ETH transfer is from the second contract even though the third contract executed the code. Execution that has been delegated is marked with a blue lifeline.
+
+```
+tx2uml 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca -o uniswapMKRRemove
+```
+
+![UniswapMKRRemove](./uniswapMKRRemove.png)
+
+## Uniswap with create contract
+
+This [Uniswap](https://uniswap.exchange/) transaction creates a new market by creating a new exchange contract. The contract create message is the second message with the circle at the end of the array.
+
+```
+0xef0ef332690119a0174f26c3ce40edfd4e57d138bb5c95a081e3d66ee571e706 -g -o ./examples/uniswapFactory
+```
+
+![Uniswap Factory](./uniswapFactory.png)
+
+## 0xUniverse with delegated message
+
+Creating a sale auction on [0xUniverse](https://0xuniverse.com/). The last `transferFrom` message in blue is executed on the `0x64c2..4f2d` contract marked in blue, but the message context is from `0xe907..2d87`.
 
 ```
 tx2uml 0xadb825bb3b27e43688c2588243eceb3bb5256dbf48c798c85deae68a7e87d20b -g -o 0xUniverse
@@ -47,17 +68,6 @@ tx2uml 0x0a99314379caf3dcbbc6e1f5b0dda8a41e3a8b5a0d9b1c1ec744be1f1cf781ea -o fai
 ```
 
 ![failed](./failedTx.png)
-
-## Uniswap
-
-This is example is removing liquidity from the Uniswap MKR pool. The 69.75 ETH is a value transfer, not a contract call.
-This transaction is also a little tricky in the second `removeLiquidity` call is a `delegatecall`. The subsequent `balanceOf`, ETH transfer and `transfer` calls in blue are executed by the third contract but made to appear to be executed from the second contract. The ETH transfer is from the second contract even though the third contract executed the code. Execution that has been delegated is marked with a blue lifeline.
-
-```
-tx2uml 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca -o uniswapMKRRemove
-```
-
-![UniswapMKRRemove](./uniswapMKRRemove.png)
 
 ## Kyber
 

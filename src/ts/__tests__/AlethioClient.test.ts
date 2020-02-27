@@ -3,7 +3,7 @@ import {
   getToken,
   getTransactionDetails
 } from "../AlethioClient"
-import { getTransaction } from "../transaction"
+import { getTransaction, MessageType } from "../transaction"
 
 jest.setTimeout(60000) // timeout for each test in milliseconds
 
@@ -19,7 +19,7 @@ describe("Alethio parser", () => {
       ).toEqual("OneInchExchange")
       expect(messages).toHaveLength(95)
       expect(messages[0].gasLimit).toEqual(BigInt(996456))
-    })
+    }, 100000)
     test("get success transaction", async () => {
       const [tx, firstMessage] = await getTransactionDetails(
         "0xbc979bfcd136884dc6c0d7243696f3443d6c9f9cc478c3189cb021968e3e31b2"
@@ -40,6 +40,14 @@ describe("Alethio parser", () => {
       expect(messages[0].value).toEqual(BigInt(0))
       expect(messages[0].gasLimit).toEqual(BigInt(466557))
       expect(messages[0].gasUsed).toEqual(BigInt(114411))
+      expect(messages[7].type).toEqual(MessageType.Delegatecall)
+      expect(messages[8].delegatedCall?.id).toEqual(0)
+      expect(messages[8].delegatedCall?.last).toBeFalsy()
+      expect(messages[9].delegatedCall?.id).toEqual(1)
+      expect(messages[10].delegatedCall?.id).toEqual(2)
+      expect(messages[10].delegatedCall?.last).toBeTruthy()
+      // FIXME seems like an Alethio bug
+      expect(messages[9].type).toEqual(MessageType.Value)
     })
   })
 

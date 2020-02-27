@@ -147,12 +147,7 @@ export const getContractMessages = async (
       )
     }
 
-    // sort by contract message id
-    const sortedMessages = messages.sort((a, b) => a.id - b.id)
-
-    debug(`Sorted ${sortedMessages.length} messages in total from Alethio`)
-
-    return sortedMessages
+    return identifyDelegateCalls(messages)
   } catch (err) {
     throw new VError(
       err,
@@ -197,11 +192,16 @@ const getContractMessagesRecursive = async (
     }
 
     for (const contractMessage of response.data.data) {
+      const parentId = contractMessage.relationships.parentContractMessage?.data?.id
+        ?.split(":")
+        ?.pop()
+
       cursorMessages.push({
         id: contractMessage.attributes.cmsgIndex,
         type: convertType(contractMessage.attributes.msgType),
         from: contractMessage.relationships.from.data.id,
         to: contractMessage.relationships.to.data.id,
+        parentId: parentId ? parseInt(parentId) : parentId,
         value: BigInt(contractMessage.attributes.value),
         payload: contractMessage.attributes.msgPayload,
         gasUsed: BigInt(contractMessage.attributes.msgGasUsed),
@@ -229,6 +229,55 @@ const getContractMessagesRecursive = async (
     throw new VError(
       err,
       `Failed to get contract messages for transaction hash ${txHash} from Alethio`
+    )
+  }
+}
+
+// identifies delegate calls where the parent's to does NOT equal the child's from
+// sets the message type on the delegatecall messages and delegatedCall on the child messages
+const identifyDelegateCalls = (messages: Message[]): Message[] => {
+  try {
+    // sort by contract message id
+    messages = messages.sort((a, b) => a.id - b.id)
+    const delegateCounts: { [parentId: number]: number } = {}
+    messages.forEach((message, i) => {
+      if (!isNaN(message.parentId)) {
+        // if message's from not equal to parent's to
+        if (messages[i].from !== messages[message.parentId - 1].to) {
+          messages[message.parentId - 1].type = MessageType.Delegatecall
+          if (!delegateCounts[message.parentId]) {
+            delegateCounts[message.parentId] = 0
+          }
+          messages[i].delegatedCall = {
+            id: delegateCounts[message.parentId]++,
+            last: false
+          }
+        }
+      }
+    })
+
+    // set the last child delegated call
+    const delegateCallIds: number[] = Object.keys(delegateCounts).map(id =>
+      parseInt(id)
+    )
+    for (const parentId of delegateCallIds) {
+      const delegatedCalls = messages.filter(m => m.parentId === parentId)
+      const lastCallId = delegatedCalls[delegatedCalls.length - 1].id
+      messages[lastCallId - 1].delegatedCall.last = true
+      debug(
+        `id ${parentId} is a delegatecall. Last child call has id ${lastCallId}`
+      )
+    }
+
+    debug(
+      `${messages.length} messages in total from Alethio. ${delegateCallIds.length} delegate calls`
+    )
+
+    return messages
+  } catch (err) {
+    throw new VError(
+      err,
+      `Failed to initialise the ${messages.length} Alethio messages.`
     )
   }
 }

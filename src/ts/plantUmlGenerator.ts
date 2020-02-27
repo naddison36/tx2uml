@@ -76,7 +76,6 @@ export const genMessages = (
     return ""
   }
   let contractCallStack: Message[] = []
-  let delegateMessages: { [parentId: string]: number } = {}
   let previousMessage: Message | undefined
   let plantUml = "\n"
   // for each contract message
@@ -86,54 +85,41 @@ export const genMessages = (
         message.from
       )}, to ${shortAddress(message.to)}, ${message?.payload?.funcName} [${
         message.gasUsed
-      }] ${message?.payload?.funcSelector}, type ${message.type}`
+      }] ${message?.payload?.funcSelector}, type ${
+        message.type
+      }, delegated call ${message.delegatedCall?.id} last ${
+        message.delegatedCall?.last
+      }`
     )
     // return from lifeline if processing has moved to a different contract
-    if (previousMessage && message.from !== previousMessage.to) {
-      // don't return if this message is the first delegate call
-      // this return will be moved to once all the delegate calls have been generated
-      if (message.parentId && !delegateMessages[message.parentId]) {
-        // replace old activate lifeline line with coloured activate lifeline for the previous delegate call
-        plantUml = plantUml.replace(/\n.*\n$/, "\n")
-        plantUml += `activate ${participantId(
-          previousMessage.to
-        )} ${DelegateLifelineColor}\n`
-
-        // Remove previous delegate call from the call stack as we'll handle the delegate lifeline separately
+    // except when the previous message was a delegatecall
+    if (
+      previousMessage &&
+      message.from !== previousMessage.to &&
+      previousMessage.type !== MessageType.Delegatecall
+    ) {
+      // reserve() is mutable so need to copy the array wih a spread operator
+      const reservedCallStack = [...contractCallStack].reverse()
+      for (const callStack of reservedCallStack) {
+        plantUml += genEndLifeline(callStack)
         contractCallStack.pop()
-
-        // remember the last call in the delegated lifeline
-        const lifelineMessages = messages.filter(
-          m => m.parentId === message.parentId
-        )
-        // get the id of the last delegate message
-        delegateMessages[message.parentId] = lifelineMessages.slice(-1)[0].id
-      } else {
-        // reserve() is mutable so need to copy the array wih a spread operator
-        const reservedCallStack = [...contractCallStack].reverse()
-        for (const callStack of reservedCallStack) {
-          plantUml += genEndLifeline(callStack)
-          contractCallStack.pop()
-          // stop returns when the callstack is back to this message's lifeline
-          if (message.from === callStack.from) {
-            break
-          }
+        // stop returns when the callstack is back to this message's lifeline
+        if (message.from === callStack.from) {
+          break
         }
       }
     }
 
-    // if the previous message was the last delegated message
-    if (
-      previousMessage &&
-      previousMessage.id === delegateMessages[previousMessage?.parentId]
-    ) {
+    // if the previous message was the last delegated call
+    if (previousMessage?.delegatedCall?.last) {
       // return from the delegated lifeline
       plantUml += "return\n"
     }
 
     if (
       message.type === MessageType.Call ||
-      message.type === MessageType.Create
+      message.type === MessageType.Create ||
+      message.type === MessageType.Delegatecall
     ) {
       // output call message
       plantUml += `${participantId(message.from)} ${genArrow(
@@ -142,9 +128,15 @@ export const genMessages = (
         message.payload,
         options.params
       )}${genGasUsage(message, options.gas)}\n`
-      plantUml += `activate ${participantId(message.to)}\n`
 
-      contractCallStack.push(message)
+      if (message.type === MessageType.Delegatecall) {
+        plantUml += `activate ${participantId(
+          message.to
+        )} ${DelegateLifelineColor}\n`
+      } else {
+        plantUml += `activate ${participantId(message.to)}\n`
+        contractCallStack.push(message)
+      }
     } else if (message.type === MessageType.Value) {
       // convert wei to Ethers which is to 18 decimal places
       const ethers = new BigNumber(message.value.toString()).div(
@@ -157,7 +149,9 @@ export const genMessages = (
         options.gas
       )}\n`
       // we want to avoid a return in the next loop so setting previous message from field so no returns are printed
-      previousMessage.to = message.from
+      if (previousMessage) {
+        previousMessage.to = message.from
+      }
       continue
     } else if (message.type === MessageType.Selfdestruct) {
       plantUml += `return selfdestruct\n`
@@ -189,7 +183,9 @@ const genEndLifeline = (message: Message): string => {
 }
 
 const genArrow = (message: Message): string => {
-  const delegateColor = message.parentId ? `[${DelegateMessageColor}]` : ""
+  const delegateColor = isNaN(message.delegatedCall?.id)
+    ? ""
+    : `[${DelegateMessageColor}]`
   if (message.type === MessageType.Call) {
     return `-${delegateColor}>`
   }

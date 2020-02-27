@@ -11,7 +11,8 @@ export enum MessageType {
   Value,
   Call,
   Create,
-  Selfdestruct
+  Selfdestruct,
+  Delegatecall
 }
 
 export type Param = {
@@ -27,13 +28,18 @@ export type Payload = {
   outputs: Param[]
 }
 
+export type DelegatedDetails = {
+  id: number // starts from 0
+  last: boolean
+}
+
 export type Message = {
   id: number
   type: MessageType
   from: string
   to: string
   parentId?: number
-  delegatedCall?: boolean
+  delegatedCall?: DelegatedDetails
   value: bigint
   payload?: Payload
   gasUsed: bigint

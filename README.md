@@ -4,15 +4,15 @@
 
 [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language) sequence diagram generator for Ethereum transaction.
 
-![Uniswap MKR remove](./examples/uniswapMKRRemove.png)
+![Maker DAO CDP](./examples/makerDao.png)
 
-See more examples under the [examples](./examples/README.md#example-uml-sequence-diagrams)
+See a lot more examples [here](./examples/README.md#example-uml-sequence-diagrams)
 
 # Install
 
 The following installation assumes [Node.js](https://nodejs.org/en/download/) has already been installed which comes with [Node Package Manager (NPM)](https://www.npmjs.com/).
 
-tx2uml needs [Java](https://www.java.com/en/download/) installed as that's required by [PlantUML](https://plantuml.com/) to generate the diagrams.
+`tx2uml` needs [Java](https://www.java.com/en/download/) installed as that's required by [PlantUML](https://plantuml.com/) to generate the diagrams.
 
 To install globally so you can run `tx2uml` from anywhere
 

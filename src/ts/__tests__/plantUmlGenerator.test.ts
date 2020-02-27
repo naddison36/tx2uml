@@ -485,7 +485,8 @@ describe("Plant UML generator", () => {
           payload: {
             ...basePayload,
             funcName: "delegate call"
-          }
+          },
+          type: MessageType.Delegatecall
         },
         {
           ...baseMessage,
@@ -496,6 +497,10 @@ describe("Plant UML generator", () => {
           payload: {
             ...basePayload,
             funcName: "1st delegated call from 0x2222..3333"
+          },
+          delegatedCall: {
+            id: 0,
+            last: false
           }
         },
         {
@@ -517,6 +522,10 @@ describe("Plant UML generator", () => {
           payload: {
             ...basePayload,
             funcName: "2nd delegated call from 0x2222..3333"
+          },
+          delegatedCall: {
+            id: 1,
+            last: true
           }
         },
         {
