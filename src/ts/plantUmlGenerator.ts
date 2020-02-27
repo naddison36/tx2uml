@@ -3,7 +3,6 @@ import {
   Message,
   MessageType,
   Param,
-  Payload,
   TransactionDetails
 } from "./transaction"
 import BigNumber from "bignumber.js"
@@ -125,7 +124,7 @@ export const genMessages = (
       plantUml += `${participantId(message.from)} ${genArrow(
         message
       )} ${participantId(message.to)}: ${genFunctionText(
-        message.payload,
+        message,
         options.params
       )}${genGasUsage(message, options.gas)}\n`
 
@@ -202,10 +201,13 @@ const genArrow = (message: Message): string => {
   return `-${delegateColor}>`
 }
 
-const genFunctionText = (payload: Payload, params: boolean = false): string => {
-  if (!payload) {
+const genFunctionText = (message: Message, params: boolean = false): string => {
+  if (!message?.payload) {
     return ""
+  } else if (message.type === MessageType.Create) {
+    return "create"
   }
+  const payload = message.payload
   if (payload.funcName) {
     const funcName = payload.funcName || "fallback"
     if (params) {
