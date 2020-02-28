@@ -117,6 +117,7 @@ puml generate delegate.puml -o delegate.png
 Good online resources for learning UML
 
 - [PlantUML Sequence diagrams](https://plantuml.com/sequence-diagram)
+- [Ashley's PlantUML Doc](https://plantuml-documentation.readthedocs.io/en/latest/diagrams/sequence.html)
 - [UML 2 Sequence Diagramming Guidelines](http://www.agilemodeling.com/style/sequenceDiagram.htm)
 
 # Similar transaction visualisation tools
