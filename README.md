@@ -4,6 +4,12 @@
 
 [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language) sequence diagram generator for Ethereum transaction.
 
+The below example is of a Maker DAO CDP transaction with gas usages.
+
+```
+tx2uml 0x4d953a8c531624e8336df5060239b7c0462b3d4d0cc5dcbb61af679ba81d161a -g -o makerDao
+```
+
 ![Maker DAO CDP](./examples/makerDao.png)
 
 See a lot more examples [here](./examples/README.md#example-uml-sequence-diagrams)

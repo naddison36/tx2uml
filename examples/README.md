@@ -1,15 +1,5 @@
 # Example UML Sequence Diagrams
 
-## Maker DAO
-
-Locking more ETH in a CDP
-
-```
-tx2uml 0x4d953a8c531624e8336df5060239b7c0462b3d4d0cc5dcbb61af679ba81d161a -g -o makerDao
-```
-
-![Maker DAO](./makerDao.png)
-
 ## Uniswap with delegatecall
 
 This is example is removing liquidity from the [Uniswap](https://uniswap.exchange/) MKR pool. The 69.75 ETH is a value transfer, not a contract call.
