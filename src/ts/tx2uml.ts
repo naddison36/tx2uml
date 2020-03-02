@@ -5,6 +5,7 @@ import { streamPlantUml } from "./plantUmlStreamer"
 import { transactionHash } from "./regEx"
 import { generateFile } from "./fileGenerator"
 
+const debugControl = require("debug")
 const debug = require("debug")("tx2uml")
 const program = require("commander")
 
@@ -35,7 +36,8 @@ Generates a UML sequence diagram for a transaction's contract calls.`
   .parse(process.argv)
 
 if (program.verbose) {
-  process.env.DEBUG = "tx2uml"
+  debugControl.enable("tx2uml")
+  debug(`Enabled tx2uml debug`)
 }
 
 const tx2uml = async () => {
