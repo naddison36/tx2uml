@@ -1,6 +1,6 @@
 {
   "name": "tx2uml",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Ethereum transaction visualizer. Generates UML sequence diagram for a transaction's contract calls.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -38,7 +38,6 @@
     "bignumber.js": "^9.0.0",
     "commander": "^4.1.1",
     "debug": "^4.1.1",
-    "node-plantuml": "^0.9.0",
     "verror": "^1.10.0"
   },
   "devDependencies": {

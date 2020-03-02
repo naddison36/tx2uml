@@ -76,6 +76,14 @@ There are five types of messages
 - **Create** a new contract with
 - **Selfdestruct** shown as a dotted lined with a filled arrow head
 
+## Delegate Calls
+
+A [delegatecall](https://github.com/ethereum/EIPs/issues/23) allows code to be executed on a contract in the context of the calling contract. That is, the delegated code appears as if it is running on the caller's contract. This means it has access to the caller's storage, Ether and calls will appear to come from the caller.
+
+In the sequence diagram, the lifeline of the delegated call will be in blue and calls will come from the calling contract. In the below example, the third call is the delegate call to the `0x3333..4444` contract. Although the code is executed on the `0x3333..4444` contract, the context is from `0x2222..3333` so the two calls to `0x4444..5555` are shown in blue and are from `0x2222..3333`.
+
+![Delegate example](./examples/delegate.png)
+
 # Data Source
 
 ## Alethio
@@ -90,17 +98,11 @@ The contract names are sourced from the verified contracts on [Etherscan](https:
 
 ## PlantUML
 
-[PlantUML](http://plantuml.com) is used to render the UML sequence diagrams.
+[PlantUML](https://plantuml.com/) is a Java program that can convert Plant UML syntax into png, svg or eps images. tx2uml pipes the PlantUML to the spawned Java process which then pipes the image outputs to a file.
 
-This tool uses the [node-plantuml](https://www.npmjs.com/package/node-plantuml) package to convert Plant UML into png and svg files which it does by using the Plant UML Java archive file.
+[plantuml.jar version 1.2020.2](https://sourceforge.net/projects/plantuml/files/plantuml.1.2020.2.jar/download) is currently used and it shipped in the [lib](./lib) folder.
 
-To manually convert a puml file to png, run
-
-```
-cd examples
-puml generate syntax.puml -o syntax.png
-puml generate delegate.puml -o delegate.png
-```
+See [Recent changes](https://plantuml.com/changes) for PlantUML's release notes.
 
 ### PlantText
 

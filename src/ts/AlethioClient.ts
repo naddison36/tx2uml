@@ -57,6 +57,7 @@ export const getTransactionDetails = async (
       index: attributes.txIndex,
       value: BigInt(attributes.value),
       gasPrice: BigInt(attributes.txGasPrice),
+      gasLimit: BigInt(attributes.msgGasLimit),
       timestamp: new Date(attributes.blockCreationTime * 1000),
       status: !attributes.msgError,
       error: attributes.msgErrorString

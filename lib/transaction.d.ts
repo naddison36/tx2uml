@@ -60,6 +60,7 @@ export interface TransactionDetails {
     index: number;
     value: bigint;
     gasPrice: bigint;
+    gasLimit: bigint;
     timestamp: Date;
     status: boolean;
     error?: string;

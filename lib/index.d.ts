@@ -1,5 +1,5 @@
 export * from "./AlethioClient";
 export * from "./EtherscanClient";
-export * from "./plantUmlGenerator";
+export * from "./plantUmlStreamer";
 export * from "./transaction";
 export * from "./utils";

@@ -1,11 +1,11 @@
-// @ts-ignore no @types/node-plantuml
-import plantuml from "node-plantuml"
 import { createWriteStream, writeFile } from "fs"
 import VError from "verror"
+import { Readable } from "stream"
+import { outputFormats, streamPlantUml } from "./plantuml"
 
 const debug = require("debug")("tx2uml")
 
-type OutputFormat = "png" | "svg" | "puml"
+type OutputFormat = "png" | "svg" | "eps" | "puml"
 
 interface OutputOptions {
   filename?: string
@@ -13,12 +13,12 @@ interface OutputOptions {
 }
 
 export const generateFile = async (
-  plantUml: string,
+  pumlStream: Readable,
   options: OutputOptions = {}
 ) => {
   const filename = constructFilename(options.filename, options.format)
   if (options.format === "puml") {
-    writeFile(filename, plantUml, err => {
+    writeFile(filename, pumlStream, err => {
       if (err) {
         throw new VError(
           err,
@@ -28,27 +28,16 @@ export const generateFile = async (
         debug(`Plant UML file written to ${filename} in raw puml format`)
       }
     })
-  } else if (options.format === "png" || options.format === "svg") {
-    const generator = plantuml.generate(
-      plantUml,
-      { format: options.format },
-      (err: Error) => {
-        if (err) {
-          throw new VError(
-            err,
-            `Failed to write plant UML file to ${filename} in ${options.format} format`
-          )
-        } else {
-          debug(
-            `Plant UML file written to ${filename} in ${options.format} format.`
-          )
-        }
-      }
-    )
-    generator.out.pipe(createWriteStream(filename))
+  } else if (outputFormats.includes(options.format)) {
+    const outputStream = createWriteStream(filename)
+    await streamPlantUml(pumlStream, outputStream, {
+      format: options.format,
+      limitSize: 60000
+    })
+    debug(`Plant UML file written to ${filename} in ${options.format} format.`)
   } else {
     throw new Error(
-      `Output format ${options.format} is not supported. Only puml, png or svg formats are supported`
+      `Output format ${options.format} is not supported. Only the following formats are supported: ${outputFormats}.`
     )
   }
 }
@@ -58,7 +47,7 @@ const constructFilename = (filename: string, format: OutputFormat = "png") => {
     return `output.${format}`
   }
   const fileExtension = filename.slice(-4)
-  if (["puml", ".png", ".svg"].includes(fileExtension)) {
+  if (["puml", ...outputFormats].includes(fileExtension)) {
     return filename
   }
 

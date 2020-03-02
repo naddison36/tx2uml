@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 import { getTransaction } from "./transaction"
-import { genPlantUml } from "./plantUmlGenerator"
+import { streamPlantUml } from "./plantUmlStreamer"
 import { transactionHash } from "./regEx"
 import { generateFile } from "./fileGenerator"
 
@@ -53,13 +53,13 @@ const tx2uml = async () => {
     network: program.network
   })
 
-  const plantUml = genPlantUml(messages, contracts, details, {
+  const pumlStream = streamPlantUml(messages, contracts, details, {
     params: program.params,
     gas: program.gas,
     network: program.network
   })
 
-  await generateFile(plantUml, {
+  await generateFile(pumlStream, {
     format: program.outputFormat,
     filename: program.outputFileName || txHash
   })

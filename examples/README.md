@@ -10,14 +10,6 @@ tx2uml 0x4d953a8c531624e8336df5060239b7c0462b3d4d0cc5dcbb61af679ba81d161a -g -o 
 
 ![Maker DAO](./makerDao.png)
 
-## Delegate calls
-
-A [delegatecall](https://github.com/ethereum/EIPs/issues/23) allows code to be executed on a contract in the context of the calling contract. That is, the delegated code appears as if it is running on the caller's contract. This means it has access to the caller's storage, Ether and calls will appear to come from the caller.
-
-In the sequence diagram, the lifeline of the delegated call will be in blue and calls will come from the calling contract. In the below example, the third call is the delegate call to the `0x3333..4444` contract. Although the code is executed on the `0x3333..4444` contract, the context is from `0x2222..3333` so the two calls to `0x4444..5555` are shown in blue and are from `0x2222..3333`.
-
-![Delegate example](./delegate.png)
-
 ## Uniswap with delegatecall
 
 This is example is removing liquidity from the [Uniswap](https://uniswap.exchange/) MKR pool. The 69.75 ETH is a value transfer, not a contract call.
@@ -118,3 +110,19 @@ tx2uml 0x11b8cedc62bcf4a838d973645cca67e8956cfd65d3ad5e3aab1fc53e2339291d -o dec
 ```
 
 ![Decentraland](./decentraland.png)
+
+## bZx Flash Loan Attacks
+
+The generated [bZx1.png](./bZx1.png) and [bZx2.png](./bZx2.png) images are too big to include in the readme so you'll have to access them via the links. See Kerman Kohli's [The Holistic bZx Post-Mortem](https://defiweekly.substack.com/p/announcing-defi-audits-and-the-holistic) post for an excellent description of what happened in both attacks.
+
+First attack
+
+```
+tx2uml 0xb5c8bd9430b6cc87a0e2fe110ece6bf527fa4f170a4bc8cd032f768fc5219838 -o bZx1
+```
+
+Second attack
+
+```
+tx2uml 0x762881b07feb63c436dee38edd4ff1f7a74c33091e534af56c9f7d49b5ecac15 -o bZx2
+```
