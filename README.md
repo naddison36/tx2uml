@@ -29,7 +29,7 @@ npm link tx2uml --only=production
 To upgrade run
 
 ```bash
-npm upgrade tx2uml -g
+npm install tx2uml -g
 ```
 
 To see which version you are using
