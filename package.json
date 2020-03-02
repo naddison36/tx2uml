@@ -1,6 +1,6 @@
 {
   "name": "tx2uml",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Ethereum transaction visualizer. Generates UML sequence diagram for a transaction's contract calls.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -15,7 +15,8 @@
   "license": "MIT",
   "files": [
     "lib/*.js",
-    "lib/*.d.ts"
+    "lib/*.d.ts",
+    "lib/plantuml.jar"
   ],
   "bin": {
     "tx2uml": "lib/tx2uml.js"
