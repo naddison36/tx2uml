@@ -47,7 +47,7 @@ const constructFilename = (filename: string, format: OutputFormat = "png") => {
     return `output.${format}`
   }
   const fileExtension = filename.slice(-4)
-  if (["puml", ...outputFormats].includes(fileExtension)) {
+  if (["puml", ".png", ".svg", ".eps"].includes(fileExtension)) {
     return filename
   }
 

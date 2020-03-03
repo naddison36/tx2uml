@@ -51,6 +51,16 @@ tx2uml 0x0a99314379caf3dcbbc6e1f5b0dda8a41e3a8b5a0d9b1c1ec744be1f1cf781ea -v -o 
 
 ![failed](./failedTx.png)
 
+## Crypto Kitties with paramaters
+
+The `--params` or `-p` option can be used to show the function call parameters and their values.
+
+```
+tx2uml 0x89a683d5eb5c894d2725a05b3a880aa228c9d2ef72d9cdbfe4bac5b8077db6c1 -v -p -o kitties
+```
+
+![Crypto Kitties](./kitties.png)
+
 ## Kyber
 
 [Kyber network](https://kyber.network/) transaction.
