@@ -12,6 +12,7 @@
     "test": "npx jest"
   },
   "author": "Nick Addison",
+  "repository": "github:naddison36/tx2uml",
   "license": "MIT",
   "files": [
     "lib/*.js",
