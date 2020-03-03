@@ -1,4 +1,4 @@
-import { createWriteStream, writeFile } from "fs"
+import { createWriteStream } from "fs"
 import VError from "verror"
 import { Readable } from "stream"
 import { outputFormats, streamPlantUml } from "./plantuml"
@@ -17,28 +17,26 @@ export const generateFile = async (
   options: OutputOptions = {}
 ) => {
   const filename = constructFilename(options.filename, options.format)
-  if (options.format === "puml") {
-    writeFile(filename, pumlStream, err => {
-      if (err) {
-        throw new VError(
-          err,
-          `Failed to write plant UML file to ${filename} in raw puml format.`
-        )
-      } else {
-        debug(`Plant UML file written to ${filename} in raw puml format`)
-      }
-    })
-  } else if (outputFormats.includes(options.format)) {
+  try {
     const outputStream = createWriteStream(filename)
-    await streamPlantUml(pumlStream, outputStream, {
-      format: options.format,
-      limitSize: 60000
-    })
-    debug(`Plant UML file written to ${filename} in ${options.format} format.`)
-  } else {
-    throw new Error(
-      `Output format ${options.format} is not supported. Only the following formats are supported: ${outputFormats}.`
-    )
+    if (options.format === "puml") {
+      pumlStream.pipe(outputStream)
+      debug(`Plant UML file written to ${filename} in raw puml format`)
+    } else if (outputFormats.includes(options.format)) {
+      await streamPlantUml(pumlStream, outputStream, {
+        format: options.format,
+        limitSize: 60000
+      })
+      debug(
+        `Plant UML file written to ${filename} in ${options.format} format.`
+      )
+    } else {
+      throw new Error(
+        `Output format ${options.format} is not supported. Only the following formats are supported: ${outputFormats}.`
+      )
+    }
+  } catch (err) {
+    throw new VError(err, `Failed to write to file ${filename}.`)
   }
 }
 
