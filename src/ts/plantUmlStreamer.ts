@@ -215,14 +215,15 @@ const genFunctionText = (message: Message, params: boolean = false): string => {
     return "create"
   }
   const payload = message.payload
-  if (payload.funcName) {
-    const funcName = payload.funcName || "fallback"
-    if (params) {
-      return `${funcName}(${genParams(payload.inputs)})`
-    }
-    return funcName
+  if (!payload.funcSelector) {
+    return params ? "fallback()" : "fallback"
   }
-  return `${payload.funcSelector}`
+  if (!payload.funcName) {
+    return `${payload.funcSelector}`
+  }
+  return params
+    ? `${payload.funcName}(${genParams(payload.inputs)})`
+    : payload.funcName
 }
 
 export const genParams = (params: Param[]): string => {

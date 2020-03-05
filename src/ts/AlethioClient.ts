@@ -10,7 +10,7 @@ import {
 import { ethereumAddress, transactionHash } from "./regEx"
 import { stringify } from "./utils"
 
-require('axios-debug-log')
+require("axios-debug-log")
 const debug = require("debug")("tx2uml")
 
 const alethioBaseUrls = {
