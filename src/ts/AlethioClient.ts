@@ -10,6 +10,7 @@ import {
 import { ethereumAddress, transactionHash } from "./regEx"
 import { stringify } from "./utils"
 
+require('axios-debug-log')
 const debug = require("debug")("tx2uml")
 
 const alethioBaseUrls = {
@@ -18,6 +19,7 @@ const alethioBaseUrls = {
   rinkeby: "https://api.rinkebyaleth.io/v1",
   kovan: "https://api.kovan.aleth.io/v1"
 }
+const AlethioPageSize = 100
 
 export const getTransactionDetails = async (
   txHash: string,
@@ -107,7 +109,11 @@ export const getContractMessages = async (
     if (apiKey) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${apiKey}`
     }
-    const response = await axios.get(url)
+    const response = await axios.get(url, {
+      params: {
+        "page[limit]": AlethioPageSize
+      }
+    })
 
     if (!Array.isArray(response?.data?.data)) {
       throw new Error(
@@ -181,7 +187,7 @@ const getContractMessagesRecursive = async (
     }
     const response = await axios.get(url, {
       params: {
-        "page[limit]": 100,
+        "page[limit]": AlethioPageSize,
         "page[next]": cursor
       }
     })

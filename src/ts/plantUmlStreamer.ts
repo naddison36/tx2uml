@@ -189,23 +189,23 @@ const genEndLifeline = (message: Message): string => {
 }
 
 const genArrow = (message: Message): string => {
-  const delegateColor = isNaN(message.delegatedCall?.id)
+  const arrowColor = isNaN(message.delegatedCall?.id)
     ? ""
     : `[${DelegateMessageColor}]`
   if (message.type === MessageType.Call) {
-    return `-${delegateColor}>`
+    return `-${arrowColor}>`
   }
   if (message.type === MessageType.Value) {
-    return `-${delegateColor}>>`
+    return `-${arrowColor}>>`
   }
   if (message.type === MessageType.Create) {
-    return `-${delegateColor}>o`
+    return `-${arrowColor}>o`
   }
   if (message.type === MessageType.Selfdestruct) {
-    return `-${delegateColor}\\`
+    return `-${arrowColor}\\`
   }
 
-  return `-${delegateColor}>`
+  return `-${arrowColor}>`
 }
 
 const genFunctionText = (message: Message, params: boolean = false): string => {

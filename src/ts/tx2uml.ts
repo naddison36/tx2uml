@@ -36,7 +36,7 @@ Generates a UML sequence diagram for a transaction's contract calls.`
   .parse(process.argv)
 
 if (program.verbose) {
-  debugControl.enable("tx2uml")
+  debugControl.enable("tx2uml,axios")
   debug(`Enabled tx2uml debug`)
 }
 
