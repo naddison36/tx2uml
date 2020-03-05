@@ -1,3 +1,4 @@
+import BigNumber from "bignumber.js";
 export declare enum MessageType {
     Value = 0,
     Call = 1,
@@ -8,7 +9,8 @@ export declare enum MessageType {
 export declare type Param = {
     name: string;
     type: string;
-    value: string;
+    value?: string;
+    components?: object[];
 };
 export declare type Payload = {
     funcName: string;
@@ -27,7 +29,7 @@ export declare type Message = {
     to: string;
     parentId?: number;
     delegatedCall?: DelegatedDetails;
-    value: bigint;
+    value: BigNumber;
     payload?: Payload;
     gasUsed: bigint;
     gasLimit: bigint;

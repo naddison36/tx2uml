@@ -51,6 +51,26 @@ tx2uml 0x0a99314379caf3dcbbc6e1f5b0dda8a41e3a8b5a0d9b1c1ec744be1f1cf781ea -v -o 
 
 ![failed](./failedTx.png)
 
+## Aragon MultiSig Wallet with Ether Values
+
+Transaction confirmation of the [Aragon MultiSig Wallet](https://etherscan.io/address/0xcafe1a77e84698c83ca8931f54a755176ef75f2c) which shows the transfer of 10000 Ether in the fallback calls.
+
+```
+tx2uml 0x44e34b97bccd7406f199ec18e61489baa6619e4093269e1df559735dd31b25bf -v -p -t -o ./examples/aragonMultiSig
+```
+
+![Aragon MultiSig Wallet](./aragonMultiSig.png)
+
+## Parity MultiSig Hack with an array parameter
+
+The first transaction in the Parity MultiSig hack has an array of addresses as the first parameter.
+
+```
+0x05f71e1b2cb4f03e547739db15d080fd30c989eda04d37ce6264c5686e0722c9 -v -p -o ./examples/parityMultiSig
+```
+
+![Parity MultiSig Hack](./parityMultiSig.png)
+
 ## Crypto Kitties with paramaters
 
 The `--params` or `-p` option can be used to show the function call parameters and their values.

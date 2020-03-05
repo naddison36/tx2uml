@@ -4,6 +4,7 @@ import {
   getTransactionDetails
 } from "./AlethioClient"
 import { getContract } from "./EtherscanClient"
+import BigNumber from "bignumber.js"
 
 const debug = require("debug")("tx2uml")
 
@@ -18,7 +19,8 @@ export enum MessageType {
 export type Param = {
   name: string
   type: string
-  value: string
+  value?: string
+  components?: object[]
 }
 
 export type Payload = {
@@ -40,7 +42,7 @@ export type Message = {
   to: string
   parentId?: number
   delegatedCall?: DelegatedDetails
-  value: bigint
+  value: BigNumber
   payload?: Payload
   gasUsed: bigint
   gasLimit: bigint

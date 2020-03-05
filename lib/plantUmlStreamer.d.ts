@@ -4,6 +4,7 @@ import { Readable } from "stream";
 export interface PumlGenerationOptions {
     gas?: boolean;
     params?: boolean;
+    ether?: boolean;
     network?: string;
 }
 export declare const streamPlantUml: (messages: Message[], contracts: Contracts, details: TransactionDetails, options?: PumlGenerationOptions) => Readable;
@@ -11,4 +12,4 @@ export declare const writeParticipants: (plantUmlStream: Readable, contracts: Co
 export declare const participantId: (address: string) => string;
 export declare const shortAddress: (address: string) => string;
 export declare const writeMessages: (plantUmlStream: Readable, messages: Message[], options?: PumlGenerationOptions) => void;
-export declare const genParams: (params: Param[]) => string;
+export declare const genParams: (params: Param[], plantUml?: string) => string;

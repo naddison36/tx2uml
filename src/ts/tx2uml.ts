@@ -32,6 +32,8 @@ Generates a UML sequence diagram for a transaction's contract calls.`
   .option("-a, --alethioApiKey <key>", "Alethio API Key")
   .option("-p, --params", "show function params and return values", false)
   .option("-g, --gas", "show gas usages", false)
+  // TODO change short of --ether to -e when Etherscan is removed
+  .option("-t, --ether", "show Ether value", false)
   .option("-v, --verbose", "run with debugging statements", false)
   .parse(process.argv)
 
@@ -56,9 +58,7 @@ const tx2uml = async () => {
   })
 
   const pumlStream = streamPlantUml(messages, contracts, details, {
-    params: program.params,
-    gas: program.gas,
-    network: program.network
+    ...program
   })
 
   await generateFile(pumlStream, {

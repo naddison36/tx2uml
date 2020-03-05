@@ -5,7 +5,6 @@ import {
   Param,
   TransactionDetails
 } from "./transaction"
-import BigNumber from "bignumber.js"
 import { Readable } from "stream"
 
 const debug = require("debug")("tx2uml")
@@ -13,6 +12,7 @@ const debug = require("debug")("tx2uml")
 export interface PumlGenerationOptions {
   gas?: boolean
   params?: boolean
+  ether?: boolean
   network?: string
 }
 
@@ -135,7 +135,7 @@ export const writeMessages = (
         )}: ${genFunctionText(message, options.params)}${genGasUsage(
           message,
           options.gas
-        )}\n`
+        )}${genEtherValue(message, options.ether)}\n`
       )
 
       if (message.type === MessageType.Delegatecall) {
@@ -147,14 +147,13 @@ export const writeMessages = (
         contractCallStack.push(message)
       }
     } else if (message.type === MessageType.Value) {
-      // convert wei to Ethers which is to 18 decimal places
-      const ethers = new BigNumber(message.value.toString()).div(
-        new BigNumber(10).pow(18)
-      )
       plantUmlStream.push(
         `${participantId(message.from)} ${genArrow(message)} ${participantId(
           message.to
-        )}: ${ethers.toFormat(2)} ETH${genGasUsage(message, options.gas)}\n`
+        )}: ${message.value.toString()} ETH${genGasUsage(
+          message,
+          options.gas
+        )}\n`
       )
       // we want to avoid a return in the next loop so setting previous message from field so no returns are printed
       if (previousMessage) {
@@ -226,17 +225,27 @@ const genFunctionText = (message: Message, params: boolean = false): string => {
     : payload.funcName
 }
 
-export const genParams = (params: Param[]): string => {
+export const genParams = (params: Param[], plantUml = ""): string => {
   if (!params) {
     return ""
   }
 
-  let plantUml = ""
   for (const param of params) {
+    if (param.name) {
+      plantUml += `${param.name}: `
+    }
     if (param.type === "address") {
-      plantUml += `${param.name}: ${shortAddress(param.value)}, `
+      plantUml += `${shortAddress(param.value)}, `
+    } else if (param.components) {
+      if (Array.isArray(param.components)) {
+        plantUml += `[`
+        plantUml = genParams(param.components as Param[], plantUml)
+        plantUml += `], `
+      } else {
+        debug(`Unsupported components type ${JSON.stringify(param.components)}`)
+      }
     } else {
-      plantUml += `${param.name}: ${param.value}, `
+      plantUml += `${param.value}, `
     }
   }
 
@@ -248,6 +257,16 @@ const genGasUsage = (message: Message, gasUsage: boolean = false): string => {
     return ""
   }
   return ` [${message.gasUsed}]`
+}
+
+const genEtherValue = (
+  message: Message,
+  etherValue: boolean = false
+): string => {
+  if (!etherValue) {
+    return ""
+  }
+  return ` {${message.value.toString()} ETH}`
 }
 
 const genCaption = (

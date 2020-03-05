@@ -9,6 +9,7 @@ import {
 } from "./transaction"
 import { ethereumAddress, transactionHash } from "./regEx"
 import { stringify } from "./utils"
+import BigNumber from "bignumber.js"
 
 require("axios-debug-log")
 const debug = require("debug")("tx2uml")
@@ -69,7 +70,7 @@ export const getTransactionDetails = async (
       type: convertType(attributes.msgType),
       from: relationships.from.data.id,
       to: relationships.to.data.id,
-      value: BigInt(attributes.value),
+      value: convertEthers(attributes.value),
       payload: attributes.msgPayload,
       gasUsed: BigInt(attributes.txGasUsed),
       gasLimit: BigInt(attributes.msgGasLimit),
@@ -132,7 +133,7 @@ export const getContractMessages = async (
         from: contractMessage.relationships.from.data.id,
         to: contractMessage.relationships.to.data.id,
         parentId: parentId ? parseInt(parentId) : parentId,
-        value: BigInt(contractMessage.attributes.value),
+        value: convertEthers(contractMessage.attributes.value),
         payload: contractMessage.attributes.msgPayload,
         gasUsed: BigInt(contractMessage.attributes.msgGasUsed),
         gasLimit: BigInt(contractMessage.attributes.msgGasLimit),
@@ -209,7 +210,7 @@ const getContractMessagesRecursive = async (
         from: contractMessage.relationships.from.data.id,
         to: contractMessage.relationships.to.data.id,
         parentId: parentId ? parseInt(parentId) : parentId,
-        value: BigInt(contractMessage.attributes.value),
+        value: convertEthers(contractMessage.attributes.value),
         payload: contractMessage.attributes.msgPayload,
         gasUsed: BigInt(contractMessage.attributes.msgGasUsed),
         gasLimit: BigInt(contractMessage.attributes.msgGasLimit),
@@ -302,6 +303,11 @@ const convertType = (msgType: string): MessageType => {
     type = MessageType.Selfdestruct
   }
   return type
+}
+
+// convert wei to Ethers which is to 18 decimal places
+const convertEthers = (value: string): BigNumber => {
+  return new BigNumber(value.toString()).div(new BigNumber(10).pow(18))
 }
 
 export const getToken = async (
