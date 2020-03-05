@@ -236,6 +236,8 @@ export const genParams = (params: Param[], plantUml = ""): string => {
     }
     if (param.type === "address") {
       plantUml += `${shortAddress(param.value)}, `
+    } else if (param.type.slice(0, 5) === "bytes") {
+      plantUml += `${param.type}, `
     } else if (param.components) {
       if (Array.isArray(param.components)) {
         plantUml += `[`
