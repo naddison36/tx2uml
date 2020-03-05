@@ -263,10 +263,10 @@ const genEtherValue = (
   message: Message,
   etherValue: boolean = false
 ): string => {
-  if (!etherValue) {
+  if (!etherValue || message.value.eq(0)) {
     return ""
   }
-  return ` {${message.value.toString()} ETH}`
+  return ` ${message.value.toString()} ETH`
 }
 
 const genCaption = (
