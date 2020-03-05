@@ -58,6 +58,7 @@ Options:
   -a, --alethioApiKey <key>     Alethio API Key
   -p, --params                  show function params and return values (default: false)
   -g, --gas                     show gas usages (default: false)
+  -t, --ether                   show Ether value (default: false)
   -v, --verbose                 run with debugging statements (default: false)
   -h, --help                    output usage information
 ```
