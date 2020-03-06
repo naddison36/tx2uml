@@ -54,11 +54,10 @@ Options:
   -f, --outputFormat <value>    output file format: png, svg or puml (default: "png")
   -o, --outputFileName <value>  output file name
   -n, --network <network>       mainnet, ropsten, kovan or rinkeby (default: "mainnet")
-  -e, --etherscanApiKey <key>   Etherscan API Key
   -a, --alethioApiKey <key>     Alethio API Key
   -p, --params                  show function params and return values (default: false)
   -g, --gas                     show gas usages (default: false)
-  -t, --ether                   show Ether value (default: false)
+  -e, --ether                   show Ether value (default: false)
   -v, --verbose                 run with debugging statements (default: false)
   -h, --help                    output usage information
 ```
@@ -98,10 +97,6 @@ In the sequence diagram, the lifeline of the delegated call will be in blue and 
 All the contract calls are sourced from [Alethio](https://aleth.io/). Specifically, the [Contract Messages API](https://docs.aleth.io/api#tag/Contracts/paths/~1contracts~1{address}~1contractMessages/get) which as already done the hard work of parsing the transaction trace to extract the contract call details.
 
 The Alethio API is free for volumes less than 10,000 calls a month. After that you'll need an API key from https://developers.aleth.io/. In order to trace large transactions, over a dozen Alethio calls can be made for one transaction as contract messages are limited to 100 messages per API call.
-
-## Etherscan
-
-The contract names are sourced from the verified contracts on [Etherscan](https://etherscan.io/), Specifically, the [get source code](https://etherscan.io/apis#contracts) API which includes the contract name if the contract has already been verified.
 
 ## PlantUML
 

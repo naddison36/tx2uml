@@ -86,7 +86,6 @@ export interface TransactionDetails {
 export type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan"
 
 export interface DataSourceOptions {
-  etherscanApiKey?: string
   alethioApiKey?: string
   network?: Networks
 }
@@ -119,11 +118,7 @@ export const getTransaction = async (
   const uniqueAddresses = new Set([firstMessage.from, ...contractAddresses])
   debug(`${uniqueAddresses.size} participants in the transaction`)
   for (const address of uniqueAddresses) {
-    contracts[address] = await getContract(
-      address,
-      options.etherscanApiKey,
-      network
-    )
+    contracts[address] = await getContract(address, undefined, network)
     const token = await getToken(address, options.alethioApiKey, network)
     if (token) {
       contracts[address].tokenName = token.name

@@ -28,12 +28,10 @@ Generates a UML sequence diagram for a transaction's contract calls.`
     "mainnet, ropsten, kovan or rinkeby",
     "mainnet"
   )
-  .option("-e, --etherscanApiKey <key>", "Etherscan API Key")
   .option("-a, --alethioApiKey <key>", "Alethio API Key")
   .option("-p, --params", "show function params and return values", false)
   .option("-g, --gas", "show gas usages", false)
-  // TODO change short of --ether to -e when Etherscan is removed
-  .option("-t, --ether", "show Ether value", false)
+  .option("-e, --ether", "show Ether value", false)
   .option("-v, --verbose", "run with debugging statements", false)
   .parse(process.argv)
 
@@ -53,7 +51,6 @@ const tx2uml = async () => {
 
   const [messages, contracts, details] = await getTransaction(txHash, {
     alethioApiKey: program.alethioApiKey,
-    etherscanApiKey: program.etherscanApiKey,
     network: program.network
   })
 

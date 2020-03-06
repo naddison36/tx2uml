@@ -69,7 +69,6 @@ export interface TransactionDetails {
 }
 export declare type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan";
 export interface DataSourceOptions {
-    etherscanApiKey?: string;
     alethioApiKey?: string;
     network?: Networks;
 }
