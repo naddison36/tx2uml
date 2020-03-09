@@ -3,7 +3,8 @@ import {
   Message,
   MessageType,
   Param,
-  TransactionDetails
+  TransactionDetails,
+  TransactionInfo
 } from "./transaction"
 import { Readable } from "stream"
 
@@ -20,18 +21,49 @@ const DelegateLifelineColor = "#809ECB"
 const DelegateMessageColor = "#3471CD"
 
 export const streamPlantUml = (
-  messages: Message[],
-  contracts: Contracts,
-  details: TransactionDetails,
+  transactions: TransactionInfo | TransactionInfo[],
   options: PumlGenerationOptions = {}
 ): Readable => {
   const pumlStream = new Readable({
     read() {}
   })
-  pumlStream.push(`@startuml\ntitle ${details.hash}\n`)
-  pumlStream.push(genCaption(details, options))
-  writeParticipants(pumlStream, contracts)
-  writeMessages(pumlStream, messages, options)
+  if (Array.isArray(transactions)) {
+    streamMultiTxsPlantUml(pumlStream, transactions, options)
+  } else {
+    streamSingleTxPlantUml(pumlStream, transactions, options)
+  }
+
+  return pumlStream
+}
+
+export const streamMultiTxsPlantUml = (
+  pumlStream: Readable,
+  transactions: TransactionInfo[],
+  options: PumlGenerationOptions = {}
+) => {
+  pumlStream.push(`@startuml\n`)
+  for (const transaction of transactions) {
+    pumlStream.push(`\ngroup ${transaction.details.hash}`)
+    writeParticipants(pumlStream, transaction.contracts)
+    writeMessages(pumlStream, transaction.messages, options)
+    pumlStream.push("end")
+  }
+
+  pumlStream.push("\n@endumls")
+  pumlStream.push(null)
+
+  return pumlStream
+}
+
+export const streamSingleTxPlantUml = (
+  pumlStream: Readable,
+  transaction: TransactionInfo,
+  options: PumlGenerationOptions = {}
+): Readable => {
+  pumlStream.push(`@startuml\ntitle ${transaction.details.hash}\n`)
+  pumlStream.push(genCaption(transaction.details, options))
+  writeParticipants(pumlStream, transaction.contracts)
+  writeMessages(pumlStream, transaction.messages, options)
 
   pumlStream.push("\n@endumls")
   pumlStream.push(null)

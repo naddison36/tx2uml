@@ -68,8 +68,14 @@ export interface TransactionDetails {
     error?: string;
 }
 export declare type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan";
+export declare type TransactionInfo = {
+    messages: Message[];
+    contracts: Contracts;
+    details: TransactionDetails;
+};
 export interface DataSourceOptions {
     alethioApiKey?: string;
     network?: Networks;
 }
-export declare const getTransaction: (txHash: string, options?: DataSourceOptions) => Promise<[Message[], Contracts, TransactionDetails]>;
+export declare const getTransactions: (txHashes: string | string[], options: DataSourceOptions) => Promise<TransactionInfo | TransactionInfo[]>;
+export declare const getTransaction: (txHash: string, options?: DataSourceOptions) => Promise<TransactionInfo>;

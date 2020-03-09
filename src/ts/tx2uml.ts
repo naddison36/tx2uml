@@ -1,9 +1,9 @@
 #! /usr/bin/env node
 
-import { getTransaction } from "./transaction"
+import { getTransaction, getTransactions, TransactionInfo } from "./transaction"
 import { streamPlantUml } from "./plantUmlStreamer"
-import { transactionHash } from "./regEx"
 import { generateFile } from "./fileGenerator"
+import { transactionHash } from "./regEx"
 
 const debugControl = require("debug")
 const debug = require("debug")("tx2uml")
@@ -41,26 +41,40 @@ if (program.verbose) {
 }
 
 const tx2uml = async () => {
-  if (!program.args[0]?.match(transactionHash)) {
-    console.error(
-      `Must pass a transaction hash in hexadecimal format with a 0x prefix`
-    )
-    process.exit(1)
-  }
-  const txHash = program.args[0]
-
-  const [messages, contracts, details] = await getTransaction(txHash, {
+  const options = {
     alethioApiKey: program.alethioApiKey,
     network: program.network
-  })
+  }
 
-  const pumlStream = streamPlantUml(messages, contracts, details, {
+  let transactions: TransactionInfo | TransactionInfo[]
+  if (program.args[0]?.match(transactionHash)) {
+    transactions = await getTransaction(program.args[0], options)
+  } else {
+    try {
+      const txHashes = program.args[0]?.split(",")
+      transactions = await getTransactions(txHashes, options)
+    } catch (err) {
+      console.error(
+        `Must pass a transaction hash or an array of hashes in hexadecimal format with a 0x prefix`
+      )
+      process.exit(1)
+    }
+  }
+
+  const pumlStream = streamPlantUml(transactions, {
     ...program
   })
 
+  let filename = program.outputFileName
+  if (!filename) {
+    filename = program.args[0]?.match(transactionHash)
+      ? program.args[0]
+      : "output"
+  }
+
   await generateFile(pumlStream, {
     format: program.outputFormat,
-    filename: program.outputFileName || txHash
+    filename
   })
 }
 

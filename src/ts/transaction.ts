@@ -5,6 +5,7 @@ import {
 } from "./AlethioClient"
 import { getContract } from "./EtherscanClient"
 import BigNumber from "bignumber.js"
+import { transactionHash } from "./regEx"
 
 const debug = require("debug")("tx2uml")
 
@@ -84,16 +85,45 @@ export interface TransactionDetails {
 }
 
 export type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan"
+export type TransactionInfo = {
+  messages: Message[]
+  contracts: Contracts
+  details: TransactionDetails
+}
 
 export interface DataSourceOptions {
   alethioApiKey?: string
   network?: Networks
 }
 
+export const getTransactions = async (
+  txHashes: string | string[],
+  options: DataSourceOptions
+): Promise<TransactionInfo | TransactionInfo[]> => {
+  if (Array.isArray(txHashes)) {
+    const transactions: TransactionInfo[] = []
+    for (const txHash of txHashes) {
+      if (!txHash?.match(transactionHash)) {
+        console.error(
+          `Array of transaction hashes must be in hexadecimal format with a 0x prefix`
+        )
+        process.exit(1)
+      }
+      transactions.push(await getTransaction(txHash, options))
+    }
+    return transactions
+  }
+  if (txHashes?.match(transactionHash)) {
+    return await getTransaction(txHashes, options)
+  }
+
+  throw new Error(`Failed to parse tx hash or array of transactions hashes`)
+}
+
 export const getTransaction = async (
   txHash: string,
   options: DataSourceOptions = {}
-): Promise<[Message[], Contracts, TransactionDetails]> => {
+): Promise<TransactionInfo> => {
   const network = options.network || "mainnet"
   const txDetailsPromise = getTransactionDetails(
     txHash,
@@ -126,5 +156,9 @@ export const getTransaction = async (
     }
   }
 
-  return [messages, contracts, details]
+  return {
+    messages,
+    contracts,
+    details
+  }
 }
