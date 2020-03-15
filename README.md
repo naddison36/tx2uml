@@ -46,9 +46,11 @@ Use the `-h` option to see the `tx2uml` CLI usage options
 
 ```
 $ tx2uml -h
-Usage: tx2uml <txHash> [options]
+Usage: tx2uml <transaction hash or comma separated list of hashes> [options]
 
-Generates a UML sequence diagram for a transaction's contract calls.
+Ethereum transaction visualizer that generates a UML sequence diagram from transaction contract calls.
+
+The transaction hashes have to be in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces. eg spaces or tags.
 
 Options:
   -f, --outputFormat <value>    output file format: png, svg or puml (default: "png")

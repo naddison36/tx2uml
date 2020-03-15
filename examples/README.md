@@ -61,15 +61,15 @@ tx2uml 0x44e34b97bccd7406f199ec18e61489baa6619e4093269e1df559735dd31b25bf -p -t 
 
 ![Aragon MultiSig Wallet](./aragonMultiSig.png)
 
-## Parity MultiSig Hack with an array parameter
+## 2nd Parity MultiSig Hack with an array parameters
 
-The first transaction in the Parity MultiSig hack has an array of addresses as the first parameter.
+A comma separated list of transaction hashes can be passes to draw multiple transaction on the same diagram. Here is the two transactions from the second [Parity Multisig Hack](https://medium.com/chain-cloud-company-blog/parity-multisig-hack-again-b46771eaa838).
 
 ```
-0x05f71e1b2cb4f03e547739db15d080fd30c989eda04d37ce6264c5686e0722c9 -p -o ./examples/parityMultiSig -v
+0x05f71e1b2cb4f03e547739db15d080fd30c989eda04d37ce6264c5686e0722c9,0x47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482f690 -p -o ./examples/parityMultiSig2 -v
 ```
 
-![Parity MultiSig Hack](./parityMultiSig.png)
+![Parity MultiSig Hack](./parityMultiSig2.png)
 
 ## Crypto Kitties with paramaters
 

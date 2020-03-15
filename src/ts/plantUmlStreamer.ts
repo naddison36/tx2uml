@@ -22,15 +22,16 @@ const DelegateMessageColor = "#3471CD"
 
 export const streamPlantUml = (
   transactions: TransactionInfo | TransactionInfo[],
+  contracts: Contracts,
   options: PumlGenerationOptions = {}
 ): Readable => {
   const pumlStream = new Readable({
     read() {}
   })
   if (Array.isArray(transactions)) {
-    streamMultiTxsPlantUml(pumlStream, transactions, options)
+    streamMultiTxsPlantUml(pumlStream, transactions, contracts, options)
   } else {
-    streamSingleTxPlantUml(pumlStream, transactions, options)
+    streamSingleTxPlantUml(pumlStream, transactions, contracts, options)
   }
 
   return pumlStream
@@ -39,12 +40,13 @@ export const streamPlantUml = (
 export const streamMultiTxsPlantUml = (
   pumlStream: Readable,
   transactions: TransactionInfo[],
+  contracts: Contracts,
   options: PumlGenerationOptions = {}
 ) => {
   pumlStream.push(`@startuml\n`)
   for (const transaction of transactions) {
     pumlStream.push(`\ngroup ${transaction.details.hash}`)
-    writeParticipants(pumlStream, transaction.contracts)
+    writeParticipants(pumlStream, contracts)
     writeMessages(pumlStream, transaction.messages, options)
     pumlStream.push("end")
   }
@@ -58,11 +60,12 @@ export const streamMultiTxsPlantUml = (
 export const streamSingleTxPlantUml = (
   pumlStream: Readable,
   transaction: TransactionInfo,
+  contracts: Contracts,
   options: PumlGenerationOptions = {}
 ): Readable => {
   pumlStream.push(`@startuml\ntitle ${transaction.details.hash}\n`)
   pumlStream.push(genCaption(transaction.details, options))
-  writeParticipants(pumlStream, transaction.contracts)
+  writeParticipants(pumlStream, contracts)
   writeMessages(pumlStream, transaction.messages, options)
 
   pumlStream.push("\n@endumls")

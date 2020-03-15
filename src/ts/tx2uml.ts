@@ -1,6 +1,11 @@
 #! /usr/bin/env node
 
-import { getTransaction, getTransactions, TransactionInfo } from "./transaction"
+import {
+  getContracts,
+  getTransaction,
+  getTransactions,
+  TransactionInfo
+} from "./transaction"
 import { streamPlantUml } from "./plantUmlStreamer"
 import { generateFile } from "./fileGenerator"
 import { transactionHash } from "./regEx"
@@ -12,10 +17,11 @@ const program = require("commander")
 program
   .arguments("<txHash>")
   .usage(
-    `<txHash> [options]
+    `<transaction hash or comma separated list of hashes> [options]
 
-Ethereum transaction visualizer.
-Generates a UML sequence diagram for a transaction's contract calls.`
+Ethereum transaction visualizer that generates a UML sequence diagram from transaction contract calls.
+
+The transaction hashes have to be in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces. eg spaces or tags.`
   )
   .option(
     "-f, --outputFormat <value>",
@@ -61,7 +67,9 @@ const tx2uml = async () => {
     }
   }
 
-  const pumlStream = streamPlantUml(transactions, {
+  const contracts = await getContracts(transactions, options)
+
+  const pumlStream = streamPlantUml(transactions, contracts, {
     ...program
   })
 

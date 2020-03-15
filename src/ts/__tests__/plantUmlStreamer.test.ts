@@ -1,6 +1,7 @@
 import { writeMessages, writeParticipants } from "../plantUmlStreamer"
 import { Contracts, Message, MessageType, Payload } from "../transaction"
 import { Readable } from "stream"
+import BigNumber from "bignumber.js"
 
 const baseMessage: Message = {
   id: 0,
@@ -8,7 +9,7 @@ const baseMessage: Message = {
   type: MessageType.Call,
   from: "0x00007F958D2ee523a2206206994597C13D831111",
   to: "0x11116FECD516Ecc3849DAf6845e3EC8680872222",
-  value: BigInt(0),
+  value: new BigNumber(0),
   gasUsed: BigInt(1),
   gasLimit: BigInt(2),
   callDepth: 0,
@@ -435,7 +436,7 @@ describe("Stream Plant UML", () => {
             ...basePayload
           },
           type: MessageType.Value,
-          value: BigInt(1100000000000000000)
+          value: new BigNumber(1.1)
         },
         {
           ...baseMessage,
@@ -454,7 +455,7 @@ describe("Stream Plant UML", () => {
       expect(plantUmlBuf.toString()).toEqual(
         "\n00001111 -> 11112222: first call\n" +
           "activate 11112222\n" +
-          "11112222 ->> 00001111: 1.10 ETH\n" +
+          "11112222 ->> 00001111: 1.1 ETH\n" +
           "11112222 -> 22223333: third call\n" +
           "activate 22223333\n" +
           "return\n" +

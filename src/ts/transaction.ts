@@ -87,7 +87,6 @@ export interface TransactionDetails {
 export type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan"
 export type TransactionInfo = {
   messages: Message[]
-  contracts: Contracts
   details: TransactionDetails
 }
 
@@ -141,12 +140,42 @@ export const getTransaction = async (
     messagesPromise
   ])
 
-  const messages: Message[] = [firstMessage, ...contractMessages]
+  return {
+    messages: [firstMessage, ...contractMessages],
+    details
+  }
+}
 
+export const getContracts = async (
+  transactions: TransactionInfo | TransactionInfo[],
+  options: DataSourceOptions
+): Promise<Contracts> => {
+  const participantAddresses: string[] = []
+  if (!Array.isArray(transactions)) {
+    participantAddresses.push(transactions.messages[0].from)
+    participantAddresses.push(
+      ...transactions.messages.map((m: Message) => m.to)
+    )
+  } else {
+    for (const transaction of Object.values(transactions)) {
+      participantAddresses.push(transaction.messages[0].from)
+      participantAddresses.push(
+        ...transaction.messages.map((m: Message) => m.to)
+      )
+    }
+  }
+
+  return await getContractsFromAddresses(participantAddresses, options)
+}
+
+const getContractsFromAddresses = async (
+  addresses: string[],
+  options: DataSourceOptions = {}
+): Promise<Contracts> => {
+  const network = options.network || "mainnet"
   const contracts: Contracts = {}
-  const contractAddresses = messages.map(m => m.to)
-  const uniqueAddresses = new Set([firstMessage.from, ...contractAddresses])
-  debug(`${uniqueAddresses.size} participants in the transaction`)
+  const uniqueAddresses = new Set(addresses)
+  debug(`${uniqueAddresses.size} participants in the transactions`)
   for (const address of uniqueAddresses) {
     contracts[address] = await getContract(address, undefined, network)
     const token = await getToken(address, options.alethioApiKey, network)
@@ -156,9 +185,5 @@ export const getTransaction = async (
     }
   }
 
-  return {
-    messages,
-    contracts,
-    details
-  }
+  return contracts
 }

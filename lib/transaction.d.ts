@@ -70,7 +70,6 @@ export interface TransactionDetails {
 export declare type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan";
 export declare type TransactionInfo = {
     messages: Message[];
-    contracts: Contracts;
     details: TransactionDetails;
 };
 export interface DataSourceOptions {
@@ -79,3 +78,4 @@ export interface DataSourceOptions {
 }
 export declare const getTransactions: (txHashes: string | string[], options: DataSourceOptions) => Promise<TransactionInfo | TransactionInfo[]>;
 export declare const getTransaction: (txHash: string, options?: DataSourceOptions) => Promise<TransactionInfo>;
+export declare const getContracts: (transactions: TransactionInfo | TransactionInfo[], options: DataSourceOptions) => Promise<Contracts>;

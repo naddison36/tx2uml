@@ -4,21 +4,19 @@ import {
   getTransactionDetails
 } from "../AlethioClient"
 import { getTransaction, MessageType } from "../transaction"
+import BigNumber from "bignumber.js"
 
 jest.setTimeout(60000) // timeout for each test in milliseconds
 
 describe("Alethio parser", () => {
   describe("1inch", () => {
     test("get transaction contract call", async () => {
-      const [messages, contracts, details] = await getTransaction(
+      const transactionInfo = await getTransaction(
         "0x34e4f8b86b5c3fe5a9e30e7cf75b242ed3e6e4eeea68cfaf3ca68ef1edb93ed1"
       )
-      expect(details.status).toEqual(true)
-      expect(
-        contracts["0x11111254369792b2ca5d084ab5eea397ca8fa48b"].contractName
-      ).toEqual("OneInchExchange")
-      expect(messages).toHaveLength(95)
-      expect(messages[0].gasLimit).toEqual(BigInt(996456))
+      expect(transactionInfo.details.status).toEqual(true)
+      expect(transactionInfo.messages).toHaveLength(95)
+      expect(transactionInfo.messages[0].gasLimit).toEqual(BigInt(996456))
     }, 100000)
     test("get success transaction", async () => {
       const [tx, firstMessage] = await getTransactionDetails(
@@ -37,7 +35,8 @@ describe("Alethio parser", () => {
         "0xbc979bfcd136884dc6c0d7243696f3443d6c9f9cc478c3189cb021968e3e31b2"
       )
       expect(messages).toHaveLength(29)
-      expect(messages[0].value).toEqual(BigInt(0))
+      expect(messages[0].type).toEqual(MessageType.Call)
+      expect(messages[0].value).toEqual(new BigNumber(0))
       expect(messages[0].gasLimit).toEqual(BigInt(466557))
       expect(messages[0].gasUsed).toEqual(BigInt(114411))
       expect(messages[7].type).toEqual(MessageType.Delegatecall)
@@ -46,8 +45,12 @@ describe("Alethio parser", () => {
       expect(messages[9].delegatedCall?.id).toEqual(1)
       expect(messages[10].delegatedCall?.id).toEqual(2)
       expect(messages[10].delegatedCall?.last).toBeTruthy()
-      // FIXME seems like an Alethio bug
-      expect(messages[9].type).toEqual(MessageType.Value)
+
+      expect(messages[9].type).toEqual(MessageType.Call)
+      expect(messages[9].payload.funcSelector).toEqual("")
+      expect(messages[9].payload.funcName).toEqual("")
+
+      expect(messages[14].type).toEqual(MessageType.Value)
     })
   })
 
