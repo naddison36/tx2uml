@@ -3,6 +3,7 @@ import {
   Message,
   MessageType,
   Param,
+  TokenTransfer,
   TransactionDetails,
   TransactionInfo
 } from "./transaction"
@@ -20,7 +21,26 @@ export interface PumlGenerationOptions {
 const DelegateLifelineColor = "#809ECB"
 const DelegateMessageColor = "#3471CD"
 
-export const streamPlantUml = (
+export const streamTransferPuml = (
+  txHash: string,
+  transfers: (Message | TokenTransfer)[],
+  contracts: Contracts,
+  options: PumlGenerationOptions = {}
+) => {
+  const pumlStream = new Readable({
+    read() {}
+  })
+  pumlStream.push(`@startuml\ntitle ${txHash}\n`)
+  writeParticipants(pumlStream, contracts)
+  writeTransfers(pumlStream, transfers, options)
+
+  pumlStream.push("\n@endumls")
+  pumlStream.push(null)
+
+  return pumlStream
+}
+
+export const streamTxPlantUml = (
   transactions: TransactionInfo | TransactionInfo[],
   contracts: Contracts,
   options: PumlGenerationOptions = {}
@@ -29,15 +49,15 @@ export const streamPlantUml = (
     read() {}
   })
   if (Array.isArray(transactions)) {
-    streamMultiTxsPlantUml(pumlStream, transactions, contracts, options)
+    streamMultiTxsPuml(pumlStream, transactions, contracts, options)
   } else {
-    streamSingleTxPlantUml(pumlStream, transactions, contracts, options)
+    streamSingleTxPuml(pumlStream, transactions, contracts, options)
   }
 
   return pumlStream
 }
 
-export const streamMultiTxsPlantUml = (
+export const streamMultiTxsPuml = (
   pumlStream: Readable,
   transactions: TransactionInfo[],
   contracts: Contracts,
@@ -57,7 +77,7 @@ export const streamMultiTxsPlantUml = (
   return pumlStream
 }
 
-export const streamSingleTxPlantUml = (
+export const streamSingleTxPuml = (
   pumlStream: Readable,
   transaction: TransactionInfo,
   contracts: Contracts,
@@ -312,4 +332,33 @@ const genCaption = (
 ): string => {
   return `caption ${options.network || ""} ${details.timestamp.toUTCString()} `
   // `gas price ${details.gasPrice}, limit ${details.gasLimit}`
+}
+
+export const writeTransfers = (
+  plantUmlStream: Readable,
+  transfers: (Message | TokenTransfer)[],
+  options: PumlGenerationOptions = {}
+) => {
+  if (!transfers?.length) {
+    return
+  }
+
+  plantUmlStream.push("\n")
+  for (const transfer of transfers) {
+    debug(
+      `id ${transfer.id}, from ${shortAddress(
+        transfer.from
+      )}, to ${shortAddress(transfer.to)}, value ${transfer.value.toString()}`
+    )
+
+    const valueUnit = (transfer as TokenTransfer).symbol
+      ? (transfer as TokenTransfer).symbol
+      : "ETH"
+
+    plantUmlStream.push(
+      `${participantId(transfer.from)} -> ${participantId(
+        transfer.to
+      )}: ${transfer.value.toString()} ${valueUnit}\n`
+    )
+  }
 }

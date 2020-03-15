@@ -56,6 +56,17 @@ export declare type Token = {
     decimals?: number;
     totalSupply?: bigint;
 };
+export declare type TokenTransfer = {
+    id: number;
+    symbol: string;
+    decimals: number;
+    from: string;
+    to: string;
+    type: MessageType | "TokenTransfer";
+    value: BigNumber;
+    gasUsed: bigint;
+    gasLimit: bigint;
+};
 export interface TransactionDetails {
     hash: string;
     nonce: number;
@@ -79,3 +90,4 @@ export interface DataSourceOptions {
 export declare const getTransactions: (txHashes: string | string[], options: DataSourceOptions) => Promise<TransactionInfo | TransactionInfo[]>;
 export declare const getTransaction: (txHash: string, options?: DataSourceOptions) => Promise<TransactionInfo>;
 export declare const getContracts: (transactions: TransactionInfo | TransactionInfo[], options: DataSourceOptions) => Promise<Contracts>;
+export declare const getContractsFromAddresses: (addresses: string[], options?: DataSourceOptions) => Promise<Contracts>;

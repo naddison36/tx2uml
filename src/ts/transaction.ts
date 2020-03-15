@@ -72,6 +72,18 @@ export type Token = {
   totalSupply?: bigint
 }
 
+export type TokenTransfer = {
+  id: number
+  symbol: string
+  decimals: number
+  from: string
+  to: string
+  type: MessageType | "TokenTransfer"
+  value: BigNumber
+  gasUsed: bigint
+  gasLimit: bigint
+}
+
 export interface TransactionDetails {
   hash: string
   nonce: number
@@ -168,7 +180,7 @@ export const getContracts = async (
   return await getContractsFromAddresses(participantAddresses, options)
 }
 
-const getContractsFromAddresses = async (
+export const getContractsFromAddresses = async (
   addresses: string[],
   options: DataSourceOptions = {}
 ): Promise<Contracts> => {

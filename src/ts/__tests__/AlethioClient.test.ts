@@ -1,7 +1,10 @@
 import {
   getContractMessages,
+  getEtherTransfers,
   getToken,
-  getTransactionDetails
+  getTokenTransfers,
+  getTransactionDetails,
+  getTransfers
 } from "../AlethioClient"
 import { getTransaction, MessageType } from "../transaction"
 import BigNumber from "bignumber.js"
@@ -52,6 +55,66 @@ describe("Alethio parser", () => {
 
       expect(messages[14].type).toEqual(MessageType.Value)
     })
+  })
+  test("get token transfers", async () => {
+    const transfers = await getTokenTransfers(
+      "0xe2e3ef2513c8e3da306cb427c03ae0114062fd09568bec559d5880c490ff743a"
+    )
+    expect(transfers).toHaveLength(4)
+    expect(transfers[0].id).toEqual(38)
+    expect(transfers[0].symbol).toEqual("WETH")
+    expect(transfers[0].from).toEqual(
+      "0x1e158c0e93c30d24e918ef83d1e0be23595c3c0f"
+    )
+    expect(transfers[0].to).toEqual(
+      "0xa57bd00134b2850b2a1c55860c9e9ea100fdd6cf"
+    )
+    expect(transfers[0].decimals).toEqual(18)
+    expect(transfers[0].value).toEqual(new BigNumber("12.713604029683001399"))
+    expect(transfers[0].gasLimit).toEqual(BigInt(1150000))
+    expect(transfers[0].gasUsed).toEqual(BigInt(542899))
+
+    expect(transfers[3].id).toEqual(42)
+    expect(transfers[3].symbol).toEqual("DAI")
+    expect(transfers[3].from).toEqual(
+      "0x65bf64ff5f51272f729bdcd7acfb00677ced86cd"
+    )
+    expect(transfers[3].to).toEqual(
+      "0x0f626f3ecffcf9cc97c0f2f8307d4501f15908a9"
+    )
+    expect(transfers[3].decimals).toEqual(18)
+    expect(transfers[3].value).toEqual(new BigNumber("3447.548131875179830942"))
+    expect(transfers[3].gasLimit).toEqual(BigInt(1150000))
+    expect(transfers[3].gasUsed).toEqual(BigInt(542899))
+  })
+  test("get ether transfers", async () => {
+    const transfers = await getEtherTransfers(
+      "0xe2e3ef2513c8e3da306cb427c03ae0114062fd09568bec559d5880c490ff743a"
+    )
+    expect(transfers).toHaveLength(3)
+    expect(transfers[0].id).toEqual(2)
+    expect(transfers[0].from).toEqual(
+      "0x818e6fecd516ecc3849daf6845e3ec868087b755"
+    )
+    expect(transfers[0].to).toEqual(
+      "0x65bf64ff5f51272f729bdcd7acfb00677ced86cd"
+    )
+    expect(transfers[0].value).toEqual(new BigNumber("12.7136040296830014"))
+  })
+
+  test("get transfers", async () => {
+    const transfers = await getTransfers(
+      "0xe2e3ef2513c8e3da306cb427c03ae0114062fd09568bec559d5880c490ff743a"
+    )
+    expect(transfers).toHaveLength(7)
+    expect(transfers[0].id).toEqual(2)
+    expect(transfers[0].from).toEqual(
+      "0x818e6fecd516ecc3849daf6845e3ec868087b755"
+    )
+    expect(transfers[0].to).toEqual(
+      "0x65bf64ff5f51272f729bdcd7acfb00677ced86cd"
+    )
+    expect(transfers[0].value).toEqual(new BigNumber("12.7136040296830014"))
   })
 
   describe("get transaction details from Alethio", () => {

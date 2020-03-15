@@ -5,6 +5,7 @@ import {
   MessageType,
   Networks,
   Token,
+  TokenTransfer,
   TransactionDetails
 } from "./transaction"
 import { ethereumAddress, transactionHash } from "./regEx"
@@ -70,7 +71,7 @@ export const getTransactionDetails = async (
       type: convertType(attributes.msgType),
       from: relationships.from.data.id,
       to: relationships.to.data.id,
-      value: convertEthers(attributes.value),
+      value: convertDecimal(attributes.value),
       payload: attributes.msgPayload,
       gasUsed: BigInt(attributes.txGasUsed),
       gasLimit: BigInt(attributes.msgGasLimit),
@@ -133,7 +134,7 @@ export const getContractMessages = async (
         from: contractMessage.relationships.from.data.id,
         to: contractMessage.relationships.to.data.id,
         parentId: parentId ? parseInt(parentId) : parentId,
-        value: convertEthers(contractMessage.attributes.value),
+        value: convertDecimal(contractMessage.attributes.value),
         payload: contractMessage.attributes.msgPayload,
         gasUsed: BigInt(contractMessage.attributes.msgGasUsed),
         gasLimit: BigInt(contractMessage.attributes.msgGasLimit),
@@ -210,7 +211,7 @@ const getContractMessagesRecursive = async (
         from: contractMessage.relationships.from.data.id,
         to: contractMessage.relationships.to.data.id,
         parentId: parentId ? parseInt(parentId) : parentId,
-        value: convertEthers(contractMessage.attributes.value),
+        value: convertDecimal(contractMessage.attributes.value),
         payload: contractMessage.attributes.msgPayload,
         gasUsed: BigInt(contractMessage.attributes.msgGasUsed),
         gasLimit: BigInt(contractMessage.attributes.msgGasLimit),
@@ -305,9 +306,10 @@ const convertType = (msgType: string): MessageType => {
   return type
 }
 
-// convert wei to Ethers which is to 18 decimal places
-const convertEthers = (value: string): BigNumber => {
-  return new BigNumber(value.toString()).div(new BigNumber(10).pow(18))
+// convert an integer value to a decimal value. eg wei to Ethers which is to 18 decimal places
+const convertDecimal = (value: string, decimals = 18): BigNumber => {
+  const valueBN = new BigNumber(value.toString())
+  return valueBN.div(new BigNumber(10).pow(decimals))
 }
 
 export const getToken = async (
@@ -359,4 +361,114 @@ export const getToken = async (
       `Failed to get token for address ${contractAddress} from Alethio using url ${url}`
     )
   }
+}
+
+export const getTokenTransfers = async (
+  txHash: string,
+  apiKey?: string,
+  network: Networks = "mainnet"
+): Promise<TokenTransfer[]> => {
+  if (!txHash?.match(transactionHash)) {
+    throw new TypeError(
+      `Transaction hash "${txHash}" must be 32 bytes in hexadecimal format with a 0x prefix`
+    )
+  }
+  const url = `${alethioBaseUrls[network]}/transactions/${txHash}/tokenTransfers`
+
+  const transfers: TokenTransfer[] = []
+  try {
+    if (apiKey) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${apiKey}`
+    }
+    const response = await axios.get(url, {
+      params: {
+        "page[limit]": AlethioPageSize
+      }
+    })
+
+    if (!Array.isArray(response?.data?.data)) {
+      throw new Error(
+        `no token transfers in Alethio response ${response?.data}`
+      )
+    }
+
+    for (const transfer of response.data.data) {
+      let id = 1
+      let type: MessageType | "TokenTransfer" = "TokenTransfer"
+      if (transfer.relationships.contractMessage.data?.id) {
+        const idString = transfer.relationships.contractMessage.data.id.split(
+          ":"
+        )[2]
+        id = parseInt(idString)
+        type = convertType(transfer.relationships.contractMessage.data.type)
+      } else if (transfer.attributes?.globalRank[2]) {
+        id = transfer.attributes.globalRank[2]
+      }
+
+      transfers.push({
+        id,
+        symbol: transfer.attributes.symbol,
+        decimals: transfer.attributes.decimals,
+        type,
+        from: transfer.relationships.from.data.id,
+        to: transfer.relationships.to.data.id,
+        value: convertDecimal(
+          transfer.attributes.value,
+          transfer.attributes.decimals
+        ),
+        gasUsed: BigInt(transfer.attributes.transactionGasUsed),
+        gasLimit: BigInt(transfer.attributes.transactionGasLimit)
+      })
+    }
+
+    debug(`Got ${transfers.length} transfers from Alethio`)
+
+    transfers.sort((a, b) => a.id - b.id)
+
+    return transfers
+  } catch (err) {
+    throw new VError(
+      err,
+      `Failed to get token transfers for transaction hash ${txHash} from Alethio at url ${url}`
+    )
+  }
+}
+
+export const getEtherTransfers = async (
+  txHash: string,
+  apiKey?: string,
+  network: Networks = "mainnet"
+): Promise<Message[]> => {
+  const contractMessages = await getContractMessages(txHash, apiKey, network)
+  const etherMessages = contractMessages.filter(message => {
+    return message.value?.gt(0)
+  })
+
+  debug(
+    `Got ${etherMessages.length} Ether transfers from ${contractMessages.length} contract messages`
+  )
+
+  const [, firstMessage] = await getTransactionDetails(txHash, apiKey, network)
+  if (firstMessage.value.gt(0)) {
+    etherMessages.push(firstMessage)
+    debug(`Transaction also transferred ${firstMessage.value.toString()} ether`)
+  }
+
+  return etherMessages
+}
+
+export const getTransfers = async (
+  txHash: string,
+  apiKey?: string,
+  network: Networks = "mainnet"
+): Promise<(Message | TokenTransfer)[]> => {
+  const etherTransfers = await getEtherTransfers(txHash, apiKey, network)
+  const tokenTransfers = await getTokenTransfers(txHash, apiKey, network)
+
+  const transfers = [...etherTransfers, ...tokenTransfers]
+  transfers.sort((a, b) => a.id - b.id)
+
+  debug(`Got ${transfers.length} ether and token transfers`)
+
+  return transfers
 }

@@ -1,6 +1,6 @@
 {
   "name": "tx2uml",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Ethereum transaction visualizer that generates UML a sequence diagram from transaction contract calls.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",

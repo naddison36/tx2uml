@@ -91,12 +91,22 @@ tx2uml 0x1744b7b718fe5cd553fa0b83b10df26f5fe249c7f8dccd3c23aa97030e1df70e -p -o 
 
 ![Moloch Rage Quit](./molochRageQuit.png)
 
+## 1inch transfers
+
+The `--transfers` or `-t` option can be used to only show the ether and token transfers.
+
+```
+tx2uml 0x4eee85cdd65b08aa641fb02cc08e8f6ba54209897073e2b73f374b86005f90d0 -t -o 1inchTransfers -v
+```
+
+![1inch Transfers](./1inchTransfers.png)
+
 ## Kyber
 
 [Kyber network](https://kyber.network/) transaction.
 
 ```
-tx2uml 0xe2e3ef2513c8e3da306cb427c03ae0114062fd09568bec559d5880c490ff743a -o kyber -v
+tx2uml 0xe2e3ef2513c8e3da306cb427c03ae0114062fd09568bec559d5880c490ff743a -g -e -o kyber -v
 ```
 
 ![Kyber](./kyber.png)
@@ -106,7 +116,7 @@ tx2uml 0xe2e3ef2513c8e3da306cb427c03ae0114062fd09568bec559d5880c490ff743a -o kyb
 The [1inch exchange](https://1inch.exchange/) aggregates the exchange of Ether and tokens across on-chain liquidity providers so does lots of calls to different contracts.
 
 ```
-tx2uml 0x34e4f8b86b5c3fe5a9e30e7cf75b242ed3e6e4eeea68cfaf3ca68ef1edb93ed1 -o 1inchSynth -v
+tx2uml 0x34e4f8b86b5c3fe5a9e30e7cf75b242ed3e6e4eeea68cfaf3ca68ef1edb93ed1 -g -o 1inchSynth -v
 ```
 
 ![1inch Synth](./1inchSynth.png)

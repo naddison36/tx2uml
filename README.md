@@ -60,6 +60,7 @@ Options:
   -p, --params                  show function params and return values (default: false)
   -g, --gas                     show gas usages (default: false)
   -e, --ether                   show Ether value (default: false)
+  -t, --transfers               only show ether and token transfers (default: false)
   -v, --verbose                 run with debugging statements (default: false)
   -h, --help                    output usage information
 ```
