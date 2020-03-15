@@ -81,6 +81,16 @@ tx2uml 0x89a683d5eb5c894d2725a05b3a880aa228c9d2ef72d9cdbfe4bac5b8077db6c1 -p -o 
 
 ![Crypto Kitties](./kitties.png)
 
+## Moloch DAO with parameters
+
+A rage quit from the [Moloch DAO](https://molochdao.com/) with the call parameters.
+
+```
+tx2uml 0x1744b7b718fe5cd553fa0b83b10df26f5fe249c7f8dccd3c23aa97030e1df70e -p -o molochRageQuit -v
+```
+
+![Moloch Rage Quit](./molochRageQuit.png)
+
 ## Kyber
 
 [Kyber network](https://kyber.network/) transaction.
