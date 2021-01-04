@@ -1,41 +1,43 @@
-import BigNumber from "bignumber.js";
+import { BigNumber, Contract as EthersContract } from "ethers";
+import OpenEthereumClient from "./OpenEthereumClient";
+import EtherscanClient from "./EtherscanClient";
 export declare enum MessageType {
-    Value = 0,
+    Unknown = 0,
     Call = 1,
     Create = 2,
     Selfdestruct = 3,
-    Delegatecall = 4
+    DelegateCall = 4,
+    StaticCall = 5
 }
 export declare type Param = {
     name: string;
     type: string;
     value?: string;
-    components?: object[];
+    components?: Param[];
 };
-export declare type Payload = {
-    funcName: string;
-    funcSelector: string;
-    inputs: Param[];
-    outputs: Param[];
-};
-export declare type DelegatedDetails = {
-    id: number;
-    last: boolean;
-};
-export declare type Message = {
+export declare type Trace = {
     id: number;
     type: MessageType;
     from: string;
+    delegatedFrom: string;
     to: string;
-    parentId?: number;
-    delegatedCall?: DelegatedDetails;
     value: BigNumber;
-    payload?: Payload;
-    gasUsed: bigint;
-    gasLimit: bigint;
-    callDepth: number;
-    status: boolean;
+    funcSelector?: string;
+    funcName?: string;
+    inputs?: string;
+    inputParams?: Param[];
+    outputs?: string;
+    outputParams?: Param[];
+    proxy?: boolean;
+    gasLimit: BigNumber;
+    gasUsed: BigNumber;
+    parentTrace?: Trace;
+    childTraces: Trace[];
     error?: string;
+    address?: string;
+    balance?: BigNumber;
+    refundAddress?: string;
+    constructorParams?: string;
 };
 export declare type Contract = {
     address: string;
@@ -43,6 +45,14 @@ export declare type Contract = {
     appName?: string;
     balance?: number;
     tokenName?: string;
+    symbol?: string;
+    decimals?: number;
+    proxyImplementation?: string;
+    ethersContract?: EthersContract;
+};
+export declare type TokenDetails = {
+    address: string;
+    name?: string;
     symbol?: string;
     decimals?: number;
 };
@@ -54,40 +64,32 @@ export declare type Token = {
     name: string;
     symbol: string;
     decimals?: number;
-    totalSupply?: bigint;
-};
-export declare type TokenTransfer = {
-    id: number;
-    symbol: string;
-    decimals: number;
-    from: string;
-    to: string;
-    type: MessageType | "TokenTransfer";
-    value: BigNumber;
-    gasUsed: bigint;
-    gasLimit: bigint;
+    totalSupply?: BigNumber;
 };
 export interface TransactionDetails {
     hash: string;
+    from: string;
+    to: string;
     nonce: number;
     index: number;
-    value: bigint;
-    gasPrice: bigint;
-    gasLimit: bigint;
+    value: BigNumber;
+    gasPrice: BigNumber;
+    gasLimit: BigNumber;
+    gasUsed: BigNumber;
     timestamp: Date;
     status: boolean;
-    error?: string;
 }
 export declare type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan";
-export declare type TransactionInfo = {
-    messages: Message[];
-    details: TransactionDetails;
-};
-export interface DataSourceOptions {
-    alethioApiKey?: string;
-    network?: Networks;
+export declare class TransactionManager {
+    readonly nodeClient: OpenEthereumClient;
+    readonly etherscanClient: EtherscanClient;
+    apiConcurrencyLimit: number;
+    constructor(nodeClient: OpenEthereumClient, etherscanClient: EtherscanClient, apiConcurrencyLimit?: number);
+    getTransactions(txHashes: string | string[]): Promise<TransactionDetails[]>;
+    getTransaction(txHash: string): Promise<TransactionDetails>;
+    getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;
+    getContracts(transactionsTraces: Trace[][]): Promise<Contracts>;
+    getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
+    setTokenAttributes(contracts: Contracts): Promise<Contracts>;
+    static parseTraceParams(traces: Trace[][], contracts: Contracts): void;
 }
-export declare const getTransactions: (txHashes: string | string[], options: DataSourceOptions) => Promise<TransactionInfo | TransactionInfo[]>;
-export declare const getTransaction: (txHash: string, options?: DataSourceOptions) => Promise<TransactionInfo>;
-export declare const getContracts: (transactions: TransactionInfo | TransactionInfo[], options: DataSourceOptions) => Promise<Contracts>;
-export declare const getContractsFromAddresses: (addresses: string[], options?: DataSourceOptions) => Promise<Contracts>;

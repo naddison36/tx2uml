@@ -8,11 +8,11 @@ jest.setTimeout(30000) // timeout for each test in milliseconds
 let outputPng: Writable
 
 describe("Test Plant UML", () => {
-  beforeEach(() => {
-    outputPng = createWriteStream("output.png")
-  })
-  test("No options", async () => {
-    const plantUmlStream = Readable.from(`
+    beforeEach(() => {
+        outputPng = createWriteStream("output.png")
+    })
+    test("No options", async () => {
+        const plantUmlStream = Readable.from(`
   @startuml
 
   participant "0x0000..1111" as 00001111
@@ -29,34 +29,34 @@ describe("Test Plant UML", () => {
   return
 
   @endumls`)
-    const exitCode = await streamPlantUml(plantUmlStream, outputPng)
-    expect(exitCode).toEqual(0)
-  })
+        const exitCode = await streamPlantUml(plantUmlStream, outputPng)
+        expect(exitCode).toEqual(0)
+    })
 
-  test("Invalid Plant UML", async () => {
-    const plantUmlStream = Readable.from("invalid")
-    expect.assertions(2)
-    try {
-      await streamPlantUml(plantUmlStream, outputPng)
-    } catch (err) {
-      expect(err).toBeInstanceOf(Error)
-      expect(VError.info(err).code).toEqual(200)
-    }
-  })
+    test("Invalid Plant UML", async () => {
+        const plantUmlStream = Readable.from("invalid")
+        expect.assertions(2)
+        try {
+            await streamPlantUml(plantUmlStream, outputPng)
+        } catch (err) {
+            expect(err).toBeInstanceOf(Error)
+            expect(VError.info(err).code).toEqual(200)
+        }
+    })
 
-  test("Syntax error", async () => {
-    const plantUmlStream = Readable.from(`
+    test("Syntax error", async () => {
+        const plantUmlStream = Readable.from(`
 @startuml
 XXXparticipant "0x0000..1111" as 00001111
 participant "0x1111..2222" as 11112222
 00001111 -> 11112222: first call
 @endumls`)
-    expect.assertions(2)
-    try {
-      await streamPlantUml(plantUmlStream, outputPng)
-    } catch (err) {
-      expect(err).toBeInstanceOf(Error)
-      expect(VError.info(err).code).toEqual(200)
-    }
-  })
+        expect.assertions(2)
+        try {
+            await streamPlantUml(plantUmlStream, outputPng)
+        } catch (err) {
+            expect(err).toBeInstanceOf(Error)
+            expect(VError.info(err).code).toEqual(200)
+        }
+    })
 })

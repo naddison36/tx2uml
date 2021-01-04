@@ -1,26 +1,31 @@
 @startuml
 
 participant "0x0000..1111" as 00001111
-participant "0x1111..2222" as 11112222 <<Token Name>>
-participant "0x2222..3333" as 22223333 <<Token Name>><<Contract Name>>
+participant "0x1111..2222" as 11112222 <<Proxy>>
+participant "0x2222..3333" as 22223333 <<Token Name (Symbol)>><<TokenImplementation>>
+participant "0x3333..4444" as 33334444 <<Pair>>
+participant "0x4444..5555" as 44445555 <<Gas Token>>
 
-00001111 -> 11112222: call [gas usage]
-note left: first contract call
+00001111 --> 11112222: firstCall()
+note left: proxy call through\nfallback function
 activate 11112222
-11112222 ->> 00001111: 1 ETH
+11112222 -> 22223333: firstCall()
+activate 22223333
+note right: externally called function
+return
+11112222 -> 00001111: fallback()\n1.23 ETH
+activate 00001111
 note left: value transfer
-11112222 ->o 22223333: create [gas usage]
+return
+11112222 ->o 33334444: create
 note right: create contract
-activate 22223333
+activate 33334444
 return
-11112222 -> 22223333: call [gas usage]
-note right: call a function on another contract
-activate 22223333
+11112222 -> 44445555: functionName()
+activate 44445555
+44445555 -\\ 44445555: Self-Destruct
+note left: Self-Destruct contract\nand return ETH
 return
-11112222 -> 22223333: call [gas usage]
-activate 22223333
-return selfdestruct
-note right: selfdestruct contract and return ETH
 return
 note left: last return of tx
 
