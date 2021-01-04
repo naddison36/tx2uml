@@ -1,58 +1,135 @@
 import axios from "axios"
+import { BigNumber, Contract as EthersContract } from "ethers"
 import { VError } from "verror"
-import { Contract, Networks } from "./transaction"
+
+import { Contract, Networks, Token } from "./transaction"
+import { ethereumAddress } from "./utils/regEx"
 
 const debug = require("debug")("tx2uml")
 
 const etherscanBaseUrls = {
-  mainnet: "https://api.etherscan.io/api",
-  ropsten: "https://api-ropsten.etherscan.io/api",
-  rinkeby: "https://api-rinkeby.etherscan.io/api",
-  kovan: "https://api-kovan.etherscan.io/api"
+    mainnet: "https://api.etherscan.io/api",
+    ropsten: "https://api-ropsten.etherscan.io/api",
+    rinkeby: "https://api-rinkeby.etherscan.io/api",
+    kovan: "https://api-kovan.etherscan.io/api",
 }
 
-export const getContract = async (
-  contractAddress: string,
-  // Register your API key at https://etherscan.io/myapikey
-  apiKey: string = "Q35WDQ2354617I8E2Z1E4WU3MIEP89DW9H",
-  network: Networks = "mainnet"
-): Promise<Contract> => {
-  try {
-    const response = await axios.get(etherscanBaseUrls[network], {
-      params: {
-        module: "contract",
-        action: "getsourcecode",
-        address: contractAddress,
-        apiKey: apiKey
-      }
-    })
+export default class EtherscanClient {
+    public readonly url: string
 
-    if (!Array.isArray(response?.data?.result)) {
-      throw new Error(
-        `Failed Etherscan API with result "${response?.data?.result}"`
-      )
+    constructor(
+        // Register your API key at https://etherscan.io/myapikey
+        public readonly apiKey: string = "Q35WDQ2354617I8E2Z1E4WU3MIEP89DW9H",
+        public readonly network: Networks = "mainnet"
+    ) {
+        this.url = etherscanBaseUrls[this.network]
     }
 
-    if (response.data.result[0].ABI === "Contract source code not verified") {
-      debug(`Contract ${contractAddress} is not verified on Etherscan`)
-      return {
-        address: contractAddress,
-        contractName: null
-      }
+    async getContract(contractAddress: string): Promise<Contract> {
+        try {
+            const response = await axios.get(this.url, {
+                params: {
+                    module: "contract",
+                    action: "getsourcecode",
+                    address: contractAddress,
+                    apiKey: this.apiKey,
+                },
+            })
+
+            if (!Array.isArray(response?.data?.result)) {
+                throw new Error(
+                    `Failed Etherscan API with result "${response?.data?.result}"`
+                )
+            }
+
+            if (
+                response.data.result[0].ABI ===
+                "Contract source code not verified"
+            ) {
+                debug(
+                    `Contract ${contractAddress} is not verified on Etherscan`
+                )
+                return {
+                    address: contractAddress,
+                    contractName: null,
+                }
+            }
+
+            debug(
+                `Got contract name ${response.data.result[0].ContractName} for address ${contractAddress} from Etherscan`
+            )
+
+            const ethersContract = new EthersContract(
+                contractAddress,
+                response.data.result[0].ABI
+            )
+            return {
+                address: contractAddress,
+                contractName: response.data.result[0].ContractName,
+                ethersContract,
+            }
+        } catch (err) {
+            throw new VError(
+                err,
+                `Failed to get contract details for contract ${contractAddress} from Etherscan using url ${this.url}`
+            )
+        }
     }
 
-    debug(
-      `Got contract name ${response.data.result[0].ContractName} for address ${contractAddress} from Etherscan`
-    )
+    // This only works with an Etherscan Pro account
+    async getToken(contractAddress: string): Promise<Token | null> {
+        if (!contractAddress?.match(ethereumAddress)) {
+            throw new TypeError(
+                `Contract address "${contractAddress}" must be 20 bytes in hexadecimal format with a 0x prefix`
+            )
+        }
 
-    return {
-      address: contractAddress,
-      contractName: response.data.result[0].ContractName
+        try {
+            const response = await axios.get(this.url, {
+                params: {
+                    module: "token",
+                    action: "tokeninfo",
+                    contractaddress: contractAddress,
+                    apiKey: this.apiKey,
+                },
+            })
+            if (response?.data?.status === "0") {
+                throw new Error(response?.data?.result)
+            }
+            if (!response?.data?.result) {
+                throw new Error(
+                    `no token attributes in Etherscan response: ${response?.data}`
+                )
+            }
+
+            const attributes = response.data.result[0]
+
+            const token: Token = {
+                address: contractAddress,
+                name: attributes.name,
+                symbol: attributes.symbol,
+                decimals: attributes.decimals,
+                totalSupply: BigNumber.from(attributes.totalSupply),
+            }
+
+            debug(
+                `Got token from Etherscan for address ${contractAddress}:\n${JSON.stringify(
+                    token
+                )}`
+            )
+
+            return token
+        } catch (err) {
+            if (err?.response?.status === 404) {
+                debug(
+                    `Could not find token details for contract ${contractAddress} from Etherscan`
+                )
+                return null
+            }
+            throw new VError(
+                err,
+                `Failed to get token for address ${contractAddress} from Etherscan using url ${this.url}`
+            )
+        }
     }
-  } catch (err) {
-    throw new VError(
-      err,
-      `Failed to get contract details for contract ${contractAddress} from Etherscan using url ${etherscanBaseUrls[network]}`
-    )
-  }
 }

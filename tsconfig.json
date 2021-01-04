@@ -3,7 +3,7 @@
     "composite": true,
     "esModuleInterop": true,
     "lib": [
-      "es2015",
+      "es2019",
       "es5",
       "es6",
       "dom",
@@ -27,7 +27,7 @@
     "outDir": "lib",
     "rootDir": "./src/ts"
   },
-  "include": ["src/ts/*"],
+  "include": ["src/ts"],
   "exclude": [
     "**/lib/*"
   ]

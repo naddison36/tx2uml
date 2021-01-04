@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Readable, Writable } from "stream";
 export declare const outputFormats: readonly ["png", "svg", "eps"];
 export declare type OutputFormat = typeof outputFormats[number];

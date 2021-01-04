@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Readable } from "stream";
 declare type OutputFormat = "png" | "svg" | "eps" | "puml";
 interface OutputOptions {

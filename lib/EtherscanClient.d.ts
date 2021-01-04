@@ -1,2 +1,9 @@
-import { Contract, Networks } from "./transaction";
-export declare const getContract: (contractAddress: string, apiKey?: string, network?: Networks) => Promise<Contract>;
+import { Contract, Networks, Token } from "./transaction";
+export default class EtherscanClient {
+    readonly apiKey: string;
+    readonly network: Networks;
+    readonly url: string;
+    constructor(apiKey?: string, network?: Networks);
+    getContract(contractAddress: string): Promise<Contract>;
+    getToken(contractAddress: string): Promise<Token | null>;
+}
