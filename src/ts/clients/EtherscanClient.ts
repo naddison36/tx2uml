@@ -2,8 +2,8 @@ import axios from "axios"
 import { BigNumber, Contract as EthersContract } from "ethers"
 import { VError } from "verror"
 
-import { Contract, Networks, Token } from "./transaction"
-import { ethereumAddress } from "./utils/regEx"
+import { Contract, Networks, Token } from "../transaction"
+import { ethereumAddress } from "../utils/regEx"
 
 const debug = require("debug")("tx2uml")
 

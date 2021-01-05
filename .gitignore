@@ -1,7 +1,7 @@
 node_modules
 .idea
 .vscode
-lib/__tests__
+lib/**/__tests__
 lib/*.map
 logs
 *.logs
