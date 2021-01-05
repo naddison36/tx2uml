@@ -4,9 +4,10 @@ import { FunctionFragment } from "ethers/lib/utils"
 import VError from "verror"
 
 import { transactionHash } from "./utils/regEx"
-import OpenEthereumClient from "./OpenEthereumClient"
-import EtherscanClient from "./EtherscanClient"
+import EtherscanClient from "./clients/EtherscanClient"
 import pLimit from "p-limit"
+import EthereumNodeClient from "./clients/EthereumNodeClient"
+import { ITracingClient } from "./clients"
 
 const debug = require("debug")("tx2uml")
 
@@ -46,12 +47,6 @@ export type Trace = {
     parentTrace?: Trace
     childTraces: Trace[]
     error?: string
-    // uesd with selfdestruct calls
-    address?: string
-    balance?: BigNumber
-    refundAddress?: string
-    // used with create contract calls
-    constructorParams?: string
 }
 
 export type Contract = {
@@ -108,8 +103,9 @@ export type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan"
 
 export class TransactionManager {
     constructor(
-        public readonly nodeClient: OpenEthereumClient,
+        public readonly tracingClient: ITracingClient,
         public readonly etherscanClient: EtherscanClient,
+        public readonly ethereumNodeClient: EthereumNodeClient,
         // 3 works for smaller contracts but Etherscan will rate limit on larger contracts when set to 3
         public apiConcurrencyLimit = 2
     ) {}
@@ -132,14 +128,14 @@ export class TransactionManager {
     }
 
     async getTransaction(txHash: string): Promise<TransactionDetails> {
-        return await this.nodeClient.getTransactionDetails(txHash)
+        return await this.ethereumNodeClient.getTransactionDetails(txHash)
     }
 
     async getTraces(transactions: TransactionDetails[]): Promise<Trace[][]> {
         const transactionsTraces: Trace[][] = []
         for (const transaction of transactions) {
             transactionsTraces.push(
-                await this.nodeClient.getTransactionTrace(transaction.hash)
+                await this.tracingClient.getTransactionTrace(transaction.hash)
             )
         }
         return transactionsTraces
@@ -192,11 +188,13 @@ export class TransactionManager {
                 contract.ethersContract?.interface?.functions["symbol()"] &&
                 contract.ethersContract?.interface?.functions["name()"]
             ) {
-                return this.nodeClient.getTokenDetailsKnownABI(
+                return this.ethereumNodeClient.getTokenDetailsKnownABI(
                     contract.ethersContract
                 )
             }
-            return this.nodeClient.getTokenDetailsUnknownABI(contract.address)
+            return this.ethereumNodeClient.getTokenDetailsUnknownABI(
+                contract.address
+            )
         })
         const tokensDetails = await Promise.all(tokensDetailsPromises)
 
@@ -304,7 +302,7 @@ const addOutputParamsToTrace = (
     txDescription: TransactionDescription
 ): void => {
     // Undefined outputs can happen with failed transactions
-    if (!trace.outputs || trace.outputs === "0x") return
+    if (!trace.outputs || trace.outputs === "0x" || trace.error) return
 
     const functionFragments = txDescription.functionFragment.outputs
     const outputParams = defaultAbiCoder.decode(

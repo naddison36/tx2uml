@@ -1,6 +1,7 @@
-import { Contract as EthersContract, providers } from "ethers";
+import { providers } from "ethers";
 import { Provider } from "ethers-multicall";
-import { TokenDetails, Trace, TransactionDetails } from "./transaction";
+import { Trace } from "../transaction";
+import { ITracingClient } from "./index";
 export declare type TraceResponse = {
     type: "call" | "suicide" | "create";
     action: {
@@ -27,16 +28,12 @@ export declare type TraceResponse = {
     traceAddress: number[];
     error?: string;
 };
-export default class OpenEthereumClient {
+export default class OpenEthereumClient implements ITracingClient {
     readonly url: string;
     readonly network: string;
     readonly ethersProvider: providers.JsonRpcProvider;
     readonly multicallProvider: Provider;
     private jsonRpcId;
     constructor(url?: string, network?: string);
-    getTransactionDetails(txHash: string): Promise<TransactionDetails>;
-    getTokenDetailsKnownABI(contract: EthersContract): Promise<TokenDetails>;
-    getTokenDetailsUnknownABI(address: string): Promise<TokenDetails>;
-    private _getTokenDetails;
     getTransactionTrace(txHash: string): Promise<Trace[]>;
 }

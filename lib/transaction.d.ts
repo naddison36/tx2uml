@@ -1,6 +1,7 @@
 import { BigNumber, Contract as EthersContract } from "ethers";
-import OpenEthereumClient from "./OpenEthereumClient";
-import EtherscanClient from "./EtherscanClient";
+import EtherscanClient from "./clients/EtherscanClient";
+import EthereumNodeClient from "./clients/EthereumNodeClient";
+import { ITracingClient } from "./clients";
 export declare enum MessageType {
     Unknown = 0,
     Call = 1,
@@ -34,10 +35,6 @@ export declare type Trace = {
     parentTrace?: Trace;
     childTraces: Trace[];
     error?: string;
-    address?: string;
-    balance?: BigNumber;
-    refundAddress?: string;
-    constructorParams?: string;
 };
 export declare type Contract = {
     address: string;
@@ -81,10 +78,11 @@ export interface TransactionDetails {
 }
 export declare type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan";
 export declare class TransactionManager {
-    readonly nodeClient: OpenEthereumClient;
+    readonly tracingClient: ITracingClient;
     readonly etherscanClient: EtherscanClient;
+    readonly ethereumNodeClient: EthereumNodeClient;
     apiConcurrencyLimit: number;
-    constructor(nodeClient: OpenEthereumClient, etherscanClient: EtherscanClient, apiConcurrencyLimit?: number);
+    constructor(tracingClient: ITracingClient, etherscanClient: EtherscanClient, ethereumNodeClient: EthereumNodeClient, apiConcurrencyLimit?: number);
     getTransactions(txHashes: string | string[]): Promise<TransactionDetails[]>;
     getTransaction(txHash: string): Promise<TransactionDetails>;
     getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;

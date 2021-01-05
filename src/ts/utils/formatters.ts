@@ -1,4 +1,5 @@
-import { ethereumAddress } from "./regEx"
+import { bytes, ethereumAddress } from "./regEx"
+import { parseBytes32String } from "ethers/lib/utils"
 
 export const participantId = (address: string): string => {
     if (!address) return ""
@@ -47,4 +48,9 @@ export const formatNumber = (value: string): string => {
         )
     }
     return thousandsCommas
+}
+
+export const convertBytes32ToString = (output: string) => {
+    if (!output || typeof output !== "string") return undefined
+    return output.match(bytes) ? parseBytes32String(output) : output
 }

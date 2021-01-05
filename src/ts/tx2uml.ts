@@ -5,8 +5,11 @@ import { TransactionDetails, TransactionManager } from "./transaction"
 import { streamTxPlantUml } from "./plantUmlStreamer"
 import { generateFile } from "./fileGenerator"
 import { transactionHash } from "./utils/regEx"
-import OpenEthereumClient from "./OpenEthereumClient"
-import EtherscanClient from "./EtherscanClient"
+import OpenEthereumClient from "./clients/OpenEthereumClient"
+import EtherscanClient from "./clients/EtherscanClient"
+import EthereumNodeClient from "./clients/EthereumNodeClient"
+import GethClient from "./clients/GethClient"
+import { ITracingClient } from "./clients"
 
 const debugControl = require("debug")
 const debug = require("debug")("tx2uml")
@@ -34,15 +37,20 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
         "-u, --url <url>",
         "URL of the archive node with trace transaction support. Can also be set with the ARCHIVE_NODE_ENV environment variable. (default: http://localhost:8545)"
     )
-    .option("-p, --noParams", "Hide function params and return values", false)
-    .option("-g, --noGas", "Hide gas usages", false)
-    .option("-e, --noEther", "Hide ether values", false)
+    .option(
+        "-n, --nodeType <value>",
+        "geth (GoEthereum), tgeth (Turbo-Geth), openeth (OpenEthereum, previously Parity), nether (Nethermind), besu (Hyperledger Besu).",
+        "geth"
+    )
+    .option("-p, --noParams", "Hide function params and return values.", false)
+    .option("-g, --noGas", "Hide gas usages.", false)
+    .option("-e, --noEther", "Hide ether values.", false)
     .option(
         "-t, --noTxDetails",
-        "Hide transaction details like nonce, gas and tx fee",
+        "Hide transaction details like nonce, gas and tx fee.",
         false
     )
-    .option("-v, --verbose", "run with debugging statements", false)
+    .option("-v, --verbose", "run with debugging statements.", false)
     .parse(process.argv)
 
 if (program.verbose) {
@@ -50,13 +58,41 @@ if (program.verbose) {
     debug(`Enabled tx2uml debug`)
 }
 
+const nodeTypes = ["geth", "tgeth", "openeth", "nether", "besu"] as const
+type NodeType = typeof nodeTypes[number]
+
 const tx2uml = async () => {
     const url =
         program.url || process.env.ARCHIVE_NODE_URL || "http://localhost:8545"
+    const nodeType: NodeType =
+        program.nodeType || process.env.ARCHIVE_NODE_TYPE || "geth"
+    if (!nodeTypes.includes(nodeType)) {
+        throw new Error(
+            `Invalid node type "${nodeType}" set by the ARCHIVE_NODE_TYPE env var or --nodeType option. Must be one of: ${nodeTypes}`
+        )
+    }
 
-    const nodeClient = new OpenEthereumClient(url)
+    const tracingClient = ((): ITracingClient => {
+        switch (nodeType) {
+            case "openeth":
+                return new OpenEthereumClient(url)
+            case "nether":
+                return new OpenEthereumClient(url)
+            case "besu":
+                throw Error(
+                    "Hyperledger Besu nodes are not currently supported"
+                )
+            default:
+                return new GethClient(url)
+        }
+    })()
+    const ethersClient = new EthereumNodeClient(url)
     const etherscanClient = new EtherscanClient()
-    const txManager = new TransactionManager(nodeClient, etherscanClient)
+    const txManager = new TransactionManager(
+        tracingClient,
+        etherscanClient,
+        ethersClient
+    )
 
     let pumlStream: Readable
     let transactions: TransactionDetails[] = []

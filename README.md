@@ -56,6 +56,7 @@ Options:
   -f, --outputFormat <value>    output file format: png, svg or puml (default: "png")
   -o, --outputFileName <value>  output file name. Defaults to the transaction hash.
   -u, --url <url>               URL of the archive node with trace transaction support. Can also be set with the ARCHIVE_NODE_ENV environment variable. (default: http://localhost:8545)
+  -n, --nodeType <value>        geth (GoEthereum), tgeth (Turbo-Geth), openeth (OpenEthereum, previously Parity), nether (Nethermind), besu (Hyperledger Besu). (default: "geth")
   -p, --noParams                Hide function params and return values (default: false)
   -g, --noGas                   Hide gas usages (default: false)
   -e, --noEther                 Hide ether values (default: false)
@@ -99,23 +100,52 @@ In the sequence diagram, the lifeline of the delegated call will be in blue and 
 
 ## Archive node that supports tracing transactions
 
-`tx2uml` needs an Ethereum archive node that supports the [trace_replayTransaction](https://openethereum.github.io/JSONRPC-trace-module#trace_replaytransaction) JSON RPC API.
-Known Ethereum node clients that support this are:
+`tx2uml` needs an Ethereum archive node that supports the [debug_traceTransaction](https://geth.ethereum.org/docs/rpc/ns-debug#debug_tracetransaction) or [trace_replayTransaction](https://openethereum.github.io/JSONRPC-trace-module#trace_replaytransaction) JSON RPC APIs.
+
+Known Ethereum node clients that support `debug_traceTransaction` are:
+* [Go-Ethereum (Geth)](https://github.com/ethereum/go-ethereum)
+* [Turbo-Geth](https://github.com/ledgerwatch/turbo-geth)
+
+`tx2uml` will use `--nodeType geth` as it's default option.
+
+You can test if your node supports `debug_traceTransaction` with the following `curl` command
+
+```bash
+curl --location --request POST 'https://your.node.url/yourApiKey' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc":"2.0",
+    "method":"debug_traceTransaction",
+    "params":["0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca", {"tracer": "callTracer"}],
+    "id":1
+}'
+```
+
+Known Ethereum node clients that support `trace_replayTransaction` are:
 * [OpenEthereum](https://github.com/openethereum/openethereum)
 * [Nethermind](https://nethermind.io/client)
+* [Hyperledger Besu](https://www.hyperledger.org/use/besu) supports tracing with method is [trace_transaction](https://besu.hyperledger.org/en/stable/Reference/API-Methods/#trace_transaction) which has the same response.
 
-The [Go-Ethereum (Geth)](https://github.com/ethereum/go-ethereum) node does not support tracing transactions. It only supports debugging with the [debug_tracetransaction](https://geth.ethereum.org/docs/rpc/ns-debug#debug_tracetransaction) API.
-[Turbo-Geth](https://github.com/ledgerwatch/turbo-geth) is a fork of Geth and also does not support tracing.
+You can test if your node supports `trace_replayTransaction` with the following `curl` command
 
-[Hyperledger Besu](https://www.hyperledger.org/use/besu) supports tracing transactions but it's JSON RPC API is slightly different to Nethermind and OpenEthereum. It's method is [trace_transaction](https://besu.hyperledger.org/en/stable/Reference/API-Methods/#trace_transaction) and not `trace_replayTransaction`.
+```bash
+curl --location --request POST 'https://your.node.url/yourApiKey' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc":"2.0",
+    "method":"trace_replayTransaction",
+    "params":["0xb2b0e7b286e83255928f81713ff416e6b8d0854706366b6a9ace46a88095f024", ["trace"]],
+    "id":1
+}'
+```
 
 ### Ethereum API providers
 
-Most Ethereum API providers do not provide tracing and debugging APIs as they are resource intensive on the server side.
+Most Ethereum API providers do not provide tracing or debugging APIs as they are resource intensive on the server side.
 
 * [ArchiveNode.io](https://archivenode.io/) brings archive data on the Ethereum blockchain to small time developers who otherwise couldn't afford it. They offer both Nethermind and Turbo-Geth archive nodes. If you want to use one specifically, you can add either /nethermind or /turbogeth to the end of your endpoint.
 
-[Infura](https://infura.io/) does not support tracing transactions.
+[Infura](https://infura.io/) does not support tracing or debugging transactions.
 
 [Alchemy](https://alchemyapi.io/) does support tracing transactions on their paid [Growth plan](https://alchemyapi.io/pricing) but it was not reliable at the time of development.
 
@@ -165,6 +195,7 @@ Good online resources for learning UML
 -   [EthTx info](http://ethtx.info/)
 -   [Bloxy](https://bloxy.info/)
 -   [Etherscan](https://etherscan.io/txs)
+-   [tokenflow](https://tokenflow.xyz/)
 
 ## Development
 

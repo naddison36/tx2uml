@@ -1,4 +1,4 @@
-import { Contract, Networks, Token } from "./transaction";
+import { Contract, Networks, Token } from "../transaction";
 export default class EtherscanClient {
     readonly apiKey: string;
     readonly network: Networks;

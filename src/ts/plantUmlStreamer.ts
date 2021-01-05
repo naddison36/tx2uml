@@ -28,6 +28,7 @@ export interface PumlGenerationOptions {
 
 const DelegateLifelineColor = "#809ECB"
 const DelegateMessageColor = "#3471CD"
+const FailureFillColor = "#FFAAAA"
 
 export const streamTxPlantUml = (
     transactions: TransactionDetails[],
@@ -184,7 +185,7 @@ export const writeMessages = (
             plantUmlStream.push(
                 `${participantId(trace.from)} ${genArrow(
                     trace
-                )} ${participantId(trace.to)}: Self-Destruct\n`
+                )} ${participantId(trace.from)}: Self-Destruct\n`
             )
             // TODO add ETH value transfer to refund address if there was a contract balance
         } else {
@@ -243,7 +244,9 @@ const genEndLifeline = (
     } else {
         // a failed transaction so end the lifeline
         plantUml += `destroy ${participantId(trace.to)}\nreturn\n`
-        plantUml += `note right of ${participantId(trace.to)}: ${trace.error}\n`
+        plantUml += `note right of ${participantId(
+            trace.to
+        )} ${FailureFillColor}: ${trace.error}\n`
     }
     return plantUml
 }
