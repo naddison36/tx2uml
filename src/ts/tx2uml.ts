@@ -39,7 +39,7 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
     )
     .option(
         "-n, --nodeType <value>",
-        "geth (GoEthereum), tgeth (Turbo-Geth), openeth (OpenEthereum, previously Parity), nether (Nethermind), besu (Hyperledger Besu).",
+        "geth (GoEthereum), tgeth (Turbo-Geth), openeth (OpenEthereum, previously Parity), nether (Nethermind), besu (Hyperledger Besu). Can also be set with the ARCHIVE_NODE_TYPE env var.",
         "geth"
     )
     .option("-p, --noParams", "Hide function params and return values.", false)
@@ -67,22 +67,27 @@ const tx2uml = async () => {
     const nodeType: NodeType =
         program.nodeType || process.env.ARCHIVE_NODE_TYPE || "geth"
     if (!nodeTypes.includes(nodeType)) {
-        throw new Error(
+        console.error(
             `Invalid node type "${nodeType}" set by the ARCHIVE_NODE_TYPE env var or --nodeType option. Must be one of: ${nodeTypes}`
         )
+        process.exit(1)
     }
 
     const tracingClient = ((): ITracingClient => {
         switch (nodeType) {
             case "openeth":
+                debug("Using OpenEthereum client.")
                 return new OpenEthereumClient(url)
             case "nether":
+                debug("Using Nethermind client.")
                 return new OpenEthereumClient(url)
             case "besu":
-                throw Error(
+                console.error(
                     "Hyperledger Besu nodes are not currently supported"
                 )
+                process.exit(2)
             default:
+                debug("Using Geth client.")
                 return new GethClient(url)
         }
     })()

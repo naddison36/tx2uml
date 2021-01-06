@@ -39,6 +39,7 @@ export type Trace = {
     funcName?: string
     inputs?: string
     inputParams?: Param[]
+    parsedConstructorParams?: boolean
     outputs?: string
     outputParams?: Param[]
     proxy?: boolean
@@ -59,6 +60,7 @@ export type Contract = {
     decimals?: number
     proxyImplementation?: string
     ethersContract?: EthersContract
+    constructorInputs?: string
 }
 
 export type TokenDetails = {
@@ -211,16 +213,22 @@ export class TransactionManager {
         )
         for (const trace of traces.flat()) {
             if (trace.inputs?.length >= 10) {
-                let contracts = functionSelector2Contract[trace.funcSelector]
-                if (contracts?.length > 0) {
+                if (trace.type === MessageType.Create) {
+                    trace.funcName = "constructor"
+                    addConstructorParamsToTrace(trace, contracts)
+                    return
+                }
+                const selectedContracts =
+                    functionSelector2Contract[trace.funcSelector]
+                if (selectedContracts?.length > 0) {
                     // get the contract for the function selector that matches the to address
-                    let contract = contracts.find(
+                    let contract = selectedContracts.find(
                         contract => contract.address === trace.to
                     )
                     // if the function is not on the `to` contract, then its a proxy contract
                     // so just use any contract if the function is on another contract
                     if (!contract) {
-                        contract = contracts[0]
+                        contract = selectedContracts[0]
                         trace.proxy = true
                     }
                     try {
@@ -310,19 +318,51 @@ const addOutputParamsToTrace = (
         trace.outputs
     )
     // For each output, add to the trace output params
-    outputParams.forEach((output, i) => {
-        const components = addValuesToComponents(functionFragments[i], output)
+    outputParams.forEach((param, i) => {
+        const components = addValuesToComponents(functionFragments[i], param)
 
         trace.outputParams.push({
             name: functionFragments[i].name,
             type: functionFragments[i].type,
-            value: output,
+            value: param,
             components,
         })
     })
     debug(
         `Decoded ${trace.outputParams.length} output params for ${trace.funcName} with selector ${trace.funcSelector}`
     )
+}
+
+const addConstructorParamsToTrace = (trace: Trace, contracts: Contracts) => {
+    // Do we have the ABI for the deployed contract?
+    const constructor = contracts[trace.to]?.ethersContract?.interface?.deploy
+    if (!constructor?.inputs) {
+        // No ABI so we don't know the constructor params which comes from verified contracts on Etherscan
+        return
+    }
+    // we need this flag to determine if there was no constructor params or they are unknown
+    trace.parsedConstructorParams = true
+
+    // if we don't have the ABI then we won't have the constructorInputs but we'll double check anyway
+    if (!contracts[trace.to]?.constructorInputs?.length) {
+        return
+    }
+    const constructorParams = defaultAbiCoder.decode(
+        constructor.inputs,
+        "0x" + contracts[trace.to]?.constructorInputs
+    )
+    // For each constructor param, add to the trace input params
+    constructorParams.forEach((param, i) => {
+        const components = addValuesToComponents(constructor.inputs[i], param)
+
+        trace.inputParams.push({
+            name: constructor.inputs[i].name,
+            type: constructor.inputs[i].type,
+            value: param,
+            components,
+        })
+    })
+    debug(`Decoded ${trace.inputParams.length} constructor params.`)
 }
 
 // if function components exists, recursively add arg values to the function components

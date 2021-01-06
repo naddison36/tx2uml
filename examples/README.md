@@ -41,11 +41,23 @@ tx2uml 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca
 
 This [Uniswap](https://uniswap.exchange/) transaction creates a new market by creating a new exchange contract. The contract create message is the second message with the circle at the end of the array.
 
+If the contract has not been verified on Etherscan, the constructor params will be `?` as tx2uml will not know what the constructor params were.
+
 ```
-0xef0ef332690119a0174f26c3ce40edfd4e57d138bb5c95a081e3d66ee571e706
+tx2uml 0xef0ef332690119a0174f26c3ce40edfd4e57d138bb5c95a081e3d66ee571e706
 ```
 
 ![Uniswap Factory](./uniswapFactory.png)
+
+## Deploy STRAX contract
+
+The constructor parameters will be parsed if the contract has been verified on Etherscan.
+
+```
+tx2uml 0x22bd02c8d934627a4b79e7fd66dba69492ddf1bbb7a86dd74fdaf7bb32f8ea24
+```
+
+![deployContract](./deployContract.png)
 
 ## Unknown function names
 

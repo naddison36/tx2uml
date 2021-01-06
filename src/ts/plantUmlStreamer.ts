@@ -288,8 +288,18 @@ const genArrow = (trace: Trace): string => {
 const genFunctionText = (trace: Trace, noParams: boolean = false): string => {
     if (!trace) {
         return ""
-    } else if (trace.type === MessageType.Create) {
-        return "create"
+    }
+    if (trace.type === MessageType.Create) {
+        if (noParams) {
+            return "constructor"
+        }
+        // If we have the contract ABI so the constructor params could be parsed
+        if (trace.parsedConstructorParams) {
+            return `${trace.funcName}(${genParams(trace.inputParams)})`
+        }
+        // we don't know if there was constructor params or not as the contract was not verified on Etherscan
+        // hence we don't have the constructor params or the contract ABI to parse them.
+        return "constructor(?)"
     }
     if (!trace.funcSelector) {
         return noParams ? "fallback" : "fallback()"
