@@ -67,6 +67,7 @@ export default class EtherscanClient {
                 address: contractAddress,
                 contractName: response.data.result[0].ContractName,
                 ethersContract,
+                constructorInputs: response.data.result[0].ConstructorArguments,
             }
         } catch (err) {
             throw new VError(

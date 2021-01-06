@@ -27,6 +27,7 @@ export declare type Trace = {
     funcName?: string;
     inputs?: string;
     inputParams?: Param[];
+    parsedConstructorParams?: boolean;
     outputs?: string;
     outputParams?: Param[];
     proxy?: boolean;
@@ -46,6 +47,7 @@ export declare type Contract = {
     decimals?: number;
     proxyImplementation?: string;
     ethersContract?: EthersContract;
+    constructorInputs?: string;
 };
 export declare type TokenDetails = {
     address: string;
