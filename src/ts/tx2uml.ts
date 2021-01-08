@@ -7,9 +7,8 @@ import { generateFile } from "./fileGenerator"
 import { transactionHash } from "./utils/regEx"
 import OpenEthereumClient from "./clients/OpenEthereumClient"
 import EtherscanClient from "./clients/EtherscanClient"
-import EthereumNodeClient from "./clients/EthereumNodeClient"
 import GethClient from "./clients/GethClient"
-import { ITracingClient } from "./clients"
+import EthereumNodeClient from "./clients/EthereumNodeClient"
 
 const debugControl = require("debug")
 const debug = require("debug")("tx2uml")
@@ -73,7 +72,7 @@ const tx2uml = async () => {
         process.exit(1)
     }
 
-    const tracingClient = ((): ITracingClient => {
+    const ethereumNodeClient = ((): EthereumNodeClient => {
         switch (nodeType) {
             case "openeth":
                 debug("Using OpenEthereum client.")
@@ -91,12 +90,10 @@ const tx2uml = async () => {
                 return new GethClient(url)
         }
     })()
-    const ethersClient = new EthereumNodeClient(url)
     const etherscanClient = new EtherscanClient()
     const txManager = new TransactionManager(
-        tracingClient,
-        etherscanClient,
-        ethersClient
+        ethereumNodeClient,
+        etherscanClient
     )
 
     let pumlStream: Readable

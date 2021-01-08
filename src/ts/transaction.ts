@@ -1,13 +1,12 @@
 import { BigNumber, Contract as EthersContract } from "ethers"
 import { defaultAbiCoder, TransactionDescription } from "@ethersproject/abi"
 import { FunctionFragment } from "ethers/lib/utils"
+import pLimit from "p-limit"
 import VError from "verror"
 
 import { transactionHash } from "./utils/regEx"
 import EtherscanClient from "./clients/EtherscanClient"
-import pLimit from "p-limit"
 import EthereumNodeClient from "./clients/EthereumNodeClient"
-import { ITracingClient } from "./clients"
 
 const debug = require("debug")("tx2uml")
 
@@ -84,6 +83,7 @@ export interface TransactionDetails {
     hash: string
     from: string
     to: string
+    data: string
     nonce: number
     index: number
     value: BigNumber
@@ -92,6 +92,8 @@ export interface TransactionDetails {
     gasUsed: BigNumber
     timestamp: Date
     status: boolean
+    blockNumber: number
+    error?: string
 }
 
 type ParamTypeInternal = {
@@ -105,9 +107,8 @@ export type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan"
 
 export class TransactionManager {
     constructor(
-        public readonly tracingClient: ITracingClient,
-        public readonly etherscanClient: EtherscanClient,
         public readonly ethereumNodeClient: EthereumNodeClient,
+        public readonly etherscanClient: EtherscanClient,
         // 3 works for smaller contracts but Etherscan will rate limit on larger contracts when set to 3
         public apiConcurrencyLimit = 2
     ) {}
@@ -137,7 +138,9 @@ export class TransactionManager {
         const transactionsTraces: Trace[][] = []
         for (const transaction of transactions) {
             transactionsTraces.push(
-                await this.tracingClient.getTransactionTrace(transaction.hash)
+                await this.ethereumNodeClient.getTransactionTrace(
+                    transaction.hash
+                )
             )
         }
         return transactionsTraces

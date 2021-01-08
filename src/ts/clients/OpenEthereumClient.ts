@@ -3,9 +3,10 @@ import { BigNumber, providers } from "ethers"
 import { Provider } from "ethers-multicall"
 import { VError } from "verror"
 
-import { MessageType, Trace } from "../transaction"
+import { MessageType, Trace, TransactionDetails } from "../transaction"
 import { transactionHash } from "../utils/regEx"
-import { ITracingClient } from "./index"
+import { hexlify } from "ethers/lib/utils"
+import EthereumNodeClient from "./EthereumNodeClient"
 
 require("axios-debug-log")
 const debug = require("debug")("tx2uml")
@@ -40,7 +41,7 @@ export type TraceResponse = {
     error?: string
 }
 
-export default class OpenEthereumClient implements ITracingClient {
+export default class OpenEthereumClient extends EthereumNodeClient {
     public readonly ethersProvider
     public readonly multicallProvider: Provider
 
@@ -50,6 +51,7 @@ export default class OpenEthereumClient implements ITracingClient {
         public readonly url: string = "http://localhost:8545",
         public readonly network = "mainnet"
     ) {
+        super(url, network)
         this.ethersProvider = new providers.JsonRpcProvider(url, network)
         this.multicallProvider = new Provider(this.ethersProvider, 1)
     }
@@ -158,6 +160,51 @@ export default class OpenEthereumClient implements ITracingClient {
             throw new VError(
                 err,
                 `Failed to get transaction trace for tx hash ${txHash} from url ${this.url}.`
+            )
+        }
+    }
+
+    async getTransactionError(tx: TransactionDetails): Promise<string> {
+        if (!tx?.hash.match(transactionHash)) {
+            throw TypeError(
+                `There is no transaction hash on the receipt object`
+            )
+        }
+        if (tx.status) {
+            return undefined
+        }
+        if (tx.gasUsed === tx.gasLimit) {
+            throw Error("Transaction failed as it ran out of gas.")
+        }
+
+        try {
+            debug(`About to get transaction trace for ${tx.hash}`)
+            const params = [
+                {
+                    // A Nethermind bug means the nonce of the original transaction can be used.
+                    // error.data: "wrong transaction nonce"
+                    // nonce: tx.nonce,
+                    gasPrice: tx.gasPrice.toHexString(),
+                    gas: tx.gasLimit.toHexString(),
+                    value: tx.value.toHexString(),
+                    from: tx.from,
+                    to: tx.to,
+                    data: tx.data,
+                },
+                hexlify(tx.blockNumber),
+            ]
+            const response = await axios.post(this.url, {
+                id: this.jsonRpcId++,
+                jsonrpc: "2.0",
+                method: "eth_call",
+                params,
+            })
+
+            return response.data?.error?.data
+        } catch (err) {
+            throw new VError(
+                err,
+                `Failed to get transaction trace for tx hash ${tx.hash} from url ${this.url}.`
             )
         }
     }

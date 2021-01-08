@@ -1,10 +1,11 @@
 import { Contract as EthersContract, providers } from "ethers"
+import { JsonFragment } from "@ethersproject/abi"
+import { Provider as EthersProvider } from "@ethersproject/providers"
 import { Contract, ContractCall, Provider } from "ethers-multicall"
 import { VError } from "verror"
 
-import { TokenDetails, TransactionDetails } from "../transaction"
+import { TokenDetails, Trace, TransactionDetails } from "../transaction"
 import { transactionHash } from "../utils/regEx"
-import { JsonFragment } from "@ethersproject/abi"
 import { convertBytes32ToString } from "../utils/formatters"
 
 require("axios-debug-log")
@@ -45,8 +46,8 @@ const bytes32TokenABI = JSON.parse(JSON.stringify(stringTokenABI))
 bytes32TokenABI[0].outputs[0].type = "bytes32"
 bytes32TokenABI[1].outputs[0].type = "bytes32"
 
-export default class EthereumNodeClient {
-    public readonly ethersProvider
+export default abstract class EthereumNodeClient {
+    public readonly ethersProvider: EthersProvider
     public readonly multicallProvider: Provider
 
     constructor(
@@ -56,6 +57,9 @@ export default class EthereumNodeClient {
         this.ethersProvider = new providers.JsonRpcProvider(url, network)
         this.multicallProvider = new Provider(this.ethersProvider, 1)
     }
+
+    abstract getTransactionTrace(txHash: string): Promise<Trace[]>
+    abstract getTransactionError(tx: TransactionDetails): Promise<string>
 
     async getTransactionDetails(txHash: string): Promise<TransactionDetails> {
         if (!txHash?.match(transactionHash)) {
@@ -75,11 +79,11 @@ export default class EthereumNodeClient {
             const block = await this.ethersProvider.getBlock(
                 receipt.blockNumber
             )
-
-            return {
+            const txDetails: TransactionDetails = {
                 hash: tx.hash,
                 from: tx.from,
                 to: tx.to,
+                data: tx.data,
                 nonce: tx.nonce,
                 index: receipt.transactionIndex,
                 value: tx.value,
@@ -88,7 +92,14 @@ export default class EthereumNodeClient {
                 gasUsed: receipt.gasUsed,
                 timestamp: new Date(block.timestamp * 1000),
                 status: receipt.status === 1,
+                blockNumber: receipt.blockNumber,
             }
+            // If the transaction failed, get the revert reason
+            if (receipt.status === 0) {
+                txDetails.error = await this.getTransactionError(txDetails)
+            }
+
+            return txDetails
         } catch (err) {
             throw new VError(
                 err,

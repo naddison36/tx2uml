@@ -1,7 +1,6 @@
 import { BigNumber, Contract as EthersContract } from "ethers";
 import EtherscanClient from "./clients/EtherscanClient";
 import EthereumNodeClient from "./clients/EthereumNodeClient";
-import { ITracingClient } from "./clients";
 export declare enum MessageType {
     Unknown = 0,
     Call = 1,
@@ -69,6 +68,7 @@ export interface TransactionDetails {
     hash: string;
     from: string;
     to: string;
+    data: string;
     nonce: number;
     index: number;
     value: BigNumber;
@@ -77,14 +77,15 @@ export interface TransactionDetails {
     gasUsed: BigNumber;
     timestamp: Date;
     status: boolean;
+    blockNumber: number;
+    error?: string;
 }
 export declare type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan";
 export declare class TransactionManager {
-    readonly tracingClient: ITracingClient;
-    readonly etherscanClient: EtherscanClient;
     readonly ethereumNodeClient: EthereumNodeClient;
+    readonly etherscanClient: EtherscanClient;
     apiConcurrencyLimit: number;
-    constructor(tracingClient: ITracingClient, etherscanClient: EtherscanClient, ethereumNodeClient: EthereumNodeClient, apiConcurrencyLimit?: number);
+    constructor(ethereumNodeClient: EthereumNodeClient, etherscanClient: EtherscanClient, apiConcurrencyLimit?: number);
     getTransactions(txHashes: string | string[]): Promise<TransactionDetails[]>;
     getTransaction(txHash: string): Promise<TransactionDetails>;
     getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;
