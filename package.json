@@ -47,7 +47,6 @@
     "commander": "^4.1.1",
     "debug": "^4.3.1",
     "ethers": "^5.0.24",
-    "ethers-multicall": "^0.1.4",
     "p-limit": "^3.1.0",
     "verror": "^1.10.0"
   },

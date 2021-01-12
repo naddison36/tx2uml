@@ -1,6 +1,5 @@
 import axios from "axios"
 import { BigNumber, providers } from "ethers"
-import { Provider } from "ethers-multicall"
 import { VError } from "verror"
 
 import { MessageType, Trace, TransactionDetails } from "../transaction"
@@ -43,7 +42,6 @@ export type TraceResponse = {
 
 export default class OpenEthereumClient extends EthereumNodeClient {
     public readonly ethersProvider
-    public readonly multicallProvider: Provider
 
     private jsonRpcId = 0
 
@@ -53,7 +51,6 @@ export default class OpenEthereumClient extends EthereumNodeClient {
     ) {
         super(url, network)
         this.ethersProvider = new providers.JsonRpcProvider(url, network)
-        this.multicallProvider = new Provider(this.ethersProvider, 1)
     }
 
     async getTransactionTrace(txHash: string): Promise<Trace[]> {

@@ -1,5 +1,4 @@
 import { providers } from "ethers";
-import { Provider } from "ethers-multicall";
 import { Trace, TransactionDetails } from "../transaction";
 import EthereumNodeClient from "./EthereumNodeClient";
 export declare type TraceResponse = {
@@ -32,7 +31,6 @@ export default class OpenEthereumClient extends EthereumNodeClient {
     readonly url: string;
     readonly network: string;
     readonly ethersProvider: providers.JsonRpcProvider;
-    readonly multicallProvider: Provider;
     private jsonRpcId;
     constructor(url?: string, network?: string);
     getTransactionTrace(txHash: string): Promise<Trace[]>;

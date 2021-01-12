@@ -78,63 +78,33 @@ describe("Ethereum Node Clients", () => {
                 expect(tx.error).toBeUndefined()
             })
         })
-        describe("Get token details", () => {
-            test("Get Maker with bytes32 function outputs", async () => {
-                const tokenDetail = await nodeClient.getTokenDetailsUnknownABI(
-                    maker
-                )
-                expect(tokenDetail.symbol).toEqual("MKR")
-                expect(tokenDetail.name).toEqual("Maker")
-            })
-            test("Get Uniswap string function outputs", async () => {
-                const tokenDetail = await nodeClient.getTokenDetailsUnknownABI(
-                    uniswap
-                )
-                expect(tokenDetail.symbol).toEqual("UNI")
-                expect(tokenDetail.name).toEqual("Uniswap")
-            })
-            test("Get USDC from proxy", async () => {
-                const tokenDetail = await nodeClient.getTokenDetailsUnknownABI(
-                    usdcProxy
-                )
-                expect(tokenDetail.symbol).toEqual("USDC")
-                expect(tokenDetail.name).toEqual("USD Coin")
-            })
-            test("USDC implementation", async () => {
-                const tokenDetails = await nodeClient.getTokenDetailsUnknownABI(
-                    usdcImpl
-                )
-                expect(tokenDetails.symbol).toBeUndefined()
-                expect(tokenDetails.name).toBeUndefined()
-            })
-            test("mStableUSD proxy", async () => {
-                const tokenDetail = await nodeClient.getTokenDetailsUnknownABI(
-                    mStableUSDProxy
-                )
-                expect(tokenDetail.symbol).toEqual("mUSD")
-                expect(tokenDetail.name).toEqual("mStable USD")
-            })
-            test("mStableUSD implementation", async () => {
-                const tokenDetail = await nodeClient.getTokenDetailsUnknownABI(
-                    mStableUSDImpl
-                )
-                expect(tokenDetail.symbol).toBeUndefined()
-                expect(tokenDetail.name).toBeUndefined()
-            })
-            test("Get tokens with string and bytes32 outputs", async () => {
-                const tokenDetail = await nodeClient.getTokenDetailsUnknownABI(
-                    dai
-                )
-                expect(tokenDetail.symbol).toEqual("DAI")
-                expect(tokenDetail.name).toEqual("Dai Stablecoin")
-            })
-            test("externally owned account with string token ABI", async () => {
-                const tokenDetail = await nodeClient.getTokenDetailsUnknownABI(
-                    externallyOwnerAccount
-                )
-                expect(tokenDetail.symbol).toBeUndefined()
-                expect(tokenDetail.name).toBeUndefined()
-            })
+        test("Get token details", async () => {
+            const tokenDetails = await nodeClient.getTokenDetails([
+                maker, // bytes32
+                uniswap, // string
+                usdcProxy, // proxy with details
+                usdcImpl, // implementation with no details
+                mStableUSDProxy,
+                mStableUSDImpl,
+                dai,
+                externallyOwnerAccount,
+            ])
+            expect(tokenDetails[0].symbol).toEqual("MKR")
+            expect(tokenDetails[0].name).toEqual("Maker")
+            expect(tokenDetails[1].symbol).toEqual("UNI")
+            expect(tokenDetails[1].name).toEqual("Uniswap")
+            expect(tokenDetails[2].symbol).toEqual("USDC")
+            expect(tokenDetails[2].name).toEqual("USD Coin")
+            expect(tokenDetails[3].symbol).toEqual("")
+            expect(tokenDetails[3].name).toEqual("")
+            expect(tokenDetails[4].symbol).toEqual("mUSD")
+            expect(tokenDetails[4].name).toEqual("mStable USD")
+            expect(tokenDetails[5].symbol).toEqual("")
+            expect(tokenDetails[5].name).toEqual("")
+            expect(tokenDetails[6].symbol).toEqual("DAI")
+            expect(tokenDetails[6].name).toEqual("Dai Stablecoin")
+            expect(tokenDetails[7].symbol).toEqual("")
+            expect(tokenDetails[7].name).toEqual("")
         })
         describe("Get transaction trace", () => {
             test("delegatecall", async () => {

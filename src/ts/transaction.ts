@@ -159,8 +159,6 @@ export class TransactionManager {
         let contracts = await this.getContractsFromAddresses(
             participantAddresses
         )
-        // identify proxy contracts from chain
-        // contracts = await setProxyContracts(contracts, url)
         // Get token name and symbol from chain
         return await this.setTokenAttributes(contracts)
     }
@@ -187,21 +185,11 @@ export class TransactionManager {
     }
 
     async setTokenAttributes(contracts: Contracts): Promise<Contracts> {
-        // get the token details in parallel
-        const tokensDetailsPromises = Object.values(contracts).map(contract => {
-            if (
-                contract.ethersContract?.interface?.functions["symbol()"] &&
-                contract.ethersContract?.interface?.functions["name()"]
-            ) {
-                return this.ethereumNodeClient.getTokenDetailsKnownABI(
-                    contract.ethersContract
-                )
-            }
-            return this.ethereumNodeClient.getTokenDetailsUnknownABI(
-                contract.address
-            )
-        })
-        const tokensDetails = await Promise.all(tokensDetailsPromises)
+        // get the token details
+        const contractAddresses = Object.keys(contracts)
+        const tokensDetails = await this.ethereumNodeClient.getTokenDetails(
+            contractAddresses
+        )
 
         tokensDetails.forEach(tokenDetails => {
             contracts[tokenDetails.address].tokenName = tokenDetails.name
