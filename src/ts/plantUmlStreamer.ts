@@ -132,7 +132,15 @@ const writeTransactionDetails = (
     if (options.noTxDetails) {
         return
     }
-    plantUmlStream.push(`\nnote over ${participantId(transaction.from)}\n`)
+    plantUmlStream.push(`\nnote over ${participantId(transaction.from)}`)
+    if (transaction.error) {
+        plantUmlStream.push(
+            ` ${FailureFillColor}\nError: ${transaction.error} \n`
+        )
+    } else {
+        // no error so will use default colour of tx details note
+        plantUmlStream.push("\n")
+    }
     plantUmlStream.push(`Nonce: ${transaction.nonce.toLocaleString()}\n`)
     plantUmlStream.push(
         `Gas Price: ${formatUnits(transaction.gasPrice, "gwei")} Gwei\n`

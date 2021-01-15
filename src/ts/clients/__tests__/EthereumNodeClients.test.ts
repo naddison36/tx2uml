@@ -346,9 +346,9 @@ describe("Ethereum Node Clients", () => {
                 )
                 expect(messages[1].outputs).toBeUndefined()
                 expect(messages[1].gasLimit).toEqualBN(100591)
-                expect(messages[1].gasUsed).toEqualBN(2497)
                 expect(messages[1].funcSelector).toEqual("0xa9059cbb")
                 expect(messages[1].value).toEqualBN(0)
+                expect(messages[1].gasUsed).toEqualBN(2497)
             })
             test("1inch tx success, but an internal call failed", async () => {
                 const traces = await nodeClient.getTransactionTrace(
