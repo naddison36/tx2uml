@@ -1,14 +1,12 @@
-import { Contract as EthersContract, providers } from "ethers";
-import { Provider } from "ethers-multicall";
-import { TokenDetails, TransactionDetails } from "../transaction";
-export default class EthereumNodeClient {
+import { Provider } from "@ethersproject/providers";
+import { TokenDetails, Trace, TransactionDetails } from "../transaction";
+export default abstract class EthereumNodeClient {
     readonly url: string;
     readonly network: string;
-    readonly ethersProvider: providers.JsonRpcProvider;
-    readonly multicallProvider: Provider;
+    readonly ethersProvider: Provider;
     constructor(url?: string, network?: string);
+    abstract getTransactionTrace(txHash: string): Promise<Trace[]>;
+    abstract getTransactionError(tx: TransactionDetails): Promise<string>;
     getTransactionDetails(txHash: string): Promise<TransactionDetails>;
-    getTokenDetailsKnownABI(contract: EthersContract): Promise<TokenDetails>;
-    getTokenDetailsUnknownABI(address: string): Promise<TokenDetails>;
-    private _getTokenDetails;
+    getTokenDetails(contractAddresses: string[]): Promise<TokenDetails[]>;
 }

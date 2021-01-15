@@ -4,7 +4,7 @@ import OpenEthereumClient from "../OpenEthereumClient"
 import { MessageType, Trace } from "../../transaction"
 import { EthersMatchers } from "../../utils/jest"
 import GethClient from "../GethClient"
-import { ITracingClient } from "../index"
+import EthereumNodeClient from "../EthereumNodeClient"
 
 jest.setTimeout(60000) // timeout for each test in milliseconds
 // Extend the Jest matchers with Ethers BigNumber matchers like toEqualBN
@@ -12,13 +12,100 @@ expect.extend(EthersMatchers)
 
 Logger.setLogLevel(Logger.levels.DEBUG)
 
-describe("Tracing Clients", () => {
-    const clients: { [clientName: string]: ITracingClient } = {
+const dai = "0x6b175474e89094c44da98b954eedeac495271d0f"
+const uniswap = "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"
+const maker = "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2"
+const usdcProxy = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+const usdcImpl = "0xb7277a6e95992041568d9391d09d0122023778a2"
+const mStableUSDProxy = "0xe2f2a5C287993345a840Db3B0845fbC70f5935a5"
+const mStableUSDImpl = "0xE0d0D052d5B1082E52C6b8422Acd23415c3DF1c4"
+const externallyOwnerAccount = "0xbbabad191e7802f526c289c15909a8cba2a5ff2a"
+
+describe("Ethereum Node Clients", () => {
+    const clients: { [clientName: string]: EthereumNodeClient } = {
         TurboGeth: new GethClient(process.env.TURBO_GETH_URL),
         Nethermind: new OpenEthereumClient(process.env.NETHERMIND_URL),
     }
 
     describe.each(Object.entries(clients))("%s", (clientName, nodeClient) => {
+        describe("Get transaction details", () => {
+            test("delegate call", async () => {
+                const tx = await nodeClient.getTransactionDetails(
+                    "0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca"
+                )
+                expect(tx.from).toEqual(
+                    "0x7A39608107DC014d4bBd7A5F01d3FbA5Dff6D042"
+                )
+                expect(tx.to).toEqual(
+                    "0x2C4Bd064b998838076fa341A83d007FC2FA50957"
+                )
+                expect(tx.nonce).toEqual(224)
+                expect(tx.timestamp).toEqual(
+                    new Date("24-Feb-2020 21:30:47 UTC")
+                )
+                expect(tx.gasLimit).toEqualBN(83173)
+                expect(tx.gasPrice).toEqualBN(1000000000)
+                expect(tx.gasUsed).toEqualBN(59813)
+                expect(tx.status).toBeTruthy()
+            })
+            test("Failed Uniswap v2", async () => {
+                const tx = await nodeClient.getTransactionDetails(
+                    "0x925109efeb515b8b785cdd5fc74fbbbfa69a46a46d4dcfe0b0407715b2182bfe"
+                )
+                expect(tx.from).toEqual(
+                    "0xAA6ebF8aEa80261E5e45205635bc1ca3553B1098"
+                )
+                expect(tx.to).toEqual(
+                    "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+                )
+                expect(tx.nonce).toEqual(142)
+                expect(tx.timestamp).toEqual(
+                    new Date("29-Dec-2020 23:02:16 UTC")
+                )
+                expect(tx.gasLimit).toEqualBN(155268)
+                expect(tx.gasPrice).toEqualBN(58000000000)
+                expect(tx.gasUsed).toEqualBN(28889)
+                expect(tx.status).toBeFalsy()
+                expect(tx.error).toMatch(
+                    "UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT"
+                )
+            })
+            test("Failed internal 1inch", async () => {
+                const tx = await nodeClient.getTransactionDetails(
+                    "0x5127c14ab29ad659b1f1063fcf022d990cf00970dae8160693ccc8b9561d4b4d"
+                )
+                expect(tx.status).toBeTruthy()
+                expect(tx.error).toBeUndefined()
+            })
+        })
+        test("Get token details", async () => {
+            const tokenDetails = await nodeClient.getTokenDetails([
+                maker, // bytes32
+                uniswap, // string
+                usdcProxy, // proxy with details
+                usdcImpl, // implementation with no details
+                mStableUSDProxy,
+                mStableUSDImpl,
+                dai,
+                externallyOwnerAccount,
+            ])
+            expect(tokenDetails[0].symbol).toEqual("MKR")
+            expect(tokenDetails[0].name).toEqual("Maker")
+            expect(tokenDetails[1].symbol).toEqual("UNI")
+            expect(tokenDetails[1].name).toEqual("Uniswap")
+            expect(tokenDetails[2].symbol).toEqual("USDC")
+            expect(tokenDetails[2].name).toEqual("USD Coin")
+            expect(tokenDetails[3].symbol).toEqual("")
+            expect(tokenDetails[3].name).toEqual("")
+            expect(tokenDetails[4].symbol).toEqual("mUSD")
+            expect(tokenDetails[4].name).toEqual("mStable USD")
+            expect(tokenDetails[5].symbol).toEqual("")
+            expect(tokenDetails[5].name).toEqual("")
+            expect(tokenDetails[6].symbol).toEqual("DAI")
+            expect(tokenDetails[6].name).toEqual("Dai Stablecoin")
+            expect(tokenDetails[7].symbol).toEqual("")
+            expect(tokenDetails[7].name).toEqual("")
+        })
         describe("Get transaction trace", () => {
             test("delegatecall", async () => {
                 const traces = await nodeClient.getTransactionTrace(
@@ -259,9 +346,9 @@ describe("Tracing Clients", () => {
                 )
                 expect(messages[1].outputs).toBeUndefined()
                 expect(messages[1].gasLimit).toEqualBN(100591)
-                expect(messages[1].gasUsed).toEqualBN(2497)
                 expect(messages[1].funcSelector).toEqual("0xa9059cbb")
                 expect(messages[1].value).toEqualBN(0)
+                expect(messages[1].gasUsed).toEqualBN(2497)
             })
             test("1inch tx success, but an internal call failed", async () => {
                 const traces = await nodeClient.getTransactionTrace(
@@ -296,6 +383,24 @@ describe("Tracing Clients", () => {
                         )
                     }
                 }
+            })
+        })
+        describe("Get transaction error", () => {
+            test("Failed transaction", async () => {
+                const tx = await nodeClient.getTransactionDetails(
+                    "0x0e73ca54a42413cfe6ff9451f74c7294859327e6a8572b29e6b8df140f9ffa97"
+                )
+                const error = await nodeClient.getTransactionError(tx)
+                expect(error).toMatch(
+                    "UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT"
+                )
+            })
+            test("Transaction that didn't fail", async () => {
+                const tx = await nodeClient.getTransactionDetails(
+                    "0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca"
+                )
+                const error = await nodeClient.getTransactionError(tx)
+                expect(error).toBeUndefined()
             })
         })
     })

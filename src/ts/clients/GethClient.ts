@@ -1,10 +1,12 @@
 import axios from "axios"
-import { BigNumber } from "ethers"
+import { BigNumber, providers } from "ethers"
 import { VError } from "verror"
 
-import { MessageType, Trace } from "../transaction"
+import { MessageType, Trace, TransactionDetails } from "../transaction"
 import { transactionHash } from "../utils/regEx"
-import { ITracingClient } from "./index"
+import { Provider } from "@ethersproject/providers"
+import { hexlify, toUtf8String } from "ethers/lib/utils"
+import EthereumNodeClient from "./EthereumNodeClient"
 
 require("axios-debug-log")
 const debug = require("debug")("tx2uml")
@@ -30,13 +32,17 @@ export type CallResponse = {
     calls?: CallResponse[]
 }
 
-export default class GethClient implements ITracingClient {
+export default class GethClient extends EthereumNodeClient {
+    public readonly provider: Provider
     private jsonRpcId = 0
 
     constructor(
         public readonly url: string = "http://localhost:8545",
         public readonly network = "mainnet"
-    ) {}
+    ) {
+        super(url, network)
+        this.provider = new providers.JsonRpcProvider(url, network)
+    }
 
     async getTransactionTrace(txHash: string): Promise<Trace[]> {
         if (!txHash?.match(transactionHash)) {
@@ -83,6 +89,79 @@ export default class GethClient implements ITracingClient {
                 `Failed to get transaction trace for tx hash ${txHash} from url ${this.url}.`
             )
         }
+    }
+
+    async getTransactionError(tx: TransactionDetails): Promise<string> {
+        if (!tx?.hash.match(transactionHash)) {
+            throw TypeError(
+                `There is no transaction hash on the receipt object`
+            )
+        }
+        if (tx.status) {
+            return undefined
+        }
+        if (tx.gasUsed === tx.gasLimit) {
+            throw Error("Transaction failed as it ran out of gas.")
+        }
+
+        let rawMessageData
+        try {
+            const params = [
+                {
+                    nonce: tx.nonce,
+                    gasPrice: convertBigNumber2Hex(tx.gasPrice),
+                    gas: convertBigNumber2Hex(tx.gasLimit),
+                    value: convertBigNumber2Hex(tx.value),
+                    from: tx.from,
+                    to: tx.to,
+                    data: tx.data,
+                },
+                // need to call for the block before
+                hexlify(tx.blockNumber - 1).replace(/^0x0/, "0x"),
+            ]
+            const response = await axios.post(this.url, {
+                id: this.jsonRpcId++,
+                jsonrpc: "2.0",
+                method: "eth_call",
+                params,
+            })
+
+            return response.data?.error?.message
+        } catch (e) {
+            if (e.message.startsWith("Node error: ")) {
+                // Trim "Node error: "
+                const errorObjectStr = e.message.slice(12)
+                // Parse the error object
+                const errorObject = JSON.parse(errorObjectStr)
+
+                if (!errorObject.data) {
+                    throw Error(
+                        "Failed to parse data field error object:" +
+                            errorObjectStr
+                    )
+                }
+
+                if (errorObject.data.startsWith("Reverted 0x")) {
+                    // Trim "Reverted 0x" from the data field
+                    rawMessageData = errorObject.data.slice(11)
+                } else if (errorObject.data.startsWith("0x")) {
+                    // Trim "0x" from the data field
+                    rawMessageData = errorObject.data.slice(2)
+                } else {
+                    throw Error(
+                        "Failed to parse data field of error object:" +
+                            errorObjectStr
+                    )
+                }
+            } else {
+                throw Error(
+                    "Failed to parse error message from Ethereum call: " +
+                        e.message
+                )
+            }
+        }
+
+        return parseReasonCode(rawMessageData)
     }
 }
 
@@ -155,4 +234,19 @@ const convertType = (trace: CallResponse): MessageType => {
 const convertBigNumber = (value: string): BigNumber | undefined => {
     if (!value) return undefined
     return BigNumber.from(value)
+}
+
+const convertBigNumber2Hex = (value: BigNumber) => {
+    return value.toHexString().replace(/^0x0/, "0x")
+}
+
+export const parseReasonCode = (messageData: string): string => {
+    // Get the length of the revert reason
+    const strLen = parseInt(messageData.slice(8 + 64, 8 + 128), 16)
+    // Using the length and known offset, extract and convert the revert reason
+    const reasonCodeHex = messageData.slice(8 + 128, 8 + 128 + strLen * 2)
+    // Convert reason from hex to string
+    const reason = toUtf8String("0x" + reasonCodeHex)
+
+    return reason
 }
