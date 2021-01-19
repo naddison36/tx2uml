@@ -34,7 +34,7 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
     )
     .option(
         "-u, --url <url>",
-        "URL of the archive node with trace transaction support. Can also be set with the ARCHIVE_NODE_ENV environment variable. (default: http://localhost:8545)"
+        "URL of the archive node with trace transaction support. Can also be set with the ARCHIVE_NODE_URL environment variable. (default: http://localhost:8545)"
     )
     .option(
         "-n, --nodeType <value>",
