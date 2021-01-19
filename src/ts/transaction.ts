@@ -1,5 +1,6 @@
 import { BigNumber, Contract as EthersContract } from "ethers"
 import { defaultAbiCoder, TransactionDescription } from "@ethersproject/abi"
+import { Log } from "@ethersproject/abstract-provider"
 import { FunctionFragment } from "ethers/lib/utils"
 import pLimit from "p-limit"
 import VError from "verror"
@@ -79,6 +80,17 @@ export type Token = {
     totalSupply?: BigNumber
 }
 
+export type Transfer = {
+    from: string
+    to: string
+    value: BigNumber
+    ether: boolean
+    tokenAddress?: string
+    tokenSymbol?: string
+    tokenName?: string
+    decimals?: number
+}
+
 export interface TransactionDetails {
     hash: string
     from: string
@@ -93,6 +105,7 @@ export interface TransactionDetails {
     timestamp: Date
     status: boolean
     blockNumber: number
+    logs: Array<Log>
     error?: string
 }
 

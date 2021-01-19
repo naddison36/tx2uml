@@ -1,4 +1,5 @@
 import { BigNumber, Contract as EthersContract } from "ethers";
+import { Log } from "@ethersproject/abstract-provider";
 import EtherscanClient from "./clients/EtherscanClient";
 import EthereumNodeClient from "./clients/EthereumNodeClient";
 export declare enum MessageType {
@@ -64,6 +65,16 @@ export declare type Token = {
     decimals?: number;
     totalSupply?: BigNumber;
 };
+export declare type Transfer = {
+    from: string;
+    to: string;
+    value: BigNumber;
+    ether: boolean;
+    tokenAddress?: string;
+    tokenSymbol?: string;
+    tokenName?: string;
+    decimals?: number;
+};
 export interface TransactionDetails {
     hash: string;
     from: string;
@@ -78,6 +89,7 @@ export interface TransactionDetails {
     timestamp: Date;
     status: boolean;
     blockNumber: number;
+    logs: Array<Log>;
     error?: string;
 }
 export declare type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan";
