@@ -182,7 +182,7 @@ tx2uml 0x4d953a8c531624e8336df5060239b7c0462b3d4d0cc5dcbb61af679ba81d161a --noTx
 
 [Balancer](https://balancer.finance/) swap of 1,153 USD Coin (USD) for 4,000 Frontier (Front)
 
-The first `multihopBatchSwapExactOut` call is a good example of how multi dimensional parameters are displayed. The `swapSequences` is a two dimensional array of `Swap` structures which contains different properties of different types. 
+The first `multihopBatchSwapExactOut` call is a good example of how multi dimensional parameters are displayed. The `swapSequences` is a two dimensional array of `Swap` structures which contains different properties of different types.
 
 For larger transactions like this, svg is a better output than the default png file format. Use the `--outputFormat` or `-f` options to specify the `png`, `svg` or `puml` formats.
 The `--outputFileName` or `-o` option will specify the file to write the output to.

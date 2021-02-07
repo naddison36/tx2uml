@@ -14,6 +14,7 @@ import { transactionHash } from "../utils/regEx"
 import { TokenInfo } from "../types/TokenInfo"
 
 require("axios-debug-log")
+const debug = require("debug")("tx2uml")
 
 const tokenInfoAddress = "0xbA51331Bf89570F3f55BC26394fcCA05d4063C71"
 
@@ -86,11 +87,20 @@ export default abstract class EthereumNodeClient {
             TokenInfoABI,
             this.ethersProvider
         ) as TokenInfo
-        const results = await tokenInfo.getInfoBatch(contractAddresses)
-        return results.map((result, i) => ({
-            address: contractAddresses[i],
-            ...result,
-        }))
+        try {
+            const results = await tokenInfo.getInfoBatch(contractAddresses)
+            debug(`Got token information for ${results.length} contracts`)
+            return results.map((result, i) => ({
+                address: contractAddresses[i],
+                symbol: result.symbol,
+                name: result.name,
+            }))
+        } catch (err) {
+            console.error(
+                `Failed to get token information for contracts: ${contractAddresses}.\nerror: ${err.message}`
+            )
+            return []
+        }
     }
 
     // Parse Transfer events from a transaction receipt

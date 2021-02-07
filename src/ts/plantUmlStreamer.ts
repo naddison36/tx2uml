@@ -23,6 +23,7 @@ export interface PumlGenerationOptions {
     noParams?: boolean
     noEther?: boolean
     noTxDetails?: boolean
+    noLogDetails?: boolean
     network?: string
 }
 
@@ -68,6 +69,7 @@ export const streamMultiTxsPuml = (
         pumlStream.push(`\ngroup ${transaction.hash}`)
         writeTransactionDetails(pumlStream, transaction, options)
         writeMessages(pumlStream, traces[i++], options)
+        writeEvents(pumlStream, contracts, options)
         pumlStream.push("end")
     }
 
@@ -89,6 +91,7 @@ export const streamSingleTxPuml = (
     writeParticipants(pumlStream, contracts)
     writeTransactionDetails(pumlStream, transaction, options)
     writeMessages(pumlStream, traces, options)
+    writeEvents(pumlStream, contracts, options)
 
     pumlStream.push("\n@endumls")
     pumlStream.push(null)
@@ -413,4 +416,29 @@ const genCaption = (
     options: PumlGenerationOptions
 ): string => {
     return `caption ${options.network || ""} ${details.timestamp.toUTCString()}`
+}
+
+export const writeEvents = (
+    plantUmlStream: Readable,
+    contracts: Contracts,
+    options: PumlGenerationOptions = {}
+) => {
+    if (options.noLogDetails) {
+        return
+    }
+    // For each contract
+    for (const contract of Object.values(contracts)) {
+        if (contract.ethersContract && contract.events.length) {
+            plantUmlStream.push(
+                `\nnote over ${participantId(contract.address)} #aqua`
+            )
+            for (const event of contract.events) {
+                plantUmlStream.push(`\n${event.name}:`)
+                plantUmlStream.push(
+                    `${genParams(event.params).replace(/\\n/g, "\n")}`
+                )
+            }
+            plantUmlStream.push("\nend note")
+        }
+    }
 }

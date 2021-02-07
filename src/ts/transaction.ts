@@ -1,7 +1,7 @@
 import { BigNumber, Contract as EthersContract } from "ethers"
 import { defaultAbiCoder, TransactionDescription } from "@ethersproject/abi"
 import { Log } from "@ethersproject/abstract-provider"
-import { FunctionFragment } from "ethers/lib/utils"
+import { FunctionFragment, LogDescription } from "ethers/lib/utils"
 import pLimit from "p-limit"
 import VError from "verror"
 
@@ -50,6 +50,11 @@ export type Trace = {
     error?: string
 }
 
+export type Event = {
+    name: string
+    params: Param[]
+}
+
 export type Contract = {
     address: string
     contractName?: string
@@ -61,6 +66,7 @@ export type Contract = {
     proxyImplementation?: string
     ethersContract?: EthersContract
     constructorInputs?: string
+    events?: Event[]
 }
 
 export type TokenDetails = {
@@ -144,7 +150,7 @@ export class TransactionManager {
     }
 
     async getTransaction(txHash: string): Promise<TransactionDetails> {
-        return await this.ethereumNodeClient.getTransactionDetails(txHash)
+        return this.ethereumNodeClient.getTransactionDetails(txHash)
     }
 
     async getTraces(transactions: TransactionDetails[]): Promise<Trace[][]> {
@@ -169,7 +175,7 @@ export class TransactionManager {
         }
 
         // get contract ABIs from Etherscan
-        let contracts = await this.getContractsFromAddresses(
+        const contracts = await this.getContractsFromAddresses(
             participantAddresses
         )
         // Get token name and symbol from chain
@@ -252,6 +258,27 @@ export class TransactionManager {
                             )
                         }
                     }
+                }
+            }
+        }
+    }
+
+    static parseTransactionLogs(logs: Array<Log>, contracts: Contracts) {
+        // for each tx log
+        for (const log of logs) {
+            // see if we have the contract source for the log
+            const contract = contracts[log.address.toLowerCase()]
+            if (contract?.ethersContract) {
+                // try and parse the log topic
+                try {
+                    const event = contract.ethersContract.interface.parseLog(
+                        log
+                    )
+                    contract.events.push(parseEvent(contract, event))
+                } catch (err) {
+                    debug(
+                        `Failed to parse log with topic ${log?.topics[0]} on contract ${log.address}`
+                    )
                 }
             }
         }
@@ -367,6 +394,30 @@ const addConstructorParamsToTrace = (trace: Trace, contracts: Contracts) => {
         })
     })
     debug(`Decoded ${trace.inputParams.length} constructor params.`)
+}
+
+const parseEvent = (contract: Contract, log: LogDescription): Event => {
+    const params: Param[] = []
+
+    // For each event param
+    log.eventFragment.inputs.forEach((param, i) => {
+        const components = addValuesToComponents(
+            log.eventFragment.inputs[i],
+            param
+        )
+
+        params.push({
+            name: log.eventFragment.inputs[i].name,
+            type: log.eventFragment.inputs[i].type,
+            value: log.args[i],
+            components,
+        })
+    })
+
+    return {
+        name: log.name,
+        params,
+    }
 }
 
 // if function components exists, recursively add arg values to the function components

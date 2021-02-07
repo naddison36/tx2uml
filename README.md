@@ -60,6 +60,7 @@ Options:
   -p, --noParams                Hide function params and return values (default: false)
   -g, --noGas                   Hide gas usages (default: false)
   -e, --noEther                 Hide ether values (default: false)
+  -l, --noLogDetails            Hide log details emitted from contract events. (default: false)
   -t, --noTxDetails             Hide transaction details like nonce, gas and tx fee (default: false)
   -v, --verbose                 run with debugging statements (default: false)
   -h, --help                    output usage information
@@ -103,8 +104,9 @@ In the sequence diagram, the lifeline of the delegated call will be in blue and 
 `tx2uml` needs an Ethereum archive node that supports the [debug_traceTransaction](https://geth.ethereum.org/docs/rpc/ns-debug#debug_tracetransaction) or [trace_replayTransaction](https://openethereum.github.io/JSONRPC-trace-module#trace_replaytransaction) JSON RPC APIs.
 
 Known Ethereum node clients that support `debug_traceTransaction` are:
-* [Go-Ethereum (Geth)](https://github.com/ethereum/go-ethereum)
-* [Turbo-Geth](https://github.com/ledgerwatch/turbo-geth)
+
+-   [Go-Ethereum (Geth)](https://github.com/ethereum/go-ethereum)
+-   [Turbo-Geth](https://github.com/ledgerwatch/turbo-geth)
 
 `tx2uml` will use `--nodeType geth` as it's default option.
 
@@ -122,9 +124,10 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 ```
 
 Known Ethereum node clients that support `trace_replayTransaction` are:
-* [OpenEthereum](https://github.com/openethereum/openethereum)
-* [Nethermind](https://nethermind.io/client)
-* [Hyperledger Besu](https://www.hyperledger.org/use/besu) supports tracing with method is [trace_transaction](https://besu.hyperledger.org/en/stable/Reference/API-Methods/#trace_transaction) which has the same response.
+
+-   [OpenEthereum](https://github.com/openethereum/openethereum)
+-   [Nethermind](https://nethermind.io/client)
+-   [Hyperledger Besu](https://www.hyperledger.org/use/besu) supports tracing with method is [trace_transaction](https://besu.hyperledger.org/en/stable/Reference/API-Methods/#trace_transaction) which has the same response.
 
 You can test if your node supports `trace_replayTransaction` with the following `curl` command
 
@@ -143,7 +146,7 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 
 Most Ethereum API providers do not provide tracing or debugging APIs as they are resource intensive on the server side.
 
-* [ArchiveNode.io](https://archivenode.io/) brings archive data on the Ethereum blockchain to small time developers who otherwise couldn't afford it. They offer both Nethermind and Turbo-Geth archive nodes. If you want to use one specifically, you can add either /nethermind or /turbogeth to the end of your endpoint.
+-   [ArchiveNode.io](https://archivenode.io/) brings archive data on the Ethereum blockchain to small time developers who otherwise couldn't afford it. They offer both Nethermind and Turbo-Geth archive nodes. If you want to use one specifically, you can add either /nethermind or /turbogeth to the end of your endpoint.
 
 [Infura](https://infura.io/) does not support tracing or debugging transactions.
 
@@ -177,7 +180,7 @@ See [Recent changes](https://plantuml.com/changes) for PlantUML's release notes.
 The following will generate png files for the above examples.
 
 ```
-java -jar ./lib/plantuml.jar ./examples/syntax.puml ./examples/delegate.puml 
+java -jar ./lib/plantuml.jar ./examples/syntax.puml ./examples/delegate.puml
 ```
 
 # UML Syntax
@@ -199,10 +202,25 @@ Good online resources for learning UML
 
 ## Development
 
-npm test, build and publish commands
+### Testing
+
+If you want to run all the tests, you'll need to export the following environment variables which are used by the tests to connect to different archive nodes.
+If you are using [Archive Node](https://archivenode.io/), you need to replace <your api key> with the API key provided to you.
+
+```
+export ARCHIVE_NODE_URL=https://api.archivenode.io/<your api key>/nethermind
+export NETHERMIND_URL=https://api.archivenode.io/<your api key>/nethermind
+export TURBO_GETH_URL=https://api.archivenode.io/<your api key>/turbogeth
+npm run test
+```
+
+Note two of the tests are currently failing due to bugs TurboGeth and Nethermind bugs.
+
+### Publishing
+
+npm build and publish commands
 
 ```bash
-npm run test
 npm run prettier:fix
 npm run clean
 npm run build

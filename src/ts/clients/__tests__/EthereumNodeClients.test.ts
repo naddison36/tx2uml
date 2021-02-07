@@ -145,6 +145,13 @@ describe("Ethereum Node Clients", () => {
             expect(tokenDetails[7].symbol).toEqual("")
             expect(tokenDetails[7].name).toEqual("")
         })
+        test("Symbol is bytes 4", async () => {
+            const tokenDetails = await nodeClient.getTokenDetails([
+                "0x1522900b6dafac587d499a862861c0869be6e428",
+            ])
+            expect(tokenDetails[0].symbol).toEqual("")
+            expect(tokenDetails[0].name).toEqual("")
+        })
         describe("Get transaction trace", () => {
             test("delegatecall", async () => {
                 const traces = await nodeClient.getTransactionTrace(

@@ -37,6 +37,10 @@ export declare type Trace = {
     childTraces: Trace[];
     error?: string;
 };
+export declare type Event = {
+    name: string;
+    params: Param[];
+};
 export declare type Contract = {
     address: string;
     contractName?: string;
@@ -48,6 +52,7 @@ export declare type Contract = {
     proxyImplementation?: string;
     ethersContract?: EthersContract;
     constructorInputs?: string;
+    events?: Event[];
 };
 export declare type TokenDetails = {
     address: string;
@@ -105,4 +110,5 @@ export declare class TransactionManager {
     getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
     setTokenAttributes(contracts: Contracts): Promise<Contracts>;
     static parseTraceParams(traces: Trace[][], contracts: Contracts): void;
+    static parseTransactionLogs(logs: Array<Log>, contracts: Contracts): void;
 }
