@@ -1,4 +1,5 @@
 import { BigNumber, Contract as EthersContract } from "ethers";
+import { Log } from "@ethersproject/abstract-provider";
 import EtherscanClient from "./clients/EtherscanClient";
 import EthereumNodeClient from "./clients/EthereumNodeClient";
 export declare enum MessageType {
@@ -36,6 +37,10 @@ export declare type Trace = {
     childTraces: Trace[];
     error?: string;
 };
+export declare type Event = {
+    name: string;
+    params: Param[];
+};
 export declare type Contract = {
     address: string;
     contractName?: string;
@@ -47,6 +52,7 @@ export declare type Contract = {
     proxyImplementation?: string;
     ethersContract?: EthersContract;
     constructorInputs?: string;
+    events?: Event[];
 };
 export declare type TokenDetails = {
     address: string;
@@ -64,6 +70,16 @@ export declare type Token = {
     decimals?: number;
     totalSupply?: BigNumber;
 };
+export declare type Transfer = {
+    from: string;
+    to: string;
+    value: BigNumber;
+    ether: boolean;
+    tokenAddress?: string;
+    tokenSymbol?: string;
+    tokenName?: string;
+    decimals?: number;
+};
 export interface TransactionDetails {
     hash: string;
     from: string;
@@ -78,6 +94,7 @@ export interface TransactionDetails {
     timestamp: Date;
     status: boolean;
     blockNumber: number;
+    logs: Array<Log>;
     error?: string;
 }
 export declare type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan";
@@ -93,4 +110,5 @@ export declare class TransactionManager {
     getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
     setTokenAttributes(contracts: Contracts): Promise<Contracts>;
     static parseTraceParams(traces: Trace[][], contracts: Contracts): void;
+    static parseTransactionLogs(logs: Array<Log>, contracts: Contracts): void;
 }

@@ -26,8 +26,47 @@ describe("Ethereum Node Clients", () => {
         TurboGeth: new GethClient(process.env.TURBO_GETH_URL),
         Nethermind: new OpenEthereumClient(process.env.NETHERMIND_URL),
     }
-
     describe.each(Object.entries(clients))("%s", (clientName, nodeClient) => {
+        describe("Parse Transfer events", () => {
+            test("mStable mUSD swap", async () => {
+                const txDetails = await nodeClient.getTransactionDetails(
+                    "0xb2b0e7b286e83255928f81713ff416e6b8d0854706366b6a9ace46a88095f024"
+                )
+                const transferEvents = EthereumNodeClient.parseTransferEvents(
+                    txDetails.logs
+                )
+                expect(transferEvents).toHaveLength(2)
+                expect(transferEvents[0].from).toEqual(
+                    "0x30bACd12a889C9Be7E5DA52aa089744C62AFF878"
+                )
+                expect(transferEvents[0].to).toEqual(
+                    "0xD55684f4369040C12262949Ff78299f2BC9dB735"
+                )
+                expect(transferEvents[0].tokenAddress).toEqual(
+                    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" // USDC
+                )
+                expect(transferEvents[0].value).toEqualBN("5100000000") // 5100 USDC to 6 decimals
+                expect(transferEvents[1].from).toEqual(
+                    "0xf617346A0FB6320e9E578E0C9B2A4588283D9d39"
+                )
+                expect(transferEvents[1].to).toEqual(
+                    "0x30bACd12a889C9Be7E5DA52aa089744C62AFF878"
+                )
+                expect(transferEvents[1].tokenAddress).toEqual(
+                    "0xdAC17F958D2ee523a2206206994597C13D831ec7" // USDT
+                )
+                expect(transferEvents[1].value).toEqualBN("5096940000") // 5,096.94 USDT to 6 decimals
+            })
+            test("No transfer events", async () => {
+                const txDetails = await nodeClient.getTransactionDetails(
+                    "0x7881d349d1f4f1b681396ea60ba195c4771a9d7e274ece434441f239f16f46f3"
+                )
+                const transferEvents = EthereumNodeClient.parseTransferEvents(
+                    txDetails.logs
+                )
+                expect(transferEvents).toHaveLength(0)
+            })
+        })
         describe("Get transaction details", () => {
             test("delegate call", async () => {
                 const tx = await nodeClient.getTransactionDetails(
@@ -105,6 +144,13 @@ describe("Ethereum Node Clients", () => {
             expect(tokenDetails[6].name).toEqual("Dai Stablecoin")
             expect(tokenDetails[7].symbol).toEqual("")
             expect(tokenDetails[7].name).toEqual("")
+        })
+        test("Symbol is bytes 4", async () => {
+            const tokenDetails = await nodeClient.getTokenDetails([
+                "0x1522900b6dafac587d499a862861c0869be6e428",
+            ])
+            expect(tokenDetails[0].symbol).toEqual("")
+            expect(tokenDetails[0].name).toEqual("")
         })
         describe("Get transaction trace", () => {
             test("delegatecall", async () => {

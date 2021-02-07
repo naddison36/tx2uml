@@ -45,6 +45,11 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
     .option("-g, --noGas", "Hide gas usages.", false)
     .option("-e, --noEther", "Hide ether values.", false)
     .option(
+        "-l, --noLogDetails",
+        "Hide log details emitted from contract events.",
+        false
+    )
+    .option(
         "-t, --noTxDetails",
         "Hide transaction details like nonce, gas and tx fee.",
         false
@@ -115,6 +120,9 @@ const tx2uml = async () => {
     const traces = await txManager.getTraces(transactions)
     const contracts = await txManager.getContracts(traces)
     TransactionManager.parseTraceParams(traces, contracts)
+    transactions.forEach(tx =>
+        TransactionManager.parseTransactionLogs(tx.logs, contracts)
+    )
 
     pumlStream = streamTxPlantUml(transactions, traces, contracts, {
         ...program,

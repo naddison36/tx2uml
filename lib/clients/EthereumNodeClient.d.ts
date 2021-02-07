@@ -1,5 +1,6 @@
 import { Provider } from "@ethersproject/providers";
-import { TokenDetails, Trace, TransactionDetails } from "../transaction";
+import { Log } from "@ethersproject/abstract-provider";
+import { TokenDetails, Trace, TransactionDetails, Transfer } from "../transaction";
 export default abstract class EthereumNodeClient {
     readonly url: string;
     readonly network: string;
@@ -9,4 +10,5 @@ export default abstract class EthereumNodeClient {
     abstract getTransactionError(tx: TransactionDetails): Promise<string>;
     getTransactionDetails(txHash: string): Promise<TransactionDetails>;
     getTokenDetails(contractAddresses: string[]): Promise<TokenDetails[]>;
+    static parseTransferEvents(logs: Array<Log>): Transfer[];
 }

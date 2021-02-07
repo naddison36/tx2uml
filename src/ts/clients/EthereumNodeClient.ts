@@ -1,35 +1,22 @@
-import { Contract, providers } from "ethers"
+import { Contract, ethers, providers } from "ethers"
 import { Provider } from "@ethersproject/providers"
+import { Log } from "@ethersproject/abstract-provider"
 import { VError } from "verror"
 
-import { TokenDetails, Trace, TransactionDetails } from "../transaction"
+import { TokenInfoABI, TransferEventsABI } from "./ABIs"
+import {
+    TokenDetails,
+    Trace,
+    TransactionDetails,
+    Transfer,
+} from "../transaction"
 import { transactionHash } from "../utils/regEx"
 import { TokenInfo } from "../types/TokenInfo"
 
 require("axios-debug-log")
+const debug = require("debug")("tx2uml")
 
 const tokenInfoAddress = "0xbA51331Bf89570F3f55BC26394fcCA05d4063C71"
-const TokenInfoABI = [
-    {
-        inputs: [
-            { internalType: "address[]", name: "tokens", type: "address[]" },
-        ],
-        name: "getInfoBatch",
-        outputs: [
-            {
-                components: [
-                    { internalType: "string", name: "symbol", type: "string" },
-                    { internalType: "string", name: "name", type: "string" },
-                ],
-                internalType: "struct TokenInfo.Info[]",
-                name: "infos",
-                type: "tuple[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-]
 
 export default abstract class EthereumNodeClient {
     public readonly ethersProvider: Provider
@@ -75,6 +62,7 @@ export default abstract class EthereumNodeClient {
                 gasUsed: receipt.gasUsed,
                 timestamp: new Date(block.timestamp * 1000),
                 status: receipt.status === 1,
+                logs: receipt.logs,
                 blockNumber: receipt.blockNumber,
             }
             // If the transaction failed, get the revert reason
@@ -99,10 +87,47 @@ export default abstract class EthereumNodeClient {
             TokenInfoABI,
             this.ethersProvider
         ) as TokenInfo
-        const results = await tokenInfo.getInfoBatch(contractAddresses)
-        return results.map((result, i) => ({
-            address: contractAddresses[i],
-            ...result,
-        }))
+        try {
+            const results = await tokenInfo.getInfoBatch(contractAddresses)
+            debug(`Got token information for ${results.length} contracts`)
+            return results.map((result, i) => ({
+                address: contractAddresses[i],
+                symbol: result.symbol,
+                name: result.name,
+            }))
+        } catch (err) {
+            console.error(
+                `Failed to get token information for contracts: ${contractAddresses}.\nerror: ${err.message}`
+            )
+            return []
+        }
+    }
+
+    // Parse Transfer events from a transaction receipt
+    static parseTransferEvents(logs: Array<Log>): Transfer[] {
+        const transferEvents: Transfer[] = []
+        // parse eve
+        const tokenEventInterface = new ethers.utils.Interface(
+            TransferEventsABI
+        )
+        logs.forEach(log => {
+            try {
+                const event = tokenEventInterface.parseLog(log)
+                if (event.name === "Transfer") {
+                    transferEvents.push({
+                        to: event.args.to,
+                        from: event.args.from,
+                        value: event.args.value,
+                        tokenAddress: log.address,
+                        ether: false,
+                    })
+                }
+            } catch (err) {
+                if (err.reason !== "no matching event")
+                    throw new VError(err, "Failed to parse event log")
+            }
+        })
+
+        return transferEvents
     }
 }
