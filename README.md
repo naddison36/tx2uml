@@ -62,6 +62,7 @@ Options:
   -e, --noEther                 Hide ether values (default: false)
   -l, --noLogDetails            Hide log details emitted from contract events. (default: false)
   -t, --noTxDetails             Hide transaction details like nonce, gas and tx fee (default: false)
+  -k, --etherscanKey            Etherscan API key. Register your API key at https://etherscan.io/myapikey
   -v, --verbose                 run with debugging statements (default: false)
   -h, --help                    output usage information
 

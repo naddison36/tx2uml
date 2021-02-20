@@ -54,6 +54,10 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
         "Hide transaction details like nonce, gas and tx fee.",
         false
     )
+    .option(
+        "-k, --etherscanKey",
+        "Etherscan API key. Register your API key at https://etherscan.io/myapikey"
+    )
     .option("-v, --verbose", "run with debugging statements.", false)
     .parse(process.argv)
 
@@ -95,7 +99,7 @@ const tx2uml = async () => {
                 return new GethClient(url)
         }
     })()
-    const etherscanClient = new EtherscanClient()
+    const etherscanClient = new EtherscanClient(program.etherscanKey)
     const txManager = new TransactionManager(
         ethereumNodeClient,
         etherscanClient
