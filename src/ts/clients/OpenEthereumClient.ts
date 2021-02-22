@@ -134,6 +134,7 @@ export default class OpenEthereumClient extends EthereumNodeClient {
                     gasUsed: convertBigNumber(trace.result?.gasUsed),
                     parentTrace,
                     childTraces: [],
+                    depth: traceDepth,
                     error: trace.error,
                 }
                 if (parentTrace) {

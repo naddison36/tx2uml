@@ -35,6 +35,7 @@ export declare type Trace = {
     gasUsed: BigNumber;
     parentTrace?: Trace;
     childTraces: Trace[];
+    depth: number;
     error?: string;
 };
 export declare type Event = {
@@ -53,6 +54,7 @@ export declare type Contract = {
     ethersContract?: EthersContract;
     constructorInputs?: string;
     events?: Event[];
+    minDepth?: number;
 };
 export declare type TokenDetails = {
     address: string;
@@ -111,4 +113,5 @@ export declare class TransactionManager {
     setTokenAttributes(contracts: Contracts): Promise<Contracts>;
     static parseTraceParams(traces: Trace[][], contracts: Contracts): void;
     static parseTransactionLogs(logs: Array<Log>, contracts: Contracts): void;
+    static parseTraceDepths(traces: Trace[][], contracts: Contracts): void;
 }

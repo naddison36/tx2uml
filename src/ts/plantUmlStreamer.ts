@@ -25,6 +25,7 @@ export interface PumlGenerationOptions {
     noTxDetails?: boolean
     noLogDetails?: boolean
     network?: string
+    depth?: number
 }
 
 const DelegateLifelineColor = "#809ECB"
@@ -63,7 +64,7 @@ export const streamMultiTxsPuml = (
     options: PumlGenerationOptions = {}
 ) => {
     pumlStream.push(`@startuml\n`)
-    writeParticipants(pumlStream, contracts)
+    writeParticipants(pumlStream, contracts, options)
     let i = 0
     for (const transaction of transactions) {
         pumlStream.push(`\ngroup ${transaction.hash}`)
@@ -88,7 +89,7 @@ export const streamSingleTxPuml = (
 ): Readable => {
     pumlStream.push(`@startuml\ntitle ${transaction.hash}\n`)
     pumlStream.push(genCaption(transaction, options))
-    writeParticipants(pumlStream, contracts)
+    writeParticipants(pumlStream, contracts, options)
     writeTransactionDetails(pumlStream, transaction, options)
     writeMessages(pumlStream, traces, options)
     writeEvents(pumlStream, contracts, options)
@@ -101,11 +102,15 @@ export const streamSingleTxPuml = (
 
 export const writeParticipants = (
     plantUmlStream: Readable,
-    contracts: Contracts
+    contracts: Contracts,
+    options: PumlGenerationOptions = {}
 ) => {
     plantUmlStream.push("\n")
 
     for (const [address, contract] of Object.entries(contracts)) {
+        // Do not write contract as a participant if min depth greater than trace depth
+        if (options.depth > 0 && contract.minDepth > options.depth) continue
+
         let name: string = ""
         if (contract.tokenName) {
             if (contract.symbol) {
@@ -174,6 +179,7 @@ export const writeMessages = (
     plantUmlStream.push("\n")
     // for each trace
     for (const trace of traces) {
+        if (trace.depth > options.depth) continue
         debug(
             `Write message ${trace.id} from ${shortAddress(
                 trace.from
@@ -428,7 +434,11 @@ export const writeEvents = (
     }
     // For each contract
     for (const contract of Object.values(contracts)) {
-        if (contract.ethersContract && contract.events.length) {
+        if (
+            contract.ethersContract &&
+            contract.events.length &&
+            contract.minDepth <= options.depth
+        ) {
             plantUmlStream.push(
                 `\nnote over ${participantId(contract.address)} #aqua`
             )

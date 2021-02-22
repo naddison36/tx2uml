@@ -76,7 +76,7 @@ export default class GethClient extends EthereumNodeClient {
 
             // recursively add the traces
             const traces: Trace[] = []
-            addTraces(response.data.result, traces, 0)
+            addTraces(response.data.result, traces, 0, 0)
 
             debug(
                 `Got ${traces.length} traces actions for tx hash ${txHash} from ${this.url}`
@@ -170,6 +170,7 @@ const addTraces = (
     callResponse: CallResponse,
     traces: Trace[],
     id: number,
+    depth: number,
     parentTrace?: Trace
 ): number => {
     const type = convertType(callResponse)
@@ -199,6 +200,7 @@ const addTraces = (
         gasUsed: convertBigNumber(callResponse.gasUsed),
         parentTrace,
         childTraces: [],
+        depth,
         error: callResponse.error,
     }
     if (parentTrace) {
@@ -208,7 +210,7 @@ const addTraces = (
     if (callResponse.calls) {
         callResponse.calls.forEach(childCall => {
             // recursively add traces
-            id = addTraces(childCall, traces, id, newTrace)
+            id = addTraces(childCall, traces, id, depth + 1, newTrace)
         })
     }
     return id

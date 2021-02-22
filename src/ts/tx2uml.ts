@@ -58,6 +58,7 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
         "-k, --etherscanKey",
         "Etherscan API key. Register your API key at https://etherscan.io/myapikey"
     )
+    .option("-d, --depth <value>", "Limit the transaction call depth.")
     .option("-v, --verbose", "run with debugging statements.", false)
     .parse(process.argv)
 
@@ -99,6 +100,18 @@ const tx2uml = async () => {
                 return new GethClient(url)
         }
     })()
+    let depth
+    if (program.depth) {
+        try {
+            depth = parseInt(program.depth)
+        } catch (err) {
+            console.error(
+                `Invalid depth "${program.depth}". Must be an integer.`
+            )
+            process.exit(1)
+        }
+    }
+
     const etherscanClient = new EtherscanClient(program.etherscanKey)
     const txManager = new TransactionManager(
         ethereumNodeClient,
@@ -123,6 +136,7 @@ const tx2uml = async () => {
 
     const traces = await txManager.getTraces(transactions)
     const contracts = await txManager.getContracts(traces)
+    TransactionManager.parseTraceDepths(traces, contracts)
     TransactionManager.parseTraceParams(traces, contracts)
     transactions.forEach(tx =>
         TransactionManager.parseTransactionLogs(tx.logs, contracts)
@@ -130,6 +144,7 @@ const tx2uml = async () => {
 
     pumlStream = streamTxPlantUml(transactions, traces, contracts, {
         ...program,
+        depth,
     })
 
     let filename = program.outputFileName

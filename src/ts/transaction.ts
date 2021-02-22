@@ -47,6 +47,7 @@ export type Trace = {
     gasUsed: BigNumber
     parentTrace?: Trace
     childTraces: Trace[]
+    depth: number
     error?: string
 }
 
@@ -67,6 +68,7 @@ export type Contract = {
     ethersContract?: EthersContract
     constructorInputs?: string
     events?: Event[]
+    minDepth?: number
 }
 
 export type TokenDetails = {
@@ -280,6 +282,20 @@ export class TransactionManager {
                         `Failed to parse log with topic ${log?.topics[0]} on contract ${log.address}`
                     )
                 }
+            }
+        }
+    }
+
+    // Marks each contract the minimum call depth it is used in
+    static parseTraceDepths(traces: Trace[][], contracts: Contracts) {
+        const flatTraces = traces.flat()
+        contracts[flatTraces[0].from].minDepth = 0
+        for (const trace of flatTraces) {
+            if (
+                contracts[trace.to].minDepth == undefined ||
+                trace.depth < contracts[trace.to].minDepth
+            ) {
+                contracts[trace.to].minDepth = trace.depth
             }
         }
     }

@@ -18,6 +18,7 @@ const baseTrace: Trace = {
     inputParams: [],
     outputParams: [],
     childTraces: [],
+    depth: 0,
 }
 
 const testContracts: Contracts = {
