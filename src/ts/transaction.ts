@@ -254,10 +254,11 @@ export class TransactionManager {
                         addOutputParamsToTrace(trace, txDescription)
                     } catch (err) {
                         if (!err.message.match("no matching function")) {
-                            throw new VError(
+                            const error = new VError(
                                 err,
-                                `Failed to parse trace with id ${trace.id} selector ${trace.funcSelector}`
+                                `Failed to parse selector ${trace.funcSelector} in trace with id ${trace.id} from ${trace.from} to ${trace.to}`
                             )
+                            console.warn(error)
                         }
                     }
                 }

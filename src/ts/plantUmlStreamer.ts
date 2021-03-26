@@ -437,7 +437,7 @@ export const writeEvents = (
         if (
             contract.ethersContract &&
             contract.events.length &&
-            contract.minDepth <= options.depth
+            (options.depth === undefined || contract.minDepth <= options.depth)
         ) {
             plantUmlStream.push(
                 `\nnote over ${participantId(contract.address)} #aqua`
