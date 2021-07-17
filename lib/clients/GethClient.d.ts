@@ -1,5 +1,4 @@
 import { Trace, TransactionDetails } from "../transaction";
-import { Provider } from "@ethersproject/providers";
 import EthereumNodeClient from "./EthereumNodeClient";
 export declare type CallResponse = {
     type: "CALL" | "CALLCODE" | "CREATE" | "CREATE2" | "DELEGATECALL" | "SELFDESTRUCT" | "STATICCALL";
@@ -16,10 +15,9 @@ export declare type CallResponse = {
 };
 export default class GethClient extends EthereumNodeClient {
     readonly url: string;
-    readonly network: string;
-    readonly provider: Provider;
+    readonly chain: string;
     private jsonRpcId;
-    constructor(url?: string, network?: string);
+    constructor(url?: string, chain?: string);
     getTransactionTrace(txHash: string): Promise<Trace[]>;
     getTransactionError(tx: TransactionDetails): Promise<string>;
 }

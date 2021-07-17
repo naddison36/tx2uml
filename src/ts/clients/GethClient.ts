@@ -1,10 +1,9 @@
 import axios from "axios"
-import { BigNumber, providers } from "ethers"
+import { BigNumber } from "ethers"
 import { VError } from "verror"
 
 import { MessageType, Trace, TransactionDetails } from "../transaction"
 import { transactionHash } from "../utils/regEx"
-import { Provider } from "@ethersproject/providers"
 import { hexlify, toUtf8String } from "ethers/lib/utils"
 import EthereumNodeClient from "./EthereumNodeClient"
 
@@ -33,15 +32,13 @@ export type CallResponse = {
 }
 
 export default class GethClient extends EthereumNodeClient {
-    public readonly provider: Provider
     private jsonRpcId = 0
 
     constructor(
         public readonly url: string = "http://localhost:8545",
-        public readonly network = "mainnet"
+        public readonly chain = "mainnet"
     ) {
-        super(url, network)
-        this.provider = new providers.JsonRpcProvider(url, network)
+        super(url, chain)
     }
 
     async getTransactionTrace(txHash: string): Promise<Trace[]> {

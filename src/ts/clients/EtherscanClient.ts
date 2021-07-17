@@ -12,6 +12,8 @@ const etherscanBaseUrls = {
     ropsten: "https://api-ropsten.etherscan.io/api",
     rinkeby: "https://api-rinkeby.etherscan.io/api",
     kovan: "https://api-kovan.etherscan.io/api",
+    goerli: "https://api-goerli.etherscan.io/api",
+    polygon: "https://api.polygonscan.com/api",
 }
 
 export default class EtherscanClient {

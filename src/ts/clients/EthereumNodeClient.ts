@@ -23,8 +23,9 @@ export default abstract class EthereumNodeClient {
 
     constructor(
         public readonly url: string = "http://localhost:8545",
-        public readonly network = "mainnet"
+        public readonly chain = "mainnet"
     ) {
+        const network = chain === "polygon" ? "matic" : chain
         this.ethersProvider = new providers.JsonRpcProvider(url, network)
     }
 

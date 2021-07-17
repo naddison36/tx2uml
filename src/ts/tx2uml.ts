@@ -58,6 +58,11 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
         "-k, --etherscanKey",
         "Etherscan API key. Register your API key at https://etherscan.io/myapikey"
     )
+    .option(
+        "-c, --chain <value>",
+        "mainnet, polygon, ropsten, kovan, rinkeby or goerli",
+        "mainnet"
+    )
     .option("-d, --depth <value>", "Limit the transaction call depth.")
     .option("-v, --verbose", "run with debugging statements.", false)
     .parse(process.argv)
@@ -82,14 +87,16 @@ const tx2uml = async () => {
         process.exit(1)
     }
 
+    const chain = program.chain || "mainnet"
+
     const ethereumNodeClient = ((): EthereumNodeClient => {
         switch (nodeType) {
             case "openeth":
                 debug("Using OpenEthereum client.")
-                return new OpenEthereumClient(url)
+                return new OpenEthereumClient(url, chain)
             case "nether":
                 debug("Using Nethermind client.")
-                return new OpenEthereumClient(url)
+                return new OpenEthereumClient(url, chain)
             case "besu":
                 console.error(
                     "Hyperledger Besu nodes are not currently supported"
@@ -97,7 +104,7 @@ const tx2uml = async () => {
                 process.exit(2)
             default:
                 debug("Using Geth client.")
-                return new GethClient(url)
+                return new GethClient(url, chain)
         }
     })()
     let depth
@@ -112,7 +119,7 @@ const tx2uml = async () => {
         }
     }
 
-    const etherscanClient = new EtherscanClient(program.etherscanKey)
+    const etherscanClient = new EtherscanClient(program.etherscanKey, chain)
     const txManager = new TransactionManager(
         ethereumNodeClient,
         etherscanClient

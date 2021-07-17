@@ -1,5 +1,5 @@
 import axios from "axios"
-import { BigNumber, providers } from "ethers"
+import { BigNumber } from "ethers"
 import { VError } from "verror"
 
 import { MessageType, Trace, TransactionDetails } from "../transaction"
@@ -41,8 +41,6 @@ export type TraceResponse = {
 }
 
 export default class OpenEthereumClient extends EthereumNodeClient {
-    public readonly ethersProvider
-
     private jsonRpcId = 0
 
     constructor(
@@ -50,7 +48,6 @@ export default class OpenEthereumClient extends EthereumNodeClient {
         public readonly network = "mainnet"
     ) {
         super(url, network)
-        this.ethersProvider = new providers.JsonRpcProvider(url, network)
     }
 
     async getTransactionTrace(txHash: string): Promise<Trace[]> {
