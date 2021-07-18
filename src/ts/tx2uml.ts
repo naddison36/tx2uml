@@ -55,6 +55,11 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
         false
     )
     .option(
+        "-x, --noDelegates",
+        "Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries.",
+        false
+    )
+    .option(
         "-k, --etherscanKey",
         "Etherscan API key. Register your API key at https://etherscan.io/myapikey"
     )
@@ -141,18 +146,31 @@ const tx2uml = async () => {
         }
     }
 
-    const traces = await txManager.getTraces(transactions)
-    const contracts = await txManager.getContracts(traces)
-    TransactionManager.parseTraceDepths(traces, contracts)
-    TransactionManager.parseTraceParams(traces, contracts)
+    const transactionTracesUnfiltered = await txManager.getTraces(transactions)
+    const contracts = await txManager.getContracts(transactionTracesUnfiltered)
+    TransactionManager.parseTraceDepths(transactionTracesUnfiltered, contracts)
+    TransactionManager.parseTraceParams(transactionTracesUnfiltered, contracts)
+    const [
+        transactionTraces,
+        usedContracts,
+    ] = TransactionManager.filterTransactionTraces(
+        transactionTracesUnfiltered,
+        contracts,
+        program
+    )
     transactions.forEach(tx =>
         TransactionManager.parseTransactionLogs(tx.logs, contracts)
     )
 
-    pumlStream = streamTxPlantUml(transactions, traces, contracts, {
-        ...program,
-        depth,
-    })
+    pumlStream = streamTxPlantUml(
+        transactions,
+        transactionTraces,
+        usedContracts,
+        {
+            ...program,
+            depth,
+        }
+    )
 
     let filename = program.outputFileName
     if (!filename) {

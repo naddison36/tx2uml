@@ -300,6 +300,84 @@ export class TransactionManager {
             }
         }
     }
+
+    // Filter out delegated calls from proxies to their implementations.
+    static filterTransactionTraces(
+        transactionTraces: Trace[][],
+        contracts: Contracts,
+        options: { noDelegates?: boolean }
+    ): [Trace[][], Contracts] {
+        // If proxies and libraries are to be included then don't filter the traces
+        if (!options.noDelegates) return [transactionTraces, contracts]
+
+        const filteredTransactionTraces = transactionTraces.map(t => [])
+        let usedAddresses = new Set<string>()
+
+        // For each transaction
+        transactionTraces.forEach((tx, i) => {
+            // recursively get a tree of traces without delegated calls from proxies
+            const filteredTraces = filterOutDelegatedTraces(tx[0])
+            filteredTransactionTraces[i] = arrayifyTraces(filteredTraces[0])
+
+            // Add the tx sender to set of used addresses
+            usedAddresses.add(filteredTransactionTraces[i][0].from)
+            // Add all the to addresses of all the trades to the set of used addresses
+            filteredTransactionTraces[i].forEach(t => usedAddresses.add(t.to))
+        })
+
+        // Filter out contracts that are no longer used from filtered out traces
+        const usedContracts: Contracts = {}
+        Array.from(usedAddresses).forEach(
+            address => (usedContracts[address] = contracts[address])
+        )
+
+        return [filteredTransactionTraces, usedContracts]
+    }
+}
+
+// Recursively filter out delegate calls from proxies or libraries depending on options
+const filterOutDelegatedTraces = (
+    trace: Trace,
+    lastValidParentTrace?: Trace // there can be multiple traces removed
+): Trace[] => {
+    // If parent trace was a proxy
+    const removeTrace = trace.type === MessageType.DelegateCall
+
+    const parentTrace = removeTrace
+        ? lastValidParentTrace // set to the last parent not removed
+        : trace.parentTrace // parent is not a proxy so is included
+
+    // filter the child traces
+    let filteredChildren: Trace[] = []
+    trace.childTraces.forEach(child => {
+        filteredChildren = filteredChildren.concat(
+            filterOutDelegatedTraces(child, parentTrace)
+        )
+    })
+    // if trace is being removed, return child traces so this trace is removed
+    if (removeTrace) {
+        return filteredChildren
+    }
+    // else, attach child traces to copied trace and return in array
+    return [
+        {
+            ...trace,
+            proxy: false,
+            childTraces: filteredChildren,
+            parentTrace: lastValidParentTrace,
+            delegatedFrom: trace.from,
+            type: removeTrace ? MessageType.Call : trace.type,
+        },
+    ]
+}
+
+const arrayifyTraces = (trace: Trace): Trace[] => {
+    let traces = [trace]
+    trace.childTraces.forEach(child => {
+        const arrayifiedChildren = arrayifyTraces(child)
+        traces = traces.concat(arrayifiedChildren)
+    })
+    return traces
 }
 
 // map of function selectors to Ethers Contracts

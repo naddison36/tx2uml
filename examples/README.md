@@ -26,7 +26,7 @@ tx2uml 0x1fa132b63521e60f4debcfe2180aa90c771b803b7470c0db4c7913bcf207449b
 
 ## Uniswap V1 Remove Liquidity with a delegatecall
 
-This example is removing liquidity from the [Uniswap](https://uniswap.exchange/) MKR pool. The 69.75 ETH is a value transfer, not a contract call.
+This example is removing liquidity from the [Uniswap V1](https://uniswap.exchange/) MKR pool. The 69.75 ETH is a value transfer, not a contract call.
 This transaction is also a little tricky in the second `removeLiquidity` call is a `delegatecall`. The subsequent `balanceOf`, ETH transfer and `transfer` calls in blue are executed by the third contract but made to appear to be executed from the second contract. The ETH transfer is from the second contract even though the third contract executed the code. Execution that has been delegated is marked with a blue lifeline.
 
 The two commas in the `amount` value 70,,650,110,457,930,182,639 marks the 18th decimal place which is used to convert wei to Ether and many token values.
@@ -39,7 +39,7 @@ tx2uml 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca
 
 ## Uniswap V1 Factory
 
-This [Uniswap](https://uniswap.exchange/) transaction creates a new market by creating a new exchange contract. The contract create message is the second message with the circle at the end of the array.
+This [Uniswap V1](https://uniswap.exchange/) transaction creates a new market by creating a new exchange contract. The contract create message is the second message with the circle at the end of the array.
 
 If the contract has not been verified on Etherscan, the constructor params will be `?` as tx2uml will not know what the constructor params were.
 
@@ -141,6 +141,27 @@ tx2uml 0xa87905dacd83c7ffaba0828ae52ecc1723c036432e97ee6e0af6e528e039ba3a --noPa
 ```
 
 ![Aave Flash Loan](./aaveFlashLoan.png)
+
+
+## mStable Swap
+
+[mStable](https://mstable.org/) swap of 180,000 USD Coin (USDC) for 179,959 Tether USD (USDT) with the delegate calls hidden with the `--noDelegates` option.
+
+```
+tx2uml 0x7210c306842d275044789b02ae64aff4513ed812682de7b1cbeb12a4a0dd07af --noDelegates --noLogDetails --noGas
+```
+
+![mStable USD Swap](./musd-v3-swap-noproxy.png)
+
+The below example is the same swap with the delegate calls.
+The second call is from the [mUSD proxy contract](https://etherscan.io/address/0xe2f2a5c287993345a840db3b0845fbc70f5935a5#code) to the [mUSD logic implementation](https://etherscan.io/address/0x15b2838cd28cc353afbe59385db3f366d8945aee#code).
+The third call is a call the [Manager library contract](https://etherscan.io/address/0x1e91f826fa8aa4fa4d3f595898af3a64dd188848#code).
+The reason the function call is not resolved is the Solidity compiler does not include public and external functions in library Application Binary Interfaces (ABIs).
+This means tx2uml can't match the function selector `0x4e3d3913` to the library's `computeSwap` function.
+
+You can also see the delegate calls from USDC's proxy has been removed.
+
+![mStable USD Swap](./musd-v3-swap.png)
 
 ## bZx Flash Loan Attacks
 

@@ -4,15 +4,9 @@
 
 [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language) sequence diagram generator for Ethereum transaction.
 
-The below example transaction is a [mStable](https://mstable.org/) swap from 5,100 USD Coin (USDC) to 5,096 Tether USD (USDT).
+![Uniswap V1 remove liquidity](./examples/uniswapMKRRemove.png)
 
-```
-tx2uml 0xb2b0e7b286e83255928f81713ff416e6b8d0854706366b6a9ace46a88095f024
-```
-
-![mStable USD Swap](./examples/mStableUSDSwap.png)
-
-See a lot more examples [here](./examples/README.md)
+See a lot more examples with different options [here](./examples/README.md)
 
 # Install
 
@@ -62,6 +56,7 @@ Options:
   -e, --noEther                 Hide ether values (default: false)
   -l, --noLogDetails            Hide log details emitted from contract events. (default: false)
   -t, --noTxDetails             Hide transaction details like nonce, gas and tx fee (default: false)
+  -x, --noDelegates             Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries. (default: false)
   -k, --etherscanKey            Etherscan API key. Register your API key at https://etherscan.io/myapikey
   -d, --depth <value>           Limit the transaction call depth.
   -v, --verbose                 run with debugging statements (default: false)
@@ -93,9 +88,11 @@ Call and delegate messages with a dotted line are proxy calls that uses the call
 
 ## Delegate Calls
 
-A [delegatecall](https://github.com/ethereum/EIPs/issues/23) allows code to be executed on a contract in the context of the calling contract. That is, the delegated code appears as if it is running on the caller's contract. This means it has access to the caller's storage, Ether and calls will appear to come from the caller.
+A [delegatecall](https://github.com/ethereum/EIPs/issues/23) allows code to be executed on a contract in the context of the calling contract. That is, the delegated code appears as if it is running on the caller's contract. This means it has access to the caller's storage, Ether and calls will appear to come from the caller. Examples of delegate calls are proxy contracts calling their implementations or calls to library contracts.
 
 In the sequence diagram, the lifeline of the delegated call will be in blue and calls will come from the calling contract. In the below example, the third call is the delegate call to the `0x3333..4444` contract. Although the code is executed on the `0x3333..4444` contract, the context is from `0x2222..3333` so the two calls to `0x4444..5555` are shown in blue and are from `0x2222..3333`.
+
+The `-x` or `--noDelegates` option can be used to hide all delegate calls.
 
 ![Delegate example](./examples/delegate.png)
 

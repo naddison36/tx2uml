@@ -7,6 +7,7 @@ export interface PumlGenerationOptions {
     noEther?: boolean;
     noTxDetails?: boolean;
     noLogDetails?: boolean;
+    noDelegates?: boolean;
     network?: string;
     depth?: number;
 }
