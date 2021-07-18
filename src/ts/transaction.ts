@@ -341,8 +341,10 @@ const filterOutDelegatedTraces = (
     const removeTrace = trace.type === MessageType.DelegateCall
 
     const parentTrace = removeTrace
-        ? lastValidParentTrace // set to the last parent not removed
-        : trace.parentTrace // parent is not a proxy so is included
+        ? // set to the last parent not removed
+          lastValidParentTrace
+        : // parent is not a proxy so is included
+          { ...trace.parentTrace, type: MessageType.Call }
 
     // filter the child traces
     let filteredChildren: Trace[] = []
