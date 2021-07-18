@@ -142,7 +142,6 @@ tx2uml 0xa87905dacd83c7ffaba0828ae52ecc1723c036432e97ee6e0af6e528e039ba3a --noPa
 
 ![Aave Flash Loan](./aaveFlashLoan.png)
 
-
 ## mStable Swap
 
 [mStable](https://mstable.org/) swap of 180,000 USD Coin (USDC) for 179,959 Tether USD (USDT) with the delegate calls hidden with the `--noDelegates` option.

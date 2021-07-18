@@ -42,9 +42,8 @@ export default abstract class EthereumNodeClient {
         try {
             // get the transaction and receipt concurrently
             const txPromise = this.ethersProvider.getTransaction(txHash)
-            const receiptPromise = this.ethersProvider.getTransactionReceipt(
-                txHash
-            )
+            const receiptPromise =
+                this.ethersProvider.getTransactionReceipt(txHash)
             const [tx, receipt] = await Promise.all([txPromise, receiptPromise])
 
             const block = await this.ethersProvider.getBlock(

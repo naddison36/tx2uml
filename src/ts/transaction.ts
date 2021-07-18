@@ -220,9 +220,8 @@ export class TransactionManager {
     }
 
     static parseTraceParams(traces: Trace[][], contracts: Contracts) {
-        const functionSelector2Contract = mapFunctionSelectors2Contracts(
-            contracts
-        )
+        const functionSelector2Contract =
+            mapFunctionSelectors2Contracts(contracts)
         for (const trace of traces.flat()) {
             if (trace.inputs?.length >= 10) {
                 if (trace.type === MessageType.Create) {
@@ -244,11 +243,10 @@ export class TransactionManager {
                         trace.proxy = true
                     }
                     try {
-                        const txDescription = contract.interface.parseTransaction(
-                            {
+                        const txDescription =
+                            contract.interface.parseTransaction({
                                 data: trace.inputs,
-                            }
-                        )
+                            })
                         trace.funcName = txDescription.name
                         addInputParamsToTrace(trace, txDescription)
                         addOutputParamsToTrace(trace, txDescription)
@@ -274,9 +272,8 @@ export class TransactionManager {
             if (contract?.ethersContract) {
                 // try and parse the log topic
                 try {
-                    const event = contract.ethersContract.interface.parseLog(
-                        log
-                    )
+                    const event =
+                        contract.ethersContract.interface.parseLog(log)
                     contract.events.push(parseEvent(contract, event))
                 } catch (err) {
                     debug(
@@ -396,9 +393,8 @@ const mapFunctionSelectors2Contracts = (
             Object.values(contract.ethersContract.interface.fragments)
                 .filter(fragment => fragment.type === "function")
                 .forEach((fragment: FunctionFragment) => {
-                    const sighash = contract.ethersContract.interface.getSighash(
-                        fragment
-                    )
+                    const sighash =
+                        contract.ethersContract.interface.getSighash(fragment)
                     if (!functionSelector2Contract[sighash]) {
                         functionSelector2Contract[sighash] = []
                     }

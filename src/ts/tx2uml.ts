@@ -150,14 +150,12 @@ const tx2uml = async () => {
     const contracts = await txManager.getContracts(transactionTracesUnfiltered)
     TransactionManager.parseTraceDepths(transactionTracesUnfiltered, contracts)
     TransactionManager.parseTraceParams(transactionTracesUnfiltered, contracts)
-    const [
-        transactionTraces,
-        usedContracts,
-    ] = TransactionManager.filterTransactionTraces(
-        transactionTracesUnfiltered,
-        contracts,
-        program
-    )
+    const [transactionTraces, usedContracts] =
+        TransactionManager.filterTransactionTraces(
+            transactionTracesUnfiltered,
+            contracts,
+            program
+        )
     transactions.forEach(tx =>
         TransactionManager.parseTransactionLogs(tx.logs, contracts)
     )
