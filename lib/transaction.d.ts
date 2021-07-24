@@ -116,5 +116,6 @@ export declare class TransactionManager {
     static parseTraceDepths(traces: Trace[][], contracts: Contracts): void;
     static filterTransactionTraces(transactionTraces: Trace[][], contracts: Contracts, options: {
         noDelegates?: boolean;
+        excludedContracts?: string[];
     }): [Trace[][], Contracts];
 }

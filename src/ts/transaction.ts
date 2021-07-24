@@ -302,18 +302,22 @@ export class TransactionManager {
     static filterTransactionTraces(
         transactionTraces: Trace[][],
         contracts: Contracts,
-        options: { noDelegates?: boolean }
+        options: { noDelegates?: boolean; excludedContracts?: string[] }
     ): [Trace[][], Contracts] {
-        // If proxies and libraries are to be included then don't filter the traces
-        if (!options.noDelegates) return [transactionTraces, contracts]
-
         const filteredTransactionTraces = transactionTraces.map(t => [])
         let usedAddresses = new Set<string>()
 
         // For each transaction
         transactionTraces.forEach((tx, i) => {
-            // recursively get a tree of traces without delegated calls from proxies
-            const filteredTraces = filterOutDelegatedTraces(tx[0])
+            // recursively remove any calls to excluded contracts
+            const filteredExcludedTraces = filterExcludedContracts(
+                tx[0],
+                options.excludedContracts
+            )
+            // recursively get a tree of traces without delegated calls
+            const filteredTraces: Trace[] = options.noDelegates
+                ? filterOutDelegatedTraces(filteredExcludedTraces)
+                : [filteredExcludedTraces]
             filteredTransactionTraces[i] = arrayifyTraces(filteredTraces[0])
 
             // Add the tx sender to set of used addresses
@@ -364,10 +368,33 @@ const filterOutDelegatedTraces = (
             proxy: false,
             childTraces: filteredChildren,
             parentTrace: lastValidParentTrace,
+            depth: (lastValidParentTrace?.depth || 0) + 1,
             delegatedFrom: trace.from,
             type: removeTrace ? MessageType.Call : trace.type,
         },
     ]
+}
+
+// Recursively filter out any calls to excluded contracts
+const filterExcludedContracts = (
+    trace: Trace,
+    excludedContracts: string[] = []
+): Trace => {
+    // filter the child traces
+    let filteredChildren: Trace[] = []
+    trace.childTraces.forEach(child => {
+        // If the child trace is a call to an excluded contract, then skip it
+        if (excludedContracts.includes(child.to)) return
+
+        filteredChildren = filteredChildren.concat(
+            filterExcludedContracts(child, excludedContracts)
+        )
+    })
+
+    return {
+        ...trace,
+        childTraces: filteredChildren,
+    }
 }
 
 const arrayifyTraces = (trace: Trace): Trace[] => {

@@ -60,6 +60,10 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
         false
     )
     .option(
+        "-a, --noAddresses <value>",
+        "Hide calls to contracts in a list of comma separated addresses with a 0x prefix."
+    )
+    .option(
         "-k, --etherscanKey",
         "Etherscan API key. Register your API key at https://etherscan.io/myapikey"
     )
@@ -123,6 +127,9 @@ const tx2uml = async () => {
             process.exit(1)
         }
     }
+    const excludedContracts = program.noAddresses
+        ? program.noAddresses.split(",")
+        : []
 
     const etherscanClient = new EtherscanClient(program.etherscanKey, chain)
     const txManager = new TransactionManager(
@@ -154,7 +161,10 @@ const tx2uml = async () => {
         TransactionManager.filterTransactionTraces(
             transactionTracesUnfiltered,
             contracts,
-            program
+            {
+                ...program,
+                excludedContracts,
+            }
         )
     transactions.forEach(tx =>
         TransactionManager.parseTransactionLogs(tx.logs, contracts)
