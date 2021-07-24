@@ -102,6 +102,12 @@ The `-x` or `--noDelegates` option can be used to hide all delegate calls.
 
 `tx2uml` needs an Ethereum archive node that supports the [debug_traceTransaction](https://geth.ethereum.org/docs/rpc/ns-debug#debug_tracetransaction) or [trace_replayTransaction](https://openethereum.github.io/JSONRPC-trace-module#trace_replaytransaction) JSON RPC APIs.
 
+The ethereum node url can be set with the `-u` or `--url` options or by exporting the `ARCHIVE_NODE_URL` environment variable. For example
+
+```bash
+export ARCHIVE_NODE_URL=https://api.archivenode.io/<your API key>/turbogeth 
+```
+
 Known Ethereum node clients that support `debug_traceTransaction` are:
 
 -   [Go-Ethereum (Geth)](https://github.com/ethereum/go-ethereum)
@@ -160,7 +166,7 @@ https://api.etherscan.io/api?module=contract&action=getsourcecode&address=0xBB9b
 
 [PlantUML](https://plantuml.com/) is a Java program that can convert Plant UML syntax into png, svg or eps images. tx2uml pipes the PlantUML to the spawned Java process which then pipes the image outputs to a file.
 
-[plantuml.jar version 1.2020.26](http://sourceforge.net/projects/plantuml/files/plantuml.1.2020.26.jar/download) is currently shipped in the [lib](./lib) folder.
+[plantuml.jar version 1.2021.8](http://sourceforge.net/projects/plantuml/files/plantuml.1.2021.8.jar/download) is currently shipped in the [lib](./lib) folder.
 
 See [Recent changes](https://plantuml.com/changes) for PlantUML's release notes.
 
