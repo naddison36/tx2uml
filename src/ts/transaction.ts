@@ -66,6 +66,7 @@ export type Contract = {
     decimals?: number
     proxyImplementation?: string
     ethersContract?: EthersContract
+    delegatedToContracts?: Contract[]
     constructorInputs?: string
     events?: Event[]
     minDepth?: number
@@ -170,16 +171,53 @@ export class TransactionManager {
     async getContracts(transactionsTraces: Trace[][]): Promise<Contracts> {
         const flatTraces = transactionsTraces.flat()
         const participantAddresses: string[] = []
+        // for each contract, maps all the contract addresses it can delegate to.
+        // eg maps from a proxy contract to an implementation
+        // or maps a contract calls for many libraries
+        const delegatesToContracts: { [address: string]: string[] } = {}
+
         for (const trace of Object.values(flatTraces)) {
             // duplicates are ok. They will be filtered later
             participantAddresses.push(trace.from)
             participantAddresses.push(trace.to)
+
+            // If trace is a delegate call
+            if (trace.type === MessageType.DelegateCall) {
+                // If not already mapped to calling contract
+                if (!delegatesToContracts[trace.from]) {
+                    // Start a new list of contracts that are delegated to
+                    delegatesToContracts[trace.from] = [trace.to]
+                } else if (
+                    // if contract has already been mapped and
+                    // contract it delegates to has not already added
+                    !delegatesToContracts[trace.from].includes(trace.to)
+                ) {
+                    // Add the contract being called to the existing list of contracts that are delegated to
+                    delegatesToContracts[trace.from].push(trace.to)
+                }
+            }
         }
 
+        // Convert to a Set to remove duplicates and then back to an array
+        const uniqueAddresses = Array.from(new Set(participantAddresses))
+        debug(`${uniqueAddresses.length} contracts in the transactions`)
+
         // get contract ABIs from Etherscan
-        const contracts = await this.getContractsFromAddresses(
-            participantAddresses
-        )
+        const contracts = await this.getContractsFromAddresses(uniqueAddresses)
+
+        // map the delegatedToContracts on each contract
+        for (const [address, toAddresses] of Object.entries(
+            delegatesToContracts
+        )) {
+            contracts[address].delegatedToContracts =
+                // map the to addresses to Contract objects
+                // with the address of the contract the delegate call is coming from
+                toAddresses.map(toAddress => ({
+                    ...contracts[toAddress],
+                    address,
+                }))
+        }
+
         // Get token name and symbol from chain
         return await this.setTokenAttributes(contracts)
     }
@@ -187,13 +225,10 @@ export class TransactionManager {
     // Get the contract names and ABIs from Etherscan
     async getContractsFromAddresses(addresses: string[]): Promise<Contracts> {
         const contracts: Contracts = {}
-        // Convert to a Set to remove duplicates and then back to an array
-        const uniqueAddresses = Array.from(new Set(addresses))
-        debug(`${uniqueAddresses.length} contracts in the transactions`)
 
         // Get the contract details in parallel with a concurrency limit
         const limit = pLimit(this.apiConcurrencyLimit)
-        const getContractPromises = uniqueAddresses.map(address => {
+        const getContractPromises = addresses.map(address => {
             return limit(() => this.etherscanClient.getContract(address))
         })
         const results: Contract[] = await Promise.all(getContractPromises)
@@ -281,6 +316,21 @@ export class TransactionManager {
                     )
                 }
             }
+            // also parse the events on any contracts that are delegated to
+            contract?.delegatedToContracts?.forEach(delegatedToContract => {
+                // try and parse the log topic
+                try {
+                    const event =
+                        delegatedToContract.ethersContract.interface.parseLog(
+                            log
+                        )
+                    contract.events.push(parseEvent(contract, event))
+                } catch (err) {
+                    debug(
+                        `Failed to parse log with topic ${log?.topics[0]} on contract ${log.address}`
+                    )
+                }
+            })
         }
     }
 
@@ -298,7 +348,8 @@ export class TransactionManager {
         }
     }
 
-    // Filter out delegated calls from proxies to their implementations.
+    // Filter out delegated calls from proxies to their implementations
+    // and remove any excluded contracts
     static filterTransactionTraces(
         transactionTraces: Trace[][],
         contracts: Contracts,

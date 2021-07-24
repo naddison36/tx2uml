@@ -155,8 +155,6 @@ const tx2uml = async () => {
 
     const transactionTracesUnfiltered = await txManager.getTraces(transactions)
     const contracts = await txManager.getContracts(transactionTracesUnfiltered)
-    TransactionManager.parseTraceDepths(transactionTracesUnfiltered, contracts)
-    TransactionManager.parseTraceParams(transactionTracesUnfiltered, contracts)
     const [transactionTraces, usedContracts] =
         TransactionManager.filterTransactionTraces(
             transactionTracesUnfiltered,
@@ -166,8 +164,10 @@ const tx2uml = async () => {
                 excludedContracts,
             }
         )
+    TransactionManager.parseTraceDepths(transactionTraces, usedContracts)
+    TransactionManager.parseTraceParams(transactionTraces, usedContracts)
     transactions.forEach(tx =>
-        TransactionManager.parseTransactionLogs(tx.logs, contracts)
+        TransactionManager.parseTransactionLogs(tx.logs, usedContracts)
     )
 
     pumlStream = streamTxPlantUml(

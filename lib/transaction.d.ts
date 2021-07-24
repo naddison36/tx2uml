@@ -52,6 +52,7 @@ export declare type Contract = {
     decimals?: number;
     proxyImplementation?: string;
     ethersContract?: EthersContract;
+    delegatedToContracts?: Contract[];
     constructorInputs?: string;
     events?: Event[];
     minDepth?: number;
