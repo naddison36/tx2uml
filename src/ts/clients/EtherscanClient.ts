@@ -65,9 +65,23 @@ export default class EtherscanClient {
                 contractAddress,
                 response.data.result[0].ABI
             )
+            // Parse Vyper contract name from Natspec
+            let contractName = response.data.result[0].ContractName
+            if (
+                contractName === "Vyper_contract" &&
+                response.data.result[0].SourceCode
+            ) {
+                const title =
+                    response.data.result[0].SourceCode.match(
+                        /\@title\s+(.+)\s+/
+                    )
+                if (title?.[1]) {
+                    contractName = title?.[1]
+                }
+            }
             return {
                 address: contractAddress,
-                contractName: response.data.result[0].ContractName,
+                contractName,
                 ethersContract,
                 constructorInputs: response.data.result[0].ConstructorArguments,
                 events: [],
