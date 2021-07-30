@@ -162,6 +162,18 @@ You can also see the delegate calls from USDC's proxy has been removed.
 
 ![mStable USD Swap](./musd-v3-swap.png)
 
+## Vyper Contract Names
+
+If the verified Vyper code on Etherscan contains the `@title` Natspec, that will be used as the contract name. If no `@title`, the contract name will be `Vyper_contract` which is what Etherscan defaults the name to.
+
+The below example is claiming CRV tokens from a Curve Gauge. The second, third and forth contract all get their names from the `@title` Natspec in the verified code on Etherscan.
+
+![Curve Minter Mint](./curve-minter-mint.png)
+
+```
+tx2uml 0x9e93a3ef8dbfd18f14253da66ef2451abe94330ecd98e1399245eb01751e5626 -v -f svg -o ./examples/curve-minter-mint
+```
+
 ## bZx Flash Loan Attacks
 
 The generated [bZx1.png](./bZx1.png) and [bZx2.png](./bZx2.png) images are too big to include in the readme so you'll have to download them via the links. See Kerman Kohli's [The Holistic bZx Post-Mortem](https://defiweekly.substack.com/p/announcing-defi-audits-and-the-holistic) post for an excellent description of what happened in both attacks.
