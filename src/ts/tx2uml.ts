@@ -76,7 +76,9 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
     .option("-v, --verbose", "run with debugging statements.", false)
     .parse(process.argv)
 
-if (program.verbose) {
+const options = program.opts()
+
+if (options.verbose) {
     debugControl.enable("tx2uml,axios")
     debug(`Enabled tx2uml debug`)
 }
@@ -86,9 +88,9 @@ type NodeType = typeof nodeTypes[number]
 
 const tx2uml = async () => {
     const url =
-        program.url || process.env.ARCHIVE_NODE_URL || "http://localhost:8545"
+        options.url || process.env.ARCHIVE_NODE_URL || "http://localhost:8545"
     const nodeType: NodeType =
-        program.nodeType || process.env.ARCHIVE_NODE_TYPE || "geth"
+        options.nodeType || process.env.ARCHIVE_NODE_TYPE || "geth"
     if (!nodeTypes.includes(nodeType)) {
         console.error(
             `Invalid node type "${nodeType}" set by the ARCHIVE_NODE_TYPE env var or --nodeType option. Must be one of: ${nodeTypes}`
@@ -96,7 +98,7 @@ const tx2uml = async () => {
         process.exit(1)
     }
 
-    const chain = program.chain || "mainnet"
+    const chain = options.chain || "mainnet"
 
     const ethereumNodeClient = ((): EthereumNodeClient => {
         switch (nodeType) {
@@ -117,21 +119,21 @@ const tx2uml = async () => {
         }
     })()
     let depth
-    if (program.depth) {
+    if (options.depth) {
         try {
-            depth = parseInt(program.depth)
+            depth = parseInt(options.depth)
         } catch (err) {
             console.error(
-                `Invalid depth "${program.depth}". Must be an integer.`
+                `Invalid depth "${options.depth}". Must be an integer.`
             )
             process.exit(1)
         }
     }
-    const excludedContracts = program.noAddresses
-        ? program.noAddresses.split(",")
+    const excludedContracts = options.noAddresses
+        ? options.noAddresses.split(",")
         : []
 
-    const etherscanClient = new EtherscanClient(program.etherscanKey, chain)
+    const etherscanClient = new EtherscanClient(options.etherscanKey, chain)
     const txManager = new TransactionManager(
         ethereumNodeClient,
         etherscanClient
@@ -161,7 +163,7 @@ const tx2uml = async () => {
             transactionTracesUnfiltered,
             contracts,
             {
-                ...program,
+                ...options,
                 excludedContracts,
             }
         )
@@ -175,12 +177,12 @@ const tx2uml = async () => {
         transactionTraces,
         usedContracts,
         {
-            ...program,
+            ...options,
             depth,
         }
     )
 
-    let filename = program.outputFileName
+    let filename = options.outputFileName
     if (!filename) {
         filename = program.args[0]?.match(transactionHash)
             ? program.args[0]
@@ -188,7 +190,7 @@ const tx2uml = async () => {
     }
 
     await generateFile(pumlStream, {
-        format: program.outputFormat,
+        format: options.outputFormat,
         filename,
     })
 }

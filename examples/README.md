@@ -174,32 +174,6 @@ The below example is claiming CRV tokens from a Curve Gauge. The second, third a
 tx2uml 0x9e93a3ef8dbfd18f14253da66ef2451abe94330ecd98e1399245eb01751e5626 -v -f svg -o ./examples/curve-minter-mint
 ```
 
-## bZx Flash Loan Attacks
-
-The generated [bZx1.png](./bZx1.png) and [bZx2.png](./bZx2.png) images are too big to include in the readme so you'll have to download them via the links. See Kerman Kohli's [The Holistic bZx Post-Mortem](https://defiweekly.substack.com/p/announcing-defi-audits-and-the-holistic) post for an excellent description of what happened in both attacks.
-
-First attack
-
-```
-tx2uml 0xb5c8bd9430b6cc87a0e2fe110ece6bf527fa4f170a4bc8cd032f768fc5219838
-```
-
-Second attack
-
-```
-tx2uml 0x762881b07feb63c436dee38edd4ff1f7a74c33091e534af56c9f7d49b5ecac15
-```
-
-## dYdX Exchange
-
-[dYdX](https://dydx.exchange/) is a non-custodial trading platform on Ethereum geared toward experienced traders.
-
-```
-tx2uml 0xa4a43728e71cfaba8105e91c0b36d0815cfa6a70de0bee0cf89e4aa8624ab292
-```
-
-![dYdX](./dydx.png)
-
 ## Maker DAO
 
 The below example is of a [Maker DAO](https://makerdao.com/) Collateralized Debt Position (CDP) transaction. The `--noTxDetails` or `-t` option will not display the transaction details in a yellow note at the start of the first contract's lifeline.
