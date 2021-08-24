@@ -58,7 +58,7 @@ Options:
   -t, --noTxDetails             Hide transaction details like nonce, gas and tx fee (default: false)
   -x, --noDelegates             Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries. (default: false)
   -a, --noAddresses <value>     Hide calls to contracts in a list of comma separated addresses with a 0x prefix.
-  -k, --etherscanKey            Etherscan API key. Register your API key at https://etherscan.io/myapikey
+  -k, --etherscanKey <value>    Etherscan API key. Register your API key at https://etherscan.io/myapikey
   -d, --depth <value>           Limit the transaction call depth.
   -v, --verbose                 run with debugging statements (default: false)
   -h, --help                    output usage information

@@ -64,7 +64,7 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
         "Hide calls to contracts in a list of comma separated addresses with a 0x prefix."
     )
     .option(
-        "-k, --etherscanKey",
+        "-k, --etherscanKey <value>",
         "Etherscan API key. Register your API key at https://etherscan.io/myapikey"
     )
     .option(
