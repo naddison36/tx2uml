@@ -25,7 +25,7 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
     )
     .option(
         "-f, --outputFormat <value>",
-        "output file format: png, svg or puml",
+        "output file format: png, svg, eps or puml",
         "png"
     )
     .option(
@@ -38,7 +38,7 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
     )
     .option(
         "-n, --nodeType <value>",
-        "geth (GoEthereum), tgeth (Turbo-Geth), openeth (OpenEthereum, previously Parity), nether (Nethermind), besu (Hyperledger Besu). Can also be set with the ARCHIVE_NODE_TYPE env var.",
+        "geth (GoEthereum), tgeth (Erigion,fka. Turbo-Geth), openeth (OpenEthereum, fka. Parity), nether (Nethermind), besu (Hyperledger Besu). Can also be set with the ARCHIVE_NODE_TYPE env var.",
         "geth"
     )
     .option("-p, --noParams", "Hide function params and return values.", false)
