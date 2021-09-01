@@ -47,10 +47,10 @@ Ethereum transaction visualizer that generates a UML sequence diagram of transac
 The transaction hashes have to be in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces. eg spaces or tags.
 
 Options:
-  -f, --outputFormat <value>    output file format: png, svg or puml (default: "png")
+  -f, --outputFormat <value>    output file format: png, svg, eps or puml (default: "png")
   -o, --outputFileName <value>  output file name. Defaults to the transaction hash.
   -u, --url <url>               URL of the archive node with trace transaction support. Can also be set with the ARCHIVE_NODE_URL environment variable. (default: http://localhost:8545)
-  -n, --nodeType <value>        geth (GoEthereum), tgeth (Turbo-Geth), openeth (OpenEthereum, previously Parity), nether (Nethermind), besu (Hyperledger Besu). Can also be set with the ARCHIVE_NODE_TYPE env var. (default: "geth")
+  -n, --nodeType <value>        geth (GoEthereum), tgeth (Erigion,fka. Turbo-Geth), openeth (OpenEthereum, fka. Parity), nether (Nethermind), besu (Hyperledger Besu). Can also be set with the ARCHIVE_NODE_TYPE env var. (default: "geth")
   -p, --noParams                Hide function params and return values (default: false)
   -g, --noGas                   Hide gas usages (default: false)
   -e, --noEther                 Hide ether values (default: false)
@@ -62,7 +62,6 @@ Options:
   -d, --depth <value>           Limit the transaction call depth.
   -v, --verbose                 run with debugging statements (default: false)
   -h, --help                    output usage information
-
 ```
 
 # Syntax
