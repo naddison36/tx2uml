@@ -9,19 +9,30 @@ import OpenEthereumClient from "./clients/OpenEthereumClient"
 import EtherscanClient from "./clients/EtherscanClient"
 import GethClient from "./clients/GethClient"
 import EthereumNodeClient from "./clients/EthereumNodeClient"
+import { Command, Option } from "commander"
 
 const debugControl = require("debug")
 const debug = require("debug")("tx2uml")
-const program = require("commander")
+
+const program = new Command()
 
 program
     .arguments("<txHash>")
+    .description(
+        `
+    Ethereum transaction visualizer that generates a UML sequence diagram of
+    transaction contract calls from an Ethereum archive node and Etherscan
+    API.
+
+    The transaction hashes have to be in hexadecimal format with a 0x
+    prefix. If running for multiple transactions, the comma-separated list
+    of transaction hashes must not have white spaces. eg spaces or tags.
+    `
+    )
     .usage(
-        `<transaction hash or comma separated list of hashes> [options]
+        `<txhash(s)> [options]
 
-Ethereum transaction visualizer that generates a UML sequence diagram of transaction contract calls from an Ethereum archive node and Etherscan API.
-
-The transaction hashes have to be in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces. eg spaces or tags.`
+    `
     )
     .option(
         "-f, --outputFormat <value>",
@@ -72,9 +83,21 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
         "mainnet, polygon, ropsten, kovan, rinkeby or goerli",
         "mainnet"
     )
+
     .option("-d, --depth <value>", "Limit the transaction call depth.")
     .option("-v, --verbose", "run with debugging statements.", false)
-    .parse(process.argv)
+// addOption: Configure local environment settings by passing arguments to the shell interface
+// -eu where, -e=env and -u=url
+program.addOption(
+    new Option(
+        "-eu, --env-archivenode <string>",
+        "specify archive node url for env configuration"
+    )
+        .default("http://localhost:8545")
+        .env("ARCHIVE_NODE_URL")
+)
+
+program.parse(process.argv)
 
 const options = program.opts()
 
@@ -202,3 +225,4 @@ tx2uml()
     .catch(err => {
         console.error(`Failed to generate UML diagram ${err.stack}`)
     })
+/** @exports tx2uml */

@@ -8,3 +8,13 @@ logs
 *.dot
 testDiagrams
 package-lock.json
+*.log
+output.png
+coverage/
+.nyc*
+.cache/
+build/
+.DS_Store
+dist/
+.env*
+!.env.example

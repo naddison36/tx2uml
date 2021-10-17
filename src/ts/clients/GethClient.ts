@@ -1,4 +1,5 @@
-import axios from "axios"
+const axios = require("axios").default
+
 import { BigNumber } from "ethers"
 import { VError } from "verror"
 
@@ -7,7 +8,7 @@ import { transactionHash } from "../utils/regEx"
 import { hexlify, toUtf8String } from "ethers/lib/utils"
 import EthereumNodeClient from "./EthereumNodeClient"
 
-require("axios-debug-log")
+require("axios-debug-log/enable")
 const debug = require("debug")("tx2uml")
 
 export type CallResponse = {

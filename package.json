@@ -1,6 +1,6 @@
 {
   "name": "tx2uml",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Ethereum transaction visualizer that generates UML a sequence diagram from transaction contract calls.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -10,7 +10,10 @@
     "examples": "java -jar ./lib/plantuml.jar ./examples/syntax.puml ./examples/delegate.puml",
     "prettier:check": "prettier --check --no-semi '**/*.{ts,md}'",
     "prettier:fix": "prettier --write --no-semi '**/*.{ts,md}'",
-    "test": "npx jest"
+    "test": "npx jest -u",
+    "coverage": "npm test -- --coverage",
+    "debug-jest": "TS_JEST_LOG=ts-jest.log npx jest -u ",
+    "test-debug": "DEBUG_COLORS=1 NODE_ENV=test DEBUG=* npm run-script coverage"
   },
   "author": "Nick Addison",
   "repository": "github:naddison36/tx2uml",
@@ -41,19 +44,20 @@
     "visual"
   ],
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.23.0",
     "axios-debug-log": "^0.8.4",
     "bignumber.js": "^9.0.1",
-    "commander": "^8.1.0",
+    "commander": "^8.2.0",
     "debug": "^4.3.2",
-    "ethers": "^5.4.4",
-    "p-limit": "^3.1.0",
+    "ethers": "^5.4.7",
+    "p-limit": "3.1.0",
     "verror": "^1.10.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "@types/node": "^16.6.1",
     "@types/verror": "^1.10.5",
+    "codecov": "^3.8.3",
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.4",

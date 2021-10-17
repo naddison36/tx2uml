@@ -13,7 +13,7 @@ import {
 import { transactionHash } from "../utils/regEx"
 import { TokenInfo } from "../types/TokenInfo"
 
-require("axios-debug-log")
+require("axios-debug-log/enable")
 const debug = require("debug")("tx2uml")
 
 const tokenInfoAddress = "0xbA51331Bf89570F3f55BC26394fcCA05d4063C71"

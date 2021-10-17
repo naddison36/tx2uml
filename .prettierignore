@@ -1,1 +1,4 @@
 lib
+coverage/
+*.html
+*.css

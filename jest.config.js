@@ -1,4 +1,4 @@
-// jest.config.js
+/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
   verbose: true,
   transform: {
@@ -8,6 +8,14 @@ module.exports = {
     "/build/",
     "/node_modules/",
   ],
+  "collectCoverageFrom": [
+    "**/*.{ts,tsx}",
+    "!**/node_modules/**",
+    "!**/vendor/**",
+    "!**/lib/*"
+  ],
+  "coverageReporters": ["text", "json", "lcov", ["text-summary"]],
+
   testRegex: '/__tests__/.*\\.test\\.ts$',
   moduleFileExtensions: [
     'ts',

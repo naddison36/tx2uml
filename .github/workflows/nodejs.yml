@@ -1,0 +1,39 @@
+# CI for command line NodeJS Applications
+name: nodejs
+on:
+  push:
+     paths:
+      - "**/**"
+      - "!**/*.md/**"
+
+env:
+  CI: true
+  FORCE_COLOR: 2
+
+jobs:
+  pipeline:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['14.x', '16.x']
+        os: ['ubuntu-latest', 'macos-latest']
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2.3.5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2.4.1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install npm dependencies
+        run: npm install
+        id: install
+
+      - name: Run build
+        run: npm run build
+        id: build
