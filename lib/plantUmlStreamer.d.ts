@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Readable } from "stream";
 import { Contracts, Param, Trace, TransactionDetails } from "./transaction";
 export interface PumlGenerationOptions {
