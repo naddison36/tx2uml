@@ -1,4 +1,4 @@
-import { BigNumber, Contract as EthersContract } from "ethers"
+import { BigNumber, BigNumberish, Contract as EthersContract } from "ethers"
 import { defaultAbiCoder, TransactionDescription } from "@ethersproject/abi"
 import { Log } from "@ethersproject/abstract-provider"
 import { FunctionFragment, LogDescription } from "ethers/lib/utils"
@@ -111,6 +111,8 @@ export interface TransactionDetails {
     gasPrice: BigNumber
     gasLimit: BigNumber
     gasUsed: BigNumber
+    maxPriorityFeePerGas?: null | BigNumberish
+    maxFeePerGas?: null | BigNumberish
     timestamp: Date
     status: boolean
     blockNumber: number

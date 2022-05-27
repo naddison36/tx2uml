@@ -1,3 +1,5 @@
+/*eslint require-unicode-regexp: error */
+// @see {@link https://eslint.org/docs/rules/require-unicode-regexp}
 export const ethereumAddress = /^0x([A-Fa-f0-9]{40})$/
 export const bytes = /^0x([A-Fa-f0-9]{1,})$/
 export const bytes4 = /^0x([A-Fa-f0-9]{8})$/

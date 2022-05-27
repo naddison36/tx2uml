@@ -8,3 +8,9 @@ logs
 *.dot
 testDiagrams
 package-lock.json
+.DS_Store
+coverage/
+cache/
+artifacts/
+output.png
+

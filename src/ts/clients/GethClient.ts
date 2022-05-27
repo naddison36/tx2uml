@@ -245,7 +245,7 @@ export const parseReasonCode = (messageData: string): string => {
     // Using the length and known offset, extract and convert the revert reason
     const reasonCodeHex = messageData.slice(8 + 128, 8 + 128 + strLen * 2)
     // Convert reason from hex to string
-    const reason = toUtf8String("0x" + reasonCodeHex)
+    const reason = toUtf8String(`0x${reasonCodeHex}`)
 
     return reason
 }

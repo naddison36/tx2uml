@@ -83,3 +83,10 @@ export const parseReasonCode = (messageData: string): string => {
 
     return reason
 }
+
+export type ErrorSignature = {
+    r: string
+    s: string
+    yParity: 0 | 1
+    networkV: bigint
+}

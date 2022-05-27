@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 import { Readable } from "stream"
 
 import { TransactionDetails, TransactionManager } from "./transaction"
@@ -12,7 +12,8 @@ import EthereumNodeClient from "./clients/EthereumNodeClient"
 
 const debugControl = require("debug")
 const debug = require("debug")("tx2uml")
-const program = require("commander")
+import { Command } from "commander"
+const program = new Command()
 
 program
     .arguments("<txHash>")

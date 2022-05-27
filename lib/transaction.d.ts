@@ -1,4 +1,4 @@
-import { BigNumber, Contract as EthersContract } from "ethers";
+import { BigNumber, BigNumberish, Contract as EthersContract } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import EtherscanClient from "./clients/EtherscanClient";
 import EthereumNodeClient from "./clients/EthereumNodeClient";
@@ -94,6 +94,8 @@ export interface TransactionDetails {
     gasPrice: BigNumber;
     gasLimit: BigNumber;
     gasUsed: BigNumber;
+    maxPriorityFeePerGas?: null | BigNumberish;
+    maxFeePerGas?: null | BigNumberish;
     timestamp: Date;
     status: boolean;
     blockNumber: number;

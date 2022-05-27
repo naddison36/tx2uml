@@ -2,7 +2,6 @@ import { Contract, ethers, providers } from "ethers"
 import { Provider } from "@ethersproject/providers"
 import { Log } from "@ethersproject/abstract-provider"
 import { VError } from "verror"
-
 import { TokenInfoABI, TransferEventsABI } from "./ABIs"
 import {
     TokenDetails,
@@ -16,6 +15,7 @@ import { TokenInfo } from "../types/TokenInfo"
 require("axios-debug-log")
 const debug = require("debug")("tx2uml")
 
+// Goerli: 0x3C4e4bE668147d549d6f6e32599092C2d7e84120
 const tokenInfoAddress = "0xbA51331Bf89570F3f55BC26394fcCA05d4063C71"
 
 export default abstract class EthereumNodeClient {
@@ -57,6 +57,8 @@ export default abstract class EthereumNodeClient {
                 nonce: tx.nonce,
                 index: receipt.transactionIndex,
                 value: tx.value,
+                maxPriorityFeePerGas: tx.maxPriorityFeePerGas,
+                maxFeePerGas: tx.maxFeePerGas,
                 gasLimit: tx.gasLimit,
                 gasPrice: tx.gasPrice,
                 gasUsed: receipt.gasUsed,
@@ -106,7 +108,7 @@ export default abstract class EthereumNodeClient {
     // Parse Transfer events from a transaction receipt
     static parseTransferEvents(logs: Array<Log>): Transfer[] {
         const transferEvents: Transfer[] = []
-        // parse eve
+        // parse events
         const tokenEventInterface = new ethers.utils.Interface(
             TransferEventsABI
         )
