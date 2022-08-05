@@ -1,5 +1,4 @@
 import { createWriteStream } from "fs"
-import VError from "verror"
 import { Readable } from "stream"
 import { outputFormats, streamPlantUml } from "./plantuml"
 
@@ -36,7 +35,7 @@ export const generateFile = async (
             )
         }
     } catch (err) {
-        throw new VError(err, `Failed to write to file ${filename}.`)
+        throw new Error(`Failed to write to file ${filename}.`, { cause: err })
     }
 }
 

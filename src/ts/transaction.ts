@@ -3,7 +3,6 @@ import { defaultAbiCoder, TransactionDescription } from "@ethersproject/abi"
 import { Log } from "@ethersproject/abstract-provider"
 import { FunctionFragment, LogDescription } from "ethers/lib/utils"
 import pLimit from "p-limit"
-import VError from "verror"
 
 import { transactionHash } from "./utils/regEx"
 import EtherscanClient from "./clients/EtherscanClient"
@@ -287,9 +286,9 @@ export class TransactionManager {
                         addOutputParamsToTrace(trace, txDescription)
                     } catch (err) {
                         if (!err.message.match("no matching function")) {
-                            const error = new VError(
-                                err,
-                                `Failed to parse selector ${trace.funcSelector} in trace with id ${trace.id} from ${trace.from} to ${trace.to}`
+                            const error = new Error(
+                                `Failed to parse selector ${trace.funcSelector} in trace with id ${trace.id} from ${trace.from} to ${trace.to}`,
+                                { cause: err }
                             )
                             console.warn(error)
                         }

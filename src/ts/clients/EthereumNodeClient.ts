@@ -1,7 +1,6 @@
 import { Contract, ethers, providers } from "ethers"
 import { Provider } from "@ethersproject/providers"
 import { Log } from "@ethersproject/abstract-provider"
-import { VError } from "verror"
 
 import { TokenInfoABI, TransferEventsABI } from "./ABIs"
 import {
@@ -72,9 +71,9 @@ export default abstract class EthereumNodeClient {
 
             return txDetails
         } catch (err) {
-            throw new VError(
-                err,
-                `Failed to get transaction details for tx hash ${txHash} from url ${this.url}.`
+            throw new Error(
+                `Failed to get transaction details for tx hash ${txHash} from url ${this.url}.`,
+                { cause: err }
             )
         }
     }
@@ -124,7 +123,7 @@ export default abstract class EthereumNodeClient {
                 }
             } catch (err) {
                 if (err.reason !== "no matching event")
-                    throw new VError(err, "Failed to parse event log")
+                    throw new Error("Failed to parse event log", { cause: err })
             }
         })
 

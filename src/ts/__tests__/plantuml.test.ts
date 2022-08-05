@@ -1,7 +1,6 @@
 import { streamPlantUml } from "../plantuml"
 import { Readable, Writable } from "stream"
 import { createWriteStream } from "fs"
-import VError from "verror"
 
 jest.setTimeout(30000) // timeout for each test in milliseconds
 
@@ -35,12 +34,11 @@ describe("Test Plant UML", () => {
 
     test("Invalid Plant UML", async () => {
         const plantUmlStream = Readable.from("invalid")
-        expect.assertions(2)
+        expect.assertions(1)
         try {
             await streamPlantUml(plantUmlStream, outputPng)
         } catch (err) {
             expect(err).toBeInstanceOf(Error)
-            expect(VError.info(err).code).toEqual(200)
         }
     })
 
@@ -51,12 +49,11 @@ XXXparticipant "0x0000..1111" as 00001111
 participant "0x1111..2222" as 11112222
 00001111 -> 11112222: first call
 @endumls`)
-        expect.assertions(2)
+        expect.assertions(1)
         try {
             await streamPlantUml(plantUmlStream, outputPng)
         } catch (err) {
             expect(err).toBeInstanceOf(Error)
-            expect(VError.info(err).code).toEqual(200)
         }
     })
 })

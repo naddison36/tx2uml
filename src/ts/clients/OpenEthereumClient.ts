@@ -1,6 +1,5 @@
 import axios from "axios"
 import { BigNumber } from "ethers"
-import { VError } from "verror"
 
 import { MessageType, Trace, TransactionDetails } from "../transaction"
 import { transactionHash } from "../utils/regEx"
@@ -152,9 +151,9 @@ export default class OpenEthereumClient extends EthereumNodeClient {
 
             return traces
         } catch (err) {
-            throw new VError(
-                err,
-                `Failed to get transaction trace for tx hash ${txHash} from url ${this.url}.`
+            throw new Error(
+                `Failed to get transaction trace for tx hash ${txHash} from url ${this.url}.`,
+                { cause: err }
             )
         }
     }
@@ -197,9 +196,9 @@ export default class OpenEthereumClient extends EthereumNodeClient {
 
             return response.data?.error?.data
         } catch (err) {
-            throw new VError(
-                err,
-                `Failed to get transaction trace for tx hash ${tx.hash} from url ${this.url}.`
+            throw new Error(
+                `Failed to get transaction trace for tx hash ${tx.hash} from url ${this.url}.`,
+                { cause: err }
             )
         }
     }

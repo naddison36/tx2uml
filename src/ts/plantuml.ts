@@ -1,6 +1,5 @@
 import { spawn } from "child_process"
 import path from "path"
-import VError from "verror"
 import { Readable, Writable } from "stream"
 
 export const outputFormats = <const>["png", "svg", "eps"]
@@ -74,8 +73,7 @@ const pipePuml = (
                 resolve(code)
             } else {
                 reject(
-                    new VError(
-                        { info: { code } },
+                    new Error(
                         `PlantUML process existed with status code ${code}. ${error}`
                     )
                 )
@@ -83,7 +81,9 @@ const pipePuml = (
         })
         child.once("error", err => {
             reject(
-                new VError(err, `PlantUML process failed with error: ${error}`)
+                new Error(`PlantUML process failed with error: ${error}`, {
+                    cause: err,
+                })
             )
         })
     })

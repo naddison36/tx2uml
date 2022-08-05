@@ -35,7 +35,9 @@ describe("Etherscan parser", () => {
                 )
             } catch (err) {
                 expect(err).toBeInstanceOf(Error)
-                expect(err.message).toContain("Invalid Address format")
+                expect(err.message).toContain(
+                    "Failed to get contract details for contract"
+                )
             }
         })
     })

@@ -1,6 +1,5 @@
 import axios from "axios"
 import { BigNumber, Contract as EthersContract } from "ethers"
-import { VError } from "verror"
 
 import { Contract, Networks, Token } from "../transaction"
 import { ethereumAddress } from "../utils/regEx"
@@ -87,9 +86,9 @@ export default class EtherscanClient {
                 events: [],
             }
         } catch (err) {
-            throw new VError(
-                err,
-                `Failed to get contract details for contract ${contractAddress} from Etherscan using url ${this.url}`
+            throw new Error(
+                `Failed to get contract details for contract ${contractAddress} from Etherscan using url ${this.url}`,
+                { cause: err }
             )
         }
     }
@@ -144,9 +143,9 @@ export default class EtherscanClient {
                 )
                 return null
             }
-            throw new VError(
-                err,
-                `Failed to get token for address ${contractAddress} from Etherscan using url ${this.url}`
+            throw new Error(
+                `Failed to get token for address ${contractAddress} from Etherscan using url ${this.url}`,
+                { cause: err }
             )
         }
     }
