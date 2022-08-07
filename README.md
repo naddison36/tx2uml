@@ -47,21 +47,23 @@ Ethereum transaction visualizer that generates a UML sequence diagram of transac
 The transaction hashes have to be in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces. eg spaces or tags.
 
 Options:
+  -V, --version                 output the version number
   -f, --outputFormat <value>    output file format: png, svg, eps or puml (default: "png")
   -o, --outputFileName <value>  output file name. Defaults to the transaction hash.
-  -u, --url <url>               URL of the archive node with trace transaction support. Can also be set with the ARCHIVE_NODE_URL environment variable. (default: http://localhost:8545)
-  -n, --nodeType <value>        geth (GoEthereum), tgeth (Erigion,fka. Turbo-Geth), openeth (OpenEthereum, fka. Parity), nether (Nethermind), besu (Hyperledger Besu). Can also be set with the ARCHIVE_NODE_TYPE env var. (default: "geth")
-  -p, --noParams                Hide function params and return values (default: false)
-  -g, --noGas                   Hide gas usages (default: false)
-  -e, --noEther                 Hide ether values (default: false)
+  -u, --url <url>               URL of the archive node with trace transaction support. (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
+  -n, --nodeType <value>        geth (GoEthereum), tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu). (default: "geth", env: ARCHIVE_NODE_TYPE)
+  -p, --noParams                Hide function params and return values. (default: false)
+  -g, --noGas                   Hide gas usages. (default: false)
+  -e, --noEther                 Hide ether values. (default: false)
   -l, --noLogDetails            Hide log details emitted from contract events. (default: false)
-  -t, --noTxDetails             Hide transaction details like nonce, gas and tx fee (default: false)
+  -t, --noTxDetails             Hide transaction details like nonce, gas and tx fee. (default: false)
   -x, --noDelegates             Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries. (default: false)
   -a, --noAddresses <value>     Hide calls to contracts in a list of comma separated addresses with a 0x prefix.
   -k, --etherscanKey <value>    Etherscan API key. Register your API key at https://etherscan.io/myapikey
+  -c, --chain <value>           Blockchain explorer network to get source code from. (choices: "mainnet", "polygon", "bsc", "arbitrum", "ropsten", "kovan", "rinkeby", "goerli", "sepolia", default: "mainnet", env: ETH_NETWORK)
   -d, --depth <value>           Limit the transaction call depth.
-  -v, --verbose                 run with debugging statements (default: false)
-  -h, --help                    output usage information
+  -v, --verbose                 run with debugging statements. (default: false)
+  -h, --help                    display help for command
 ```
 
 # Syntax

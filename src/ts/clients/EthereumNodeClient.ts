@@ -20,12 +20,8 @@ const tokenInfoAddress = "0xbA51331Bf89570F3f55BC26394fcCA05d4063C71"
 export default abstract class EthereumNodeClient {
     public readonly ethersProvider: Provider
 
-    constructor(
-        public readonly url: string = "http://localhost:8545",
-        public readonly chain = "mainnet"
-    ) {
-        const network = chain === "polygon" ? "matic" : chain
-        this.ethersProvider = new providers.JsonRpcProvider(url, network)
+    constructor(public readonly url: string = "http://localhost:8545") {
+        this.ethersProvider = new providers.JsonRpcProvider(url)
     }
 
     abstract getTransactionTrace(txHash: string): Promise<Trace[]>

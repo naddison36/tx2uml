@@ -9,10 +9,18 @@ import OpenEthereumClient from "./clients/OpenEthereumClient"
 import EtherscanClient from "./clients/EtherscanClient"
 import GethClient from "./clients/GethClient"
 import EthereumNodeClient from "./clients/EthereumNodeClient"
+import { Command, Option } from "commander"
+import * as fs from "fs"
 
 const debugControl = require("debug")
 const debug = require("debug")("tx2uml")
-const program = require("commander")
+
+const program = new Command()
+
+const version = fs.existsSync("../package.json")
+    ? require("../package.json").version // used when run from compile js in /lib
+    : require("../../package.json").version // used when run from TypeScript source files under ts/src via ts-node
+program.version(version)
 
 program
     .arguments("<txHash>")
@@ -32,14 +40,21 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
         "-o, --outputFileName <value>",
         "output file name. Defaults to the transaction hash."
     )
-    .option(
-        "-u, --url <url>",
-        "URL of the archive node with trace transaction support. Can also be set with the ARCHIVE_NODE_URL environment variable. (default: http://localhost:8545)"
+    .addOption(
+        new Option(
+            "-u, --url <url>",
+            "URL of the archive node with trace transaction support."
+        )
+            .env("ARCHIVE_NODE_URL")
+            .default("http://localhost:8545")
     )
-    .option(
-        "-n, --nodeType <value>",
-        "geth (GoEthereum), tgeth (Erigion,fka. Turbo-Geth), openeth (OpenEthereum, fka. Parity), nether (Nethermind), besu (Hyperledger Besu). Can also be set with the ARCHIVE_NODE_TYPE env var.",
-        "geth"
+    .addOption(
+        new Option(
+            "-n, --nodeType <value>",
+            "geth (GoEthereum), tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu)."
+        )
+            .env("ARCHIVE_NODE_TYPE")
+            .default("geth")
     )
     .option("-p, --noParams", "Hide function params and return values.", false)
     .option("-g, --noGas", "Hide gas usages.", false)
@@ -67,10 +82,24 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
         "-k, --etherscanKey <value>",
         "Etherscan API key. Register your API key at https://etherscan.io/myapikey"
     )
-    .option(
-        "-c, --chain <value>",
-        "mainnet, polygon, ropsten, kovan, rinkeby or goerli",
-        "mainnet"
+    .addOption(
+        new Option(
+            "-c, --chain <value>",
+            "Blockchain explorer network to get source code from."
+        )
+            .choices([
+                "mainnet",
+                "polygon",
+                "bsc",
+                "arbitrum",
+                "ropsten",
+                "kovan",
+                "rinkeby",
+                "goerli",
+                "sepolia",
+            ])
+            .default("mainnet")
+            .env("ETH_NETWORK")
     )
     .option("-d, --depth <value>", "Limit the transaction call depth.")
     .option("-v, --verbose", "run with debugging statements.", false)
@@ -98,16 +127,12 @@ const tx2uml = async () => {
         process.exit(1)
     }
 
-    const chain = options.chain || "mainnet"
-
     const ethereumNodeClient = ((): EthereumNodeClient => {
         switch (nodeType) {
             case "openeth":
-                debug("Using OpenEthereum client.")
-                return new OpenEthereumClient(url, chain)
             case "nether":
-                debug("Using Nethermind client.")
-                return new OpenEthereumClient(url, chain)
+                debug("Using OpenEthereum client.")
+                return new OpenEthereumClient(url)
             case "besu":
                 console.error(
                     "Hyperledger Besu nodes are not currently supported"
@@ -115,7 +140,7 @@ const tx2uml = async () => {
                 process.exit(2)
             default:
                 debug("Using Geth client.")
-                return new GethClient(url, chain)
+                return new GethClient(url)
         }
     })()
     let depth
@@ -126,14 +151,17 @@ const tx2uml = async () => {
             console.error(
                 `Invalid depth "${options.depth}". Must be an integer.`
             )
-            process.exit(1)
+            process.exit(3)
         }
     }
     const excludedContracts = options.noAddresses
         ? options.noAddresses.split(",")
         : []
 
-    const etherscanClient = new EtherscanClient(options.etherscanKey, chain)
+    const etherscanClient = new EtherscanClient(
+        options.etherscanKey,
+        options.chain
+    )
     const txManager = new TransactionManager(
         ethereumNodeClient,
         etherscanClient
@@ -151,7 +179,7 @@ const tx2uml = async () => {
             console.error(
                 `Must pass a transaction hash or an array of hashes in hexadecimal format with a 0x prefix`
             )
-            process.exit(1)
+            process.exit(4)
         }
     }
 
@@ -200,5 +228,6 @@ tx2uml()
         debug("Done!")
     })
     .catch(err => {
-        console.error(`Failed to generate UML diagram ${err.stack}`)
+        console.error(err)
+        process.exit(10)
     })

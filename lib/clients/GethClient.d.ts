@@ -15,9 +15,8 @@ export declare type CallResponse = {
 };
 export default class GethClient extends EthereumNodeClient {
     readonly url: string;
-    readonly chain: string;
     private jsonRpcId;
-    constructor(url?: string, chain?: string);
+    constructor(url?: string);
     getTransactionTrace(txHash: string): Promise<Trace[]>;
     getTransactionError(tx: TransactionDetails): Promise<string>;
 }

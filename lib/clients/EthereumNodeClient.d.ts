@@ -3,9 +3,8 @@ import { Log } from "@ethersproject/abstract-provider";
 import { TokenDetails, Trace, TransactionDetails, Transfer } from "../transaction";
 export default abstract class EthereumNodeClient {
     readonly url: string;
-    readonly chain: string;
     readonly ethersProvider: Provider;
-    constructor(url?: string, chain?: string);
+    constructor(url?: string);
     abstract getTransactionTrace(txHash: string): Promise<Trace[]>;
     abstract getTransactionError(tx: TransactionDetails): Promise<string>;
     getTransactionDetails(txHash: string): Promise<TransactionDetails>;

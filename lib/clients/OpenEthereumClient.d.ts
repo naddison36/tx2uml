@@ -28,9 +28,8 @@ export declare type TraceResponse = {
 };
 export default class OpenEthereumClient extends EthereumNodeClient {
     readonly url: string;
-    readonly network: string;
     private jsonRpcId;
-    constructor(url?: string, network?: string);
+    constructor(url?: string);
     getTransactionTrace(txHash: string): Promise<Trace[]>;
     getTransactionError(tx: TransactionDetails): Promise<string>;
 }

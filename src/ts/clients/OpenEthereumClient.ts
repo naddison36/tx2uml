@@ -42,11 +42,8 @@ export type TraceResponse = {
 export default class OpenEthereumClient extends EthereumNodeClient {
     private jsonRpcId = 0
 
-    constructor(
-        public readonly url: string = "http://localhost:8545",
-        public readonly network = "mainnet"
-    ) {
-        super(url, network)
+    constructor(public readonly url: string = "http://localhost:8545") {
+        super(url)
     }
 
     async getTransactionTrace(txHash: string): Promise<Trace[]> {
@@ -151,10 +148,11 @@ export default class OpenEthereumClient extends EthereumNodeClient {
 
             return traces
         } catch (err) {
-            throw new Error(
+            const error = new Error(
                 `Failed to get transaction trace for tx hash ${txHash} from url ${this.url}.`,
                 { cause: err }
             )
+            throw error
         }
     }
 

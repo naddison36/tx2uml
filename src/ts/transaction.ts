@@ -143,7 +143,7 @@ export class TransactionManager {
                 console.error(
                     `Array of transaction hashes must be in hexadecimal format with a 0x prefix`
                 )
-                process.exit(1)
+                process.exit(5)
             }
             transactions.push(await this.getTransaction(txHash))
         }
