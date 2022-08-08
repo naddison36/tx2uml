@@ -42,7 +42,7 @@ Use the `-h` option to see the `tx2uml` CLI usage options
 $ tx2uml -h
 Usage: tx2uml <transaction hash or comma separated list of hashes> [options]
 
-Ethereum transaction visualizer that generates a UML sequence diagram of transaction contract calls from an Ethereum archive node and Etherscan API.
+Ethereum transaction visualizer that generates a UML sequence diagram of transaction contract calls from an Ethereum archive node and Etherscan like API.
 
 The transaction hashes have to be in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces. eg spaces or tags.
 
@@ -51,7 +51,8 @@ Options:
   -f, --outputFormat <value>    output file format: png, svg, eps or puml (default: "png")
   -o, --outputFileName <value>  output file name. Defaults to the transaction hash.
   -u, --url <url>               URL of the archive node with trace transaction support. (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
-  -n, --nodeType <value>        geth (GoEthereum), tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu). (default: "geth", env: ARCHIVE_NODE_TYPE)
+  -n, --nodeType <value>        geth (GoEthereum), anvil, tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu). (choices: "geth", "anvil", "tgeth", "openeth", "nether", "besu",
+                                default: "geth", env: ARCHIVE_NODE_TYPE)
   -p, --noParams                Hide function params and return values. (default: false)
   -g, --noGas                   Hide gas usages. (default: false)
   -e, --noEther                 Hide ether values. (default: false)
@@ -64,6 +65,7 @@ Options:
   -d, --depth <value>           Limit the transaction call depth.
   -v, --verbose                 run with debugging statements. (default: false)
   -h, --help                    display help for command
+
 ```
 
 # Syntax
@@ -102,7 +104,7 @@ The `-x` or `--noDelegates` option can be used to hide all delegate calls.
 
 ## Archive node that supports tracing transactions
 
-`tx2uml` needs an Ethereum archive node that supports the [debug_traceTransaction](https://geth.ethereum.org/docs/rpc/ns-debug#debug_tracetransaction) or [trace_replayTransaction](https://openethereum.github.io/JSONRPC-trace-module#trace_replaytransaction) JSON RPC APIs.
+`tx2uml` needs an Ethereum archive node that supports the [debug_traceTransaction](https://geth.ethereum.org/docs/rpc/ns-debug#debug_tracetransaction) or [trace_transaction](https://openethereum.github.io/JSONRPC-trace-module#trace_transaction) JSON RPC APIs.
 
 The ethereum node url can be set with the `-u` or `--url` options or by exporting the `ARCHIVE_NODE_URL` environment variable. For example
 
@@ -130,21 +132,22 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 }'
 ```
 
-Known Ethereum node clients that support `trace_replayTransaction` are:
+Known Ethereum node clients that support `trace_transaction` are:
 
--   [OpenEthereum](https://github.com/openethereum/openethereum)
--   [Nethermind](https://nethermind.io/client)
--   [Hyperledger Besu](https://www.hyperledger.org/use/besu) supports tracing with method is [trace_transaction](https://besu.hyperledger.org/en/stable/Reference/API-Methods/#trace_transaction) which has the same response.
+- [OpenEthereum](https://github.com/openethereum/openethereum)
+- [Nethermind](https://nethermind.io/client)
+- [Hyperledger Besu](https://www.hyperledger.org/use/besu)
+- [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil)
 
-You can test if your node supports `trace_replayTransaction` with the following `curl` command
+You can test if your node supports `trace_transaction` with the following `curl` command
 
 ```bash
 curl --location --request POST 'https://your.node.url/yourApiKey' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "jsonrpc":"2.0",
-    "method":"trace_replayTransaction",
-    "params":["0xb2b0e7b286e83255928f81713ff416e6b8d0854706366b6a9ace46a88095f024", ["trace"]],
+    "method":"trace_transaction",
+    "params":["0xb2b0e7b286e83255928f81713ff416e6b8d0854706366b6a9ace46a88095f024"],
     "id":1
 }'
 ```

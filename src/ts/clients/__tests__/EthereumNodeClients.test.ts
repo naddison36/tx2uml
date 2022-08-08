@@ -152,7 +152,7 @@ describe("Ethereum Node Clients", () => {
             expect(tokenDetails[0].symbol).toEqual("")
             expect(tokenDetails[0].name).toEqual("")
         })
-        describe("Get transaction trace", () => {
+        describe.only("Get transaction trace", () => {
             test("delegatecall", async () => {
                 const traces = await nodeClient.getTransactionTrace(
                     "0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca"
@@ -419,15 +419,9 @@ describe("Ethereum Node Clients", () => {
                     )
                 } catch (err) {
                     expect(err).toBeInstanceOf(Error)
-                    if (clientName === "TurboGeth") {
-                        expect(err.message).toMatch(
-                            "transaction 47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a866000000000000 not found"
-                        )
-                    } else {
-                        expect(err.message).toMatch(
-                            "receipt could not be found"
-                        )
-                    }
+                    expect(err.message).toMatch(
+                        "Failed to get transaction trace for tx hash 47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a866000000000000"
+                    )
                 }
             })
         })

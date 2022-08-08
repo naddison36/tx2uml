@@ -10,24 +10,34 @@ import EtherscanClient from "./clients/EtherscanClient"
 import GethClient from "./clients/GethClient"
 import EthereumNodeClient from "./clients/EthereumNodeClient"
 import { Command, Option } from "commander"
-import * as fs from "fs"
+import { basename } from "path"
 
 const debugControl = require("debug")
 const debug = require("debug")("tx2uml")
 
 const program = new Command()
 
-const version = fs.existsSync("../package.json")
-    ? require("../package.json").version // used when run from compile js in /lib
-    : require("../../package.json").version // used when run from TypeScript source files under ts/src via ts-node
+const version =
+    basename(__dirname) === "lib"
+        ? require("../package.json").version // used when run from compile js in /lib
+        : require("../../package.json").version // used when run from TypeScript source files under src/ts via ts-node
 program.version(version)
+
+const nodeTypes = [
+    "geth",
+    "anvil",
+    "tgeth",
+    "openeth",
+    "nether",
+    "besu",
+] as const
 
 program
     .arguments("<txHash>")
     .usage(
         `<transaction hash or comma separated list of hashes> [options]
 
-Ethereum transaction visualizer that generates a UML sequence diagram of transaction contract calls from an Ethereum archive node and Etherscan API.
+Ethereum transaction visualizer that generates a UML sequence diagram of transaction contract calls from an Ethereum archive node and Etherscan like API.
 
 The transaction hashes have to be in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces. eg spaces or tags.`
     )
@@ -51,8 +61,9 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
     .addOption(
         new Option(
             "-n, --nodeType <value>",
-            "geth (GoEthereum), tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu)."
+            "geth (GoEthereum), anvil, tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu)."
         )
+            .choices(nodeTypes)
             .env("ARCHIVE_NODE_TYPE")
             .default("geth")
     )
@@ -112,35 +123,18 @@ if (options.verbose) {
     debug(`Enabled tx2uml debug`)
 }
 
-const nodeTypes = ["geth", "tgeth", "openeth", "nether", "besu"] as const
-type NodeType = typeof nodeTypes[number]
-
 const tx2uml = async () => {
-    const url =
-        options.url || process.env.ARCHIVE_NODE_URL || "http://localhost:8545"
-    const nodeType: NodeType =
-        options.nodeType || process.env.ARCHIVE_NODE_TYPE || "geth"
-    if (!nodeTypes.includes(nodeType)) {
-        console.error(
-            `Invalid node type "${nodeType}" set by the ARCHIVE_NODE_TYPE env var or --nodeType option. Must be one of: ${nodeTypes}`
-        )
-        process.exit(1)
-    }
-
     const ethereumNodeClient = ((): EthereumNodeClient => {
-        switch (nodeType) {
+        switch (options.nodeType) {
             case "openeth":
             case "nether":
-                debug("Using OpenEthereum client.")
-                return new OpenEthereumClient(url)
+            case "anvil":
             case "besu":
-                console.error(
-                    "Hyperledger Besu nodes are not currently supported"
-                )
-                process.exit(2)
+                debug("Using OpenEthereum client.")
+                return new OpenEthereumClient(options.url)
             default:
                 debug("Using Geth client.")
-                return new GethClient(url)
+                return new GethClient(options.url)
         }
     })()
     let depth

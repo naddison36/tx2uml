@@ -58,19 +58,19 @@ export default class OpenEthereumClient extends EthereumNodeClient {
             const response = await axios.post(this.url, {
                 id: this.jsonRpcId++,
                 jsonrpc: "2.0",
-                method: "trace_replayTransaction",
-                params: [txHash, ["trace"]],
+                method: "trace_transaction",
+                params: [txHash],
             })
 
             if (response.data?.error?.message) {
                 throw new Error(response.data.error.message)
             }
-            if (!(response?.data?.result?.trace?.length > 0)) {
+            if (!(response?.data?.result?.length > 0)) {
                 throw new Error(
                     `no transaction trace messages in response: ${response?.data}`
                 )
             }
-            const traceResponses: TraceResponse[] = response.data.result.trace
+            const traceResponses: TraceResponse[] = response.data.result
 
             const parentTraces: Trace[] = []
             const traces: Trace[] = []
