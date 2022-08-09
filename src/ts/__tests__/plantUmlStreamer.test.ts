@@ -56,7 +56,7 @@ describe("Stream Plant UML", () => {
         writeParticipants(stream, testContracts)
         const plantUmlBuf = stream.read()
         expect(plantUmlBuf.toString()).toEqual(
-            '\nparticipant "0x0000..1111" as 00001111 \n' +
+            '\nactor "0x0000..1111" as 00001111\n' +
                 'participant "0x1111..2222" as 11112222 <<Controller>>\n' +
                 'participant "0x2222..3333" as 22223333 <<Proxy>>\n' +
                 'participant "0x3333..4444" as 33334444 <<DeFiApp>>\n' +

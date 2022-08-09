@@ -108,14 +108,23 @@ export const writeParticipants = (
 ) => {
     plantUmlStream.push("\n")
 
-    for (const [address, contract] of Object.entries(contracts)) {
+    // get the address of the first contract to output as the actor
+    const [senderAddress] = Object.entries(contracts)[0]
+    plantUmlStream.push(
+        `actor "${shortAddress(senderAddress)}" as ${participantId(
+            senderAddress
+        )}\n`
+    )
+
+    // output remaining contracts as participants
+    for (const [address, contract] of Object.entries(contracts).slice(1)) {
         // Do not write contract as a participant if min depth greater than trace depth
         if (options.depth > 0 && contract.minDepth > options.depth) continue
 
         let name: string = ""
         if (contract.tokenName) {
             if (contract.symbol) {
-                name = `<<${contract.tokenName} (${contract.symbol})>>`
+                name = `<<${contract.tokenName}>><<${contract.symbol}>>`
             } else {
                 name = `<<${contract.tokenName}>>`
             }
