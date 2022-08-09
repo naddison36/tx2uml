@@ -152,15 +152,37 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 }'
 ```
 
+### Node trace transaction support
+
+|  | OpenEthereum | Nethereum | Besu | Geth | Erigon | Akula | Anvil | Hardhat | Ganache |
+|---|---|---|---|---|---|---|---|---|---|
+| trace_replayTransaction | X | X | | | | X | | | |
+| trace_transaction | X | X | X | | | | X | | |
+| trace_rawTransaction | X | X | X | | | X | | | |
+| debug_traceTransaction | | | | X | X | | | X | X |
+| debug_traceTransaction with tracer param | | | | X | X | | | | |
+
 ### Ethereum API providers
 
 Most Ethereum API providers do not provide tracing or debugging APIs as they are resource intensive on the server side.
 
--   [ArchiveNode.io](https://archivenode.io/) brings archive data on the Ethereum blockchain to small time developers who otherwise couldn't afford it. They offer both Nethermind and Turbo-Geth archive nodes. If you want to use one specifically, you can add either /nethermind or /turbogeth to the end of your endpoint.
+- [ArchiveNode.io](https://archivenode.io/) brings archive data on the Ethereum blockchain to small time developers who otherwise couldn't afford it. They offer both Nethermind and Turbo-Geth archive nodes. If you want to use one specifically, you can add either /nethermind or /turbogeth to the end of your endpoint.
 
-[Infura](https://infura.io/) does not support tracing or debugging transactions.
+- [Alchemy](https://alchemyapi.io/) supports [trace_transaction](https://docs.alchemy.com/reference/trace-transaction) on their paid [Growth plan](https://alchemyapi.io/pricing).
 
-[Alchemy](https://alchemyapi.io/) does support tracing transactions on their paid [Growth plan](https://alchemyapi.io/pricing) but it was not reliable at the time of development.
+- [QuickNode](https://www.quicknode.com/) supports both [trace_transaction](https://www.quicknode.com/docs/ethereum/trace_transaction) and [debug_traceTransaction](https://www.quicknode.com/docs/ethereum/debug_traceTransaction) on their paid plan.
+
+- [Chainstack](https://chainstack.com/) supports both `trace_transaction` and `debug_traceTransaction` but only on their expensive Business plan.
+
+- [GetBlock](https://getblock.io/) supports [trace_transaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/trace_transaction/) but it just hangs when tested. It also supports [debug_traceTransaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/debug_traceTransaction/) but not with the tracer option required by tx2uml.
+
+- [WatchData](https://www.watchdata.io/) supports [trace_transaction](https://docs.watchdata.io/powered-api/trace/trace_transaction) but I could not get it to work. No response from support. It probably needs a paid plan.
+
+- [InfStones](https://infstones.com/) supports both `trace_transaction` and `debug_traceTransaction` but I could not get them to work. No response from support. It probably needs a paid plan.
+
+- [Moralis](https://moralis.io/) supports both `trace_transaction` and `debug_traceTransaction` on their paid plan.
+
+- [Infura](https://infura.io/) does not support tracing or debugging transactions.
 
 ## Etherscan
 
