@@ -41,10 +41,10 @@ Ethereum transaction visualizer that generates a UML sequence diagram of transac
 
 The transaction hashes have to be in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces. eg spaces or tags.`
     )
-    .option(
-        "-f, --outputFormat <value>",
-        "output file format: png, svg, eps or puml",
-        "png"
+    .addOption(
+        new Option("-f, --outputFormat <value>", "output file format.")
+            .choices(["svg", "png", "eps", "puml"])
+            .default("svg")
     )
     .option(
         "-o, --outputFileName <value>",

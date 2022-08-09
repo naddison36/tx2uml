@@ -48,7 +48,7 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
 
 Options:
   -V, --version                 output the version number
-  -f, --outputFormat <value>    output file format: png, svg, eps or puml (default: "png")
+  -f, --outputFormat <value>    output file format. (choices: "svg", "png", "eps", "puml", default: "svg")
   -o, --outputFileName <value>  output file name. Defaults to the transaction hash.
   -u, --url <url>               URL of the archive node with trace transaction support. (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
   -n, --nodeType <value>        geth (GoEthereum), anvil, tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu). (choices: "geth", "anvil", "tgeth", "openeth", "nether", "besu",
