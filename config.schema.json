@@ -1,0 +1,95 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "patternProperties": {
+        "^0x[A-Fa-f0-9]{1,64}$": {
+            "$ref": "#/definitions/ContractConfig"
+        }
+    },
+    "definitions": {
+        "ContractConfig": {
+            "properties": {
+                "abi": {
+                    "items": {
+                        "$ref": "#/definitions/JsonFragment"
+                    },
+                    "type": "array"
+                },
+                "contractName": {
+                    "type": "string"
+                },
+                "protocolName": {
+                    "type": "string"
+                },
+                "tokenName": {
+                    "type": "string"
+                },
+                "tokenSymbol": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "JsonFragment": {
+            "properties": {
+                "anonymous": {
+                    "type": "boolean"
+                },
+                "constant": {
+                    "type": "boolean"
+                },
+                "gas": {
+                    "type": "string"
+                },
+                "inputs": {
+                    "items": {
+                        "$ref": "#/definitions/JsonFragmentType"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "outputs": {
+                    "items": {
+                        "$ref": "#/definitions/JsonFragmentType"
+                    },
+                    "type": "array"
+                },
+                "payable": {
+                    "type": "boolean"
+                },
+                "stateMutability": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "JsonFragmentType": {
+            "properties": {
+                "components": {
+                    "items": {
+                        "$ref": "#/definitions/JsonFragmentType"
+                    },
+                    "type": "array"
+                },
+                "indexed": {
+                    "type": "boolean"
+                },
+                "internalType": {},
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    }
+}
+

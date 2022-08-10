@@ -122,16 +122,10 @@ export const writeParticipants = (
         if (options.depth > 0 && contract.minDepth > options.depth) continue
 
         let name: string = ""
-        if (contract.tokenName) {
-            if (contract.symbol) {
-                name = `<<${contract.tokenName}>><<${contract.symbol}>>`
-            } else {
-                name = `<<${contract.tokenName}>>`
-            }
-        }
-        if (contract.contractName) {
-            name += `<<${contract.contractName}>>`
-        }
+        if (contract.protocol) name += `<<${contract.protocol}>>`
+        if (contract.tokenName) name += `<<${contract.tokenName}>>`
+        if (contract.symbol) name += `<<(${contract.symbol})>>`
+        if (contract.contractName) name += `<<${contract.contractName}>>`
 
         debug(`Write lifeline ${shortAddress(address)} with stereotype ${name}`)
         plantUmlStream.push(
@@ -446,7 +440,7 @@ export const writeEvents = (
     for (const contract of Object.values(contracts)) {
         if (
             contract.ethersContract &&
-            contract.events.length &&
+            contract.events?.length &&
             (options.depth === undefined || contract.minDepth <= options.depth)
         ) {
             plantUmlStream.push(

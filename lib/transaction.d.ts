@@ -49,6 +49,7 @@ export declare type Contract = {
     balance?: number;
     tokenName?: string;
     symbol?: string;
+    protocol?: string;
     decimals?: number;
     proxyImplementation?: string;
     ethersContract?: EthersContract;
@@ -109,9 +110,10 @@ export declare class TransactionManager {
     getTransactions(txHashes: string | string[]): Promise<TransactionDetails[]>;
     getTransaction(txHash: string): Promise<TransactionDetails>;
     getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;
-    getContracts(transactionsTraces: Trace[][]): Promise<Contracts>;
+    getContracts(transactionsTraces: Trace[][], configFilename?: string): Promise<Contracts>;
     getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
     setTokenAttributes(contracts: Contracts): Promise<Contracts>;
+    configOverrides(contracts: Contracts, filename?: string): Promise<void>;
     static parseTraceParams(traces: Trace[][], contracts: Contracts): void;
     static parseTransactionLogs(logs: Array<Log>, contracts: Contracts): void;
     static parseTraceDepths(traces: Trace[][], contracts: Contracts): void;

@@ -7,6 +7,7 @@ import pLimit from "p-limit"
 import { transactionHash } from "./utils/regEx"
 import EtherscanClient from "./clients/EtherscanClient"
 import EthereumNodeClient from "./clients/EthereumNodeClient"
+import { loadConfig } from "./config"
 
 const debug = require("debug")("tx2uml")
 
@@ -62,6 +63,7 @@ export type Contract = {
     balance?: number
     tokenName?: string
     symbol?: string
+    protocol?: string
     decimals?: number
     proxyImplementation?: string
     ethersContract?: EthersContract
@@ -167,7 +169,10 @@ export class TransactionManager {
         return transactionsTraces
     }
 
-    async getContracts(transactionsTraces: Trace[][]): Promise<Contracts> {
+    async getContracts(
+        transactionsTraces: Trace[][],
+        configFilename?: string
+    ): Promise<Contracts> {
         const flatTraces = transactionsTraces.flat()
         const participantAddresses: string[] = []
         // for each contract, maps all the contract addresses it can delegate to.
@@ -218,7 +223,11 @@ export class TransactionManager {
         }
 
         // Get token name and symbol from chain
-        return await this.setTokenAttributes(contracts)
+        const contractsWithAttributes = await this.setTokenAttributes(contracts)
+        // Override contract details like name, token symbol and ABI
+        await this.configOverrides(contractsWithAttributes, configFilename)
+
+        return contractsWithAttributes
     }
 
     // Get the contract names and ABIs from Etherscan
@@ -251,6 +260,30 @@ export class TransactionManager {
             contracts[tokenDetails.address].symbol = tokenDetails.symbol
         })
         return contracts
+    }
+
+    async configOverrides(contracts: Contracts, filename?: string) {
+        const configs = await loadConfig(filename)
+        for (const [contractAddress, config] of Object.entries(configs)) {
+            const address = contractAddress.toLowerCase()
+            if (contracts[address]) {
+                if (config.contractName)
+                    contracts[address].contractName = config.contractName
+                if (config.tokenName)
+                    contracts[address].tokenName = config.tokenName
+                if (config.tokenSymbol)
+                    contracts[address].symbol = config.tokenSymbol
+                if (config.protocolName)
+                    contracts[address].protocol = config.protocolName
+                if (config.abi) {
+                    contracts[address].ethersContract = new EthersContract(
+                        address,
+                        config.abi
+                    )
+                    contracts[address].events = []
+                }
+            }
+        }
     }
 
     static parseTraceParams(traces: Trace[][], contracts: Contracts) {

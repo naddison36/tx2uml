@@ -63,9 +63,39 @@ Options:
   -k, --etherscanKey <value>    Etherscan API key. Register your API key at https://etherscan.io/myapikey
   -c, --chain <value>           Blockchain explorer network to get source code from. (choices: "mainnet", "polygon", "bsc", "arbitrum", "ropsten", "kovan", "rinkeby", "goerli", "sepolia", default: "mainnet", env: ETH_NETWORK)
   -d, --depth <value>           Limit the transaction call depth.
+  -cf, --configFile <value>     Name of the json configuration file that can override contract details like name and ABI. (default: "tx_config.json")
   -v, --verbose                 run with debugging statements. (default: false)
   -h, --help                    display help for command
+```
 
+## Configuration file
+
+You can use a config file to set contract properties that are not available on chain or on Etherscan. For example, the contract's name and protocol.
+The config file can also be used to supply contract ABIs if a contract has not been verified on Etherscan.
+This is particularly useful if you are testing on a local fork of mainnet and some of the contracts in the transaction are yet to be deployed on mainnet.
+
+The config file is in json format and has json schema [config.schema.json](./config.schema.json). The config file is an object with an address property for each contract.
+
+The default file is `tx.config.json` in the current working folder, but you can set the location and name of the config file with the `-cf, --configFile <value>` option.
+
+An example config file
+
+```
+{
+  "0xd6ed651CfDf7778794649FfA87557EF091DfFE81": {
+    "protocolName": "mStable",
+    "contractName": "Convex3CrvVault",
+    "tokenSymbol": "mv3CRV",
+    "tokenName": "Convex 3Crv Vault",
+    "abi": [
+      ...
+    ]
+  },
+  "0xaF94d5585CCCb04afcf98cA49E60F09f96f6444d": {
+    "protocolName": "mStable",
+    "contractName": "CurveMetapoolCalculatorLibrary"
+  }
+}
 ```
 
 # Syntax
@@ -178,7 +208,7 @@ Most Ethereum API providers do not provide tracing or debugging APIs as they are
 
 - [WatchData](https://www.watchdata.io/) supports [trace_transaction](https://docs.watchdata.io/powered-api/trace/trace_transaction) but I could not get it to work. No response from support. It probably needs a paid plan.
 
-- [InfStones](https://infstones.com/) supports both `trace_transaction` and `debug_traceTransaction` but I could not get them to work. No response from support. It probably needs a paid plan.
+- [InfStones](https://infstones.com/) supports both `trace_transaction` and `debug_traceTransaction` on their paid plan.
 
 - [Moralis](https://moralis.io/) supports both `trace_transaction` and `debug_traceTransaction` on their paid plan.
 

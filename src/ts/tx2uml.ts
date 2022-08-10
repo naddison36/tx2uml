@@ -113,6 +113,11 @@ The transaction hashes have to be in hexadecimal format with a 0x prefix. If run
             .env("ETH_NETWORK")
     )
     .option("-d, --depth <value>", "Limit the transaction call depth.")
+    .option(
+        "-cf, --configFile <value>",
+        "Name of the json configuration file that can override contract details like name and ABI.",
+        "tx.config.json"
+    )
     .option("-v, --verbose", "run with debugging statements.", false)
     .parse(process.argv)
 
@@ -178,7 +183,10 @@ const tx2uml = async () => {
     }
 
     const transactionTracesUnfiltered = await txManager.getTraces(transactions)
-    const contracts = await txManager.getContracts(transactionTracesUnfiltered)
+    const contracts = await txManager.getContracts(
+        transactionTracesUnfiltered,
+        options.configFile
+    )
     TransactionManager.parseTraceParams(transactionTracesUnfiltered, contracts)
     const [transactionTraces, usedContracts] =
         TransactionManager.filterTransactionTraces(
