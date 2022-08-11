@@ -35,11 +35,19 @@ export default abstract class EthereumNodeClient {
         }
 
         try {
+            debug(`About to get tx details and receipt from chain`)
             // get the transaction and receipt concurrently
             const txPromise = this.ethersProvider.getTransaction(txHash)
             const receiptPromise =
                 this.ethersProvider.getTransactionReceipt(txHash)
             const [tx, receipt] = await Promise.all([txPromise, receiptPromise])
+
+            if (!receipt)
+                throw Error(
+                    `Failed to get transaction details and receipt for ${txHash} from ${this.url}`
+                )
+
+            debug(`Got tx details and receipt`)
 
             const block = await this.ethersProvider.getBlock(
                 receipt.blockNumber

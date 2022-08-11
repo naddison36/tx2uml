@@ -194,9 +194,14 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 
 ### Ethereum API providers
 
-Most Ethereum API providers do not provide tracing or debugging APIs as they are resource intensive on the server side.
+Most Ethereum API providers do not provide tracing or debugging APIs on their free plans as they are resource intensive on the server side.
 
-- [ArchiveNode.io](https://archivenode.io/) brings archive data on the Ethereum blockchain to small time developers who otherwise couldn't afford it. They offer both Nethermind and Turbo-Geth archive nodes. If you want to use one specifically, you can add either /nethermind or /turbogeth to the end of your endpoint.
+As of Aug 2022, [WatchData](https://www.watchdata.io/) is the only provider that offers tracing on a free plan.
+[ArchiveNode.io](https://archivenode.io/) also supports tracing and is free but it is only available to approved DeFi developers.
+
+- [ArchiveNode.io](https://archivenode.io/) offer both Nethermind and Erigon (fka Turbo-Geth) archive nodes. If you want to use one specifically, you can add either /nethermind or /turbogeth to the end of your endpoint.
+
+- [WatchData](https://www.watchdata.io/) supports [trace_transaction](https://docs.watchdata.io/powered-api/trace/trace_transaction) and is available on their free plan.
 
 - [Alchemy](https://alchemyapi.io/) supports [trace_transaction](https://docs.alchemy.com/reference/trace-transaction) on their paid [Growth plan](https://alchemyapi.io/pricing).
 
@@ -205,10 +210,6 @@ Most Ethereum API providers do not provide tracing or debugging APIs as they are
 - [Chainstack](https://chainstack.com/) supports both `trace_transaction` and `debug_traceTransaction` but only on their expensive Business plan.
 
 - [GetBlock](https://getblock.io/) supports [trace_transaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/trace_transaction/) but it just hangs when tested. It also supports [debug_traceTransaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/debug_traceTransaction/) but not with the tracer option required by tx2uml.
-
-- [WatchData](https://www.watchdata.io/) supports [trace_transaction](https://docs.watchdata.io/powered-api/trace/trace_transaction) but I could not get it to work. No response from support. It probably needs a paid plan.
-
-- [InfStones](https://infstones.com/) supports both `trace_transaction` and `debug_traceTransaction` on their paid plan.
 
 - [Moralis](https://moralis.io/) supports both `trace_transaction` and `debug_traceTransaction` on their paid plan.
 
