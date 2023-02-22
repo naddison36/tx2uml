@@ -145,7 +145,7 @@ export ARCHIVE_NODE_URL=https://api.archivenode.io/<your API key>/turbogeth
 Known Ethereum node clients that support `debug_traceTransaction` are:
 
 -   [Go-Ethereum (Geth)](https://github.com/ethereum/go-ethereum)
--   [Turbo-Geth](https://github.com/ledgerwatch/turbo-geth)
+-   [Erigon (fka Turbo-Geth)](https://github.com/ledgerwatch/erigon)
 
 `tx2uml` will use `--nodeType geth` as it's default option.
 

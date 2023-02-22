@@ -437,14 +437,17 @@ export const writeEvents = (
         return
     }
     // For each contract
+    let firstEvent = true
     for (const contract of Object.values(contracts)) {
         if (
             contract.ethersContract &&
             contract.events?.length &&
             (options.depth === undefined || contract.minDepth <= options.depth)
         ) {
+            const align = firstEvent ? "" : "/ "
+            firstEvent = false
             plantUmlStream.push(
-                `\nnote over ${participantId(contract.address)} #aqua`
+                `\n${align}note over ${participantId(contract.address)} #aqua`
             )
             for (const event of contract.events) {
                 plantUmlStream.push(`\n${event.name}:`)

@@ -89,17 +89,6 @@ tx2uml 0x44e34b97bccd7406f199ec18e61489baa6619e4093269e1df559735dd31b25bf
 
 ![Aragon MultiSig Wallet](./aragonMultiSig.png)
 
-## 1st Parity MultiSig Hack with an array parameters
-
-A comma separated list of transaction hashes can be passes to draw multiple transaction on the same diagram.
-Here are some transactions from the first [Parity MultiSig Wallet Hack](https://blog.openzeppelin.com/on-the-parity-wallet-multisig-hack-405a8c12e8f7/).
-
-```
-0xff261a49c61861884d0509dac46ed67577a7d48cb73c2f51f149c0bf96b29660,0x0e0d16475d2ac6a4802437a35a21776e5c9b681a77fef1693b0badbb6afdb083,0x9dbf0326a03a2a3719c27be4fa69aacc9857fd231a8d9dcaede4bb083def75ec,0xeef10fc5170f669b86c4cd0444882a96087221325f8bf2f55d6188633aa7be7c -o ./examples/parityMultiSig2
-```
-
-![Parity MultiSig Hack](./parityMultiSig.png)
-
 ## Crypto Kitties
 
 [Crypto Kitties](https://www.cryptokitties.co/)
@@ -198,4 +187,4 @@ In the below example, the output file will be `balancerSwap.svg` in the folder `
 tx2uml 0xe624e1e21e22fd312936a97df0852f4289ca88ab8bfdb40b679d46b55c842605 -f svg -o balancerSwap
 ```
 
-![Balancer Swap](./balancerSwap.svg?sanitize=true)
+![Balancer Swap](./balancerSwap.svg)
