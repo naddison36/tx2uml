@@ -72,6 +72,7 @@ const pipePuml = (
             if (code === 0) {
                 resolve(code)
             } else {
+                console.error(error)
                 reject(
                     new Error(
                         `PlantUML process existed with status code ${code}. ${error}`
