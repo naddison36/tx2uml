@@ -8,3 +8,7 @@ logs
 *.dot
 testDiagrams
 package-lock.json
+.DS_Store
+output.png
+build/
+dist/
