@@ -64,6 +64,8 @@ export default abstract class EthereumNodeClient {
                 value: tx.value,
                 gasLimit: tx.gasLimit,
                 gasPrice: tx.gasPrice,
+                maxPriorityFeePerGas: tx.maxPriorityFeePerGas,
+                maxFeePerGas: tx.maxFeePerGas,
                 gasUsed: receipt.gasUsed,
                 timestamp: new Date(block.timestamp * 1000),
                 status: receipt.status === 1,
@@ -111,7 +113,7 @@ export default abstract class EthereumNodeClient {
     // Parse Transfer events from a transaction receipt
     static parseTransferEvents(logs: Array<Log>): Transfer[] {
         const transferEvents: Transfer[] = []
-        // parse eve
+        // parse events
         const tokenEventInterface = new ethers.utils.Interface(
             TransferEventsABI
         )

@@ -25,7 +25,7 @@ export interface PumlGenerationOptions {
     noTxDetails?: boolean
     noLogDetails?: boolean
     noDelegates?: boolean
-    network?: string
+    chain?: string
     depth?: number
 }
 
@@ -37,7 +37,7 @@ export const streamTxPlantUml = (
     transactions: TransactionDetails[],
     traces: Trace[][],
     contracts: Contracts,
-    options: PumlGenerationOptions = {}
+    options: PumlGenerationOptions
 ): Readable => {
     const pumlStream = new Readable({
         read() {},
@@ -86,7 +86,7 @@ export const streamSingleTxPuml = (
     transaction: TransactionDetails,
     traces: Trace[],
     contracts: Contracts,
-    options: PumlGenerationOptions = {}
+    options: PumlGenerationOptions
 ): Readable => {
     pumlStream.push(`@startuml\ntitle ${transaction.hash}\n`)
     pumlStream.push(genCaption(transaction, options))
@@ -157,6 +157,19 @@ const writeTransactionDetails = (
     plantUmlStream.push(
         `Gas Price: ${formatUnits(transaction.gasPrice, "gwei")} Gwei\n`
     )
+    if (transaction.maxFeePerGas) {
+        plantUmlStream.push(
+            `Max Fee: ${formatUnits(transaction.maxFeePerGas, "gwei")} Gwei\n`
+        )
+    }
+    if (transaction.maxPriorityFeePerGas) {
+        plantUmlStream.push(
+            `Max Priority: ${formatUnits(
+                transaction.maxPriorityFeePerGas,
+                "gwei"
+            )} Gwei\n`
+        )
+    }
     plantUmlStream.push(
         `Gas Limit: ${formatNumber(transaction.gasLimit.toString())}\n`
     )
@@ -425,7 +438,9 @@ const genCaption = (
     details: TransactionDetails,
     options: PumlGenerationOptions
 ): string => {
-    return `caption ${options.network || ""} ${details.timestamp.toUTCString()}`
+    return `caption ${options.chain || ""}, block ${
+        details.blockNumber
+    }, ${details.timestamp.toUTCString()}`
 }
 
 export const writeEvents = (
