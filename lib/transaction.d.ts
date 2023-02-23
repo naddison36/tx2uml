@@ -93,6 +93,8 @@ export interface TransactionDetails {
     index: number;
     value: BigNumber;
     gasPrice: BigNumber;
+    maxPriorityFeePerGas?: BigNumber;
+    maxFeePerGas?: BigNumber;
     gasLimit: BigNumber;
     gasUsed: BigNumber;
     timestamp: Date;
