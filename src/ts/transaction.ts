@@ -58,6 +58,7 @@ export type Event = {
 
 export type Contract = {
     address: string
+    noContract: boolean
     contractName?: string
     appName?: string
     balance?: number
@@ -75,6 +76,7 @@ export type Contract = {
 
 export type TokenDetails = {
     address: string
+    noContract: boolean
     name?: string
     symbol?: string
     decimals?: number
@@ -91,10 +93,11 @@ export type Token = {
 }
 
 export type Transfer = {
+    pc: number
     from: string
     to: string
-    value: BigNumber
-    ether: boolean
+    value?: BigNumber
+    tokenId?: number
     tokenAddress?: string
     tokenSymbol?: string
     tokenName?: string
@@ -128,7 +131,27 @@ type ParamTypeInternal = {
     components?: ParamTypeInternal[]
 }
 
-export type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan"
+export const networks = <const>[
+    "mainnet",
+    "goerli",
+    "sepolia",
+    "polygon",
+    "testnet.polygon",
+    "arbitrum",
+    "testnet.arbitrum",
+    "avalanche",
+    "testnet.avalanche",
+    "bsc",
+    "testnet.bsc",
+    "crono",
+    "fantom",
+    "testnet.fantom",
+    "moonbeam",
+    "optimistic",
+    "kovan-optimistic",
+    "gnosisscan",
+]
+export type Network = typeof networks[number]
 
 export class TransactionManager {
     constructor(
@@ -171,7 +194,7 @@ export class TransactionManager {
         return transactionsTraces
     }
 
-    async getContracts(
+    async getContractsFromTraces(
         transactionsTraces: Trace[][],
         configFilename?: string
     ): Promise<Contracts> {
@@ -225,11 +248,51 @@ export class TransactionManager {
         }
 
         // Get token name and symbol from chain
-        const contractsWithAttributes = await this.setTokenAttributes(contracts)
+        await this.setTokenAttributes(contracts)
         // Override contract details like name, token symbol and ABI
-        await this.configOverrides(contractsWithAttributes, configFilename)
+        await this.configOverrides(contracts, configFilename)
 
-        return contractsWithAttributes
+        return contracts
+    }
+
+    async getContractsFromTransfers(
+        transactionsTransfers: Transfer[][],
+        configFilename?: string
+    ): Promise<Contracts> {
+        const flatTransfers = transactionsTransfers.flat()
+        const addressSet = new Set<string>()
+        flatTransfers.forEach(transfer => {
+            addressSet.add(transfer.from)
+            addressSet.add(transfer.to)
+            if (transfer.tokenAddress) addressSet.add(transfer.tokenAddress)
+        })
+        const uniqueAddresses = Array.from(addressSet)
+
+        // get contract ABIs from Etherscan
+        const contracts = await this.getContractsFromAddresses(uniqueAddresses)
+
+        // Get token name and symbol from chain
+        await this.setTokenAttributes(contracts)
+        // Override contract details like name, token symbol and ABI
+        await this.configOverrides(contracts, configFilename)
+
+        // Add the token symbol and name to each transfer
+        transactionsTransfers.forEach(transfers => {
+            transfers.forEach(transfer => {
+                if (!transfer.tokenAddress) {
+                    transfer.decimals = 18
+                    return
+                }
+                const contract = contracts[transfer.tokenAddress]
+                if (contract) {
+                    transfer.tokenSymbol = contract.symbol
+                    transfer.tokenName = contract.tokenName
+                    transfer.decimals = contract.decimals
+                }
+            })
+        })
+
+        return contracts
     }
 
     // Get the contract names and ABIs from Etherscan
@@ -250,7 +313,7 @@ export class TransactionManager {
         return contracts
     }
 
-    async setTokenAttributes(contracts: Contracts): Promise<Contracts> {
+    async setTokenAttributes(contracts: Contracts) {
         // get the token details
         const contractAddresses = Object.keys(contracts)
         const tokensDetails = await this.ethereumNodeClient.getTokenDetails(
@@ -258,10 +321,11 @@ export class TransactionManager {
         )
 
         tokensDetails.forEach(tokenDetails => {
+            contracts[tokenDetails.address].noContract = tokenDetails.noContract
             contracts[tokenDetails.address].tokenName = tokenDetails.name
             contracts[tokenDetails.address].symbol = tokenDetails.symbol
+            contracts[tokenDetails.address].decimals = tokenDetails.decimals
         })
-        return contracts
     }
 
     async configOverrides(contracts: Contracts, filename?: string) {

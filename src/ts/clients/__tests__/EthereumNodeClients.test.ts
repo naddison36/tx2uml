@@ -23,7 +23,7 @@ const externallyOwnerAccount = "0xbbabad191e7802f526c289c15909a8cba2a5ff2a"
 
 describe("Ethereum Node Clients", () => {
     const clients: { [clientName: string]: EthereumNodeClient } = {
-        TurboGeth: new GethClient(process.env.TURBO_GETH_URL),
+        Erigon: new GethClient(process.env.ERIGON_URL),
         Nethermind: new OpenEthereumClient(process.env.NETHERMIND_URL),
     }
     describe.each(Object.entries(clients))("%s", (clientName, nodeClient) => {
@@ -67,6 +67,8 @@ describe("Ethereum Node Clients", () => {
                 expect(transferEvents).toHaveLength(0)
             })
         })
+    })
+    describe.each(Object.entries(clients))("%s", (clientName, nodeClient) => {
         describe("Get transaction details", () => {
             test("delegate call", async () => {
                 const tx = await nodeClient.getTransactionDetails(
@@ -130,29 +132,38 @@ describe("Ethereum Node Clients", () => {
             ])
             expect(tokenDetails[0].symbol).toEqual("MKR")
             expect(tokenDetails[0].name).toEqual("Maker")
+            expect(tokenDetails[0].decimals).toEqual(18)
+            expect(tokenDetails[0].noContract).toEqual(false)
+            expect(tokenDetails[0].address).toEqual(maker)
             expect(tokenDetails[1].symbol).toEqual("UNI")
             expect(tokenDetails[1].name).toEqual("Uniswap")
             expect(tokenDetails[2].symbol).toEqual("USDC")
             expect(tokenDetails[2].name).toEqual("USD Coin")
+            expect(tokenDetails[2].decimals).toEqual(6)
             expect(tokenDetails[3].symbol).toEqual("")
             expect(tokenDetails[3].name).toEqual("")
             expect(tokenDetails[4].symbol).toEqual("mUSD")
             expect(tokenDetails[4].name).toEqual("mStable USD")
+            expect(tokenDetails[4].decimals).toEqual(18)
             expect(tokenDetails[5].symbol).toEqual("")
             expect(tokenDetails[5].name).toEqual("")
             expect(tokenDetails[6].symbol).toEqual("DAI")
             expect(tokenDetails[6].name).toEqual("Dai Stablecoin")
+            expect(tokenDetails[6].decimals).toEqual(18)
             expect(tokenDetails[7].symbol).toEqual("")
             expect(tokenDetails[7].name).toEqual("")
+            expect(tokenDetails[7].decimals).toEqual(0)
+            expect(tokenDetails[7].noContract).toEqual(true)
+            expect(tokenDetails[7].address).toEqual(externallyOwnerAccount)
         })
-        test("Symbol is bytes 4", async () => {
+        test("Fail to get token info from a contract that is not a token", async () => {
             const tokenDetails = await nodeClient.getTokenDetails([
                 "0x1522900b6dafac587d499a862861c0869be6e428",
+                dai,
             ])
-            expect(tokenDetails[0].symbol).toEqual("")
-            expect(tokenDetails[0].name).toEqual("")
+            expect(tokenDetails).toHaveLength(0)
         })
-        describe.only("Get transaction trace", () => {
+        describe("Get transaction trace", () => {
             test("delegatecall", async () => {
                 const traces = await nodeClient.getTransactionTrace(
                     "0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca"
@@ -372,7 +383,7 @@ describe("Ethereum Node Clients", () => {
                 expect(messages).toHaveLength(2)
                 expect(messages[0].error).toBeUndefined()
 
-                if (clientName === "TurboGeth") {
+                if (clientName === "Erigon") {
                     expect(messages[1].error).toEqual("execution reverted")
                 } else {
                     expect(messages[1].error).toEqual("Reverted")
@@ -404,7 +415,7 @@ describe("Ethereum Node Clients", () => {
                 expect(traces[0].error).toBeUndefined()
                 expect(traces[1].error).toBeUndefined()
                 expect(traces[2].error).toBeUndefined()
-                if (clientName === "TurboGeth") {
+                if (clientName === "Erigon") {
                     expect(traces[3].error).toEqual("execution reverted")
                 } else {
                     expect(traces[3].error).toEqual("Reverted")
@@ -420,7 +431,7 @@ describe("Ethereum Node Clients", () => {
                 } catch (err) {
                     expect(err).toBeInstanceOf(Error)
                     expect(err.message).toMatch(
-                        "Failed to get transaction trace for tx hash 47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a866000000000000"
+                        "Failed to get transaction trace for tx hash 0x47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a866000000000000"
                     )
                 }
             })

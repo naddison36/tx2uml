@@ -2,47 +2,88 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import {
-    ethers,
-    EventFilter,
-    Signer,
+import type {
+    BaseContract,
     BigNumber,
     BigNumberish,
-    PopulatedTransaction,
-} from "ethers"
-import {
-    Contract,
-    ContractTransaction,
+    BytesLike,
     CallOverrides,
-} from "@ethersproject/contracts"
-import { BytesLike } from "@ethersproject/bytes"
+    PopulatedTransaction,
+    Signer,
+    utils,
+} from "ethers"
+
 import { Listener, Provider } from "@ethersproject/providers"
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi"
+import {
+    OnEvent,
+    PromiseOrValue,
+    TypedEvent,
+    TypedEventFilter,
+    TypedListener,
+} from "./common"
 
-interface TokenInfoInterface extends ethers.utils.Interface {
+export declare namespace TokenInfo {
+    export type InfoStruct = {
+        symbol: PromiseOrValue<string>
+        name: PromiseOrValue<string>
+        decimals: PromiseOrValue<BigNumberish>
+        noContract: PromiseOrValue<boolean>
+    }
+
+    export type InfoStructOutput = [string, string, BigNumber, boolean] & {
+        symbol: string
+        name: string
+        decimals: BigNumber
+        noContract: boolean
+    }
+}
+
+export interface TokenInfoInterface extends utils.Interface {
     functions: {
         "getBytes32Properties(address)": FunctionFragment
+        "getDecimal(address)": FunctionFragment
         "getInfo(address)": FunctionFragment
         "getInfoBatch(address[])": FunctionFragment
         "getStringProperties(address)": FunctionFragment
     }
 
+    getFunction(
+        nameOrSignatureOrTopic:
+            | "getBytes32Properties"
+            | "getDecimal"
+            | "getInfo"
+            | "getInfoBatch"
+            | "getStringProperties"
+    ): FunctionFragment
+
     encodeFunctionData(
         functionFragment: "getBytes32Properties",
-        values: [string]
+        values: [PromiseOrValue<string>]
     ): string
-    encodeFunctionData(functionFragment: "getInfo", values: [string]): string
+    encodeFunctionData(
+        functionFragment: "getDecimal",
+        values: [PromiseOrValue<string>]
+    ): string
+    encodeFunctionData(
+        functionFragment: "getInfo",
+        values: [PromiseOrValue<string>]
+    ): string
     encodeFunctionData(
         functionFragment: "getInfoBatch",
-        values: [string[]]
+        values: [PromiseOrValue<string>[]]
     ): string
     encodeFunctionData(
         functionFragment: "getStringProperties",
-        values: [string]
+        values: [PromiseOrValue<string>]
     ): string
 
     decodeFunctionResult(
         functionFragment: "getBytes32Properties",
+        data: BytesLike
+    ): Result
+    decodeFunctionResult(
+        functionFragment: "getDecimal",
         data: BytesLike
     ): Result
     decodeFunctionResult(functionFragment: "getInfo", data: BytesLike): Result
@@ -58,155 +99,113 @@ interface TokenInfoInterface extends ethers.utils.Interface {
     events: {}
 }
 
-export class TokenInfo extends Contract {
+export interface TokenInfo extends BaseContract {
     connect(signerOrProvider: Signer | Provider | string): this
     attach(addressOrName: string): this
     deployed(): Promise<this>
 
-    on(event: EventFilter | string, listener: Listener): this
-    once(event: EventFilter | string, listener: Listener): this
-    addListener(eventName: EventFilter | string, listener: Listener): this
-    removeAllListeners(eventName: EventFilter | string): this
-    removeListener(eventName: any, listener: Listener): this
-
     interface: TokenInfoInterface
+
+    queryFilter<TEvent extends TypedEvent>(
+        event: TypedEventFilter<TEvent>,
+        fromBlockOrBlockhash?: string | number | undefined,
+        toBlock?: string | number | undefined
+    ): Promise<Array<TEvent>>
+
+    listeners<TEvent extends TypedEvent>(
+        eventFilter?: TypedEventFilter<TEvent>
+    ): Array<TypedListener<TEvent>>
+    listeners(eventName?: string): Array<Listener>
+    removeAllListeners<TEvent extends TypedEvent>(
+        eventFilter: TypedEventFilter<TEvent>
+    ): this
+    removeAllListeners(eventName?: string): this
+    off: OnEvent<this>
+    on: OnEvent<this>
+    once: OnEvent<this>
+    removeListener: OnEvent<this>
 
     functions: {
         getBytes32Properties(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<[string, string] & { symbol: string; name: string }>
 
-        "getBytes32Properties(address)"(
-            token: string,
+        getDecimal(
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
-        ): Promise<[string, string] & { symbol: string; name: string }>
+        ): Promise<[BigNumber] & { decimals: BigNumber }>
 
         getInfo(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<
-            [[string, string] & { symbol: string; name: string }] & {
-                info: [string, string] & { symbol: string; name: string }
-            }
-        >
-
-        "getInfo(address)"(
-            token: string,
-            overrides?: CallOverrides
-        ): Promise<
-            [[string, string] & { symbol: string; name: string }] & {
-                info: [string, string] & { symbol: string; name: string }
-            }
+            [TokenInfo.InfoStructOutput] & { info: TokenInfo.InfoStructOutput }
         >
 
         getInfoBatch(
-            tokens: string[],
+            tokens: PromiseOrValue<string>[],
             overrides?: CallOverrides
         ): Promise<
-            [([string, string] & { symbol: string; name: string })[]] & {
-                infos: ([string, string] & { symbol: string; name: string })[]
-            }
-        >
-
-        "getInfoBatch(address[])"(
-            tokens: string[],
-            overrides?: CallOverrides
-        ): Promise<
-            [([string, string] & { symbol: string; name: string })[]] & {
-                infos: ([string, string] & { symbol: string; name: string })[]
+            [TokenInfo.InfoStructOutput[]] & {
+                infos: TokenInfo.InfoStructOutput[]
             }
         >
 
         getStringProperties(
-            token: string,
-            overrides?: CallOverrides
-        ): Promise<[string, string] & { symbol: string; name: string }>
-
-        "getStringProperties(address)"(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<[string, string] & { symbol: string; name: string }>
     }
 
     getBytes32Properties(
-        token: string,
+        token: PromiseOrValue<string>,
         overrides?: CallOverrides
     ): Promise<[string, string] & { symbol: string; name: string }>
 
-    "getBytes32Properties(address)"(
-        token: string,
+    getDecimal(
+        token: PromiseOrValue<string>,
         overrides?: CallOverrides
-    ): Promise<[string, string] & { symbol: string; name: string }>
+    ): Promise<BigNumber>
 
     getInfo(
-        token: string,
+        token: PromiseOrValue<string>,
         overrides?: CallOverrides
-    ): Promise<[string, string] & { symbol: string; name: string }>
-
-    "getInfo(address)"(
-        token: string,
-        overrides?: CallOverrides
-    ): Promise<[string, string] & { symbol: string; name: string }>
+    ): Promise<TokenInfo.InfoStructOutput>
 
     getInfoBatch(
-        tokens: string[],
+        tokens: PromiseOrValue<string>[],
         overrides?: CallOverrides
-    ): Promise<([string, string] & { symbol: string; name: string })[]>
-
-    "getInfoBatch(address[])"(
-        tokens: string[],
-        overrides?: CallOverrides
-    ): Promise<([string, string] & { symbol: string; name: string })[]>
+    ): Promise<TokenInfo.InfoStructOutput[]>
 
     getStringProperties(
-        token: string,
-        overrides?: CallOverrides
-    ): Promise<[string, string] & { symbol: string; name: string }>
-
-    "getStringProperties(address)"(
-        token: string,
+        token: PromiseOrValue<string>,
         overrides?: CallOverrides
     ): Promise<[string, string] & { symbol: string; name: string }>
 
     callStatic: {
         getBytes32Properties(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<[string, string] & { symbol: string; name: string }>
 
-        "getBytes32Properties(address)"(
-            token: string,
+        getDecimal(
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
-        ): Promise<[string, string] & { symbol: string; name: string }>
+        ): Promise<BigNumber>
 
         getInfo(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
-        ): Promise<[string, string] & { symbol: string; name: string }>
-
-        "getInfo(address)"(
-            token: string,
-            overrides?: CallOverrides
-        ): Promise<[string, string] & { symbol: string; name: string }>
+        ): Promise<TokenInfo.InfoStructOutput>
 
         getInfoBatch(
-            tokens: string[],
+            tokens: PromiseOrValue<string>[],
             overrides?: CallOverrides
-        ): Promise<([string, string] & { symbol: string; name: string })[]>
-
-        "getInfoBatch(address[])"(
-            tokens: string[],
-            overrides?: CallOverrides
-        ): Promise<([string, string] & { symbol: string; name: string })[]>
+        ): Promise<TokenInfo.InfoStructOutput[]>
 
         getStringProperties(
-            token: string,
-            overrides?: CallOverrides
-        ): Promise<[string, string] & { symbol: string; name: string }>
-
-        "getStringProperties(address)"(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<[string, string] & { symbol: string; name: string }>
     }
@@ -215,81 +214,54 @@ export class TokenInfo extends Contract {
 
     estimateGas: {
         getBytes32Properties(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<BigNumber>
 
-        "getBytes32Properties(address)"(
-            token: string,
+        getDecimal(
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<BigNumber>
 
-        getInfo(token: string, overrides?: CallOverrides): Promise<BigNumber>
-
-        "getInfo(address)"(
-            token: string,
+        getInfo(
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<BigNumber>
 
         getInfoBatch(
-            tokens: string[],
-            overrides?: CallOverrides
-        ): Promise<BigNumber>
-
-        "getInfoBatch(address[])"(
-            tokens: string[],
+            tokens: PromiseOrValue<string>[],
             overrides?: CallOverrides
         ): Promise<BigNumber>
 
         getStringProperties(
-            token: string,
-            overrides?: CallOverrides
-        ): Promise<BigNumber>
-
-        "getStringProperties(address)"(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<BigNumber>
     }
 
     populateTransaction: {
         getBytes32Properties(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<PopulatedTransaction>
 
-        "getBytes32Properties(address)"(
-            token: string,
+        getDecimal(
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<PopulatedTransaction>
 
         getInfo(
-            token: string,
-            overrides?: CallOverrides
-        ): Promise<PopulatedTransaction>
-
-        "getInfo(address)"(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<PopulatedTransaction>
 
         getInfoBatch(
-            tokens: string[],
-            overrides?: CallOverrides
-        ): Promise<PopulatedTransaction>
-
-        "getInfoBatch(address[])"(
-            tokens: string[],
+            tokens: PromiseOrValue<string>[],
             overrides?: CallOverrides
         ): Promise<PopulatedTransaction>
 
         getStringProperties(
-            token: string,
-            overrides?: CallOverrides
-        ): Promise<PopulatedTransaction>
-
-        "getStringProperties(address)"(
-            token: string,
+            token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<PopulatedTransaction>
     }

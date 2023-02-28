@@ -44,6 +44,7 @@ export declare type Event = {
 };
 export declare type Contract = {
     address: string;
+    noContract: boolean;
     contractName?: string;
     appName?: string;
     balance?: number;
@@ -60,6 +61,7 @@ export declare type Contract = {
 };
 export declare type TokenDetails = {
     address: string;
+    noContract: boolean;
     name?: string;
     symbol?: string;
     decimals?: number;
@@ -75,10 +77,11 @@ export declare type Token = {
     totalSupply?: BigNumber;
 };
 export declare type Transfer = {
+    pc: number;
     from: string;
     to: string;
-    value: BigNumber;
-    ether: boolean;
+    value?: BigNumber;
+    tokenId?: number;
     tokenAddress?: string;
     tokenSymbol?: string;
     tokenName?: string;
@@ -103,7 +106,8 @@ export interface TransactionDetails {
     logs: Array<Log>;
     error?: string;
 }
-export declare type Networks = "mainnet" | "ropsten" | "rinkeby" | "kovan";
+export declare const networks: readonly ["mainnet", "goerli", "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche", "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom", "testnet.fantom", "moonbeam", "optimistic", "kovan-optimistic", "gnosisscan"];
+export declare type Network = typeof networks[number];
 export declare class TransactionManager {
     readonly ethereumNodeClient: EthereumNodeClient;
     readonly etherscanClient: EtherscanClient;
@@ -112,9 +116,10 @@ export declare class TransactionManager {
     getTransactions(txHashes: string | string[]): Promise<TransactionDetails[]>;
     getTransaction(txHash: string): Promise<TransactionDetails>;
     getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;
-    getContracts(transactionsTraces: Trace[][], configFilename?: string): Promise<Contracts>;
+    getContractsFromTraces(transactionsTraces: Trace[][], configFilename?: string): Promise<Contracts>;
+    getContractsFromTransfers(transactionsTransfers: Transfer[][], configFilename?: string): Promise<Contracts>;
     getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
-    setTokenAttributes(contracts: Contracts): Promise<Contracts>;
+    setTokenAttributes(contracts: Contracts): Promise<void>;
     configOverrides(contracts: Contracts, filename?: string): Promise<void>;
     static parseTraceParams(traces: Trace[][], contracts: Contracts): void;
     static parseTransactionLogs(logs: Array<Log>, contracts: Contracts): void;

@@ -9,6 +9,12 @@ export const TokenInfoABI = [
                 components: [
                     { internalType: "string", name: "symbol", type: "string" },
                     { internalType: "string", name: "name", type: "string" },
+                    {
+                        internalType: "uint256",
+                        name: "decimals",
+                        type: "uint256",
+                    },
+                    { internalType: "bool", name: "noContract", type: "bool" },
                 ],
                 internalType: "struct TokenInfo.Info[]",
                 name: "infos",
@@ -63,6 +69,28 @@ export const TransferEventsABI = [
             },
         ],
         name: "Transfer",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                name: "from",
+                type: "address",
+            },
+            {
+                indexed: true,
+                name: "to",
+                type: "address",
+            },
+            {
+                indexed: true,
+                name: "tokenId",
+                type: "uint256",
+            },
+        ],
+        name: "NFTTransfer",
         type: "event",
     },
 ]

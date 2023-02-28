@@ -18,7 +18,7 @@ import {
 
 const debug = require("debug")("tx2uml")
 
-export interface PumlGenerationOptions {
+export interface TracePumlGenerationOptions {
     noGas?: boolean
     noParams?: boolean
     noEther?: boolean
@@ -33,19 +33,25 @@ const DelegateLifelineColor = "#809ECB"
 const DelegateMessageColor = "#3471CD"
 const FailureFillColor = "#FFAAAA"
 
-export const streamTxPlantUml = (
+export const traces2PumlStream = (
     transactions: TransactionDetails[],
     traces: Trace[][],
     contracts: Contracts,
-    options: PumlGenerationOptions
+    options: TracePumlGenerationOptions
 ): Readable => {
     const pumlStream = new Readable({
         read() {},
     })
     if (transactions.length > 1) {
-        streamMultiTxsPuml(pumlStream, transactions, traces, contracts, options)
+        multiTxTraces2PumlStream(
+            pumlStream,
+            transactions,
+            traces,
+            contracts,
+            options
+        )
     } else {
-        streamSingleTxPuml(
+        singleTx2PumlStream(
             pumlStream,
             transactions[0],
             traces[0],
@@ -57,12 +63,12 @@ export const streamTxPlantUml = (
     return pumlStream
 }
 
-export const streamMultiTxsPuml = (
+export const multiTxTraces2PumlStream = (
     pumlStream: Readable,
     transactions: TransactionDetails[],
     traces: Trace[][],
     contracts: Contracts,
-    options: PumlGenerationOptions = {}
+    options: TracePumlGenerationOptions = {}
 ) => {
     pumlStream.push(`@startuml\n`)
     writeParticipants(pumlStream, contracts, options)
@@ -81,12 +87,12 @@ export const streamMultiTxsPuml = (
     return pumlStream
 }
 
-export const streamSingleTxPuml = (
+export const singleTx2PumlStream = (
     pumlStream: Readable,
     transaction: TransactionDetails,
     traces: Trace[],
     contracts: Contracts,
-    options: PumlGenerationOptions
+    options: TracePumlGenerationOptions
 ): Readable => {
     pumlStream.push(`@startuml\ntitle ${transaction.hash}\n`)
     pumlStream.push(genCaption(transaction, options))
@@ -104,20 +110,12 @@ export const streamSingleTxPuml = (
 export const writeParticipants = (
     plantUmlStream: Readable,
     contracts: Contracts,
-    options: PumlGenerationOptions = {}
+    options: TracePumlGenerationOptions = {}
 ) => {
     plantUmlStream.push("\n")
 
-    // get the address of the first contract to output as the actor
-    const [senderAddress] = Object.entries(contracts)[0]
-    plantUmlStream.push(
-        `actor "${shortAddress(senderAddress)}" as ${participantId(
-            senderAddress
-        )}\n`
-    )
-
-    // output remaining contracts as participants
-    for (const [address, contract] of Object.entries(contracts).slice(1)) {
+    // output remaining contracts as actors or participants
+    for (const [address, contract] of Object.entries(contracts)) {
         // Do not write contract as a participant if min depth greater than trace depth
         if (options.depth > 0 && contract.minDepth > options.depth) continue
 
@@ -128,8 +126,9 @@ export const writeParticipants = (
         if (contract.contractName) name += `<<${contract.contractName}>>`
 
         debug(`Write lifeline ${shortAddress(address)} with stereotype ${name}`)
+        const participantType = contract.noContract ? "actor" : "participant"
         plantUmlStream.push(
-            `participant "${shortAddress(address)}" as ${participantId(
+            `${participantType} "${shortAddress(address)}" as ${participantId(
                 address
             )} ${name}\n`
         )
@@ -139,7 +138,7 @@ export const writeParticipants = (
 const writeTransactionDetails = (
     plantUmlStream: Readable,
     transaction: TransactionDetails,
-    options: PumlGenerationOptions = {}
+    options: TracePumlGenerationOptions = {}
 ): void => {
     if (options.noTxDetails) {
         return
@@ -186,7 +185,7 @@ const writeTransactionDetails = (
 export const writeMessages = (
     plantUmlStream: Readable,
     traces: Trace[],
-    options: PumlGenerationOptions = {}
+    options: TracePumlGenerationOptions = {}
 ) => {
     if (!traces?.length) {
         return
@@ -258,7 +257,7 @@ export const writeMessages = (
 
 const genEndLifeline = (
     trace: Trace,
-    options: PumlGenerationOptions = {}
+    options: TracePumlGenerationOptions = {}
 ): string => {
     let plantUml = ""
     if (!trace.error) {
@@ -436,7 +435,7 @@ const genEtherValue = (trace: Trace, noEtherValue: boolean = false): string => {
 
 const genCaption = (
     details: TransactionDetails,
-    options: PumlGenerationOptions
+    options: TracePumlGenerationOptions
 ): string => {
     return `caption ${options.chain || ""}, block ${
         details.blockNumber
@@ -446,7 +445,7 @@ const genCaption = (
 export const writeEvents = (
     plantUmlStream: Readable,
     contracts: Contracts,
-    options: PumlGenerationOptions = {}
+    options: TracePumlGenerationOptions = {}
 ) => {
     if (options.noLogDetails) {
         return

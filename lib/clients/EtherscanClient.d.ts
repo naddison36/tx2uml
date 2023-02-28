@@ -1,9 +1,9 @@
-import { Contract, Networks, Token } from "../transaction";
+import { Contract, Network, Token } from "../transaction";
 export default class EtherscanClient {
     readonly apiKey: string;
-    readonly network: Networks;
+    readonly network: Network;
     readonly url: string;
-    constructor(apiKey?: string, network?: Networks);
+    constructor(apiKey?: string, network?: Network);
     getContract(contractAddress: string): Promise<Contract>;
     getToken(contractAddress: string): Promise<Token | null>;
 }

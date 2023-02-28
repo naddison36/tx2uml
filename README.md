@@ -39,33 +39,82 @@ npm ls tx2uml
 Use the `-h` option to see the `tx2uml` CLI usage options
 
 ```
-$ tx2uml -h
-Usage: tx2uml <transaction hash or comma separated list of hashes> [options]
+$ tx2uml -hUsage: tx2uml [command] <options>
 
-Ethereum transaction visualizer that generates a UML sequence diagram of transaction contract calls from an Ethereum archive node and Etherscan like API.
-
-The transaction hashes have to be in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces. eg spaces or tags.
+Ethereum transaction visualizer that generates UML sequence diagrams from an Ethereum archive node and Etherscan like block explorer.
 
 Options:
-  -V, --version                 output the version number
   -f, --outputFormat <value>    output file format. (choices: "svg", "png", "eps", "puml", default: "svg")
   -o, --outputFileName <value>  output file name. Defaults to the transaction hash.
   -u, --url <url>               URL of the archive node with trace transaction support. (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
-  -n, --nodeType <value>        geth (GoEthereum), anvil, tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu). (choices: "geth", "anvil", "tgeth", "openeth", "nether", "besu",
-                                default: "geth", env: ARCHIVE_NODE_TYPE)
-  -p, --noParams                Hide function params and return values. (default: false)
-  -g, --noGas                   Hide gas usages. (default: false)
-  -e, --noEther                 Hide ether values. (default: false)
-  -l, --noLogDetails            Hide log details emitted from contract events. (default: false)
-  -t, --noTxDetails             Hide transaction details like nonce, gas and tx fee. (default: false)
-  -x, --noDelegates             Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries. (default: false)
-  -a, --noAddresses <value>     Hide calls to contracts in a list of comma separated addresses with a 0x prefix.
+  -n, --nodeType <value>        geth (GoEthereum), anvil, tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu). (choices: "geth", "anvil", "tgeth", "openeth", "nether", "besu", default: "geth", env:
+                                ARCHIVE_NODE_TYPE)
   -k, --etherscanKey <value>    Etherscan API key. Register your API key at https://etherscan.io/myapikey
   -c, --chain <value>           Blockchain explorer network to get source code from. (choices: "mainnet", "polygon", "bsc", "arbitrum", "ropsten", "kovan", "rinkeby", "goerli", "sepolia", default: "mainnet", env: ETH_NETWORK)
-  -d, --depth <value>           Limit the transaction call depth.
-  -cf, --configFile <value>     Name of the json configuration file that can override contract details like name and ABI. (default: "tx_config.json")
+  -cf, --configFile <value>     Name of the json configuration file that can override contract details like name and ABI. (default: "tx.config.json")
   -v, --verbose                 run with debugging statements. (default: false)
+  -V, --version                 output the version number
   -h, --help                    display help for command
+
+Commands:
+  call [options] <txHash(s)>    UML sequence diagram of transaction contract calls. (default)
+  value <txHash(s)>             UML sequence diagram of token and ether value transfers.
+  help [command]                display help for command
+```
+
+### Call command
+
+```
+Usage: tx2uml call <txhash(s)> [options]
+
+UML sequence diagram of transaction contract calls. (default)
+
+Arguments:
+  txHash(s)                  Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces.
+
+Options:
+  -a, --noAddresses <value>  Hide calls to contracts in a list of comma separated addresses with a 0x prefix.
+  -d, --depth <value>        Limit the transaction call depth.
+  -e, --noEther              Hide ether values. (default: false)
+  -g, --noGas                Hide gas usages. (default: false)
+  -l, --noLogDetails         Hide log details emitted from contract events. (default: false)
+  -p, --noParams             Hide function params and return values. (default: false)
+  -t, --noTxDetails          Hide transaction details like nonce, gas and tx fee. (default: false)
+  -x, --noDelegates          Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries. (default: false)
+  -h, --help                 display help for command
+
+```
+
+### Value command
+
+```
+Usage: tx2uml call <txhash(s)> [options]
+
+UML sequence diagram of transaction contract calls. (default)
+
+Arguments:
+  txHash(s)                  Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces.
+
+Options:
+  -a, --noAddresses <value>  Hide calls to contracts in a list of comma separated addresses with a 0x prefix.
+  -d, --depth <value>        Limit the transaction call depth.
+  -e, --noEther              Hide ether values. (default: false)
+  -g, --noGas                Hide gas usages. (default: false)
+  -l, --noLogDetails         Hide log details emitted from contract events. (default: false)
+  -p, --noParams             Hide function params and return values. (default: false)
+  -t, --noTxDetails          Hide transaction details like nonce, gas and tx fee. (default: false)
+  -x, --noDelegates          Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries. (default: false)
+  -h, --help                 display help for command
+workspaces/tx2uml % npx tx2uml value --help
+Usage: tx2uml value <txhash(s)> [options]
+
+UML sequence diagram of token and ether value transfers.
+
+Arguments:
+  txHash(s)   Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces.
+
+Options:
+  -h, --help  display help for command
 ```
 
 ## Configuration file
