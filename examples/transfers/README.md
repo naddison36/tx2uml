@@ -21,7 +21,7 @@ An example Uniswap V3 swap of ether (ETH) for XFT in tx
 [0xafc8b33fd096bffaaec0c75f4fad0fc8815bc906761a44a8db72d8aea3c9fec6](https://etherscan.io/tx/0xafc8b33fd096bffaaec0c75f4fad0fc8815bc906761a44a8db72d8aea3c9fec6).
 
 ```
-tx2uml value 0xafc8b33fd096bffaaec0c75f4fad0fc8815bc906761a44a8db72d8aea3c9fec6 -v -o ./uniswapV3swap
+tx2uml value 0xafc8b33fd096bffaaec0c75f4fad0fc8815bc906761a44a8db72d8aea3c9fec6 -o ./uniswapV3swap
 ```
 
 ![Uniswap V3 Swap](./uniswapV3swap.svg)
@@ -34,7 +34,17 @@ In this example, a [WETH](https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f2
 and withdraw [0x13142a10fe690b3e4c10708a68037e795fb85e048d70ccf15c639efb339e2e43](https://etherscan.io/tx/0x13142a10fe690b3e4c10708a68037e795fb85e048d70ccf15c639efb339e2e43)
 
 ```
-tx2uml value 0x883e76ca9590e6cf37138548f04b5c3317e0e8d62c44665d2083cbee70152bd1,0x13142a10fe690b3e4c10708a68037e795fb85e048d70ccf15c639efb339e2e43 -v -o ./wethDepositWithddraw
+tx2uml value 0x883e76ca9590e6cf37138548f04b5c3317e0e8d62c44665d2083cbee70152bd1,0x13142a10fe690b3e4c10708a68037e795fb85e048d70ccf15c639efb339e2e43 -o ./wethDepositWithddraw
 ```
 
 ![WETH Deposit and Withdraw](./wethDepositWithddraw.svg)
+
+## NFT Transfers
+
+The following example is the purchase of three [Chungo](https://opensea.io/collection/chungos) NFTs using the [Blur](https://blur.io/) NFT marketplace.
+
+```
+tx2uml value 0x720e126ea17f4e0b2fcf021e6c6b90b55c5283527cdf50d4c2eb3cdbc012dbfc -o ./blurChungo
+```
+
+![Chungo NFT swaps on Blur](./blurChungo.svg)

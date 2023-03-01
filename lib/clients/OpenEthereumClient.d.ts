@@ -1,6 +1,6 @@
 import { Trace, TransactionDetails } from "../transaction";
 import EthereumNodeClient from "./EthereumNodeClient";
-export declare type TraceResponse = {
+export type TraceResponse = {
     type: "call" | "suicide" | "create";
     action: {
         callType?: "call" | "delegatecall" | "staticcall";

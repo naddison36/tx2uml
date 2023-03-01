@@ -10,13 +10,13 @@ export declare enum MessageType {
     DelegateCall = 4,
     StaticCall = 5
 }
-export declare type Param = {
+export type Param = {
     name: string;
     type: string;
     value?: string;
     components?: Param[];
 };
-export declare type Trace = {
+export type Trace = {
     id: number;
     type: MessageType;
     from: string;
@@ -38,11 +38,11 @@ export declare type Trace = {
     depth: number;
     error?: string;
 };
-export declare type Event = {
+export type Event = {
     name: string;
     params: Param[];
 };
-export declare type Contract = {
+export type Contract = {
     address: string;
     noContract: boolean;
     contractName?: string;
@@ -59,10 +59,10 @@ export declare type Contract = {
     events?: Event[];
     minDepth?: number;
 };
-export declare type Contracts = {
+export type Contracts = {
     [address: string]: Contract;
 };
-export declare type TokenDetails = {
+export type TokenDetails = {
     address: string;
     noContract: boolean;
     name?: string;
@@ -70,17 +70,17 @@ export declare type TokenDetails = {
     decimals?: number;
     protocol?: string;
 };
-export declare type Participants = {
+export type Participants = {
     [address: string]: TokenDetails;
 };
-export declare type Token = {
+export type Token = {
     address: string;
     name: string;
     symbol: string;
     decimals?: number;
     totalSupply?: BigNumber;
 };
-export declare type Transfer = {
+export type Transfer = {
     pc: number;
     from: string;
     to: string;
@@ -112,7 +112,7 @@ export interface TransactionDetails {
     error?: string;
 }
 export declare const networks: readonly ["mainnet", "goerli", "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche", "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom", "testnet.fantom", "moonbeam", "optimistic", "kovan-optimistic", "gnosisscan"];
-export declare type Network = typeof networks[number];
+export type Network = typeof networks[number];
 export declare class TransactionManager {
     readonly ethereumNodeClient: EthereumNodeClient;
     readonly etherscanClient: EtherscanClient;
