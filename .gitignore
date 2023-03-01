@@ -12,3 +12,4 @@ package-lock.json
 output.png
 build/
 dist/
+tx.config.json

@@ -101,13 +101,17 @@ export const generateValueDiagram = async (hashes: string, options: any) => {
     })
 
     // Get all the participating contracts from the transfers
-    const contracts = await txManager.getContractsFromTransfers(
+    const participants = await txManager.getTransferParticipants(
         transfers,
         options.configFile
     )
 
     // Convert transactions and transfers to readable stream
-    const pumlStream = transfers2PumlStream(transactions, transfers, contracts)
+    const pumlStream = transfers2PumlStream(
+        transactions,
+        transfers,
+        participants
+    )
 
     // Pipe readable stream to PlantUML's Java process which then writes to a file
     let filename = options.outputFileName

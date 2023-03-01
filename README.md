@@ -76,10 +76,10 @@ Usage: tx2uml call <txhash(s)> [options]
 UML sequence diagram of transaction contract calls. (default)
 
 Arguments:
-  txHash(s)                  Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces.
+  txHash(s)                  Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces.
 
 Options:
-  -a, --noAddresses <value>  Hide calls to contracts in a list of comma separated addresses with a 0x prefix.
+  -a, --noAddresses <value>  Hide calls to contracts in a list of comma-separated addresses with a 0x prefix.
   -d, --depth <value>        Limit the transaction call depth.
   -e, --noEther              Hide ether values. (default: false)
   -g, --noGas                Hide gas usages. (default: false)
@@ -88,36 +88,19 @@ Options:
   -t, --noTxDetails          Hide transaction details like nonce, gas and tx fee. (default: false)
   -x, --noDelegates          Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries. (default: false)
   -h, --help                 display help for command
-
 ```
 
 ### Value command
 
 ```
-Usage: tx2uml call <txhash(s)> [options]
-
-UML sequence diagram of transaction contract calls. (default)
-
-Arguments:
-  txHash(s)                  Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces.
-
-Options:
-  -a, --noAddresses <value>  Hide calls to contracts in a list of comma separated addresses with a 0x prefix.
-  -d, --depth <value>        Limit the transaction call depth.
-  -e, --noEther              Hide ether values. (default: false)
-  -g, --noGas                Hide gas usages. (default: false)
-  -l, --noLogDetails         Hide log details emitted from contract events. (default: false)
-  -p, --noParams             Hide function params and return values. (default: false)
-  -t, --noTxDetails          Hide transaction details like nonce, gas and tx fee. (default: false)
-  -x, --noDelegates          Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries. (default: false)
-  -h, --help                 display help for command
-workspaces/tx2uml % npx tx2uml value --help
 Usage: tx2uml value <txhash(s)> [options]
 
-UML sequence diagram of token and ether value transfers.
+Generates a UML sequence diagram of token and ether value transfers between accounts and contracts.
+
+This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth or Erigon.
 
 Arguments:
-  txHash(s)   Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces.
+  txHash(s)   Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces.
 
 Options:
   -h, --help  display help for command

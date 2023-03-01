@@ -89,7 +89,7 @@ program
     .command("call", { isDefault: true })
     .argument(
         "<txHash(s)>",
-        "Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces."
+        "Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces."
     )
     .usage("<txhash(s)> [options]")
     .description(
@@ -97,7 +97,7 @@ program
     )
     .option(
         "-a, --noAddresses <value>",
-        "Hide calls to contracts in a list of comma separated addresses with a 0x prefix."
+        "Hide calls to contracts in a list of comma-separated addresses with a 0x prefix."
     )
     .option("-d, --depth <value>", "Limit the transaction call depth.")
     .option("-e, --noEther", "Hide ether values.", false)
@@ -136,11 +136,13 @@ program
     .command("value")
     .argument(
         "<txHash(s)>",
-        "Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma separated list of transaction hashes must not have white spaces."
+        "Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces."
     )
     .usage("<txhash(s)> [options]")
     .description(
-        "Generates a UML sequence diagram of token and ether value transfers between accounts and contracts."
+        `Generates a UML sequence diagram of token and ether value transfers between accounts and contracts.
+
+This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth or Erigon.`
     )
     .action(async (hashes: string, options, command) => {
         debug(`About to generate tx calls for ${hashes}`)
