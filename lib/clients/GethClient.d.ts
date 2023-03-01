@@ -19,6 +19,7 @@ export declare type CallTransferResponse = {
     tokenAddress?: string;
     value: string;
     pc: number;
+    event?: string;
 };
 export default class GethClient extends EthereumNodeClient {
     readonly url: string;

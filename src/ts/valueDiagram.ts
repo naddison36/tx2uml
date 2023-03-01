@@ -74,12 +74,14 @@ export const generateValueDiagram = async (hashes: string, options: any) => {
             )
         }
         traceTransfers.forEach((traceTransfer, i) => {
-            if (traceTransfer.from != eventTransfers[i].from)
+            if (traceTransfer.from !== eventTransfers[i].from)
                 throw Error(
                     `trace transfer from address "${traceTransfer.from}" in the ${i} transfer does not match event transfer from address "${eventTransfers[i].from}"`
                 )
-            if (traceTransfer.to != eventTransfers[i].to)
+            if (traceTransfer.to !== eventTransfers[i].to)
                 `trace transfer to address "${traceTransfer.to}" in the ${i} transfer does not match event transfer to address "${eventTransfers[i].to}"`
+            if (traceTransfer.event !== eventTransfers[i].event)
+                `trace transfer event "${traceTransfer.event}" in the ${i} transfer does not match event transfer event "${eventTransfers[i].event}"`
             // Update the trace transfer value with the event's Transfer value
             traceTransfer.value = eventTransfers[i].value
             traceTransfer.tokenId = eventTransfers[i].tokenId

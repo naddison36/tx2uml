@@ -1,5 +1,5 @@
 import axios from "axios"
-import { BigNumber } from "ethers"
+import { BigNumber, constants } from "ethers"
 
 import {
     MessageType,
@@ -41,6 +41,7 @@ export type CallTransferResponse = {
     tokenAddress?: string
     value: string
     pc: number
+    event?: string
 }
 
 export default class GethClient extends EthereumNodeClient {
@@ -114,7 +115,41 @@ export default class GethClient extends EthereumNodeClient {
                 params: [
                     txHash,
                     {
-                        tracer: '{data: [], fault: function(log) {}, step: function(log) { if(log.op.toString().match(/LOG[34]/) && log.stack.length() >= 5 && log.stack.peek(2).toString(16) === "ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef") { this.data.push({from: toHex(toAddress(log.stack.peek(3).toString(16))), to: toHex(toAddress(log.stack.peek(4).toString(16))), pc: log.getPC(), tokenAddress: toHex(log.contract.getAddress()) }) } else if(log.op.toString() == "CALL" && log.stack.length() >= 2 && log.stack.peek(2) > 0) { this.data.push({from: toHex(log.contract.getAddress()), to: toHex(toAddress(log.stack.peek(1).toString(16))), value: log.stack.peek(2), pc: log.getPC() }) } }, result: function() { return this.data; }}',
+                        tracer: `{
+data: [],
+fault: function(log) {},
+step: function(log) {
+    if(log.op.toString().match(/LOG[34]/) && log.stack.peek(2).toString(16) === "ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef") {
+        this.data.push({
+            from: toHex(toAddress(log.stack.peek(3).toString(16))),
+            to: toHex(toAddress(log.stack.peek(4).toString(16))),
+            event: "Transfer",
+            pc: log.getPC(),
+            tokenAddress: toHex(log.contract.getAddress())})
+    } else if(log.op.toString() === "LOG2" && log.stack.peek(2).toString(16) === "e1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c" ) {
+        this.data.push({
+            from: toHex(log.contract.getAddress()),
+            to: toHex(toAddress(log.stack.peek(3).toString(16))),
+            event: "Deposit",
+            pc: log.getPC(),
+            tokenAddress: toHex(log.contract.getAddress())})
+    } else if(log.op.toString() === "LOG2" && log.stack.peek(2).toString(16) === "7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65" ) {
+        this.data.push({
+           from: toHex(toAddress(log.stack.peek(3).toString(16))),
+           to: toHex(log.contract.getAddress()),
+           event: "Withdraw",
+           pc: log.getPC(),
+           tokenAddress: toHex(log.contract.getAddress())})
+    } else if(log.op.toString() == "CALL" && log.stack.length() >= 2 && log.stack.peek(2) > 0) {
+        // Ether transfer in call
+        this.data.push({
+            from: toHex(log.contract.getAddress()),
+            to: toHex(toAddress(log.stack.peek(1).toString(16))),
+            value: log.stack.peek(2),
+            pc: log.getPC() })
+    }
+},
+result: function() { return this.data; }}`,
                     },
                 ],
             })
@@ -122,9 +157,9 @@ export default class GethClient extends EthereumNodeClient {
             if (response.data?.error?.message) {
                 throw new Error(response.data.error.message)
             }
-            if (!response?.data?.result) {
+            if (!Array.isArray(response?.data?.result)) {
                 throw new Error(
-                    `No value transfers in response. ${response?.data?.result}`
+                    `No value transfers in response. ${response?.data}`
                 )
             }
 
@@ -133,14 +168,22 @@ export default class GethClient extends EthereumNodeClient {
             )
 
             // Format address with checksum formatting
+            // If zero address, use the token address
             const addressEncodedTransfers = response?.data?.result.map(
                 (t: CallTransferResponse) => ({
                     ...t,
-                    from: getAddress(t.from),
-                    to: getAddress(t.to),
+                    from:
+                        t.from === constants.AddressZero
+                            ? getAddress(t.tokenAddress)
+                            : getAddress(t.from),
+                    to:
+                        t.to === constants.AddressZero
+                            ? getAddress(t.tokenAddress)
+                            : getAddress(t.to),
                     tokenAddress: t.tokenAddress
                         ? getAddress(t.tokenAddress)
                         : undefined,
+                    event: t.event,
                 })
             )
             return addressEncodedTransfers

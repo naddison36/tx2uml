@@ -98,6 +98,7 @@ export type Transfer = {
     to: string
     value?: BigNumber
     tokenId?: number
+    event?: string
     tokenAddress?: string
     tokenSymbol?: string
     tokenName?: string

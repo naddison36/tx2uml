@@ -174,10 +174,12 @@ export const writeMessages = (
     // for each trace
     for (const transfer of transfers) {
         const value = transfer.value
-            ? `${commify(
+            ? `${transfer.event || ""} ${commify(
                   formatUnits(transfer.value, transfer.decimals || 0)
               )} ${transfer.tokenSymbol || "ETH"}`
-            : `${transfer.tokenSymbol} id ${transfer.tokenId}`
+            : `${transfer.event || ""} ${transfer.tokenSymbol} id ${
+                  transfer.tokenId
+              }`
         plantUmlStream.push(
             `${participantId(transfer.from)} -> ${participantId(
                 transfer.to

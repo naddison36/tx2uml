@@ -1,4 +1,4 @@
-import { BigNumber, Contract, providers } from "ethers"
+import { BigNumber, constants, Contract, providers } from "ethers"
 import { Provider } from "@ethersproject/providers"
 
 import { TokenInfoABI } from "./ABIs"
@@ -130,40 +130,78 @@ export default abstract class EthereumNodeClient {
     static parseTransferEvents(logs: Array<Log>): Transfer[] {
         const transferEvents: Transfer[] = []
         logs.forEach((log, i) => {
+            const tokenAddress = getAddress(log.address)
+            const baseTransfer = {
+                tokenAddress,
+                pc: 0,
+            }
             try {
-                // Only try and parse Transfer events with the first two params indexed
+                // If Transfer(address,address,uint256)
                 if (
-                    log.topics[0] !==
-                        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef" ||
-                    log.topics.length < 3
-                )
-                    return
-
-                if (log.topics.length === 3) {
-                    transferEvents.push({
-                        from: getAddress(hexDataSlice(log.topics[1], 12)),
-                        to: getAddress(hexDataSlice(log.topics[2], 12)),
-                        value: BigNumber.from(log.data),
-                        tokenAddress: log.address,
-                        pc: 0,
-                    })
-                } else {
-                    transferEvents.push({
-                        from: getAddress(hexDataSlice(log.topics[1], 12)),
-                        to: getAddress(hexDataSlice(log.topics[2], 12)),
-                        tokenId: BigNumber.from(log.topics[3]).toNumber(),
-                        tokenAddress: log.address,
-                        pc: 0,
-                    })
+                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef" ===
+                    log.topics[0]
+                ) {
+                    if (log.topics.length === 3) {
+                        transferEvents.push({
+                            ...baseTransfer,
+                            from: parseAddress(log, 1),
+                            to: parseAddress(log, 2),
+                            value: BigNumber.from(log.data),
+                            event: "Transfer",
+                        })
+                    } else if (log.topics.length === 4) {
+                        transferEvents.push({
+                            ...baseTransfer,
+                            from: parseAddress(log, 1),
+                            to: parseAddress(log, 2),
+                            tokenId: BigNumber.from(log.topics[3]).toNumber(),
+                            event: "Transfer",
+                        })
+                    }
+                }
+                // If Deposit(address,uint256)
+                else if (
+                    "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c" ===
+                    log.topics[0]
+                ) {
+                    if (log.topics.length === 2) {
+                        transferEvents.push({
+                            ...baseTransfer,
+                            from: tokenAddress,
+                            to: parseAddress(log, 1),
+                            value: BigNumber.from(log.data),
+                            event: "Deposit",
+                        })
+                    }
+                }
+                // If Withdraw(address,uint256)
+                else if (
+                    "0x7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65" ===
+                    log.topics[0]
+                ) {
+                    if (log.topics.length === 2) {
+                        transferEvents.push({
+                            ...baseTransfer,
+                            from: parseAddress(log, 1),
+                            to: tokenAddress,
+                            value: BigNumber.from(log.data),
+                            event: "Withdraw",
+                        })
+                    }
                 }
             } catch (err) {
-                if (err.reason !== "no matching event")
-                    throw new Error(`Failed to parse the event log ${i}`, {
-                        cause: err,
-                    })
+                throw new Error(`Failed to parse the event log ${i}`, {
+                    cause: err,
+                })
             }
         })
 
         return transferEvents
     }
+}
+
+const parseAddress = (log: Log, topicIndex: number): string => {
+    return log.topics[topicIndex] === constants.HashZero
+        ? getAddress(log.address)
+        : getAddress(hexDataSlice(log.topics[topicIndex], 12))
 }
