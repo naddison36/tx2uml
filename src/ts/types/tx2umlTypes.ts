@@ -66,16 +66,26 @@ export type Contract = {
 }
 export type Contracts = { [address: string]: Contract }
 
-export type TokenDetails = {
+export interface TokenDetails {
     address: string
     noContract: boolean
-    name?: string
-    symbol?: string
+    tokenName?: string
+    tokenSymbol?: string
     decimals?: number
+}
+export interface Participant extends TokenDetails {
     protocol?: string
+    name?: string
+    labels?: string[]
 }
 
-export type Participants = { [address: string]: TokenDetails }
+export type Participants = { [address: string]: Participant }
+
+export interface Label {
+    name: string
+    labels: string[]
+}
+export type Labels = { [address: string]: Label }
 
 export type Token = {
     address: string

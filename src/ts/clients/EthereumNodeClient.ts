@@ -115,8 +115,8 @@ export default abstract class EthereumNodeClient {
             return results.map((result, i) => ({
                 address: contractAddresses[i],
                 noContract: result.noContract,
-                symbol: result.symbol,
-                name: result.name,
+                tokenSymbol: result.symbol,
+                tokenName: result.name,
                 decimals: result.decimals.toNumber(),
             }))
         } catch (err) {

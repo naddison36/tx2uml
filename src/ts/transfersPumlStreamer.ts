@@ -207,8 +207,13 @@ export const writeParticipants = (
     for (const [address, participant] of Object.entries(participants)) {
         let name: string = ""
         if (participant.protocol) name += `<<${participant.protocol}>>`
-        if (participant.name) name += `<<${participant.name}>>`
-        if (participant.symbol) name += `<<(${participant.symbol})>>`
+        participant.labels?.forEach(label => {
+            name += `<<${label}>>`
+        })
+        // Use token name, else the label or Etherscan name
+        if (participant.tokenName || participant.name)
+            name += `<<${participant.tokenName || participant.name}>>`
+        if (participant.tokenSymbol) name += `<<(${participant.tokenSymbol})>>`
 
         debug(`Write lifeline for ${address} with stereotype ${name}`)
         const participantType = participant.noContract ? "actor" : "participant"
@@ -263,7 +268,7 @@ export const writeBalances = (
         Object.keys(participantBalances[participant]).forEach(tokenAddress => {
             // Get token details or use Ether details
             const token = participants[tokenAddress] || {
-                symbol: "ETH",
+                tokenSymbol: "ETH",
                 decimals: 18,
             }
             genTokenBalance(
@@ -290,12 +295,12 @@ const genCaption = (details: Readonly<TransactionDetails>): string => {
 const genTokenBalance = (
     plantUmlStream: Readable,
     position: Position,
-    token: { symbol?: string; decimals?: number }
+    token: { tokenSymbol?: string; decimals?: number }
 ) => {
     if (!position?.balance.eq(0)) {
         plantUmlStream.push(
             `\n${commify(formatUnits(position.balance, token.decimals || 0))} ${
-                token.symbol || ""
+                token.tokenSymbol || ""
             }`
         )
     }
@@ -304,10 +309,10 @@ const genTokenBalance = (
 const genNftChanges = (
     plantUmlStream: Readable,
     position: Position,
-    token: { symbol?: string }
+    token: { tokenSymbol?: string }
 ) => {
     if (position.removedIds.size + position.addedIds.size > 0) {
-        plantUmlStream.push(`\n${token.symbol}`)
+        plantUmlStream.push(`\n${token.tokenSymbol}`)
     }
     if (position.removedIds.size > 0) {
         position.removedIds.forEach(id => {
