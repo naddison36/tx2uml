@@ -1,6 +1,6 @@
 import { Readable } from "stream"
 
-import { Contracts, TransactionDetails, Transfer } from "./transaction"
+import { Participants, TransactionDetails, Transfer } from "./transaction"
 import { participantId, shortAddress } from "./utils/formatters"
 import { commify, formatUnits } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
@@ -10,7 +10,7 @@ const debug = require("debug")("tx2uml")
 export const transfers2PumlStream = (
     transactions: readonly Readonly<TransactionDetails>[],
     transfers: readonly Readonly<Transfer>[][],
-    contracts: Readonly<Contracts>
+    participants: Readonly<Participants>
 ): Readable => {
     const pumlStream = new Readable({
         read() {},
@@ -20,14 +20,14 @@ export const transfers2PumlStream = (
             pumlStream,
             transactions,
             transfers,
-            contracts
+            participants
         )
     } else {
         singleTransfer2PumlStream(
             pumlStream,
             transactions[0],
             transfers[0],
-            contracts
+            participants
         )
     }
 
@@ -38,12 +38,16 @@ export const multiTransfers2PumlStream = (
     pumlStream: Readable,
     transactions: readonly TransactionDetails[],
     transfers: readonly Transfer[][],
-    contracts: Readonly<Contracts>
+    participants: Readonly<Participants>
 ) => {
     pumlStream.push(`@startuml\n`)
 
-    // Filter out any contracts that don't have a transfer from or to
-    const filteredContracts = filterParticipantContracts(contracts, transfers)
+    // Filter out any participants that don't have a transfer from or to.
+    // This will be token contracts that don't mint or burn
+    const filteredContracts = filterParticipantContracts(
+        participants,
+        transfers
+    )
 
     writeParticipants(pumlStream, filteredContracts)
     let i = 0
@@ -63,18 +67,21 @@ export const singleTransfer2PumlStream = (
     pumlStream: Readable,
     transaction: Readonly<TransactionDetails>,
     transfers: readonly Transfer[],
-    contracts: Readonly<Contracts>
+    participants: Readonly<Participants>
 ): Readable => {
     pumlStream.push(`@startuml\ntitle ${transaction.hash}\n`)
     pumlStream.push(genCaption(transaction))
 
     // Filter out any contracts that don't have a transfer from or to
-    const filteredContracts = filterParticipantContracts(contracts, transfers)
+    const filteredContracts = filterParticipantContracts(
+        participants,
+        transfers
+    )
     const participantPositions = netParticipantValues(transfers, {})
 
     writeParticipants(pumlStream, filteredContracts)
     writeMessages(pumlStream, transfers)
-    writeBalances(pumlStream, participantPositions, contracts)
+    writeBalances(pumlStream, participantPositions, participants)
 
     pumlStream.push("\n@endumls")
     pumlStream.push(null)
@@ -82,18 +89,18 @@ export const singleTransfer2PumlStream = (
     return pumlStream
 }
 
-// Filter out any contracts that don't have a transfer from or to
+// Filter out any participating contracts that don't have a transfer from or to
 const filterParticipantContracts = (
-    contracts: Readonly<Contracts>,
+    participants: Readonly<Participants>,
     transfers: readonly Transfer[] | readonly Transfer[][]
-): Contracts => {
-    const filteredContracts: Contracts = {}
-    Object.keys(contracts)
+): Participants => {
+    const filteredParticipants: Participants = {}
+    Object.keys(participants)
         .filter(key =>
             transfers.flat().some(t => t.from === key || t.to === key)
         )
-        .forEach(key => (filteredContracts[key] = contracts[key]))
-    return filteredContracts
+        .forEach(key => (filteredParticipants[key] = participants[key]))
+    return filteredParticipants
 }
 
 // Mapping of participant address to token addresses to balances
@@ -141,20 +148,19 @@ const netParticipantValues = (
 
 export const writeParticipants = (
     plantUmlStream: Readable,
-    contracts: Readonly<Contracts>
+    participants: Readonly<Participants>
 ) => {
     plantUmlStream.push("\n")
 
-    // output contracts as participants
-    for (const [address, contract] of Object.entries(contracts)) {
+    // output participants
+    for (const [address, participant] of Object.entries(participants)) {
         let name: string = ""
-        if (contract.protocol) name += `<<${contract.protocol}>>`
-        if (contract.tokenName) name += `<<${contract.tokenName}>>`
-        if (contract.symbol) name += `<<(${contract.symbol})>>`
-        if (contract.contractName) name += `<<${contract.contractName}>>`
+        if (participant.protocol) name += `<<${participant.protocol}>>`
+        if (participant.name) name += `<<${participant.name}>>`
+        if (participant.symbol) name += `<<(${participant.symbol})>>`
 
         debug(`Write lifeline ${shortAddress(address)} with stereotype ${name}`)
-        const participantType = contract.noContract ? "actor" : "participant"
+        const participantType = participant.noContract ? "actor" : "participant"
         plantUmlStream.push(
             `${participantType} "${shortAddress(address)}" as ${participantId(
                 address
@@ -191,7 +197,7 @@ export const writeMessages = (
 export const writeBalances = (
     plantUmlStream: Readable,
     participantBalances: ParticipantPositions,
-    contracts: Contracts
+    participants: Readonly<Participants>
 ) => {
     plantUmlStream.push("\n")
 
@@ -205,7 +211,7 @@ export const writeBalances = (
         // For each participant's token balance
         Object.keys(participantBalances[participant]).forEach(tokenAddress => {
             // Get token details for use Ether details
-            const token = contracts[tokenAddress] || {
+            const token = participants[tokenAddress] || {
                 symbol: "ETH",
                 decimals: 18,
             }

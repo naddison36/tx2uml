@@ -59,15 +59,19 @@ export declare type Contract = {
     events?: Event[];
     minDepth?: number;
 };
+export declare type Contracts = {
+    [address: string]: Contract;
+};
 export declare type TokenDetails = {
     address: string;
     noContract: boolean;
     name?: string;
     symbol?: string;
     decimals?: number;
+    protocol?: string;
 };
-export declare type Contracts = {
-    [address: string]: Contract;
+export declare type Participants = {
+    [address: string]: TokenDetails;
 };
 export declare type Token = {
     address: string;
@@ -118,10 +122,10 @@ export declare class TransactionManager {
     getTransaction(txHash: string): Promise<TransactionDetails>;
     getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;
     getContractsFromTraces(transactionsTraces: Trace[][], configFilename?: string): Promise<Contracts>;
-    getContractsFromTransfers(transactionsTransfers: Transfer[][], configFilename?: string): Promise<Contracts>;
+    getTransferParticipants(transactionsTransfers: Transfer[][], configFilename?: string): Promise<Participants>;
     getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
     setTokenAttributes(contracts: Contracts): Promise<void>;
-    configOverrides(contracts: Contracts, filename?: string): Promise<void>;
+    configOverrides(contracts: Contracts & Participants, filename?: string): Promise<void>;
     static parseTraceParams(traces: Trace[][], contracts: Contracts): void;
     static parseTransactionLogs(logs: Array<Log>, contracts: Contracts): void;
     static parseTraceDepths(traces: Trace[][], contracts: Contracts): void;

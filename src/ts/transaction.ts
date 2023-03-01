@@ -73,6 +73,7 @@ export type Contract = {
     events?: Event[]
     minDepth?: number
 }
+export type Contracts = { [address: string]: Contract }
 
 export type TokenDetails = {
     address: string
@@ -80,9 +81,10 @@ export type TokenDetails = {
     name?: string
     symbol?: string
     decimals?: number
+    protocol?: string
 }
 
-export type Contracts = { [address: string]: Contract }
+export type Participants = { [address: string]: TokenDetails }
 
 export type Token = {
     address: string
@@ -256,10 +258,10 @@ export class TransactionManager {
         return contracts
     }
 
-    async getContractsFromTransfers(
+    async getTransferParticipants(
         transactionsTransfers: Transfer[][],
         configFilename?: string
-    ): Promise<Contracts> {
+    ): Promise<Participants> {
         const flatTransfers = transactionsTransfers.flat()
         const addressSet = new Set<string>()
         flatTransfers.forEach(transfer => {
@@ -269,13 +271,16 @@ export class TransactionManager {
         })
         const uniqueAddresses = Array.from(addressSet)
 
-        // get contract ABIs from Etherscan
-        const contracts = await this.getContractsFromAddresses(uniqueAddresses)
+        // get token details from on-chain
+        const participantDetails =
+            await this.ethereumNodeClient.getTokenDetails(uniqueAddresses)
+        const participants: Participants = {}
+        participantDetails.forEach(p => {
+            participants[p.address] = p
+        })
 
-        // Get token name and symbol from chain
-        await this.setTokenAttributes(contracts)
         // Override contract details like name, token symbol and ABI
-        await this.configOverrides(contracts, configFilename)
+        await this.configOverrides(participants, configFilename)
 
         // Add the token symbol and name to each transfer
         transactionsTransfers.forEach(transfers => {
@@ -284,16 +289,16 @@ export class TransactionManager {
                     transfer.decimals = 18
                     return
                 }
-                const contract = contracts[transfer.tokenAddress]
-                if (contract) {
-                    transfer.tokenSymbol = contract.symbol
-                    transfer.tokenName = contract.tokenName
-                    transfer.decimals = contract.decimals
+                const tokenDetails = participants[transfer.tokenAddress]
+                if (tokenDetails) {
+                    transfer.tokenSymbol = tokenDetails.symbol
+                    transfer.tokenName = tokenDetails.address
+                    transfer.decimals = tokenDetails.decimals
                 }
             })
         })
 
-        return contracts
+        return participants
     }
 
     // Get the contract names and ABIs from Etherscan
@@ -329,7 +334,10 @@ export class TransactionManager {
         })
     }
 
-    async configOverrides(contracts: Contracts, filename?: string) {
+    async configOverrides(
+        contracts: Contracts & Participants,
+        filename?: string
+    ) {
         const configs = await loadConfig(filename)
         for (const [contractAddress, config] of Object.entries(configs)) {
             const address = contractAddress.toLowerCase()
