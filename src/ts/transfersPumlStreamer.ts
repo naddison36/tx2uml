@@ -51,11 +51,21 @@ export const multiTransfers2PumlStream = (
 
     writeParticipants(pumlStream, filteredContracts)
     let i = 0
+
+    const totalParticipantPositions: ParticipantPositions = {}
     for (const transaction of transactions) {
         pumlStream.push(`\ngroup ${transaction.hash}`)
-        writeMessages(pumlStream, transfers[i++])
+        writeMessages(pumlStream, transfers[i])
+
+        netParticipantValues(transfers[i], totalParticipantPositions)
+        const txParticipantPositions: ParticipantPositions = {}
+        netParticipantValues(transfers[i], txParticipantPositions)
+        writeBalances(pumlStream, txParticipantPositions, participants)
         pumlStream.push("end")
+        i++
     }
+
+    writeBalances(pumlStream, totalParticipantPositions, participants)
 
     pumlStream.push("\n@endumls")
     pumlStream.push(null)
@@ -77,7 +87,8 @@ export const singleTransfer2PumlStream = (
         participants,
         transfers
     )
-    const participantPositions = netParticipantValues(transfers, {})
+    const participantPositions: ParticipantPositions = {}
+    netParticipantValues(transfers, participantPositions)
 
     writeParticipants(pumlStream, filteredContracts)
     writeMessages(pumlStream, transfers)
@@ -114,7 +125,7 @@ type ParticipantPositions = {
 const netParticipantValues = (
     transfers: readonly Transfer[],
     participantPositions: ParticipantPositions = {}
-): ParticipantPositions => {
+) => {
     // for each transfer
     transfers.forEach(transfer => {
         // Continue if no value which is probably an NFT transfer
@@ -143,7 +154,6 @@ const netParticipantValues = (
                 transfer.value
             )
     })
-    return participantPositions
 }
 
 export const writeParticipants = (
@@ -223,7 +233,7 @@ export const writeBalances = (
                 }`
             )
         })
-        plantUmlStream.push("\nend note")
+        plantUmlStream.push("\nend note\n")
     })
 }
 

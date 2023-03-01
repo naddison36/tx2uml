@@ -9,10 +9,12 @@ The following `contract call` and `value transfer` diagrams are for the Uniswap 
 ![Contract call example](./examples/uniswapMKRRemove.png) 
 *Contract calls*
 
+See a lot more call diagram examples with different options [here](./examples/README.md).
+
 ![Value transfer example](./examples/transfers/uniswapMKRRemove.svg)
 *Value transfers*
 
-See a lot more examples with different options [here](./examples/README.md)
+More value transfer diagram examples can be found [here](./examples/transfers/README.md).
 
 # Install
 
