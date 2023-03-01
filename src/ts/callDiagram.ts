@@ -1,11 +1,12 @@
 import EthereumNodeClient from "./clients/EthereumNodeClient"
 import EtherscanClient from "./clients/EtherscanClient"
-import { TransactionDetails, TransactionManager } from "./transaction"
+import { TransactionManager } from "./transaction"
 import { transactionHash } from "./utils/regEx"
 import { traces2PumlStream } from "./tracesPumlStreamer"
 import { generateFile } from "./fileGenerator"
 import OpenEthereumClient from "./clients/OpenEthereumClient"
 import GethClient from "./clients/GethClient"
+import { TransactionDetails } from "./types/tx2umlTypes"
 
 const debug = require("debug")("tx2uml")
 

@@ -1,7 +1,7 @@
 import { Logger } from "ethers/lib/utils"
 
 import OpenEthereumClient from "../OpenEthereumClient"
-import { MessageType, Trace } from "../../transaction"
+import { MessageType, Trace } from "../../types/tx2umlTypes"
 import { EthersMatchers } from "../../utils/jest"
 import GethClient from "../GethClient"
 import EthereumNodeClient from "../EthereumNodeClient"

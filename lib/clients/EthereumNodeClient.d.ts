@@ -1,5 +1,5 @@
 import { Provider } from "@ethersproject/providers";
-import { Network, TokenDetails, Trace, TransactionDetails, Transfer } from "../transaction";
+import { Network, TokenDetails, Trace, TransactionDetails, Transfer } from "../types/tx2umlTypes";
 import { Log } from "@ethersproject/abstract-provider";
 export default abstract class EthereumNodeClient {
     readonly url: string;

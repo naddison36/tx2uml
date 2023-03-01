@@ -1,6 +1,11 @@
 import { Readable } from "stream"
 
-import { Participants, TransactionDetails, Transfer } from "./transaction"
+import {
+    Participants,
+    TransactionDetails,
+    Transfer,
+    TransferType,
+} from "./types/tx2umlTypes"
 import { participantId, shortAddress } from "./utils/formatters"
 import { commify, formatUnits } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
@@ -205,7 +210,7 @@ export const writeParticipants = (
         if (participant.name) name += `<<${participant.name}>>`
         if (participant.symbol) name += `<<(${participant.symbol})>>`
 
-        debug(`Write lifeline ${shortAddress(address)} with stereotype ${name}`)
+        debug(`Write lifeline for ${address} with stereotype ${name}`)
         const participantType = participant.noContract ? "actor" : "participant"
         plantUmlStream.push(
             `${participantType} "${shortAddress(address)}" as ${participantId(
@@ -225,7 +230,7 @@ export const writeMessages = (
     plantUmlStream.push("\n")
     // for each trace
     for (const transfer of transfers) {
-        const value = transfer.value
+        const displayValue = transfer.value
             ? `${transfer.event || ""} ${commify(
                   formatUnits(transfer.value, transfer.decimals || 0)
               )} ${transfer.tokenSymbol || "ETH"}`
@@ -233,9 +238,9 @@ export const writeMessages = (
                   transfer.tokenId
               }`
         plantUmlStream.push(
-            `${participantId(transfer.from)} -> ${participantId(
-                transfer.to
-            )}: ${value}\n`
+            `${participantId(transfer.from)} ${genArrow(
+                transfer
+            )} ${participantId(transfer.to)}: ${displayValue}\n`
         )
     }
 }
@@ -315,3 +320,10 @@ const genNftChanges = (
         })
     }
 }
+
+const genArrow = (transfer: Transfer): string =>
+    transfer.type === TransferType.Transfer
+        ? "->"
+        : transfer.type === TransferType.Burn
+        ? "-x"
+        : "o->"

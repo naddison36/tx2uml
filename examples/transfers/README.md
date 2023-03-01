@@ -48,3 +48,14 @@ tx2uml value 0x720e126ea17f4e0b2fcf021e6c6b90b55c5283527cdf50d4c2eb3cdbc012dbfc 
 ```
 
 ![Chungo NFT swaps on Blur](./blurChungo.svg)
+
+## Tokenized Vaults 
+
+A deposit of USDC into mStable's USDC 3Pool Convex Meta Vault with transaction
+[0xc717e875d1a3e9b59e721537287f5aba6542c12604f65f0a1026f55644d191a4](https://etherscan.io/tx/0xc717e875d1a3e9b59e721537287f5aba6542c12604f65f0a1026f55644d191a4)
+
+```
+tx2uml value 0xc717e875d1a3e9b59e721537287f5aba6542c12604f65f0a1026f55644d191a4 -o ./metavaultUsdcDeposit
+```
+
+![mStable USDC 3CRV Meta Vault](./metavaultUsdcDeposit.svg)

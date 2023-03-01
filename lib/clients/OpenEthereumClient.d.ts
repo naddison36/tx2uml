@@ -1,4 +1,4 @@
-import { Trace, TransactionDetails } from "../transaction";
+import { Trace, TransactionDetails } from "../types/tx2umlTypes";
 import EthereumNodeClient from "./EthereumNodeClient";
 export type TraceResponse = {
     type: "call" | "suicide" | "create";

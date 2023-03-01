@@ -49,10 +49,6 @@ program
             .env("ARCHIVE_NODE_TYPE")
             .default("geth")
     )
-    .option(
-        "-k, --etherscanKey <value>",
-        "Etherscan API key. Register your API key at https://etherscan.io/myapikey"
-    )
     .addOption(
         new Option(
             "-c, --chain <value>",
@@ -94,6 +90,10 @@ program
     .usage("<txhash(s)> [options]")
     .description(
         "Generates a UML sequence diagram of transaction contract calls between contracts. (default)"
+    )
+    .option(
+        "-k, --etherscanKey <value>",
+        "Etherscan API key. Register your API key at https://etherscan.io/myapikey"
     )
     .option(
         "-a, --noAddresses <value>",

@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { Participants, TransactionDetails, Transfer } from "./transaction";
+import { Participants, TransactionDetails, Transfer } from "./types/tx2umlTypes";
 import { BigNumber } from "ethers";
 export declare const transfers2PumlStream: (transactions: readonly Readonly<TransactionDetails>[], transfers: readonly Readonly<Transfer>[][], participants: Readonly<Participants>) => Readable;
 export declare const multiTransfers2PumlStream: (pumlStream: Readable, transactions: readonly TransactionDetails[], transfers: readonly Transfer[][], participants: Readonly<Participants>) => Readable;
