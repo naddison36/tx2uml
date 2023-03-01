@@ -4,7 +4,13 @@
 
 [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language) sequence diagram generator for Ethereum transaction.
 
-![Uniswap V1 remove liquidity](./examples/uniswapMKRRemove.png)
+The following `contract call` and `value transfer` diagrams are for the Uniswap V1 tx [0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca](https://etherscan.io/tx/0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca) that removes MKR liquidity from the Uniswap V1 MKR pool.
+
+![Contract call example](./examples/uniswapMKRRemove.png) 
+*Contract calls*
+
+![Value transfer example](./examples/transfers/uniswapMKRRemove.svg)
+*Value transfers*
 
 See a lot more examples with different options [here](./examples/README.md)
 
