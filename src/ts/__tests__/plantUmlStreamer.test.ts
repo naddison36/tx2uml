@@ -1,4 +1,4 @@
-import { writeMessages, writeParticipants } from "../plantUmlStreamer"
+import { writeMessages, writeParticipants } from "../tracesPumlStreamer"
 import { Contracts, MessageType, Trace } from "../transaction"
 import { Readable } from "stream"
 import { BigNumber } from "ethers"
@@ -23,25 +23,31 @@ const baseTrace: Trace = {
 
 const testContracts: Contracts = {
     "0x0000324fd7df8b2a969969bcc3663d74f0581111": {
+        noContract: true,
         address: "0x0000324fd7df8b2a969969bcc3663d74f0581111",
     },
     "0x11116FECD516Ecc3849DAf6845e3EC8680872222": {
+        noContract: false,
         address: "0x11116FECD516Ecc3849DAf6845e3EC8680872222",
         contractName: "Controller",
     },
     "0x22226FECD516Ecc3849DAf6845e3EC8680873333": {
+        noContract: false,
         address: "0x22226FECD516Ecc3849DAf6845e3EC8680873333",
         contractName: "Proxy",
     },
     "0x333365fe5446d880f8ec261d9224166909124444": {
+        noContract: false,
         address: "0x333365fe5446d880f8ec261d9224166909124444",
         contractName: "DeFiApp",
     },
     "0x44447296C1DE2Ed53348A3B23AD56797b75a5555": {
+        noContract: false,
         address: "0x4fc67296C1DE2Ed53348A3B23AD56797b75aAA8C",
         contractName: "Hacker",
     },
     "0x555538e6266DE92C1E449cBd89C5c202583b6666": {
+        noContract: false,
         address: "0xDc3138e6266DE92C1E449cBd89C5c202583b62eD",
         contractName: "Oracle",
     },
@@ -56,7 +62,7 @@ describe("Stream Plant UML", () => {
         writeParticipants(stream, testContracts)
         const plantUmlBuf = stream.read()
         expect(plantUmlBuf.toString()).toEqual(
-            '\nactor "0x0000..1111" as 00001111\n' +
+            '\nactor "0x0000..1111" as 00001111 \n' +
                 'participant "0x1111..2222" as 11112222 <<Controller>>\n' +
                 'participant "0x2222..3333" as 22223333 <<Proxy>>\n' +
                 'participant "0x3333..4444" as 33334444 <<DeFiApp>>\n' +

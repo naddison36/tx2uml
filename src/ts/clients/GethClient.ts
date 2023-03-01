@@ -1,15 +1,20 @@
 import axios from "axios"
-import { BigNumber } from "ethers"
+import { BigNumber, constants } from "ethers"
 
-import { MessageType, Trace, TransactionDetails } from "../transaction"
+import {
+    MessageType,
+    Trace,
+    TransactionDetails,
+    Transfer,
+} from "../transaction"
 import { transactionHash } from "../utils/regEx"
-import { hexlify, toUtf8String } from "ethers/lib/utils"
+import { getAddress, hexlify, toUtf8String } from "ethers/lib/utils"
 import EthereumNodeClient from "./EthereumNodeClient"
 
 require("axios-debug-log")
 const debug = require("debug")("tx2uml")
 
-export type CallResponse = {
+export type CallTracerResponse = {
     type:
         | "CALL"
         | "CALLCODE"
@@ -27,7 +32,16 @@ export type CallResponse = {
     gasUsed?: string
     time?: string
     error?: string
-    calls?: CallResponse[]
+    calls?: CallTracerResponse[]
+}
+
+export type CallTransferResponse = {
+    from: string
+    to: string
+    tokenAddress?: string
+    value: string
+    pc: number
+    event?: string
 }
 
 export default class GethClient extends EthereumNodeClient {
@@ -79,6 +93,103 @@ export default class GethClient extends EthereumNodeClient {
         } catch (err) {
             const error = new Error(
                 `Failed to get transaction trace for tx hash ${txHash} from url ${this.url}.`,
+                { cause: err }
+            )
+            throw error
+        }
+    }
+
+    async getValueTransfers(txHash: string): Promise<Transfer[]> {
+        if (!txHash?.match(transactionHash)) {
+            throw new TypeError(
+                `Transaction hash "${txHash}" must be 32 bytes in hexadecimal format with a 0x prefix`
+            )
+        }
+
+        try {
+            debug(`About to debug transaction ${txHash}`)
+            const response = await axios.post(this.url, {
+                id: this.jsonRpcId++,
+                jsonrpc: "2.0",
+                method: "debug_traceTransaction",
+                params: [
+                    txHash,
+                    {
+                        tracer: `{
+data: [],
+fault: function(log) {},
+step: function(log) {
+    if(log.op.toString().match(/LOG[34]/) && log.stack.peek(2).toString(16) === "ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef") {
+        this.data.push({
+            from: toHex(toAddress(log.stack.peek(3).toString(16))),
+            to: toHex(toAddress(log.stack.peek(4).toString(16))),
+            event: "Transfer",
+            pc: log.getPC(),
+            tokenAddress: toHex(log.contract.getAddress())})
+    } else if(log.op.toString() === "LOG2" && log.stack.peek(2).toString(16) === "e1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c" ) {
+        this.data.push({
+            from: toHex(log.contract.getAddress()),
+            to: toHex(toAddress(log.stack.peek(3).toString(16))),
+            event: "Deposit",
+            pc: log.getPC(),
+            tokenAddress: toHex(log.contract.getAddress())})
+    } else if(log.op.toString() === "LOG2" && log.stack.peek(2).toString(16) === "7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65" ) {
+        this.data.push({
+           from: toHex(toAddress(log.stack.peek(3).toString(16))),
+           to: toHex(log.contract.getAddress()),
+           event: "Withdraw",
+           pc: log.getPC(),
+           tokenAddress: toHex(log.contract.getAddress())})
+    } else if(log.op.toString() == "CALL" && log.stack.length() >= 2 && log.stack.peek(2) > 0) {
+        // Ether transfer in call
+        this.data.push({
+            from: toHex(log.contract.getAddress()),
+            to: toHex(toAddress(log.stack.peek(1).toString(16))),
+            value: log.stack.peek(2),
+            pc: log.getPC() })
+    }
+},
+result: function() { return this.data; }}`,
+                    },
+                ],
+            })
+
+            if (response.data?.error?.message) {
+                throw new Error(response.data.error.message)
+            }
+            if (!Array.isArray(response?.data?.result)) {
+                throw new Error(
+                    `No value transfers in response. ${response?.data}`
+                )
+            }
+
+            debug(
+                `Got ${response.data.result.length} value transfers for tx hash ${txHash}`
+            )
+
+            // Format address with checksum formatting
+            // If zero address, use the token address
+            const addressEncodedTransfers = response?.data?.result.map(
+                (t: CallTransferResponse) => ({
+                    ...t,
+                    from:
+                        t.from === constants.AddressZero
+                            ? getAddress(t.tokenAddress)
+                            : getAddress(t.from),
+                    to:
+                        t.to === constants.AddressZero
+                            ? getAddress(t.tokenAddress)
+                            : getAddress(t.to),
+                    tokenAddress: t.tokenAddress
+                        ? getAddress(t.tokenAddress)
+                        : undefined,
+                    event: t.event,
+                })
+            )
+            return addressEncodedTransfers
+        } catch (err) {
+            const error = new Error(
+                `Failed to get value transfers for tx hash ${txHash} from url ${this.url}.`,
                 { cause: err }
             )
             throw error
@@ -161,7 +272,7 @@ export default class GethClient extends EthereumNodeClient {
 
 // Adds calls from a Geth debug_traceTransaction API response to the traces
 const addTraces = (
-    callResponse: CallResponse,
+    callResponse: CallTracerResponse,
     traces: Trace[],
     id: number,
     depth: number,
@@ -210,7 +321,7 @@ const addTraces = (
     return id
 }
 
-const convertType = (trace: CallResponse): MessageType => {
+const convertType = (trace: CallTracerResponse): MessageType => {
     let type: MessageType = MessageType.Call
     if (trace.type === "DELEGATECALL") {
         return MessageType.DelegateCall

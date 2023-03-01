@@ -1,9 +1,9 @@
-import { Contract, ethers, providers } from "ethers"
+import { BigNumber, constants, Contract, providers } from "ethers"
 import { Provider } from "@ethersproject/providers"
-import { Log } from "@ethersproject/abstract-provider"
 
-import { TokenInfoABI, TransferEventsABI } from "./ABIs"
+import { TokenInfoABI } from "./ABIs"
 import {
+    Network,
     TokenDetails,
     Trace,
     TransactionDetails,
@@ -11,17 +11,31 @@ import {
 } from "../transaction"
 import { transactionHash } from "../utils/regEx"
 import { TokenInfo } from "../types/TokenInfo"
+import { Log } from "@ethersproject/abstract-provider"
+import { getAddress, hexDataSlice } from "ethers/lib/utils"
 
 require("axios-debug-log")
 const debug = require("debug")("tx2uml")
 
-const tokenInfoAddress = "0xbA51331Bf89570F3f55BC26394fcCA05d4063C71"
+const tokenInfoAddresses: { [network: string]: string } = {
+    mainnet: "0x190c8CB4BA6444390266CA30bDEAe4583041B14e",
+    polygon: "0x2aA8dba5bd50Dc469B50b5687b75c6212DeF3E1A",
+}
 
 export default abstract class EthereumNodeClient {
     public readonly ethersProvider: Provider
+    private tokenInfoAddress: string
 
-    constructor(public readonly url: string = "http://localhost:8545") {
+    constructor(
+        public readonly url: string = "http://localhost:8545",
+        public readonly network: Network = "mainnet"
+    ) {
         this.ethersProvider = new providers.JsonRpcProvider(url)
+        if (!tokenInfoAddresses[network])
+            throw Error(
+                `Can not get token info from ${network} as TokenInfo contract has not been deployed`
+            )
+        this.tokenInfoAddress = tokenInfoAddresses[network]
     }
 
     abstract getTransactionTrace(txHash: string): Promise<Trace[]>
@@ -90,7 +104,7 @@ export default abstract class EthereumNodeClient {
         contractAddresses: string[]
     ): Promise<TokenDetails[]> {
         const tokenInfo = new Contract(
-            tokenInfoAddress,
+            this.tokenInfoAddress,
             TokenInfoABI,
             this.ethersProvider
         ) as TokenInfo
@@ -99,8 +113,10 @@ export default abstract class EthereumNodeClient {
             debug(`Got token information for ${results.length} contracts`)
             return results.map((result, i) => ({
                 address: contractAddresses[i],
+                noContract: result.noContract,
                 symbol: result.symbol,
                 name: result.name,
+                decimals: result.decimals.toNumber(),
             }))
         } catch (err) {
             console.error(
@@ -113,28 +129,79 @@ export default abstract class EthereumNodeClient {
     // Parse Transfer events from a transaction receipt
     static parseTransferEvents(logs: Array<Log>): Transfer[] {
         const transferEvents: Transfer[] = []
-        // parse events
-        const tokenEventInterface = new ethers.utils.Interface(
-            TransferEventsABI
-        )
-        logs.forEach(log => {
+        logs.forEach((log, i) => {
+            const tokenAddress = getAddress(log.address)
+            const baseTransfer = {
+                tokenAddress,
+                pc: 0,
+            }
             try {
-                const event = tokenEventInterface.parseLog(log)
-                if (event.name === "Transfer") {
-                    transferEvents.push({
-                        to: event.args.to,
-                        from: event.args.from,
-                        value: event.args.value,
-                        tokenAddress: log.address,
-                        ether: false,
-                    })
+                // If Transfer(address,address,uint256)
+                if (
+                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef" ===
+                    log.topics[0]
+                ) {
+                    if (log.topics.length === 3) {
+                        transferEvents.push({
+                            ...baseTransfer,
+                            from: parseAddress(log, 1),
+                            to: parseAddress(log, 2),
+                            value: BigNumber.from(log.data),
+                            event: "Transfer",
+                        })
+                    } else if (log.topics.length === 4) {
+                        transferEvents.push({
+                            ...baseTransfer,
+                            from: parseAddress(log, 1),
+                            to: parseAddress(log, 2),
+                            tokenId: BigNumber.from(log.topics[3]).toNumber(),
+                            event: "Transfer",
+                        })
+                    }
+                }
+                // If Deposit(address,uint256)
+                else if (
+                    "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c" ===
+                    log.topics[0]
+                ) {
+                    if (log.topics.length === 2) {
+                        transferEvents.push({
+                            ...baseTransfer,
+                            from: tokenAddress,
+                            to: parseAddress(log, 1),
+                            value: BigNumber.from(log.data),
+                            event: "Deposit",
+                        })
+                    }
+                }
+                // If Withdraw(address,uint256)
+                else if (
+                    "0x7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65" ===
+                    log.topics[0]
+                ) {
+                    if (log.topics.length === 2) {
+                        transferEvents.push({
+                            ...baseTransfer,
+                            from: parseAddress(log, 1),
+                            to: tokenAddress,
+                            value: BigNumber.from(log.data),
+                            event: "Withdraw",
+                        })
+                    }
                 }
             } catch (err) {
-                if (err.reason !== "no matching event")
-                    throw new Error("Failed to parse event log", { cause: err })
+                throw new Error(`Failed to parse the event log ${i}`, {
+                    cause: err,
+                })
             }
         })
 
         return transferEvents
     }
+}
+
+const parseAddress = (log: Log, topicIndex: number): string => {
+    return log.topics[topicIndex] === constants.HashZero
+        ? getAddress(log.address)
+        : getAddress(hexDataSlice(log.topics[topicIndex], 12))
 }

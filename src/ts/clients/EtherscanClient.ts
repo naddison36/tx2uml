@@ -1,12 +1,12 @@
 import axios from "axios"
 import { BigNumber, Contract as EthersContract } from "ethers"
 
-import { Contract, Networks, Token } from "../transaction"
+import { Contract, Network, Token } from "../transaction"
 import { ethereumAddress } from "../utils/regEx"
 
 const debug = require("debug")("tx2uml")
 
-const etherscanBaseUrls = {
+const etherscanBaseUrls: { [network: string]: string } = {
     mainnet: "https://api.etherscan.io/api",
     ropsten: "https://api-ropsten.etherscan.io/api",
     rinkeby: "https://api-rinkeby.etherscan.io/api",
@@ -24,9 +24,9 @@ export default class EtherscanClient {
     constructor(
         // Register your API key at https://etherscan.io/myapikey
         public readonly apiKey: string = "Q35WDQ2354617I8E2Z1E4WU3MIEP89DW9H",
-        public readonly network: Networks = "mainnet"
+        public readonly network: Network = "mainnet"
     ) {
-        this.url = etherscanBaseUrls[this.network]
+        this.url = etherscanBaseUrls[network]
     }
 
     async getContract(contractAddress: string): Promise<Contract> {
@@ -55,6 +55,7 @@ export default class EtherscanClient {
                 )
                 return {
                     address: contractAddress,
+                    noContract: true,
                     contractName: null,
                 }
             }
@@ -83,6 +84,7 @@ export default class EtherscanClient {
             }
             return {
                 address: contractAddress,
+                noContract: false,
                 contractName,
                 ethersContract,
                 constructorInputs: response.data.result[0].ConstructorArguments,
