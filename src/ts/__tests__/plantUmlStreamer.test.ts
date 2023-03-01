@@ -1,5 +1,5 @@
 import { writeMessages, writeParticipants } from "../tracesPumlStreamer"
-import { Contracts, MessageType, Trace } from "../transaction"
+import { Contracts, MessageType, Trace } from "../types/tx2umlTypes"
 import { Readable } from "stream"
 import { BigNumber } from "ethers"
 

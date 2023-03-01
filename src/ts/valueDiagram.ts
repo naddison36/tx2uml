@@ -1,10 +1,11 @@
-import { TransactionDetails, TransactionManager, Transfer } from "./transaction"
+import { TransactionDetails, Transfer, TransferType } from "./types/tx2umlTypes"
 import { transactionHash } from "./utils/regEx"
 import GethClient from "./clients/GethClient"
 import EtherscanClient from "./clients/EtherscanClient"
 import { transfers2PumlStream } from "./transfersPumlStreamer"
 import { generateFile } from "./fileGenerator"
 import EthereumNodeClient from "./clients/EthereumNodeClient"
+import { TransactionManager } from "./transaction"
 
 export interface TransferPumlGenerationOptions {
     chain?: string
@@ -96,6 +97,7 @@ export const generateValueDiagram = async (hashes: string, options: any) => {
                 to: tx.to,
                 value: tx.value,
                 pc: 0,
+                type: TransferType.Transfer,
             })
         }
     })

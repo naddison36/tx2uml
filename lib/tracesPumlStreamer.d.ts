@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { Contracts, Param, Trace, TransactionDetails } from "./transaction";
+import { Contracts, Param, Trace, TransactionDetails } from "./types/tx2umlTypes";
 export interface TracePumlGenerationOptions {
     noGas?: boolean;
     noParams?: boolean;

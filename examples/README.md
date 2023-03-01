@@ -1,4 +1,4 @@
-# Example UML Sequence Diagrams
+# Example Contract Call Diagrams
 
 The below examples assume the `ARCHIVE_NODE_URL` environment variable has been set. For example
 
@@ -6,13 +6,13 @@ The below examples assume the `ARCHIVE_NODE_URL` environment variable has been s
 export ARCHIVE_NODE_URL=https://yournode/apikey
 ```
 
-Alternatively, the `url` option can be used to set the url of your archive node. eg
+Alternatively, the `-u, --url <url>` option can be used to set the url of your archive node. eg
 
 ```
 tx2uml 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca --url https://yournode/apikey
 ```
 
-The `--verbose` or `-v` option will show the debug statements while `tx2uml` is running.
+The `-v, --verbose` option will show the debug statements while `tx2uml` is running.
 
 ## Uniswap V2 Swap
 

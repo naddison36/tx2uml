@@ -8,7 +8,7 @@ import {
     Param,
     Trace,
     TransactionDetails,
-} from "./transaction"
+} from "./types/tx2umlTypes"
 import {
     formatNumber,
     participantId,

@@ -8,7 +8,8 @@ import {
     Trace,
     TransactionDetails,
     Transfer,
-} from "../transaction"
+    TransferType,
+} from "../types/tx2umlTypes"
 import { transactionHash } from "../utils/regEx"
 import { TokenInfo } from "../types/TokenInfo"
 import { Log } from "@ethersproject/abstract-provider"
@@ -148,6 +149,12 @@ export default abstract class EthereumNodeClient {
                             to: parseAddress(log, 2),
                             value: BigNumber.from(log.data),
                             event: "Transfer",
+                            type:
+                                log.topics[1] === constants.HashZero
+                                    ? TransferType.Mint
+                                    : log.topics[2] === constants.HashZero
+                                    ? TransferType.Burn
+                                    : TransferType.Mint,
                         })
                     } else if (log.topics.length === 4) {
                         transferEvents.push({
@@ -156,6 +163,12 @@ export default abstract class EthereumNodeClient {
                             to: parseAddress(log, 2),
                             tokenId: BigNumber.from(log.topics[3]).toNumber(),
                             event: "Transfer",
+                            type:
+                                log.topics[1] === constants.HashZero
+                                    ? TransferType.Mint
+                                    : log.topics[2] === constants.HashZero
+                                    ? TransferType.Burn
+                                    : TransferType.Mint,
                         })
                     }
                 }
@@ -171,6 +184,7 @@ export default abstract class EthereumNodeClient {
                             to: parseAddress(log, 1),
                             value: BigNumber.from(log.data),
                             event: "Deposit",
+                            type: TransferType.Mint,
                         })
                     }
                 }
@@ -186,6 +200,7 @@ export default abstract class EthereumNodeClient {
                             to: tokenAddress,
                             value: BigNumber.from(log.data),
                             event: "Withdraw",
+                            type: TransferType.Burn,
                         })
                     }
                 }

@@ -6,7 +6,8 @@ import {
     Trace,
     TransactionDetails,
     Transfer,
-} from "../transaction"
+    TransferType,
+} from "../types/tx2umlTypes"
 import { transactionHash } from "../utils/regEx"
 import { getAddress, hexlify, toUtf8String } from "ethers/lib/utils"
 import EthereumNodeClient from "./EthereumNodeClient"
@@ -184,6 +185,14 @@ result: function() { return this.data; }}`,
                         ? getAddress(t.tokenAddress)
                         : undefined,
                     event: t.event,
+                    type:
+                        t.from === constants.AddressZero ||
+                        t.event === "Deposit"
+                            ? TransferType.Mint
+                            : t.to === constants.AddressZero ||
+                              t.event === "Withdraw"
+                            ? TransferType.Burn
+                            : TransferType.Transfer,
                 })
             )
             return addressEncodedTransfers

@@ -1,6 +1,11 @@
 import { Readable } from "stream"
 
-import { Participants, TransactionDetails, Transfer } from "./transaction"
+import {
+    Participants,
+    TransactionDetails,
+    Transfer,
+    TransferType,
+} from "./types/tx2umlTypes"
 import { participantId, shortAddress } from "./utils/formatters"
 import { commify, formatUnits } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
@@ -51,11 +56,21 @@ export const multiTransfers2PumlStream = (
 
     writeParticipants(pumlStream, filteredContracts)
     let i = 0
+
+    const totalParticipantPositions: ParticipantPositions = {}
     for (const transaction of transactions) {
         pumlStream.push(`\ngroup ${transaction.hash}`)
-        writeMessages(pumlStream, transfers[i++])
+        writeMessages(pumlStream, transfers[i])
+
+        netParticipantValues(transfers[i], totalParticipantPositions)
+        const txParticipantPositions: ParticipantPositions = {}
+        netParticipantValues(transfers[i], txParticipantPositions)
+        writeBalances(pumlStream, txParticipantPositions, participants)
         pumlStream.push("end")
+        i++
     }
+
+    writeBalances(pumlStream, totalParticipantPositions, participants)
 
     pumlStream.push("\n@endumls")
     pumlStream.push(null)
@@ -77,7 +92,8 @@ export const singleTransfer2PumlStream = (
         participants,
         transfers
     )
-    const participantPositions = netParticipantValues(transfers, {})
+    const participantPositions: ParticipantPositions = {}
+    netParticipantValues(transfers, participantPositions)
 
     writeParticipants(pumlStream, filteredContracts)
     writeMessages(pumlStream, transfers)
@@ -104,47 +120,82 @@ const filterParticipantContracts = (
 }
 
 // Mapping of participant address to token addresses to balances
-// Participant -> Token -> Balance
+interface Position {
+    balance: BigNumber
+    addedIds: Set<number>
+    removedIds: Set<number>
+}
+// Participant -> Token -> Position
 type ParticipantPositions = {
     [address: string]: {
-        [address: string]: BigNumber
+        [address: string]: Position
     }
 }
 
 const netParticipantValues = (
     transfers: readonly Transfer[],
     participantPositions: ParticipantPositions = {}
-): ParticipantPositions => {
+) => {
     // for each transfer
     transfers.forEach(transfer => {
-        // Continue if no value which is probably an NFT transfer
-        if (!transfer.value) return
+        // Add empty position for the from token
         if (!participantPositions[transfer.from]) {
             participantPositions[transfer.from] = {}
         }
         if (!participantPositions[transfer.from][transfer.tokenAddress]) {
             participantPositions[transfer.from][transfer.tokenAddress] =
-                BigNumber.from(0)
+                createEmptyPosition()
         }
-        participantPositions[transfer.from][transfer.tokenAddress] =
-            participantPositions[transfer.from][transfer.tokenAddress].sub(
-                transfer.value
-            )
-
+        // Add empty position for the to token
         if (!participantPositions[transfer.to]) {
             participantPositions[transfer.to] = {}
         }
         if (!participantPositions[transfer.to][transfer.tokenAddress]) {
             participantPositions[transfer.to][transfer.tokenAddress] =
-                BigNumber.from(0)
+                createEmptyPosition()
         }
-        participantPositions[transfer.to][transfer.tokenAddress] =
-            participantPositions[transfer.to][transfer.tokenAddress].add(
-                transfer.value
-            )
+        // If a transfer of a token or ether
+        if (transfer.value) {
+            participantPositions[transfer.from][transfer.tokenAddress].balance =
+                participantPositions[transfer.from][
+                    transfer.tokenAddress
+                ].balance.sub(transfer.value)
+
+            participantPositions[transfer.to][transfer.tokenAddress].balance =
+                participantPositions[transfer.to][
+                    transfer.tokenAddress
+                ].balance.add(transfer.value)
+        }
+        // If a NFT transfer
+        if (transfer.tokenId) {
+            // For the from participant
+            // add to removedIds
+            participantPositions[transfer.from][
+                transfer.tokenAddress
+            ].removedIds.add(transfer.tokenId)
+            // remove from addedIds
+            participantPositions[transfer.from][
+                transfer.tokenAddress
+            ].addedIds.delete(transfer.tokenId)
+
+            // For the to participant
+            // add remove removedIds
+            participantPositions[transfer.to][
+                transfer.tokenAddress
+            ].removedIds.delete(transfer.tokenId)
+            // add to addedIds
+            participantPositions[transfer.to][
+                transfer.tokenAddress
+            ].addedIds.add(transfer.tokenId)
+        }
     })
-    return participantPositions
 }
+
+const createEmptyPosition = (): Position => ({
+    balance: BigNumber.from(0),
+    addedIds: new Set<number>(),
+    removedIds: new Set<number>(),
+})
 
 export const writeParticipants = (
     plantUmlStream: Readable,
@@ -159,7 +210,7 @@ export const writeParticipants = (
         if (participant.name) name += `<<${participant.name}>>`
         if (participant.symbol) name += `<<(${participant.symbol})>>`
 
-        debug(`Write lifeline ${shortAddress(address)} with stereotype ${name}`)
+        debug(`Write lifeline for ${address} with stereotype ${name}`)
         const participantType = participant.noContract ? "actor" : "participant"
         plantUmlStream.push(
             `${participantType} "${shortAddress(address)}" as ${participantId(
@@ -179,7 +230,7 @@ export const writeMessages = (
     plantUmlStream.push("\n")
     // for each trace
     for (const transfer of transfers) {
-        const value = transfer.value
+        const displayValue = transfer.value
             ? `${transfer.event || ""} ${commify(
                   formatUnits(transfer.value, transfer.decimals || 0)
               )} ${transfer.tokenSymbol || "ETH"}`
@@ -187,9 +238,9 @@ export const writeMessages = (
                   transfer.tokenId
               }`
         plantUmlStream.push(
-            `${participantId(transfer.from)} -> ${participantId(
-                transfer.to
-            )}: ${value}\n`
+            `${participantId(transfer.from)} ${genArrow(
+                transfer
+            )} ${participantId(transfer.to)}: ${displayValue}\n`
         )
     }
 }
@@ -210,20 +261,23 @@ export const writeBalances = (
         )
         // For each participant's token balance
         Object.keys(participantBalances[participant]).forEach(tokenAddress => {
-            // Get token details for use Ether details
+            // Get token details or use Ether details
             const token = participants[tokenAddress] || {
                 symbol: "ETH",
                 decimals: 18,
             }
-            const balance = participantBalances[participant][tokenAddress]
-            if (balance.eq(0)) return
-            plantUmlStream.push(
-                `\n${commify(formatUnits(balance, token.decimals))} ${
-                    token.symbol
-                }`
+            genTokenBalance(
+                plantUmlStream,
+                participantBalances[participant][tokenAddress],
+                token
+            )
+            genNftChanges(
+                plantUmlStream,
+                participantBalances[participant][tokenAddress],
+                token
             )
         })
-        plantUmlStream.push("\nend note")
+        plantUmlStream.push("\nend note\n")
     })
 }
 
@@ -232,3 +286,44 @@ const genCaption = (details: Readonly<TransactionDetails>): string => {
         details.blockNumber
     }, ${details.timestamp.toUTCString()}`
 }
+
+const genTokenBalance = (
+    plantUmlStream: Readable,
+    position: Position,
+    token: { symbol?: string; decimals?: number }
+) => {
+    if (!position?.balance.eq(0)) {
+        plantUmlStream.push(
+            `\n${commify(formatUnits(position.balance, token.decimals || 0))} ${
+                token.symbol || ""
+            }`
+        )
+    }
+}
+
+const genNftChanges = (
+    plantUmlStream: Readable,
+    position: Position,
+    token: { symbol?: string }
+) => {
+    if (position.removedIds.size + position.addedIds.size > 0) {
+        plantUmlStream.push(`\n${token.symbol}`)
+    }
+    if (position.removedIds.size > 0) {
+        position.removedIds.forEach(id => {
+            plantUmlStream.push(`\n  -${id}`)
+        })
+    }
+    if (position.addedIds.size > 0) {
+        position.addedIds.forEach(id => {
+            plantUmlStream.push(`\n  +${id}`)
+        })
+    }
+}
+
+const genArrow = (transfer: Transfer): string =>
+    transfer.type === TransferType.Transfer
+        ? "->"
+        : transfer.type === TransferType.Burn
+        ? "-x"
+        : "o->"

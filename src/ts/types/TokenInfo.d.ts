@@ -21,7 +21,7 @@ import {
     TypedEvent,
     TypedEventFilter,
     TypedListener,
-} from "./common"
+} from "./TypeChain"
 
 export declare namespace TokenInfo {
     export type InfoStruct = {
