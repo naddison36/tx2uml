@@ -145,37 +145,47 @@ const netParticipantValues = (
         }
         // If a transfer of a token or ether
         if (transfer.value) {
-            participantPositions[transfer.from][transfer.tokenAddress].balance =
+            if (transfer.type !== TransferType.Mint) {
                 participantPositions[transfer.from][
                     transfer.tokenAddress
+                ].balance = participantPositions[transfer.from][
+                    transfer.tokenAddress
                 ].balance.sub(transfer.value)
+            }
 
-            participantPositions[transfer.to][transfer.tokenAddress].balance =
+            if (transfer.type !== TransferType.Burn) {
                 participantPositions[transfer.to][
                     transfer.tokenAddress
+                ].balance = participantPositions[transfer.to][
+                    transfer.tokenAddress
                 ].balance.add(transfer.value)
+            }
         }
         // If a NFT transfer
         if (transfer.tokenId) {
-            // For the from participant
-            // add to removedIds
-            participantPositions[transfer.from][
-                transfer.tokenAddress
-            ].removedIds.add(transfer.tokenId)
-            // remove from addedIds
-            participantPositions[transfer.from][
-                transfer.tokenAddress
-            ].addedIds.delete(transfer.tokenId)
+            if (transfer.type !== TransferType.Mint) {
+                // For the from participant
+                // add to removedIds
+                participantPositions[transfer.from][
+                    transfer.tokenAddress
+                ].removedIds.add(transfer.tokenId)
+                // remove from addedIds
+                participantPositions[transfer.from][
+                    transfer.tokenAddress
+                ].addedIds.delete(transfer.tokenId)
+            }
 
-            // For the to participant
-            // add remove removedIds
-            participantPositions[transfer.to][
-                transfer.tokenAddress
-            ].removedIds.delete(transfer.tokenId)
-            // add to addedIds
-            participantPositions[transfer.to][
-                transfer.tokenAddress
-            ].addedIds.add(transfer.tokenId)
+            if (transfer.type !== TransferType.Burn) {
+                // For the to participant
+                // add remove removedIds
+                participantPositions[transfer.to][
+                    transfer.tokenAddress
+                ].removedIds.delete(transfer.tokenId)
+                // add to addedIds
+                participantPositions[transfer.to][
+                    transfer.tokenAddress
+                ].addedIds.add(transfer.tokenId)
+            }
         }
     })
 }

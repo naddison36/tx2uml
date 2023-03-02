@@ -49,13 +49,30 @@ tx2uml value 0x720e126ea17f4e0b2fcf021e6c6b90b55c5283527cdf50d4c2eb3cdbc012dbfc 
 
 ![Chungo NFT swaps on Blur](./blurChungo.svg)
 
-## Tokenized Vaults 
+## Mints
 
-A deposit of USDC into mStable's USDC 3Pool Convex Meta Vault with transaction
-[0xc717e875d1a3e9b59e721537287f5aba6542c12604f65f0a1026f55644d191a4](https://etherscan.io/tx/0xc717e875d1a3e9b59e721537287f5aba6542c12604f65f0a1026f55644d191a4)
+Below is a deposit of 70k USDC into mStable's USDC Meta Vault with transaction
+[0xc717e875d1a3e9b59e721537287f5aba6542c12604f65f0a1026f55644d191a4](https://etherscan.io/tx/0xc717e875d1a3e9b59e721537287f5aba6542c12604f65f0a1026f55644d191a4).
+Note the third, fifth and sixth transfers have a circle at the source.
+This indicates it was a mint so the net positions at the end are not reduced.
 
 ```
 tx2uml value 0xc717e875d1a3e9b59e721537287f5aba6542c12604f65f0a1026f55644d191a4 -o ./metavaultUsdcDeposit
 ```
 
 ![mStable USDC 3CRV Meta Vault](./metavaultUsdcDeposit.svg)
+
+
+## Burns
+
+The below settle transaction run against mStable's 3CRV Meta Vault deposits 3CRV in the underlying mUSD, FRAX and BUSD Vaults which in turn add liquidity to their corresponding Curve Metapools and deposit the Curve Metapool LP token into Convex with tx
+[0x142536caeb5e6cd552ed6885a5efe2a44756a403140f5e8d84b60532ec05f4f8](https://etherscan.io/tx/0x142536caeb5e6cd552ed6885a5efe2a44756a403140f5e8d84b60532ec05f4f8).
+The first transfer is a burn of vcx3CRV-mUSD vault shares which is indicated with an `x` at the destination of the transfer.
+
+```
+tx2uml value 0x142536caeb5e6cd552ed6885a5efe2a44756a403140f5e8d84b60532ec05f4f8 -o ./metavaultSettle
+```
+
+![mStable Meta Vault Settle](./metavaultSettle.svg)
+
+
