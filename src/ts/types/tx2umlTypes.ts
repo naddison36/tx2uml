@@ -69,6 +69,7 @@ export type Contracts = { [address: string]: Contract }
 export interface TokenDetails {
     address: string
     noContract: boolean
+    nft?: boolean
     tokenName?: string
     tokenSymbol?: string
     decimals?: number

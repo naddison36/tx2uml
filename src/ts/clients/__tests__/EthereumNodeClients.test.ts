@@ -19,6 +19,7 @@ const usdcProxy = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
 const usdcImpl = "0xb7277a6e95992041568d9391d09d0122023778a2"
 const mStableUSDProxy = "0xe2f2a5C287993345a840Db3B0845fbC70f5935a5"
 const mStableUSDImpl = "0xE0d0D052d5B1082E52C6b8422Acd23415c3DF1c4"
+const cryptoKitties = "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d"
 const externallyOwnerAccount = "0xbbabad191e7802f526c289c15909a8cba2a5ff2a"
 
 describe("Ethereum Node Clients", () => {
@@ -65,6 +66,26 @@ describe("Ethereum Node Clients", () => {
                     txDetails.logs
                 )
                 expect(transferEvents).toHaveLength(0)
+            })
+            test("CryptoKitties Transfer with no indexed params", async () => {
+                const txDetails = await nodeClient.getTransactionDetails(
+                    "0x8c7e5bdce1046d534648e591f3627f929bb4753334118443665f9b7dff576106"
+                )
+                const transferEvents = EthereumNodeClient.parseTransferEvents(
+                    txDetails.logs
+                )
+                expect(transferEvents).toHaveLength(1)
+                expect(transferEvents[0].from).toEqual(
+                    "0x29f099F537d7974e5Ef095a47D9649cB512243dD"
+                )
+                expect(transferEvents[0].to).toEqual(
+                    "0xB9107454d1d321ACB45c42264948e1Ec56834268"
+                )
+                expect(transferEvents[0].tokenAddress).toEqual(
+                    "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d" // CryptoKittie
+                )
+                expect(transferEvents[0].value).toEqualBN(66007)
+                expect(transferEvents[0].tokenId).toBeUndefined()
             })
         })
     })
@@ -128,12 +149,14 @@ describe("Ethereum Node Clients", () => {
                 mStableUSDProxy,
                 mStableUSDImpl,
                 dai,
+                cryptoKitties,
                 externallyOwnerAccount,
             ])
             expect(tokenDetails[0].tokenSymbol).toEqual("MKR")
             expect(tokenDetails[0].tokenName).toEqual("Maker")
             expect(tokenDetails[0].decimals).toEqual(18)
             expect(tokenDetails[0].noContract).toEqual(false)
+            expect(tokenDetails[0].nft).toEqual(false)
             expect(tokenDetails[0].address).toEqual(maker)
             expect(tokenDetails[1].tokenSymbol).toEqual("UNI")
             expect(tokenDetails[1].tokenName).toEqual("Uniswap")
@@ -150,11 +173,18 @@ describe("Ethereum Node Clients", () => {
             expect(tokenDetails[6].tokenSymbol).toEqual("DAI")
             expect(tokenDetails[6].tokenName).toEqual("Dai Stablecoin")
             expect(tokenDetails[6].decimals).toEqual(18)
-            expect(tokenDetails[7].tokenSymbol).toEqual("")
-            expect(tokenDetails[7].tokenName).toEqual("")
+            expect(tokenDetails[7].tokenSymbol).toEqual("CK")
+            expect(tokenDetails[7].tokenName).toEqual("CryptoKitties")
             expect(tokenDetails[7].decimals).toEqual(0)
-            expect(tokenDetails[7].noContract).toEqual(true)
-            expect(tokenDetails[7].address).toEqual(externallyOwnerAccount)
+            expect(tokenDetails[7].noContract).toEqual(false)
+            expect(tokenDetails[7].nft).toEqual(true)
+            expect(tokenDetails[7].address).toEqual(cryptoKitties)
+            expect(tokenDetails[8].tokenSymbol).toEqual("")
+            expect(tokenDetails[8].tokenName).toEqual("")
+            expect(tokenDetails[8].decimals).toEqual(0)
+            expect(tokenDetails[8].noContract).toEqual(true)
+            expect(tokenDetails[8].nft).toEqual(false)
+            expect(tokenDetails[8].address).toEqual(externallyOwnerAccount)
         })
         test("Fail to get token info from a contract that is not a token", async () => {
             const tokenDetails = await nodeClient.getTokenDetails([

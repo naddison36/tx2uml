@@ -183,7 +183,7 @@ export class TransactionManager {
         // Override contract details like name, token symbol and ABI
         await this.configOverrides(participants, configFilename)
 
-        // Add the token symbol and name to each transfer
+        // Add the token symbol, name, decimal and nft flag to each transfer
         transactionsTransfers.forEach(transfers => {
             transfers.forEach(transfer => {
                 if (!transfer.tokenAddress) {
@@ -195,6 +195,11 @@ export class TransactionManager {
                     transfer.tokenSymbol = participant.tokenSymbol
                     transfer.tokenName = participant.address
                     transfer.decimals = participant.decimals
+                    // if an NFT, move the value to the tokenId
+                    if (participant.nft) {
+                        transfer.tokenId = transfer.value.toNumber()
+                        delete transfer.value
+                    }
                 }
             })
         })
@@ -251,6 +256,7 @@ export class TransactionManager {
                     contracts[address].symbol = config.tokenSymbol
                 if (config.protocolName)
                     contracts[address].protocol = config.protocolName
+                if (config?.nft) contracts[address].nft = config?.nft
                 if (config.abi) {
                     contracts[address].ethersContract = new EthersContract(
                         address,

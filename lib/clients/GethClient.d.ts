@@ -14,8 +14,8 @@ export type CallTracerResponse = {
     calls?: CallTracerResponse[];
 };
 export type CallTransferResponse = {
-    from: string;
-    to: string;
+    from?: string;
+    to?: string;
     tokenAddress?: string;
     value: string;
     pc: number;

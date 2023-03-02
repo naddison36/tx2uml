@@ -1,5 +1,5 @@
 import axios from "axios"
-import { BigNumber, constants } from "ethers"
+import { BigNumber } from "ethers"
 
 import {
     MessageType,
@@ -37,8 +37,8 @@ export type CallTracerResponse = {
 }
 
 export type CallTransferResponse = {
-    from: string
-    to: string
+    from?: string
+    to?: string
     tokenAddress?: string
     value: string
     pc: number
@@ -116,32 +116,27 @@ export default class GethClient extends EthereumNodeClient {
                 params: [
                     txHash,
                     {
+                        // TODO need to handle LOG1 and LOG2 Deposit and Withdraw
                         tracer: `{
 data: [],
 fault: function(log) {},
 step: function(log) {
-    if(log.op.toString().match(/LOG[34]/) && log.stack.peek(2).toString(16) === "ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef") {
+    if(log.op.toString().match(/LOG/) && log.stack.peek(2).toString(16) === "ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef") {
         this.data.push({
-            from: toHex(toAddress(log.stack.peek(3).toString(16))),
-            to: toHex(toAddress(log.stack.peek(4).toString(16))),
             event: "Transfer",
             pc: log.getPC(),
             tokenAddress: toHex(log.contract.getAddress())})
-    } else if(log.op.toString() === "LOG2" && log.stack.peek(2).toString(16) === "e1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c" ) {
+    } else if(log.op.toString().match(/LOG/) && log.stack.peek(2).toString(16) === "e1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c" ) {
         this.data.push({
-            from: toHex(log.contract.getAddress()),
-            to: toHex(toAddress(log.stack.peek(3).toString(16))),
             event: "Deposit",
             pc: log.getPC(),
             tokenAddress: toHex(log.contract.getAddress())})
-    } else if(log.op.toString() === "LOG2" && log.stack.peek(2).toString(16) === "7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65" ) {
+    } else if(log.op.toString().match(/LOG/) && log.stack.peek(2).toString(16) === "7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65" ) {
         this.data.push({
-           from: toHex(toAddress(log.stack.peek(3).toString(16))),
-           to: toHex(log.contract.getAddress()),
            event: "Withdraw",
            pc: log.getPC(),
            tokenAddress: toHex(log.contract.getAddress())})
-    } else if(log.op.toString() == "CALL" && log.stack.length() >= 2 && log.stack.peek(2) > 0) {
+    } else if(log.op.toString() == "CALL" && log.stack.length() >= 3 && log.stack.peek(2) > 0) {
         // Ether transfer in call
         this.data.push({
             from: toHex(log.contract.getAddress()),
@@ -168,31 +163,17 @@ result: function() { return this.data; }}`,
                 `Got ${response.data.result.length} value transfers for tx hash ${txHash}`
             )
 
-            // Format address with checksum formatting
-            // If zero address, use the token address
+            // Format contract address with checksum formatting
             const addressEncodedTransfers = response?.data?.result.map(
                 (t: CallTransferResponse) => ({
                     ...t,
-                    from:
-                        t.from === constants.AddressZero
-                            ? getAddress(t.tokenAddress)
-                            : getAddress(t.from),
-                    to:
-                        t.to === constants.AddressZero
-                            ? getAddress(t.tokenAddress)
-                            : getAddress(t.to),
+                    from: t.from ? getAddress(t.from) : undefined,
+                    to: t.to ? getAddress(t.to) : undefined,
                     tokenAddress: t.tokenAddress
                         ? getAddress(t.tokenAddress)
                         : undefined,
                     event: t.event,
-                    type:
-                        t.from === constants.AddressZero ||
-                        t.event === "Deposit"
-                            ? TransferType.Mint
-                            : t.to === constants.AddressZero ||
-                              t.event === "Withdraw"
-                            ? TransferType.Burn
-                            : TransferType.Transfer,
+                    type: TransferType.Transfer,
                 })
             )
             return addressEncodedTransfers

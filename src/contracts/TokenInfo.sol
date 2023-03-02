@@ -16,6 +16,10 @@ interface IERC20Bytes32 {
     function name() external view returns (bytes32);
 }
 
+interface IERC165 {
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
+}
+
 /**
  * @notice Used to get token information for many addresses in a single call.
  * If an address is not a contract or a token, the batch will not fail.
@@ -27,6 +31,7 @@ contract TokenInfo {
         string name;
         uint256 decimals;
         bool noContract;
+        bool nft;
     }
 
     function getInfoBatch(address[] memory tokens)
@@ -58,31 +63,25 @@ contract TokenInfo {
         ) {
             info.symbol = _symbol;
             info.name = _name;
-
-            // Try and get dicimals
-            try this.getDecimals(token) returns (uint256 _decimals) {
-                info.decimals = _decimals;
+        } catch {
+            // Try and get symbol and name as bytes32
+            try this.getBytes32Properties(token) returns (
+                string memory _symbol,
+                string memory _name
+            ) {
+                info.symbol = _symbol;
+                info.name = _name;
             } catch {}
+        }
 
-            // Just return the info without the decimals
-            return info;
+        // Try and get the decimals
+        try this.getDecimals(token) returns (uint256 _decimals) {
+            info.decimals = _decimals;
         } catch {}
-
-        // Try and get symbol and name as bytes32
-        try this.getBytes32Properties(token) returns (
-            string memory _symbol,
-            string memory _name
-        ) {
-            info.symbol = _symbol;
-            info.name = _name;
-
-            // Try and get dicimals
-            try this.getDecimals(token) returns (uint256 _decimals) {
-                info.decimals = _decimals;
-            } catch {}
-
-            // Just return the info without the decimals
-            return info;
+        
+        // Try and see if the contract is a NFT
+        try this.isNFT(token) returns (bool _nft) {
+            info.nft = _nft;
         } catch {}
     }
 
@@ -138,5 +137,13 @@ contract TokenInfo {
         }
         
         return size > 0;
+    }
+
+    /// @notice is an address a NFT?
+    function isNFT(address account) external view returns (bool) {
+        return IERC165(account).supportsInterface(0x80ac58cd) || // ERC721
+            IERC165(account).supportsInterface(0x5b5e139f) || // ERC721Metadata
+            IERC165(account).supportsInterface(0x780e9d63) || // ERC721Enumerable
+            IERC165(account).supportsInterface(0x9a20483d); // CryptoKitties
     }
 }
