@@ -64,6 +64,7 @@ export type Contracts = {
 export interface TokenDetails {
     address: string;
     noContract: boolean;
+    nft?: boolean;
     tokenName?: string;
     tokenSymbol?: string;
     decimals?: number;

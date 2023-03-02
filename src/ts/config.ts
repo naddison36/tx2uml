@@ -31,6 +31,7 @@ export interface ContractConfig {
     tokenSymbol?: string
     contractName?: string
     protocolName?: string
+    nft?: boolean
     abi?: ReadonlyArray<JsonFragment>
 }
 

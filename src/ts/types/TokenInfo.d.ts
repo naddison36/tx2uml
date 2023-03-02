@@ -14,7 +14,7 @@ import type {
 } from "ethers"
 
 import { Listener, Provider } from "@ethersproject/providers"
-import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi"
+import { FunctionFragment, Result } from "@ethersproject/abi"
 import {
     OnEvent,
     PromiseOrValue,
@@ -29,13 +29,21 @@ export declare namespace TokenInfo {
         name: PromiseOrValue<string>
         decimals: PromiseOrValue<BigNumberish>
         noContract: PromiseOrValue<boolean>
+        nft: PromiseOrValue<boolean>
     }
 
-    export type InfoStructOutput = [string, string, BigNumber, boolean] & {
+    export type InfoStructOutput = [
+        string,
+        string,
+        BigNumber,
+        boolean,
+        boolean
+    ] & {
         symbol: string
         name: string
         decimals: BigNumber
         noContract: boolean
+        nft: boolean
     }
 }
 
@@ -46,6 +54,8 @@ export interface TokenInfoInterface extends utils.Interface {
         "getInfo(address)": FunctionFragment
         "getInfoBatch(address[])": FunctionFragment
         "getStringProperties(address)": FunctionFragment
+        "isContract(address)": FunctionFragment
+        "isNFT(address)": FunctionFragment
     }
 
     getFunction(
@@ -55,6 +65,8 @@ export interface TokenInfoInterface extends utils.Interface {
             | "getInfo"
             | "getInfoBatch"
             | "getStringProperties"
+            | "isContract"
+            | "isNFT"
     ): FunctionFragment
 
     encodeFunctionData(
@@ -95,6 +107,11 @@ export interface TokenInfoInterface extends utils.Interface {
         functionFragment: "getStringProperties",
         data: BytesLike
     ): Result
+    decodeFunctionResult(
+        functionFragment: "isContract",
+        data: BytesLike
+    ): Boolean
+    decodeFunctionResult(functionFragment: "isNFT", data: BytesLike): Boolean
 
     events: {}
 }
@@ -156,6 +173,16 @@ export interface TokenInfo extends BaseContract {
             token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<[string, string] & { symbol: string; name: string }>
+
+        isContract(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<Boolean>
+
+        isNFT(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<Boolean>
     }
 
     getBytes32Properties(
@@ -183,6 +210,16 @@ export interface TokenInfo extends BaseContract {
         overrides?: CallOverrides
     ): Promise<[string, string] & { symbol: string; name: string }>
 
+    isContract(
+        account: PromiseOrValue<string>,
+        overrides?: CallOverrides
+    ): Promise<Boolean>
+
+    isNFT(
+        account: PromiseOrValue<string>,
+        overrides?: CallOverrides
+    ): Promise<Boolean>
+
     callStatic: {
         getBytes32Properties(
             token: PromiseOrValue<string>,
@@ -208,6 +245,16 @@ export interface TokenInfo extends BaseContract {
             token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<[string, string] & { symbol: string; name: string }>
+
+        isContract(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<Boolean>
+
+        isNFT(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<Boolean>
     }
 
     filters: {}
@@ -237,6 +284,16 @@ export interface TokenInfo extends BaseContract {
             token: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<BigNumber>
+
+        isContract(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<BigNumber>
+
+        isNFT(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<BigNumber>
     }
 
     populateTransaction: {
@@ -262,6 +319,16 @@ export interface TokenInfo extends BaseContract {
 
         getStringProperties(
             token: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<PopulatedTransaction>
+
+        isContract(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<PopulatedTransaction>
+
+        isNFT(
+            account: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<PopulatedTransaction>
     }

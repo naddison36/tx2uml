@@ -15,6 +15,7 @@ export const TokenInfoABI = [
                         type: "uint256",
                     },
                     { internalType: "bool", name: "noContract", type: "bool" },
+                    { internalType: "bool", name: "nft", type: "bool" },
                 ],
                 internalType: "struct TokenInfo.Info[]",
                 name: "infos",

@@ -19,7 +19,7 @@ require("axios-debug-log")
 const debug = require("debug")("tx2uml")
 
 const tokenInfoAddresses: { [network: string]: string } = {
-    mainnet: "0x190c8CB4BA6444390266CA30bDEAe4583041B14e",
+    mainnet: "0x05b4671B2cC4858A7E72c2B24e202a87520cf14e",
     polygon: "0x2aA8dba5bd50Dc469B50b5687b75c6212DeF3E1A",
 }
 const ProxySlot =
@@ -117,6 +117,7 @@ export default abstract class EthereumNodeClient {
             return results.map((result, i) => ({
                 address: contractAddresses[i],
                 noContract: result.noContract,
+                nft: result.nft,
                 tokenSymbol: result.symbol,
                 tokenName: result.name,
                 decimals: result.decimals.toNumber(),
@@ -144,35 +145,27 @@ export default abstract class EthereumNodeClient {
                     "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef" ===
                     log.topics[0]
                 ) {
-                    if (log.topics.length === 3) {
-                        transferEvents.push({
-                            ...baseTransfer,
-                            from: parseAddress(log, 1),
-                            to: parseAddress(log, 2),
-                            value: BigNumber.from(log.data),
-                            event: "Transfer",
-                            type:
-                                log.topics[1] === constants.HashZero
-                                    ? TransferType.Mint
-                                    : log.topics[2] === constants.HashZero
-                                    ? TransferType.Burn
-                                    : TransferType.Mint,
-                        })
-                    } else if (log.topics.length === 4) {
-                        transferEvents.push({
-                            ...baseTransfer,
-                            from: parseAddress(log, 1),
-                            to: parseAddress(log, 2),
-                            tokenId: BigNumber.from(log.topics[3]).toNumber(),
-                            event: "Transfer",
-                            type:
-                                log.topics[1] === constants.HashZero
-                                    ? TransferType.Mint
-                                    : log.topics[2] === constants.HashZero
-                                    ? TransferType.Burn
-                                    : TransferType.Mint,
-                        })
-                    }
+                    const fromAddress = parseAddress(log, 1)
+                    const toAddress = parseAddress(log, 2)
+                    transferEvents.push({
+                        ...baseTransfer,
+                        from:
+                            fromAddress === constants.AddressZero
+                                ? getAddress(log.address)
+                                : fromAddress,
+                        to:
+                            toAddress === constants.AddressZero
+                                ? getAddress(log.address)
+                                : toAddress,
+                        value: parseValue(log, 3),
+                        event: "Transfer",
+                        type:
+                            fromAddress === constants.AddressZero
+                                ? TransferType.Mint
+                                : toAddress === constants.AddressZero
+                                ? TransferType.Burn
+                                : TransferType.Transfer,
+                    })
                 }
                 // If Deposit(address,uint256)
                 else if (
@@ -184,7 +177,7 @@ export default abstract class EthereumNodeClient {
                             ...baseTransfer,
                             from: tokenAddress,
                             to: parseAddress(log, 1),
-                            value: BigNumber.from(log.data),
+                            value: parseValue(log, 2),
                             event: "Deposit",
                             type: TransferType.Mint,
                         })
@@ -200,7 +193,7 @@ export default abstract class EthereumNodeClient {
                             ...baseTransfer,
                             from: parseAddress(log, 1),
                             to: tokenAddress,
-                            value: BigNumber.from(log.data),
+                            value: parseValue(log, 2),
                             event: "Withdraw",
                             type: TransferType.Burn,
                         })
@@ -243,8 +236,32 @@ export default abstract class EthereumNodeClient {
     }
 }
 
-const parseAddress = (log: Log, topicIndex: number): string => {
-    return log.topics[topicIndex] === constants.HashZero
-        ? getAddress(log.address)
-        : getAddress(hexDataSlice(log.topics[topicIndex], 12))
+const parseAddress = (log: Log, paramPosition: number): string => {
+    const topicLength = log.topics.length
+    if (paramPosition < topicLength) {
+        // If the address is in the topic
+        const lowercaseAddress = hexDataSlice(log.topics[paramPosition], 12)
+        return getAddress(lowercaseAddress)
+    } else {
+        // if the address is in the data
+        const offset = (paramPosition - topicLength) * 32 + 12
+        const endOffset = (paramPosition - topicLength + 1) * 32
+        const lowercaseAddress = hexDataSlice(log.data, offset, endOffset)
+        // Convert address to checksum format
+        return getAddress(lowercaseAddress)
+    }
+}
+
+const parseValue = (log: Log, paramPosition: number): BigNumber => {
+    const topicLength = log.topics.length
+    if (paramPosition < topicLength) {
+        // If the value is in the topic
+        return BigNumber.from(log.topics[paramPosition])
+    } else {
+        // if the value is in the data
+        const offset = (paramPosition - topicLength) * 32
+        const endOffset = (paramPosition - topicLength + 1) * 32
+        const hexValue = hexDataSlice(log.data, offset, endOffset)
+        return BigNumber.from(hexValue)
+    }
 }
