@@ -1,4 +1,9 @@
-import { TransactionDetails, Transfer, TransferType } from "./types/tx2umlTypes"
+import {
+    TransactionDetails,
+    Transfer,
+    TransferPumlGenerationOptions,
+    TransferType,
+} from "./types/tx2umlTypes"
 import { transactionHash } from "./utils/regEx"
 import GethClient from "./clients/GethClient"
 import EtherscanClient from "./clients/EtherscanClient"
@@ -7,11 +12,10 @@ import { generateFile } from "./fileGenerator"
 import EthereumNodeClient from "./clients/EthereumNodeClient"
 import { TransactionManager } from "./transaction"
 
-export interface TransferPumlGenerationOptions {
-    chain?: string
-}
-
-export const generateValueDiagram = async (hashes: string, options: any) => {
+export const generateValueDiagram = async (
+    hashes: string,
+    options: TransferPumlGenerationOptions
+) => {
     // Initiate Geth client
     if (["openeth", "nether", "besu"].includes(options.nodeType)) {
         throw Error(
@@ -105,6 +109,7 @@ export const generateValueDiagram = async (hashes: string, options: any) => {
     // Get all the participating contracts from the transfers
     const participants = await txManager.getTransferParticipants(
         transfers,
+        transactions[0].blockNumber,
         options.configFile
     )
 

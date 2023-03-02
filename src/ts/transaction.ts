@@ -13,6 +13,7 @@ import {
     Contract,
     Contracts,
     Event,
+    Labels,
     MessageType,
     Param,
     ParamTypeInternal,
@@ -21,6 +22,7 @@ import {
     TransactionDetails,
     Transfer,
 } from "./types/tx2umlTypes"
+import { basename } from "path"
 
 const debug = require("debug")("tx2uml")
 
@@ -128,8 +130,10 @@ export class TransactionManager {
 
     async getTransferParticipants(
         transactionsTransfers: Transfer[][],
+        block: number,
         configFilename?: string
     ): Promise<Participants> {
+        // Get a unique list of all accounts that transfer from, transfer to or are token contracts.
         const flatTransfers = transactionsTransfers.flat()
         const addressSet = new Set<string>()
         flatTransfers.forEach(transfer => {
@@ -140,12 +144,41 @@ export class TransactionManager {
         const uniqueAddresses = Array.from(addressSet)
 
         // get token details from on-chain
-        const participantDetails =
-            await this.ethereumNodeClient.getTokenDetails(uniqueAddresses)
+        const tokenDetails = await this.ethereumNodeClient.getTokenDetails(
+            uniqueAddresses
+        )
+
+        // get Etherscan labels from local file
+        // TODO check this is for mainnet and not some other chain
+        const labels: Labels =
+            basename(__dirname) === "lib"
+                ? require("./labels.json")
+                : require("../../lib/labels.json")
         const participants: Participants = {}
-        participantDetails.forEach(p => {
-            participants[p.address] = p
-        })
+        for (const token of tokenDetails) {
+            const address = token.address
+            participants[token.address] = {
+                ...token,
+                ...labels[address.toLowerCase()],
+            }
+            if (
+                !token.noContract &&
+                !token.tokenSymbol &&
+                !participants[address].name
+            ) {
+                // Check if the contract is proxied
+                const implementation =
+                    await this.ethereumNodeClient.getProxyImplementation(
+                        address,
+                        block
+                    )
+                // try and get contract name for the contract or its proxied implementation from Etherscan
+                const contract = await this.etherscanClient.getContract(
+                    implementation || address
+                )
+                participants[address].name = contract?.contractName
+            }
+        }
 
         // Override contract details like name, token symbol and ABI
         await this.configOverrides(participants, configFilename)
@@ -157,11 +190,11 @@ export class TransactionManager {
                     transfer.decimals = 18
                     return
                 }
-                const tokenDetails = participants[transfer.tokenAddress]
-                if (tokenDetails) {
-                    transfer.tokenSymbol = tokenDetails.symbol
-                    transfer.tokenName = tokenDetails.address
-                    transfer.decimals = tokenDetails.decimals
+                const participant = participants[transfer.tokenAddress]
+                if (participant) {
+                    transfer.tokenSymbol = participant.tokenSymbol
+                    transfer.tokenName = participant.address
+                    transfer.decimals = participant.decimals
                 }
             })
         })
@@ -196,8 +229,8 @@ export class TransactionManager {
 
         tokensDetails.forEach(tokenDetails => {
             contracts[tokenDetails.address].noContract = tokenDetails.noContract
-            contracts[tokenDetails.address].tokenName = tokenDetails.name
-            contracts[tokenDetails.address].symbol = tokenDetails.symbol
+            contracts[tokenDetails.address].tokenName = tokenDetails.tokenName
+            contracts[tokenDetails.address].symbol = tokenDetails.tokenSymbol
             contracts[tokenDetails.address].decimals = tokenDetails.decimals
         })
     }

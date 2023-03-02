@@ -1,16 +1,7 @@
 import { spawn } from "child_process"
 import path from "path"
 import { Readable, Writable } from "stream"
-
-export const outputFormats = <const>["png", "svg", "eps"]
-export type OutputFormat = typeof outputFormats[number]
-
-export interface PlantUmlOptions {
-    format?: OutputFormat
-    limitSize?: number
-    config?: string
-    pipemap?: boolean
-}
+import { outputFormats, PlantUmlOptions } from "./types/tx2umlTypes"
 
 export const streamPlantUml = async (
     pumlStream: Readable,

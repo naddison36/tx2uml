@@ -22,6 +22,8 @@ const tokenInfoAddresses: { [network: string]: string } = {
     mainnet: "0x190c8CB4BA6444390266CA30bDEAe4583041B14e",
     polygon: "0x2aA8dba5bd50Dc469B50b5687b75c6212DeF3E1A",
 }
+const ProxySlot =
+    "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
 
 export default abstract class EthereumNodeClient {
     public readonly ethersProvider: Provider
@@ -115,8 +117,8 @@ export default abstract class EthereumNodeClient {
             return results.map((result, i) => ({
                 address: contractAddresses[i],
                 noContract: result.noContract,
-                symbol: result.symbol,
-                name: result.name,
+                tokenSymbol: result.symbol,
+                tokenName: result.name,
                 decimals: result.decimals.toNumber(),
             }))
         } catch (err) {
@@ -212,6 +214,32 @@ export default abstract class EthereumNodeClient {
         })
 
         return transferEvents
+    }
+
+    public getProxyImplementation = async (address: string, block: number) => {
+        try {
+            const slotValue = await this.ethersProvider.getStorageAt(
+                address,
+                ProxySlot,
+                block
+            )
+
+            if (slotValue !== constants.HashZero) {
+                const proxyImplementation = getAddress(
+                    "0x" + slotValue.slice(-40)
+                )
+                debug(
+                    `Contract ${address} has proxy implementation ${proxyImplementation}`
+                )
+                return proxyImplementation
+            }
+            return undefined
+        } catch (err) {
+            throw Error(
+                `Failed to get proxy implementation for contract ${address}`,
+                { cause: err }
+            )
+        }
     }
 }
 

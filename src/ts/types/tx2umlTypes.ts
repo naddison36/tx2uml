@@ -66,16 +66,39 @@ export type Contract = {
 }
 export type Contracts = { [address: string]: Contract }
 
-export type TokenDetails = {
+export interface TokenDetails {
     address: string
     noContract: boolean
-    name?: string
-    symbol?: string
+    tokenName?: string
+    tokenSymbol?: string
     decimals?: number
+    implementation?: string
+}
+export interface Participant extends TokenDetails {
     protocol?: string
+    name?: string
+    labels?: string[]
+}
+export type Participants = { [address: string]: Participant }
+
+// Mapping of participant address to token addresses to balances
+export interface Position {
+    balance: BigNumber
+    addedIds: Set<number>
+    removedIds: Set<number>
+}
+// Participant -> Token -> Position
+export type ParticipantPositions = {
+    [address: string]: {
+        [address: string]: Position
+    }
 }
 
-export type Participants = { [address: string]: TokenDetails }
+export interface Label {
+    name: string
+    labels: string[]
+}
+export type Labels = { [address: string]: Label }
 
 export type Token = {
     address: string
@@ -152,4 +175,40 @@ export const networks = <const>[
     "kovan-optimistic",
     "gnosisscan",
 ]
-export type Network = typeof networks[number]
+export type Network = (typeof networks)[number]
+
+export const outputFormats = <const>["png", "svg", "eps", "puml"]
+export type OutputFormat = (typeof outputFormats)[number]
+
+export interface OutputOptions {
+    filename?: string
+    format?: OutputFormat
+}
+
+export interface PlantUmlOptions {
+    format?: OutputFormat
+    limitSize?: number
+    config?: string
+    pipemap?: boolean
+}
+
+export interface TracePumlGenerationOptions {
+    noGas?: boolean
+    noParams?: boolean
+    noEther?: boolean
+    noTxDetails?: boolean
+    noLogDetails?: boolean
+    noDelegates?: boolean
+    chain?: string
+    depth?: number
+}
+
+export interface TransferPumlGenerationOptions {
+    chain?: Network
+    nodeType?: string
+    url?: string
+    etherscanKey?: string
+    configFile?: string
+    outputFileName?: string
+    outputFormat?: OutputFormat
+}

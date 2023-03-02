@@ -1,7 +1,9 @@
 import { Readable } from "stream"
 
 import {
+    ParticipantPositions,
     Participants,
+    Position,
     TransactionDetails,
     Transfer,
     TransferType,
@@ -119,19 +121,6 @@ const filterParticipantContracts = (
     return filteredParticipants
 }
 
-// Mapping of participant address to token addresses to balances
-interface Position {
-    balance: BigNumber
-    addedIds: Set<number>
-    removedIds: Set<number>
-}
-// Participant -> Token -> Position
-type ParticipantPositions = {
-    [address: string]: {
-        [address: string]: Position
-    }
-}
-
 const netParticipantValues = (
     transfers: readonly Transfer[],
     participantPositions: ParticipantPositions = {}
@@ -156,37 +145,47 @@ const netParticipantValues = (
         }
         // If a transfer of a token or ether
         if (transfer.value) {
-            participantPositions[transfer.from][transfer.tokenAddress].balance =
+            if (transfer.type !== TransferType.Mint) {
                 participantPositions[transfer.from][
                     transfer.tokenAddress
+                ].balance = participantPositions[transfer.from][
+                    transfer.tokenAddress
                 ].balance.sub(transfer.value)
+            }
 
-            participantPositions[transfer.to][transfer.tokenAddress].balance =
+            if (transfer.type !== TransferType.Burn) {
                 participantPositions[transfer.to][
                     transfer.tokenAddress
+                ].balance = participantPositions[transfer.to][
+                    transfer.tokenAddress
                 ].balance.add(transfer.value)
+            }
         }
         // If a NFT transfer
         if (transfer.tokenId) {
-            // For the from participant
-            // add to removedIds
-            participantPositions[transfer.from][
-                transfer.tokenAddress
-            ].removedIds.add(transfer.tokenId)
-            // remove from addedIds
-            participantPositions[transfer.from][
-                transfer.tokenAddress
-            ].addedIds.delete(transfer.tokenId)
+            if (transfer.type !== TransferType.Mint) {
+                // For the from participant
+                // add to removedIds
+                participantPositions[transfer.from][
+                    transfer.tokenAddress
+                ].removedIds.add(transfer.tokenId)
+                // remove from addedIds
+                participantPositions[transfer.from][
+                    transfer.tokenAddress
+                ].addedIds.delete(transfer.tokenId)
+            }
 
-            // For the to participant
-            // add remove removedIds
-            participantPositions[transfer.to][
-                transfer.tokenAddress
-            ].removedIds.delete(transfer.tokenId)
-            // add to addedIds
-            participantPositions[transfer.to][
-                transfer.tokenAddress
-            ].addedIds.add(transfer.tokenId)
+            if (transfer.type !== TransferType.Burn) {
+                // For the to participant
+                // add remove removedIds
+                participantPositions[transfer.to][
+                    transfer.tokenAddress
+                ].removedIds.delete(transfer.tokenId)
+                // add to addedIds
+                participantPositions[transfer.to][
+                    transfer.tokenAddress
+                ].addedIds.add(transfer.tokenId)
+            }
         }
     })
 }
@@ -207,8 +206,13 @@ export const writeParticipants = (
     for (const [address, participant] of Object.entries(participants)) {
         let name: string = ""
         if (participant.protocol) name += `<<${participant.protocol}>>`
-        if (participant.name) name += `<<${participant.name}>>`
-        if (participant.symbol) name += `<<(${participant.symbol})>>`
+        participant.labels?.forEach(label => {
+            name += `<<${label}>>`
+        })
+        // Use token name, else the label or Etherscan name
+        if (participant.tokenName || participant.name)
+            name += `<<${participant.tokenName || participant.name}>>`
+        if (participant.tokenSymbol) name += `<<(${participant.tokenSymbol})>>`
 
         debug(`Write lifeline for ${address} with stereotype ${name}`)
         const participantType = participant.noContract ? "actor" : "participant"
@@ -263,7 +267,7 @@ export const writeBalances = (
         Object.keys(participantBalances[participant]).forEach(tokenAddress => {
             // Get token details or use Ether details
             const token = participants[tokenAddress] || {
-                symbol: "ETH",
+                tokenSymbol: "ETH",
                 decimals: 18,
             }
             genTokenBalance(
@@ -290,12 +294,12 @@ const genCaption = (details: Readonly<TransactionDetails>): string => {
 const genTokenBalance = (
     plantUmlStream: Readable,
     position: Position,
-    token: { symbol?: string; decimals?: number }
+    token: { tokenSymbol?: string; decimals?: number }
 ) => {
     if (!position?.balance.eq(0)) {
         plantUmlStream.push(
             `\n${commify(formatUnits(position.balance, token.decimals || 0))} ${
-                token.symbol || ""
+                token.tokenSymbol || ""
             }`
         )
     }
@@ -304,10 +308,10 @@ const genTokenBalance = (
 const genNftChanges = (
     plantUmlStream: Readable,
     position: Position,
-    token: { symbol?: string }
+    token: { tokenSymbol?: string }
 ) => {
     if (position.removedIds.size + position.addedIds.size > 0) {
-        plantUmlStream.push(`\n${token.symbol}`)
+        plantUmlStream.push(`\n${token.tokenSymbol}`)
     }
     if (position.removedIds.size > 0) {
         position.removedIds.forEach(id => {
