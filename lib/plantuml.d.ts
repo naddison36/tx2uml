@@ -1,11 +1,4 @@
 import { Readable, Writable } from "stream";
-export declare const outputFormats: readonly ["png", "svg", "eps"];
-export type OutputFormat = typeof outputFormats[number];
-export interface PlantUmlOptions {
-    format?: OutputFormat;
-    limitSize?: number;
-    config?: string;
-    pipemap?: boolean;
-}
+import { PlantUmlOptions } from "./types/tx2umlTypes";
 export declare const streamPlantUml: (pumlStream: Readable, outputStream: Writable, options?: PlantUmlOptions) => Promise<number>;
 export declare const genPumlJavaOptions: (options?: PlantUmlOptions) => string[];

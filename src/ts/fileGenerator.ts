@@ -1,15 +1,9 @@
 import { createWriteStream } from "fs"
 import { Readable } from "stream"
-import { outputFormats, streamPlantUml } from "./plantuml"
+import { streamPlantUml } from "./plantuml"
+import { OutputFormat, outputFormats, OutputOptions } from "./types/tx2umlTypes"
 
 const debug = require("debug")("tx2uml")
-
-type OutputFormat = "png" | "svg" | "eps" | "puml"
-
-interface OutputOptions {
-    filename?: string
-    format?: OutputFormat
-}
 
 export const generateFile = async (
     pumlStream: Readable,

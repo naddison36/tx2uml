@@ -67,6 +67,7 @@ export interface TokenDetails {
     tokenName?: string;
     tokenSymbol?: string;
     decimals?: number;
+    implementation?: string;
 }
 export interface Participant extends TokenDetails {
     protocol?: string;
@@ -75,6 +76,16 @@ export interface Participant extends TokenDetails {
 }
 export type Participants = {
     [address: string]: Participant;
+};
+export interface Position {
+    balance: BigNumber;
+    addedIds: Set<number>;
+    removedIds: Set<number>;
+}
+export type ParticipantPositions = {
+    [address: string]: {
+        [address: string]: Position;
+    };
 };
 export interface Label {
     name: string;
@@ -134,4 +145,35 @@ export type ParamTypeInternal = {
     components?: ParamTypeInternal[];
 };
 export declare const networks: readonly ["mainnet", "goerli", "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche", "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom", "testnet.fantom", "moonbeam", "optimistic", "kovan-optimistic", "gnosisscan"];
-export type Network = typeof networks[number];
+export type Network = (typeof networks)[number];
+export declare const outputFormats: readonly ["png", "svg", "eps", "puml"];
+export type OutputFormat = (typeof outputFormats)[number];
+export interface OutputOptions {
+    filename?: string;
+    format?: OutputFormat;
+}
+export interface PlantUmlOptions {
+    format?: OutputFormat;
+    limitSize?: number;
+    config?: string;
+    pipemap?: boolean;
+}
+export interface TracePumlGenerationOptions {
+    noGas?: boolean;
+    noParams?: boolean;
+    noEther?: boolean;
+    noTxDetails?: boolean;
+    noLogDetails?: boolean;
+    noDelegates?: boolean;
+    chain?: string;
+    depth?: number;
+}
+export interface TransferPumlGenerationOptions {
+    chain?: Network;
+    nodeType?: string;
+    url?: string;
+    etherscanKey?: string;
+    configFile?: string;
+    outputFileName?: string;
+    outputFormat?: OutputFormat;
+}

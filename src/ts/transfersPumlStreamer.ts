@@ -1,7 +1,9 @@
 import { Readable } from "stream"
 
 import {
+    ParticipantPositions,
     Participants,
+    Position,
     TransactionDetails,
     Transfer,
     TransferType,
@@ -117,19 +119,6 @@ const filterParticipantContracts = (
         )
         .forEach(key => (filteredParticipants[key] = participants[key]))
     return filteredParticipants
-}
-
-// Mapping of participant address to token addresses to balances
-interface Position {
-    balance: BigNumber
-    addedIds: Set<number>
-    removedIds: Set<number>
-}
-// Participant -> Token -> Position
-type ParticipantPositions = {
-    [address: string]: {
-        [address: string]: Position
-    }
 }
 
 const netParticipantValues = (

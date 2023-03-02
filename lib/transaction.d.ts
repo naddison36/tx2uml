@@ -11,7 +11,7 @@ export declare class TransactionManager {
     getTransaction(txHash: string): Promise<TransactionDetails>;
     getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;
     getContractsFromTraces(transactionsTraces: Trace[][], configFilename?: string): Promise<Contracts>;
-    getTransferParticipants(transactionsTransfers: Transfer[][], configFilename?: string): Promise<Participants>;
+    getTransferParticipants(transactionsTransfers: Transfer[][], block: number, configFilename?: string): Promise<Participants>;
     getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
     setTokenAttributes(contracts: Contracts): Promise<void>;
     configOverrides(contracts: Contracts & Participants, filename?: string): Promise<void>;

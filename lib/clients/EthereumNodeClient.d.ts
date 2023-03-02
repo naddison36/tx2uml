@@ -12,4 +12,5 @@ export default abstract class EthereumNodeClient {
     getTransactionDetails(txHash: string): Promise<TransactionDetails>;
     getTokenDetails(contractAddresses: string[]): Promise<TokenDetails[]>;
     static parseTransferEvents(logs: Array<Log>): Transfer[];
+    getProxyImplementation: (address: string, block: number) => Promise<string>;
 }

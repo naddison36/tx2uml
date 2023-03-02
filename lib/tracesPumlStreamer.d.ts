@@ -1,15 +1,5 @@
 import { Readable } from "stream";
-import { Contracts, Param, Trace, TransactionDetails } from "./types/tx2umlTypes";
-export interface TracePumlGenerationOptions {
-    noGas?: boolean;
-    noParams?: boolean;
-    noEther?: boolean;
-    noTxDetails?: boolean;
-    noLogDetails?: boolean;
-    noDelegates?: boolean;
-    chain?: string;
-    depth?: number;
-}
+import { Contracts, Param, Trace, TracePumlGenerationOptions, TransactionDetails } from "./types/tx2umlTypes";
 export declare const traces2PumlStream: (transactions: TransactionDetails[], traces: Trace[][], contracts: Contracts, options: TracePumlGenerationOptions) => Readable;
 export declare const multiTxTraces2PumlStream: (pumlStream: Readable, transactions: TransactionDetails[], traces: Trace[][], contracts: Contracts, options?: TracePumlGenerationOptions) => Readable;
 export declare const singleTx2PumlStream: (pumlStream: Readable, transaction: TransactionDetails, traces: Trace[], contracts: Contracts, options: TracePumlGenerationOptions) => Readable;

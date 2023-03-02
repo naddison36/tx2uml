@@ -7,6 +7,7 @@ import {
     MessageType,
     Param,
     Trace,
+    TracePumlGenerationOptions,
     TransactionDetails,
 } from "./types/tx2umlTypes"
 import {
@@ -17,17 +18,6 @@ import {
 } from "./utils/formatters"
 
 const debug = require("debug")("tx2uml")
-
-export interface TracePumlGenerationOptions {
-    noGas?: boolean
-    noParams?: boolean
-    noEther?: boolean
-    noTxDetails?: boolean
-    noLogDetails?: boolean
-    noDelegates?: boolean
-    chain?: string
-    depth?: number
-}
 
 const DelegateLifelineColor = "#809ECB"
 const DelegateMessageColor = "#3471CD"

@@ -130,8 +130,10 @@ export class TransactionManager {
 
     async getTransferParticipants(
         transactionsTransfers: Transfer[][],
+        block: number,
         configFilename?: string
     ): Promise<Participants> {
+        // Get a unique list of all accounts that transfer from, transfer to or are token contracts.
         const flatTransfers = transactionsTransfers.flat()
         const addressSet = new Set<string>()
         flatTransfers.forEach(transfer => {
@@ -145,6 +147,8 @@ export class TransactionManager {
         const tokenDetails = await this.ethereumNodeClient.getTokenDetails(
             uniqueAddresses
         )
+
+        // get Etherscan labels from local file
         // TODO check this is for mainnet and not some other chain
         const labels: Labels =
             basename(__dirname) === "lib"
@@ -162,8 +166,16 @@ export class TransactionManager {
                 !token.tokenSymbol &&
                 !participants[address].name
             ) {
-                // try and get contract name from Etherscan
-                const contract = await this.etherscanClient.getContract(address)
+                // Check if the contract is proxied
+                const implementation =
+                    await this.ethereumNodeClient.getProxyImplementation(
+                        address,
+                        block
+                    )
+                // try and get contract name for the contract or its proxied implementation from Etherscan
+                const contract = await this.etherscanClient.getContract(
+                    implementation || address
+                )
                 participants[address].name = contract?.contractName
             }
         }
