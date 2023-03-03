@@ -456,7 +456,7 @@ export const writeEvents = (
             for (const event of contract.events) {
                 plantUmlStream.push(`\n${event.name}:`)
                 plantUmlStream.push(
-                    ` ${genParams(event.params).replace(/\\n/g, "\n")}`
+                    `${genParams(event.params).replace(/\\n/g, "\n  ")}`
                 )
             }
             plantUmlStream.push("\nend note\n")
