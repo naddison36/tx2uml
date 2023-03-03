@@ -4,7 +4,6 @@ import { Log } from "@ethersproject/abstract-provider"
 import { FunctionFragment, LogDescription } from "ethers/lib/utils"
 import pLimit from "p-limit"
 
-import { transactionHash } from "./utils/regEx"
 import EtherscanClient from "./clients/EtherscanClient"
 import EthereumNodeClient from "./clients/EthereumNodeClient"
 import { loadConfig } from "./config"
@@ -34,17 +33,9 @@ export class TransactionManager {
         public apiConcurrencyLimit = 2
     ) {}
 
-    async getTransactions(
-        txHashes: string | string[]
-    ): Promise<TransactionDetails[]> {
+    async getTransactions(txHashes: string[]): Promise<TransactionDetails[]> {
         const transactions: TransactionDetails[] = []
         for (const txHash of txHashes) {
-            if (!txHash?.match(transactionHash)) {
-                console.error(
-                    `Array of transaction hashes must be in hexadecimal format with a 0x prefix`
-                )
-                process.exit(5)
-            }
             transactions.push(await this.getTransaction(txHash))
         }
 

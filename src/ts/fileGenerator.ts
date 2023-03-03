@@ -9,23 +9,26 @@ export const generateFile = async (
     pumlStream: Readable,
     options: OutputOptions = {}
 ) => {
-    const filename = constructFilename(options.filename, options.format)
+    const filename = constructFilename(
+        options.outputFilename,
+        options.outputFormat
+    )
     try {
         const outputStream = createWriteStream(filename)
-        if (options.format === "puml") {
+        if (options.outputFormat === "puml") {
             pumlStream.pipe(outputStream)
             debug(`Plant UML file written to ${filename} in raw puml format`)
-        } else if (outputFormats.includes(options.format)) {
+        } else if (outputFormats.includes(options.outputFormat)) {
             await streamPlantUml(pumlStream, outputStream, {
-                format: options.format,
+                format: options.outputFormat,
                 limitSize: 60000,
             })
             debug(
-                `Plant UML file written to ${filename} in ${options.format} format.`
+                `Plant UML file written to ${filename} in ${options.outputFormat} format.`
             )
         } else {
             throw new Error(
-                `Output format ${options.format} is not supported. Only the following formats are supported: ${outputFormats}.`
+                `Output format ${options.outputFormat} is not supported. Only the following formats are supported: ${outputFormats}.`
             )
         }
     } catch (err) {

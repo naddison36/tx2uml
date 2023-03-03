@@ -1,10 +1,10 @@
-import { Provider } from "@ethersproject/providers";
+import { JsonRpcProvider } from "@ethersproject/providers";
 import { Network, TokenDetails, Trace, TransactionDetails, Transfer } from "../types/tx2umlTypes";
 import { Log } from "@ethersproject/abstract-provider";
 export default abstract class EthereumNodeClient {
     readonly url: string;
     readonly network: Network;
-    readonly ethersProvider: Provider;
+    readonly ethersProvider: JsonRpcProvider;
     private tokenInfoAddress;
     constructor(url?: string, network?: Network);
     abstract getTransactionTrace(txHash: string): Promise<Trace[]>;
