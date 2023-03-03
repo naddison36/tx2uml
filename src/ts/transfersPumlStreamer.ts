@@ -68,7 +68,7 @@ export const multiTransfers2PumlStream = (
         const txParticipantPositions: ParticipantPositions = {}
         netParticipantValues(transfers[i], txParticipantPositions)
         writeBalances(pumlStream, txParticipantPositions, participants)
-        pumlStream.push("end")
+        pumlStream.push("\nend")
         i++
     }
 

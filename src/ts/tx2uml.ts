@@ -3,77 +3,57 @@ import { Command, Option } from "commander"
 import { basename } from "path"
 import { generateCallDiagram } from "./callDiagram"
 import { generateValueDiagram } from "./valueDiagram"
+import {
+    parseFilename,
+    validateAddresses,
+    validateDepth,
+    validateHashes,
+} from "./utils/validators"
+import { networks, nodeTypes, outputFormats } from "./types/tx2umlTypes"
+import { copyTransactions } from "./copyTransactions"
 
 const debugControl = require("debug")
 const debug = require("debug")("tx2uml")
 
 const program = new Command()
 
-const nodeTypes = [
-    "geth",
-    "anvil",
-    "tgeth",
-    "openeth",
-    "nether",
-    "besu",
-] as const
-
 program
     .usage("[command] <options>")
     .description(
-        "Ethereum transaction visualizer that generates UML sequence diagrams from an Ethereum archive node and Etherscan like block explorer."
+        "Ethereum transaction visualizer that generates UML sequence diagrams from an Ethereum archive node and Etherscan like block explorer"
     )
     .addOption(
-        new Option("-f, --outputFormat <value>", "output file format.")
-            .choices(["svg", "png", "eps", "puml"])
+        new Option("-f, --outputFormat <value>", "output file format")
+            .choices(outputFormats)
             .default("svg")
     )
     .option(
         "-o, --outputFileName <value>",
-        "output file name. Defaults to the transaction hash."
+        "output file name. Defaults to the transaction hash"
     )
     .addOption(
         new Option(
             "-u, --url <url>",
-            "URL of the archive node with trace transaction support."
+            "URL of the archive node with trace transaction support"
         )
             .env("ARCHIVE_NODE_URL")
             .default("http://localhost:8545")
     )
     .addOption(
         new Option(
-            "-n, --nodeType <value>",
-            "geth (GoEthereum), anvil, tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu)."
-        )
-            .choices(nodeTypes)
-            .env("ARCHIVE_NODE_TYPE")
-            .default("geth")
-    )
-    .addOption(
-        new Option(
             "-c, --chain <value>",
-            "Blockchain explorer network to get source code from."
+            "blockchain explorer network to get source code from"
         )
-            .choices([
-                "mainnet",
-                "polygon",
-                "bsc",
-                "arbitrum",
-                "ropsten",
-                "kovan",
-                "rinkeby",
-                "goerli",
-                "sepolia",
-            ])
+            .choices(networks)
             .default("mainnet")
             .env("ETH_NETWORK")
     )
     .option(
         "-cf, --configFile <value>",
-        "Name of the json configuration file that can override contract details like name and ABI.",
+        "name of the json configuration file that can override contract details like name and ABI",
         "tx.config.json"
     )
-    .option("-v, --verbose", "run with debugging statements.", false)
+    .option("-v, --verbose", "run with debugging statements", false)
 
 const version =
     basename(__dirname) === "lib"
@@ -85,46 +65,65 @@ program
     .command("call", { isDefault: true })
     .argument(
         "<txHash(s)>",
-        "Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces."
+        "transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces",
+        validateHashes
     )
     .usage("<txhash(s)> [options]")
     .description(
-        "Generates a UML sequence diagram of transaction contract calls between contracts. (default)"
+        "Generates a UML sequence diagram of transaction contract calls between contracts (default)."
+    )
+    .addOption(
+        new Option(
+            "-n, --nodeType <value>",
+            "type of Ethereum node the provider url is pointing to. This determines which trace API is used"
+        )
+            .choices(nodeTypes)
+            .env("ARCHIVE_NODE_TYPE")
+            .default("geth")
     )
     .option(
         "-k, --etherscanKey <value>",
-        "Etherscan API key. Register your API key at https://etherscan.io/myapikey"
+        "Etherscan like block explorer API key"
     )
     .option(
         "-a, --noAddresses <value>",
-        "Hide calls to contracts in a list of comma-separated addresses with a 0x prefix."
+        "hide calls to contracts in a list of comma-separated addresses with a 0x prefix",
+        validateAddresses
     )
-    .option("-d, --depth <value>", "Limit the transaction call depth.")
-    .option("-e, --noEther", "Hide ether values.", false)
-    .option("-g, --noGas", "Hide gas usages.", false)
+    .option(
+        "-d, --depth <value>",
+        "limit the transaction call depth",
+        validateDepth
+    )
+    .option("-e, --noEther", "hide ether values", false)
+    .option("-g, --noGas", "hide gas usages", false)
     .option(
         "-l, --noLogDetails",
-        "Hide log details emitted from contract events.",
+        "hide log details emitted from contract events",
         false
     )
-    .option("-p, --noParams", "Hide function params and return values.", false)
+    .option("-p, --noParams", "hide function params and return values", false)
     .option(
         "-t, --noTxDetails",
-        "Hide transaction details like nonce, gas and tx fee.",
+        "hide transaction details like nonce, gas and tx fee",
         false
     )
     .option(
         "-x, --noDelegates",
-        "Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries.",
+        "hide delegate calls from proxy contracts to their implementations and calls to deployed libraries",
         false
     )
-    .action(async (hashes: string, options, command) => {
+    .action(async (hashes: string[], options, command) => {
         debug(`About to generate tx calls for ${hashes}`)
-
+        const outputFilename = parseFilename(
+            command.parent._optionValues.outputFileName,
+            hashes
+        )
         try {
             await generateCallDiagram(hashes, {
                 ...command.parent._optionValues,
                 ...options,
+                outputFilename,
             })
         } catch (err) {
             console.error(err)
@@ -136,25 +135,62 @@ program
     .command("value")
     .argument(
         "<txHash(s)>",
-        "Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces."
+        "transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces",
+        validateHashes
     )
     .usage("<txhash(s)> [options]")
     .description(
-        `Generates a UML sequence diagram of token and ether value transfers between accounts and contracts.
-
-This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth or Erigon.`
+        `Generates a UML sequence diagram of token and ether value transfers between accounts and contracts. This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth, Erigon or Anvil.`
     )
-    .action(async (hashes: string, options, command) => {
-        debug(`About to generate tx calls for ${hashes}`)
+    .action(async (hashes: string[], options, command) => {
+        debug(`About to generate value transfers for ${hashes}`)
+        const filename = parseFilename(
+            command.parent._optionValues.outputFileName,
+            hashes
+        )
         try {
             await generateValueDiagram(hashes, {
                 ...command.parent._optionValues,
                 ...options,
+                filename,
             })
         } catch (err) {
             console.error(err)
             process.exit(11)
         }
+    })
+
+program
+    .command("copy")
+    .argument(
+        "<txHash(s)>",
+        "transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces",
+        validateHashes
+    )
+    .usage("<txhash(s)> [options]")
+    .description(
+        "Copies a transaction from one chain to another or duplicates txs on the same node."
+    )
+    .addOption(
+        new Option(
+            "-du, --destUrl <url>",
+            "url of the node provider the transaction is being copied to"
+        )
+            .env("DEST_NODE_URL")
+            .default("http://localhost:8545")
+    )
+    // TODO add the ability to impersonate a transaction
+    // .option(
+    //     "-s, --signer <address>",
+    //     "Address of the account that is to be impersonated. This only works for development nodes like Hardhat and Anvil"
+    // )
+    .action(async (hashes: string[], options, command) => {
+        debug(`About to copy tx calls for ${hashes}`)
+
+        await copyTransactions(hashes, {
+            ...command.parent._optionValues,
+            ...options,
+        })
     })
 
 program.on("option:verbose", () => {

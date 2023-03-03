@@ -4,6 +4,7 @@ jobs:
   build:
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [14.x, 16.x, 18.x]
@@ -15,11 +16,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm link tx2uml --only=production
-      - name: Chungo NFT call
-        run: tx2uml 0x720e126ea17f4e0b2fcf021e6c6b90b55c5283527cdf50d4c2eb3cdbc012dbfc -v -p
+      - name: Uniswap V1 call
+        run: tx2uml 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca -v -p
         env:
           ARCHIVE_NODE_URL: ${{ secrets.ARCHIVE_NODE_URL }}
-      - name: Chungo NFT value
-        run: tx2uml value 0x720e126ea17f4e0b2fcf021e6c6b90b55c5283527cdf50d4c2eb3cdbc012dbfc -v
+      - name: Uniswap V1 value
+        run: tx2uml value 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca -v
         env:
           ARCHIVE_NODE_URL: ${{ secrets.ARCHIVE_NODE_URL }}

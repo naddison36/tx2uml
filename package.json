@@ -1,12 +1,13 @@
 {
   "name": "tx2uml",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Ethereum transaction visualizer that generates UML sequence diagrams.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
     "build": "tsc --build ./tsconfig.json",
     "clean": "tsc --build --clean ./tsconfig.json",
+    "pack-lock": "npm i --package-lock-only",
     "examples": "java -jar ./lib/plantuml.jar ./examples/syntax.puml ./examples/delegate.puml",
     "prettier:check": "prettier --check --no-semi '**/*.{ts,md}'",
     "prettier:fix": "prettier --write --no-semi '**/*.{ts,md}'",
@@ -20,6 +21,8 @@
     "lib/*.d.ts",
     "lib/clients/*.js",
     "lib/clients/*.d.ts",
+    "lib/ethers/*.js",
+    "lib/ethers/*.d.ts",
     "lib/types/*.js",
     "lib/types/*.d.ts",
     "lib/plantuml.jar",

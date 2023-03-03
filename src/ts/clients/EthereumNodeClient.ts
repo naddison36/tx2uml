@@ -1,5 +1,5 @@
 import { BigNumber, constants, Contract, providers } from "ethers"
-import { Provider } from "@ethersproject/providers"
+import { JsonRpcProvider } from "@ethersproject/providers"
 
 import { TokenInfoABI } from "./ABIs"
 import {
@@ -26,7 +26,7 @@ const ProxySlot =
     "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
 
 export default abstract class EthereumNodeClient {
-    public readonly ethersProvider: Provider
+    public readonly ethersProvider: JsonRpcProvider
     private tokenInfoAddress: string
 
     constructor(

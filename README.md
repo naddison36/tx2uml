@@ -47,25 +47,25 @@ npm ls tx2uml
 Use the `-h` option to see the `tx2uml` CLI usage options
 
 ```
-$ tx2uml -hUsage: tx2uml [command] <options>
+Usage: tx2uml [command] <options>
 
-Ethereum transaction visualizer that generates UML sequence diagrams from an Ethereum archive node and Etherscan like block explorer.
+Ethereum transaction visualizer that generates UML sequence diagrams from an Ethereum archive node and Etherscan like block explorer
 
 Options:
-  -f, --outputFormat <value>    output file format. (choices: "svg", "png", "eps", "puml", default: "svg")
-  -o, --outputFileName <value>  output file name. Defaults to the transaction hash.
-  -u, --url <url>               URL of the archive node with trace transaction support. (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
-  -n, --nodeType <value>        geth (GoEthereum), anvil, tgeth (Erigion, fka Turbo-Geth), openeth (OpenEthereum, fka Parity), nether (Nethermind), besu (Hyperledger Besu). (choices: "geth", "anvil", "tgeth", "openeth", "nether", "besu", default: "geth", env:
-                                ARCHIVE_NODE_TYPE)
-  -c, --chain <value>           Blockchain explorer network to get source code from. (choices: "mainnet", "polygon", "bsc", "arbitrum", "ropsten", "kovan", "rinkeby", "goerli", "sepolia", default: "mainnet", env: ETH_NETWORK)
-  -cf, --configFile <value>     Name of the json configuration file that can override contract details like name and ABI. (default: "tx.config.json")
-  -v, --verbose                 run with debugging statements. (default: false)
+  -f, --outputFormat <value>    output file format (choices: "png", "svg", "eps", "puml", default: "svg")
+  -o, --outputFileName <value>  output file name. Defaults to the transaction hash
+  -u, --url <url>               URL of the archive node with trace transaction support (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
+  -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli", "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche", "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom",
+                                "testnet.fantom", "moonbeam", "optimistic", "kovan-optimistic", "gnosisscan", default: "mainnet", env: ETH_NETWORK)
+  -cf, --configFile <value>     name of the json configuration file that can override contract details like name and ABI (default: "tx.config.json")
+  -v, --verbose                 run with debugging statements (default: false)
   -V, --version                 output the version number
   -h, --help                    display help for command
 
 Commands:
-  call [options] <txHash(s)>    UML sequence diagram of transaction contract calls. (default)
-  value <txHash(s)>             UML sequence diagram of token and ether value transfers.
+  call [options] <txHash(s)>    Generates a UML sequence diagram of transaction contract calls between contracts (default).
+  value <txHash(s)>             Generates a UML sequence diagram of token and ether value transfers between accounts and contracts. This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth, Erigon or Anvil.
+  copy [options] <txHash(s)>    Copies a transaction from one chain to another or duplicates txs on the same node.
   help [command]                display help for command
 ```
 
@@ -74,22 +74,23 @@ Commands:
 ```
 Usage: tx2uml call <txhash(s)> [options]
 
-UML sequence diagram of transaction contract calls. (default)
+Generates a UML sequence diagram of transaction contract calls between contracts (default).
 
 Arguments:
-  txHash(s)                  Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces.
+  txHash(s)                   transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces
 
 Options:
-  -k, --etherscanKey <value>    Etherscan API key. Register your API key at https://etherscan.io/myapikey
-  -a, --noAddresses <value>  Hide calls to contracts in a list of comma-separated addresses with a 0x prefix.
-  -d, --depth <value>        Limit the transaction call depth.
-  -e, --noEther              Hide ether values. (default: false)
-  -g, --noGas                Hide gas usages. (default: false)
-  -l, --noLogDetails         Hide log details emitted from contract events. (default: false)
-  -p, --noParams             Hide function params and return values. (default: false)
-  -t, --noTxDetails          Hide transaction details like nonce, gas and tx fee. (default: false)
-  -x, --noDelegates          Hide delegate calls from proxy contracts to their implementations and calls to deployed libraries. (default: false)
-  -h, --help                 display help for command
+  -n, --nodeType <value>      type of Ethereum node the provider url is pointing to. This determines which trace API is used (choices: "geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", default: "geth", env: ARCHIVE_NODE_TYPE)
+  -k, --etherscanKey <value>  Etherscan like block explorer API key
+  -a, --noAddresses <value>   hide calls to contracts in a list of comma-separated addresses with a 0x prefix
+  -d, --depth <value>         limit the transaction call depth
+  -e, --noEther               hide ether values (default: false)
+  -g, --noGas                 hide gas usages (default: false)
+  -l, --noLogDetails          hide log details emitted from contract events (default: false)
+  -p, --noParams              hide function params and return values (default: false)
+  -t, --noTxDetails           hide transaction details like nonce, gas and tx fee (default: false)
+  -x, --noDelegates           hide delegate calls from proxy contracts to their implementations and calls to deployed libraries (default: false)
+  -h, --help                  display help for command
 ```
 
 ### Value command
@@ -97,15 +98,31 @@ Options:
 ```
 Usage: tx2uml value <txhash(s)> [options]
 
-Generates a UML sequence diagram of token and ether value transfers between accounts and contracts.
-
-This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth or Erigon.
+Generates a UML sequence diagram of token and ether value transfers between accounts and contracts. This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth, Erigon or Anvil.
 
 Arguments:
-  txHash(s)   Transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces.
+  txHash(s)   transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces
 
 Options:
   -h, --help  display help for command
+```
+
+### Copy command
+
+```
+Usage: tx2uml copy <txhash(s)> [options]
+
+Copies a transaction from one chain to another or duplicates txs on the same node.
+
+Arguments:
+  txHash(s)               transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for
+                          multiple transactions, the comma-separated list of transaction hashes must not have white
+                          spaces
+
+Options:
+  -du, --destUrl <url>    url of the node provider the transaction is being copied to (default:
+                          "http://localhost:8545", env: DEST_NODE_URL)
+  -h, --help              display help for command
 ```
 
 ## Configuration file
@@ -146,7 +163,7 @@ An example config file
 
 The participant names are shortened contract addresses. Basically, the first and last 2 bytes in hexadecimal format with a 0x prefix.
 
-Stereotypes are added for the contract and token name if they can be sourced. The contract name comes from Etherscan's verified contracts. The token name comes from Alethio.
+Stereotypes are added for the contract and token name if they can be sourced. The contract name comes from Etherscan's verified contracts.
 
 ## Messages
 
@@ -174,7 +191,7 @@ The `-x` or `--noDelegates` option can be used to hide all delegate calls.
 
 ## Archive node that supports tracing transactions
 
-`tx2uml` needs an Ethereum archive node that supports the [debug_traceTransaction](https://geth.ethereum.org/docs/rpc/ns-debug#debug_tracetransaction) or [trace_transaction](https://openethereum.github.io/JSONRPC-trace-module#trace_transaction) JSON RPC APIs.
+`tx2uml` needs an Ethereum archive node that supports the [debug_traceTransaction](https://geth.ethereum.org/docs/interacting-with-geth/rpc/ns-debug#debugtracetransaction) or [trace_transaction](https://openethereum.github.io/JSONRPC-trace-module#trace_transaction) JSON RPC APIs.
 
 The ethereum node url can be set with the `-u` or `--url` options or by exporting the `ARCHIVE_NODE_URL` environment variable. For example
 
@@ -182,7 +199,7 @@ The ethereum node url can be set with the `-u` or `--url` options or by exportin
 export ARCHIVE_NODE_URL=https://api.archivenode.io/<your API key>/turbogeth 
 ```
 
-Known Ethereum node clients that support `debug_traceTransaction` are:
+Known Ethereum node clients that support `debug_traceTransaction` with a `tracer` parameter are:
 
 -   [Go-Ethereum (Geth)](https://github.com/ethereum/go-ethereum)
 -   [Erigon (fka Turbo-Geth)](https://github.com/ledgerwatch/erigon)
@@ -201,6 +218,8 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
     "id":1
 }'
 ```
+
+Anvil, Hardhat and Genache all support `debug_traceTransaction` but without the `tracer` parameter so will not work with tx2uml.
 
 Known Ethereum node clients that support `trace_transaction` are:
 
@@ -229,23 +248,22 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 | trace_replayTransaction | X | X | | | | X | | | |
 | trace_transaction | X | X | X | | | | X | | |
 | trace_rawTransaction | X | X | X | | | X | | | |
-| debug_traceTransaction | | | | X | X | | | X | X |
+| debug_traceTransaction | | | | X | X | | X | X | X |
 | debug_traceTransaction with tracer param | | | | X | X | | | | |
 
 ### Ethereum API providers
 
 Most Ethereum API providers do not provide tracing or debugging APIs on their free plans as they are resource intensive on the server side.
 
-As of Aug 2022, [WatchData](https://www.watchdata.io/) is the only provider that offers tracing on a free plan.
-[ArchiveNode.io](https://archivenode.io/) also supports tracing and is free but it is only available to approved DeFi developers.
+[ArchiveNode.io](https://archivenode.io/) supports tracing and is free but it is only available to approved DeFi developers.
 
-- [ArchiveNode.io](https://archivenode.io/) offer both Nethermind and Erigon (fka Turbo-Geth) archive nodes. If you want to use one specifically, you can add either /nethermind or /turbogeth to the end of your endpoint.
+- [ArchiveNode.io](https://archivenode.io/) offer load balanced Nethermind and Erigon archive nodes. If you want to use one specifically, you can add either /nethermind or /erigon to the end of your endpoint.
 
 - [WatchData](https://www.watchdata.io/) supports [trace_transaction](https://docs.watchdata.io/powered-api/trace/trace_transaction) and is available on their free plan.
 
 - [Alchemy](https://alchemyapi.io/) supports [trace_transaction](https://docs.alchemy.com/reference/trace-transaction) on their paid [Growth plan](https://alchemyapi.io/pricing).
 
-- [QuickNode](https://www.quicknode.com/) supports both [trace_transaction](https://www.quicknode.com/docs/ethereum/trace_transaction) and [debug_traceTransaction](https://www.quicknode.com/docs/ethereum/debug_traceTransaction) on their paid plan.
+- [QuickNode](https://www.quicknode.com/) supports both [trace_transaction](https://www.quicknode.com/docs/ethereum/trace_transaction) and [debug_traceTransaction](https://www.quicknode.com/docs/ethereum/debug_traceTransaction) on their paid plan. Custom EVM tracers used by tx2uml value transfer diagrams are not supported.
 
 - [Chainstack](https://chainstack.com/) supports both `trace_transaction` and `debug_traceTransaction` but only on their expensive Business plan.
 

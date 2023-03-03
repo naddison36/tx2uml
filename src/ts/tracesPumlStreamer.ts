@@ -68,7 +68,7 @@ export const multiTxTraces2PumlStream = (
         writeTransactionDetails(pumlStream, transaction, options)
         writeMessages(pumlStream, traces[i++], options)
         writeEvents(pumlStream, contracts, options)
-        pumlStream.push("end")
+        pumlStream.push("\nend")
     }
 
     pumlStream.push("\n@endumls")
@@ -456,10 +456,10 @@ export const writeEvents = (
             for (const event of contract.events) {
                 plantUmlStream.push(`\n${event.name}:`)
                 plantUmlStream.push(
-                    `${genParams(event.params).replace(/\\n/g, "\n")}`
+                    `${genParams(event.params).replace(/\\n/g, "\n  ")}`
                 )
             }
-            plantUmlStream.push("\nend note")
+            plantUmlStream.push("\nend note\n")
         }
     }
 }

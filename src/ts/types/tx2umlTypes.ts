@@ -156,6 +156,16 @@ export type ParamTypeInternal = {
     components?: ParamTypeInternal[]
 }
 
+export const nodeTypes = [
+    "geth",
+    "erigon",
+    "nether",
+    "openeth",
+    "tgeth",
+    "besu",
+    "anvil",
+] as const
+
 export const networks = <const>[
     "mainnet",
     "goerli",
@@ -182,8 +192,8 @@ export const outputFormats = <const>["png", "svg", "eps", "puml"]
 export type OutputFormat = (typeof outputFormats)[number]
 
 export interface OutputOptions {
-    filename?: string
-    format?: OutputFormat
+    outputFilename?: string
+    outputFormat?: OutputFormat
 }
 
 export interface PlantUmlOptions {
@@ -193,23 +203,34 @@ export interface PlantUmlOptions {
     pipemap?: boolean
 }
 
-export interface TracePumlGenerationOptions {
+export interface TracePumlGenerationOptions extends OutputOptions {
+    chain?: Network
+    depth?: number
     noGas?: boolean
     noParams?: boolean
     noEther?: boolean
     noTxDetails?: boolean
     noLogDetails?: boolean
     noDelegates?: boolean
-    chain?: string
-    depth?: number
 }
 
-export interface TransferPumlGenerationOptions {
+export interface CallDiagramOptions extends TracePumlGenerationOptions {
+    url?: string
+    nodeType: string
+    noAddresses?: string[]
+    etherscanKey?: string
+    configFile?: string
+}
+
+export interface TransferPumlGenerationOptions extends OutputOptions {
     chain?: Network
-    nodeType?: string
     url?: string
     etherscanKey?: string
     configFile?: string
-    outputFileName?: string
-    outputFormat?: OutputFormat
+}
+
+export interface CopyOptions {
+    destUrl: string
+    url: string
+    nodeType?: string
 }
