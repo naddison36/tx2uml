@@ -209,17 +209,27 @@ export const writeMessages = (
             )
             // TODO add ETH value transfer to refund address if there was a contract balance
         } else {
-            plantUmlStream.push(
-                `${participantId(trace.from)} ${genArrow(
-                    trace
-                )} ${participantId(trace.to)}: ${genFunctionText(
-                    trace,
-                    options.noParams
-                )}${genGasUsage(trace.gasUsed, options.noGas)}${genEtherValue(
-                    trace,
-                    options.noEther
-                )}\n`
-            )
+            const beforeParams = `${participantId(trace.from)} ${genArrow(
+                trace
+            )} ${participantId(trace.to)}: `
+
+            const afterParams = `${genGasUsage(
+                trace.gasUsed,
+                options.noGas
+            )}${genEtherValue(trace, options.noEther)}\n`
+
+            const rawParams = `${genFunctionText(trace, options.noParams)}`
+            const maxParamLength =
+                2000 - beforeParams.length - afterParams.length
+
+            const truncatedParams = rawParams.slice(0, maxParamLength)
+            if (maxParamLength < rawParams.length)
+                console.warn(
+                    `params were truncated by ${
+                        truncatedParams.length - maxParamLength
+                    } characters`
+                )
+            plantUmlStream.push(beforeParams + truncatedParams + afterParams)
 
             if (trace.type === MessageType.DelegateCall) {
                 plantUmlStream.push(
@@ -327,6 +337,8 @@ const genFunctionText = (trace: Trace, noParams: boolean = false): string => {
     if (!trace.funcName) {
         return `${trace.funcSelector}`
     }
+    if (noParams) return trace.funcName
+
     return noParams
         ? trace.funcName
         : `${trace.funcName}(${genParams(trace.inputParams)})`

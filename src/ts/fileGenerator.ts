@@ -21,7 +21,7 @@ export const generateFile = async (
         } else if (outputFormats.includes(options.outputFormat)) {
             await streamPlantUml(pumlStream, outputStream, {
                 format: options.outputFormat,
-                limitSize: 60000,
+                memory: options.memory,
             })
             debug(
                 `Plant UML file written to ${filename} in ${options.outputFormat} format.`

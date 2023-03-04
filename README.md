@@ -56,27 +56,19 @@ block explorer
 Options:
   -f, --outputFormat <value>    output file format (choices: "png", "svg", "eps", "puml", default: "svg")
   -o, --outputFileName <value>  output file name. Defaults to the transaction hash
-  -u, --url <url>               URL of the archive node with trace transaction support (default:
-                                "http://localhost:8545", env: ARCHIVE_NODE_URL)
-  -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli",
-                                "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche",
-                                "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom", "testnet.fantom",
-                                "moonbeam", "optimistic", "kovan-optimistic", "gnosisscan", default: "mainnet", env:
-                                ETH_NETWORK)
-  -cf, --configFile <value>     name of the json configuration file that can override contract details like name and
-                                ABI (default: "tx.config.json")
+  -u, --url <url>               URL of the archive node with trace transaction support (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
+  -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli", "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche", "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom", "testnet.fantom", "moonbeam", "optimistic",
+                                "kovan-optimistic", "gnosisscan", default: "mainnet", env: ETH_NETWORK)
+  -cf, --configFile <value>     name of the json configuration file that can override contract details like name and ABI (default: "tx.config.json")
+  -m, --memory <gigabytes>      max Java memory of PlantUML process in gigabytes. Java default is 1/4 of physical memory. Large txs in png format will need up to 12g. svg format is much better for large transactions.
   -v, --verbose                 run with debugging statements (default: false)
   -V, --version                 output the version number
   -h, --help                    display help for command
 
 Commands:
-  call [options] <txHash(s)>    Generates a UML sequence diagram of transaction contract calls between contracts
-                                (default).
-  value <txHash(s)>             Generates a UML sequence diagram of token and ether value transfers between accounts
-                                and contracts. This requires an archive node that supports debug_traceTransaction with
-                                custom EVM tracers which are Geth, Erigon or Anvil.
-  copy [options] <txHash(s)>    Copies one or more transactions from one chain to another. This is either relayed with
-                                the original signature or impersonated with a different signer.
+  call [options] <txHash(s)>    Generates a UML sequence diagram of transaction contract calls between contracts (default).
+  value <txHash(s)>             Generates a UML sequence diagram of token and ether value transfers between accounts and contracts. This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth, Erigon or Anvil.
+  copy [options] <txHash(s)>    Copies one or more transactions from one chain to another. This is either relayed with the original signature or impersonated with a different signer.
   help [command]                display help for command
 ```
 

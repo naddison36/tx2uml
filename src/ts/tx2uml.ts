@@ -54,6 +54,10 @@ program
         "name of the json configuration file that can override contract details like name and ABI",
         "tx.config.json"
     )
+    .option(
+        "-m, --memory <gigabytes>",
+        "max Java memory of PlantUML process in gigabytes. Java default is 1/4 of physical memory. Large txs in png format will need up to 12g. svg format is much better for large transactions."
+    )
     .option("-v, --verbose", "run with debugging statements", false)
 
 const version =
