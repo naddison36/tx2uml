@@ -2,6 +2,7 @@ import GethClient from "./clients/GethClient"
 import { CopyOptions } from "./types/tx2umlTypes"
 import { Transaction } from "ethers"
 import { serialize } from "./ethers/transactions"
+import { TransactionResponse } from "@ethersproject/abstract-provider"
 
 const debug = require("debug")("tx2uml")
 
@@ -9,17 +10,38 @@ export const copyTransactions = async (
     hashes: string[],
     options: CopyOptions
 ) => {
-    const sourceProvider = new GethClient(options.url).ethersProvider
-    const destProvider = new GethClient(options.destUrl).ethersProvider
+    const source = new GethClient(options.url)
+    const destination = new GethClient(options.destUrl)
+
+    const destSigner = options.impersonate
+        ? await destination.impersonate(options.impersonate)
+        : undefined
 
     for (const hash of hashes) {
         // Get the transaction from the source chains
-        const sourceTx = await sourceProvider.getTransaction(hash)
+        const sourceTx = await source.ethersProvider.getTransaction(hash)
         debug(`Got raw tx ${sourceTx.raw} for source ${hash}.`)
-        const rawTx = getRawTransaction(sourceTx)
 
-        // replay transactions to destination
-        const destTx = await destProvider.sendTransaction(rawTx)
+        let destTx: TransactionResponse
+        if (destSigner) {
+            // Send the unsigned tx to the dev node to be signed and sent
+            destTx = await destSigner.sendTransaction({
+                to: sourceTx.to,
+                data: sourceTx.data,
+                value: sourceTx.value,
+                gasLimit: sourceTx.gasLimit,
+                gasPrice: sourceTx.gasPrice,
+                accessList: sourceTx.accessList,
+                // type: sourceTx.type,
+                // maxFeePerGas: sourceTx.maxFeePerGas,
+                // maxPriorityFeePerGas: sourceTx.maxPriorityFeePerGas,
+            })
+        } else {
+            // replay transactions to destination
+            const rawTx = getRawTransaction(sourceTx)
+            destTx = await destination.ethersProvider.sendTransaction(rawTx)
+        }
+
         debug(`${destTx.hash} is hash of replayed source tx ${hash}.`)
         await destTx.wait()
         debug(`${destTx.hash} replayed tx has been mined.`)

@@ -1,4 +1,11 @@
-import { BigNumber, constants, Contract, providers } from "ethers"
+import {
+    BigNumber,
+    BigNumberish,
+    constants,
+    Contract,
+    providers,
+    Signer,
+} from "ethers"
 import { JsonRpcProvider } from "@ethersproject/providers"
 
 import { TokenInfoABI } from "./ABIs"
@@ -13,7 +20,7 @@ import {
 import { transactionHash } from "../utils/regEx"
 import { TokenInfo } from "../types/TokenInfo"
 import { Log } from "@ethersproject/abstract-provider"
-import { getAddress, hexDataSlice } from "ethers/lib/utils"
+import { getAddress, hexDataSlice, parseEther } from "ethers/lib/utils"
 
 require("axios-debug-log")
 const debug = require("debug")("tx2uml")
@@ -237,6 +244,22 @@ export default abstract class EthereumNodeClient {
                 { cause: err }
             )
         }
+    }
+
+    public async impersonate(address: string, fund = true): Promise<Signer> {
+        await this.ethersProvider.send("hardhat_impersonateAccount", [address])
+        if (fund) {
+            // Give the account 10 Ether
+            await this.setBalance(address, parseEther("10"))
+        }
+        return this.ethersProvider.getSigner(address)
+    }
+
+    public async setBalance(address: string, balance: BigNumberish) {
+        await this.ethersProvider.send("hardhat_setBalance", [
+            address,
+            BigNumber.from(balance).toHexString(),
+        ])
     }
 }
 

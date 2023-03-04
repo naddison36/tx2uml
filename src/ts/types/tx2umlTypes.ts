@@ -233,4 +233,5 @@ export interface CopyOptions {
     destUrl: string
     url: string
     nodeType?: string
+    impersonate?: string
 }

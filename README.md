@@ -1,10 +1,11 @@
-# Ethereum transaction to UML sequence diagram generator
+# UML for Ethereum Transactions
 
-[![npm version](https://badge.fury.io/js/tx2uml.svg)](https://badge.fury.io/js/tx2uml)
+[![npm (tag)](https://img.shields.io/npm/v/tx2uml)](https://www.npmjs.com/package/tx2uml)
+[![Twitter Follow](https://img.shields.io/twitter/follow/naddison?style=social)](https://twitter.com/naddison)
 
 [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language) sequence diagram generator for Ethereum transaction.
 
-The following `contract call` and `value transfer` diagrams are for the Uniswap V1 tx [0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca](https://etherscan.io/tx/0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca) that removes MKR liquidity from the Uniswap V1 MKR pool.
+The following *contract call* and *value transfer* diagrams are for the Uniswap V1 transaction [0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca](https://etherscan.io/tx/0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca) that removes MKR liquidity from the Uniswap V1 MKR pool.
 
 ![Contract call example](./examples/uniswapMKRRemove.png) 
 *Contract calls*
@@ -49,23 +50,33 @@ Use the `-h` option to see the `tx2uml` CLI usage options
 ```
 Usage: tx2uml [command] <options>
 
-Ethereum transaction visualizer that generates UML sequence diagrams from an Ethereum archive node and Etherscan like block explorer
+Ethereum transaction visualizer that generates UML sequence diagrams from an Ethereum archive node and Etherscan like
+block explorer
 
 Options:
   -f, --outputFormat <value>    output file format (choices: "png", "svg", "eps", "puml", default: "svg")
   -o, --outputFileName <value>  output file name. Defaults to the transaction hash
-  -u, --url <url>               URL of the archive node with trace transaction support (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
-  -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli", "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche", "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom",
-                                "testnet.fantom", "moonbeam", "optimistic", "kovan-optimistic", "gnosisscan", default: "mainnet", env: ETH_NETWORK)
-  -cf, --configFile <value>     name of the json configuration file that can override contract details like name and ABI (default: "tx.config.json")
+  -u, --url <url>               URL of the archive node with trace transaction support (default:
+                                "http://localhost:8545", env: ARCHIVE_NODE_URL)
+  -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli",
+                                "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche",
+                                "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom", "testnet.fantom",
+                                "moonbeam", "optimistic", "kovan-optimistic", "gnosisscan", default: "mainnet", env:
+                                ETH_NETWORK)
+  -cf, --configFile <value>     name of the json configuration file that can override contract details like name and
+                                ABI (default: "tx.config.json")
   -v, --verbose                 run with debugging statements (default: false)
   -V, --version                 output the version number
   -h, --help                    display help for command
 
 Commands:
-  call [options] <txHash(s)>    Generates a UML sequence diagram of transaction contract calls between contracts (default).
-  value <txHash(s)>             Generates a UML sequence diagram of token and ether value transfers between accounts and contracts. This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth, Erigon or Anvil.
-  copy [options] <txHash(s)>    Copies a transaction from one chain to another or duplicates txs on the same node.
+  call [options] <txHash(s)>    Generates a UML sequence diagram of transaction contract calls between contracts
+                                (default).
+  value <txHash(s)>             Generates a UML sequence diagram of token and ether value transfers between accounts
+                                and contracts. This requires an archive node that supports debug_traceTransaction with
+                                custom EVM tracers which are Geth, Erigon or Anvil.
+  copy [options] <txHash(s)>    Copies one or more transactions from one chain to another. This is either relayed with
+                                the original signature or impersonated with a different signer.
   help [command]                display help for command
 ```
 
@@ -112,17 +123,21 @@ Options:
 ```
 Usage: tx2uml copy <txhash(s)> [options]
 
-Copies a transaction from one chain to another or duplicates txs on the same node.
+Copies one or more transactions from one chain to another. This is either relayed with the original signature or
+impersonated with a different signer.
 
 Arguments:
-  txHash(s)               transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for
-                          multiple transactions, the comma-separated list of transaction hashes must not have white
-                          spaces
+  txHash(s)                    transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If
+                               running for multiple transactions, the comma-separated list of transaction hashes must
+                               not have white spaces
 
 Options:
-  -du, --destUrl <url>    url of the node provider the transaction is being copied to (default:
-                          "http://localhost:8545", env: DEST_NODE_URL)
-  -h, --help              display help for command
+  -du, --destUrl <url>         url of the node provider the transaction is being copied to (default:
+                               "http://localhost:8545", env: DEST_NODE_URL)
+  -i, --impersonate <address>  Address of the account that is to be impersonated. This only works for development nodes
+                               like Hardhat and Anvil. The default is the transaction is relayed so is from the
+                               original signer.
+  -h, --help                   display help for command
 ```
 
 ## Configuration file
@@ -155,7 +170,7 @@ An example config file
 }
 ```
 
-# Syntax
+# Call Sequence Syntax
 
 ![Syntax](./examples/syntax.png)
 

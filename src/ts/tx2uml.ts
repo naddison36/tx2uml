@@ -5,6 +5,7 @@ import { generateCallDiagram } from "./callDiagram"
 import { generateValueDiagram } from "./valueDiagram"
 import {
     parseFilename,
+    validateAddress,
     validateAddresses,
     validateDepth,
     validateHashes,
@@ -144,7 +145,7 @@ program
     )
     .action(async (hashes: string[], options, command) => {
         debug(`About to generate value transfers for ${hashes}`)
-        const filename = parseFilename(
+        const outputFilename = parseFilename(
             command.parent._optionValues.outputFileName,
             hashes
         )
@@ -152,7 +153,7 @@ program
             await generateValueDiagram(hashes, {
                 ...command.parent._optionValues,
                 ...options,
-                filename,
+                outputFilename,
             })
         } catch (err) {
             console.error(err)
@@ -169,7 +170,7 @@ program
     )
     .usage("<txhash(s)> [options]")
     .description(
-        "Copies a transaction from one chain to another or duplicates txs on the same node."
+        "Copies one or more transactions from one chain to another. This is either relayed with the original signature or impersonated with a different signer."
     )
     .addOption(
         new Option(
@@ -179,18 +180,23 @@ program
             .env("DEST_NODE_URL")
             .default("http://localhost:8545")
     )
-    // TODO add the ability to impersonate a transaction
-    // .option(
-    //     "-s, --signer <address>",
-    //     "Address of the account that is to be impersonated. This only works for development nodes like Hardhat and Anvil"
-    // )
+    .option(
+        "-i, --impersonate <address>",
+        "Address of the account that is to be impersonated. This only works for development nodes like Hardhat and Anvil. The default is the transaction is relayed so is from the original signer.",
+        validateAddress
+    )
     .action(async (hashes: string[], options, command) => {
         debug(`About to copy tx calls for ${hashes}`)
 
-        await copyTransactions(hashes, {
-            ...command.parent._optionValues,
-            ...options,
-        })
+        try {
+            await copyTransactions(hashes, {
+                ...command.parent._optionValues,
+                ...options,
+            })
+        } catch (err) {
+            console.error(err)
+            process.exit(20)
+        }
     })
 
 program.on("option:verbose", () => {

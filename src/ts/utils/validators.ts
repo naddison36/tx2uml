@@ -1,5 +1,11 @@
-import { ethereumAddresses, transactionHash, transactionHashes } from "./regEx"
+import {
+    ethereumAddress,
+    ethereumAddresses,
+    transactionHash,
+    transactionHashes,
+} from "./regEx"
 import { InvalidArgumentError, InvalidOptionArgumentError } from "commander"
+import { getAddress } from "ethers/lib/utils"
 
 // Validate transaction hashes
 export const validateHashes = (hashes: string): string[] => {
@@ -12,9 +18,25 @@ If running for multiple transactions, the comma-separated list of transaction ha
     )
 }
 
+export const validateAddress = (address: string): string => {
+    if (typeof address === "string" && address?.match(ethereumAddress))
+        return getAddress(address)
+
+    throw new InvalidArgumentError(
+        `Address must be in hexadecimal format with a 0x prefix.`
+    )
+}
+
 export const validateAddresses = (addresses: string): string[] => {
-    if (addresses?.match(ethereumAddresses)) return [addresses]
-    if (addresses?.match(ethereumAddresses)) return addresses.split(",")
+    try {
+        if (typeof addresses === "string" && addresses?.match(ethereumAddress))
+            return [getAddress(addresses)]
+        if (
+            typeof addresses === "string" &&
+            addresses?.match(ethereumAddresses)
+        )
+            return addresses.split(",").map(a => getAddress(a))
+    } catch (err) {}
 
     throw new InvalidArgumentError(
         `Must be address or an array of addresses in hexadecimal format with a 0x prefix.
@@ -24,12 +46,12 @@ If running for multiple addresses, the comma-separated list of addresses must no
 
 export const validateDepth = (depthStr: string): number => {
     try {
-        return parseInt(depthStr, 10)
-    } catch (err) {
-        throw new InvalidOptionArgumentError(
-            `Invalid depth "${depthStr}". Must be an integer.`
-        )
-    }
+        const depth = parseInt(depthStr, 10)
+        if (depth >= 0) return depth
+    } catch (err) {}
+    throw new InvalidOptionArgumentError(
+        `Invalid depth "${depthStr}". Must be a zero or a positive integer.`
+    )
 }
 
 export const parseFilename = (
