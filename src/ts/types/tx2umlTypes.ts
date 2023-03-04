@@ -63,6 +63,7 @@ export type Contract = {
     constructorInputs?: string
     events?: Event[]
     minDepth?: number
+    labels?: string[]
 }
 export type Contracts = { [address: string]: Contract }
 

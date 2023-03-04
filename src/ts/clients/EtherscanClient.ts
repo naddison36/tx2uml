@@ -55,7 +55,7 @@ export default class EtherscanClient {
                 )
                 return {
                     address: contractAddress,
-                    noContract: true,
+                    noContract: false,
                     contractName: null,
                 }
             }

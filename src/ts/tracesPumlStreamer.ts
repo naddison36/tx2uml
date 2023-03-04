@@ -105,6 +105,7 @@ export const writeParticipants = (
     plantUmlStream.push("\n")
 
     // output remaining contracts as actors or participants
+    let participantType = "actor"
     for (const [address, contract] of Object.entries(contracts)) {
         // Do not write contract as a participant if min depth greater than trace depth
         if (options.depth > 0 && contract.minDepth > options.depth) continue
@@ -116,12 +117,12 @@ export const writeParticipants = (
         if (contract.contractName) name += `<<${contract.contractName}>>`
 
         debug(`Write lifeline ${shortAddress(address)} with stereotype ${name}`)
-        const participantType = contract.noContract ? "actor" : "participant"
         plantUmlStream.push(
             `${participantType} "${shortAddress(address)}" as ${participantId(
                 address
             )} ${name}\n`
         )
+        participantType = "participant"
     }
 }
 
@@ -186,11 +187,7 @@ export const writeMessages = (
     // for each trace
     for (const trace of traces) {
         if (trace.depth > options.depth) continue
-        debug(
-            `Write message ${trace.id} from ${shortAddress(
-                trace.from
-            )} to ${shortAddress(trace.to)}`
-        )
+        debug(`Write message ${trace.id} from ${trace.from} to ${trace.to}`)
         // return from lifeline if processing has moved to a different contract
         if (trace.delegatedFrom !== previousTrace?.to) {
             // contractCallStack is mutated in the loop so make a copy

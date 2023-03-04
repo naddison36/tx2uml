@@ -223,12 +223,18 @@ export class TransactionManager {
             contractAddresses
         )
 
-        tokensDetails.forEach(tokenDetails => {
-            contracts[tokenDetails.address].noContract = tokenDetails.noContract
-            contracts[tokenDetails.address].tokenName = tokenDetails.tokenName
-            contracts[tokenDetails.address].symbol = tokenDetails.tokenSymbol
-            contracts[tokenDetails.address].decimals = tokenDetails.decimals
-        })
+        const labels: Labels =
+            basename(__dirname) === "lib"
+                ? require("./labels.json")
+                : require("../../lib/labels.json")
+        for (const [address, contract] of Object.entries(contracts)) {
+            contract.labels = labels[address]?.labels
+            const tokenDetail = tokensDetails.find(td => td.address === address)
+            contract.noContract = tokenDetail?.noContract
+            contract.tokenName = tokenDetail?.tokenName || labels[address]?.name
+            contract.symbol = tokenDetail?.tokenSymbol
+            contract.decimals = tokenDetail?.decimals
+        }
     }
 
     async configOverrides(
