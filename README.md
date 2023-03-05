@@ -252,10 +252,10 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 
 |  | OpenEthereum | Nethereum | Besu | Geth | Erigon | Akula | Anvil | Hardhat | Ganache |
 |---|---|---|---|---|---|---|---|---|---|
-| trace_replayTransaction | X | X | | | | X | | | |
-| trace_transaction | X | X | X | | | | X | | |
+| trace_replayTransaction | X | X | | | X | X | | | |
+| trace_transaction | X | X | X | | X | | X | | |
 | trace_rawTransaction | X | X | X | | | X | | | |
-| debug_traceTransaction | | | | X | X | | X | X | X |
+| debug_traceTransaction | | X | X | X | X | | X | X | X |
 | debug_traceTransaction with tracer param | | | | X | X | | | | |
 
 ### Ethereum API provider trace support
@@ -273,7 +273,7 @@ Most Ethereum API providers do not provide tracing or debugging APIs as they are
 
 - [Alchemy](https://alchemyapi.io/) supports both [trace_transaction](https://docs.alchemy.com/reference/trace-transaction) and [debug_traceTransaction](https://docs.alchemy.com/reference/sdk-tracetransaction) on their paid [Growth plan](https://alchemyapi.io/pricing). Only the in-built `call` and `prestate` tracers are supported. Custom tracers is not supported.
 
-- [QuickNode](https://www.quicknode.com/) supports both [trace_transaction](https://www.quicknode.com/docs/ethereum/trace_transaction) and [debug_traceTransaction](https://www.quicknode.com/docs/ethereum/debug_traceTransaction) on their paid plan. Only the in-built `call` and `prestate` tracers are supported. Custom tracers is not supported.
+- [QuickNode](https://www.quicknode.com/) supports both [trace_transaction](https://www.quicknode.com/docs/ethereum/trace_transaction) and [debug_traceTransaction](https://www.quicknode.com/docs/ethereum/debug_traceTransaction) on their paid plan. The in-built `call` and `prestate` tracers are supported. Custom tracers can be requested via support and approved if within resourcing limits.
 
 - [Chainstack](https://chainstack.com/) supports both [trace_transaction](https://docs.chainstack.com/api/ethereum/trace_transaction) and [debug_traceTransaction](https://docs.chainstack.com/api/ethereum/debug_traceTransaction) on their Business plan. Tracers are not supported.
 

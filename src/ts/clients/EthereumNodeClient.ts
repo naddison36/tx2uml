@@ -123,16 +123,29 @@ export default abstract class EthereumNodeClient {
             this.ethersProvider
         ) as TokenInfo
         try {
-            const results = await tokenInfo.getInfoBatch(contractAddresses)
-            debug(`Got token information for ${results.length} contracts`)
-            return results.map((result, i) => ({
-                address: contractAddresses[i],
-                noContract: result.noContract,
-                nft: result.nft,
-                tokenSymbol: result.symbol,
-                tokenName: result.name,
-                decimals: result.decimals.toNumber(),
-            }))
+            // Break up the calls into 10 contracts at a time
+            let tokenDetails: TokenDetails[] = []
+            const chunkSize = 10
+            for (let i = 0; i < contractAddresses.length; i += chunkSize) {
+                const cunkedAddresses = contractAddresses.slice(
+                    i,
+                    i + chunkSize
+                )
+                const results = await tokenInfo.getInfoBatch(cunkedAddresses)
+                const mappedResponse: TokenDetails[] = results.map(
+                    (result, r) => ({
+                        address: contractAddresses[i + r],
+                        noContract: result.noContract,
+                        nft: result.nft,
+                        tokenSymbol: result.symbol,
+                        tokenName: result.name,
+                        decimals: result.decimals.toNumber(),
+                    })
+                )
+                tokenDetails = tokenDetails.concat(mappedResponse)
+            }
+            debug(`Got token information for ${tokenDetails.length} contracts`)
+            return tokenDetails
         } catch (err) {
             console.error(
                 `Failed to get token information for contracts: ${contractAddresses}.\nerror: ${err.message}`
