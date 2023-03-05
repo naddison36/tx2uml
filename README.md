@@ -319,14 +319,13 @@ Good online resources for learning UML
 -   [Ashley's PlantUML Doc](https://plantuml-documentation.readthedocs.io/en/latest/diagrams/sequence.html)
 -   [UML 2 Sequence Diagramming Guidelines](http://www.agilemodeling.com/style/sequenceDiagram.htm)
 
-# Similar transaction visualisation tools
+# Similar Visualisation Tools
 
--   [Parity Trace Decoder](https://github.com/k06a/parity-trace-decoder)
--   [Tenderly](https://dashboard.tenderly.dev/)
+-   [Transaction Tracer](https://openchain.xyz/trace)
+-   [Tenderly](https://dashboard.tenderly.co/)
 -   [EthTx info](http://ethtx.info/)
 -   [Bloxy](https://bloxy.info/)
 -   [Etherscan](https://etherscan.io/txs)
--   [tokenflow](https://tokenflow.xyz/)
 
 ## Development
 
@@ -338,7 +337,7 @@ If you are using [Archive Node](https://archivenode.io/), you need to replace <y
 ```
 export ARCHIVE_NODE_URL=https://api.archivenode.io/<your api key>/nethermind
 export NETHERMIND_URL=https://api.archivenode.io/<your api key>/nethermind
-export TURBO_GETH_URL=https://api.archivenode.io/<your api key>/turbogeth
+export ERIGON_GETH_URL=https://api.archivenode.io/<your api key>/erigon
 npm run test
 ```
 
@@ -351,6 +350,7 @@ npm build and publish commands
 ```bash
 npm run prettier:fix
 npm run clean
+npm run package-lock
 npm run build
 # make tx2uml globally available for local testing
 npm link

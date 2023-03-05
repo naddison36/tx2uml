@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc --build ./tsconfig.json",
     "clean": "tsc --build --clean ./tsconfig.json",
-    "pack-lock": "npm i --package-lock-only",
+    "package-lock": "npm i --package-lock-only",
     "examples": "java -jar ./lib/plantuml.jar ./examples/syntax.puml ./examples/delegate.puml",
     "prettier:check": "prettier --check --no-semi '**/*.{ts,md}'",
     "prettier:fix": "prettier --write --no-semi '**/*.{ts,md}'",
