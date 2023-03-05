@@ -7,7 +7,7 @@
 
 The following *contract call* and *value transfer* diagrams are for the Uniswap V1 transaction [0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca](https://etherscan.io/tx/0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca) that removes MKR liquidity from the Uniswap V1 MKR pool.
 
-![Contract call example](./examples/uniswapMKRRemove.png) 
+![Contract call example](./examples/uniswapMKRRemove.svg) 
 *Contract calls*
 
 See a lot more call diagram examples with different options [here](./examples/README.md).
