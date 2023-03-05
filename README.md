@@ -35,12 +35,6 @@ To upgrade run
 npm install tx2uml -g
 ```
 
-To see which version you are using
-
-```bash
-npm ls tx2uml
-```
-
 # Usage
 
 ## Command Line Interface (CLI)
