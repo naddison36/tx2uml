@@ -1,45 +1,38 @@
 import { spawn } from "child_process"
 import path from "path"
 import { Readable, Writable } from "stream"
-import { outputFormats, PlantUmlOptions } from "./types/tx2umlTypes"
+import { PlantUmlOptions } from "./types/tx2umlTypes"
+
+const debug = require("debug")("tx2uml")
 
 export const streamPlantUml = async (
     pumlStream: Readable,
     outputStream: Writable,
-    options: PlantUmlOptions = {}
+    options: PlantUmlOptions
 ): Promise<number> => {
     const pumlJavaOptions = genPumlJavaOptions(options)
 
     return pipePuml(pumlStream, outputStream, pumlJavaOptions)
 }
 
-export const genPumlJavaOptions = (options: PlantUmlOptions = {}): string[] => {
-    const plantUmlOptions: string[] = [
+export const genPumlJavaOptions = (options: PlantUmlOptions): string[] => {
+    const plantUmlOptions: string[] = options.memory
+        ? [`-Xmx${options.memory}g`]
+        : []
+    plantUmlOptions.push(
         "-jar",
         path.join(__dirname, "./plantuml.jar"),
         "-Djava.awt.headless=true",
-    ]
+        "-DPLANTUML_LIMIT_SIZE=64000",
+        "-pipe"
+    )
     if (options?.format) {
-        if (!outputFormats.includes(options.format)) {
-            throw new Error(
-                `Invalid format ${
-                    options.format
-                }. Must be either: ${JSON.stringify(outputFormats)}`
-            )
-        }
         plantUmlOptions.push("-t" + options.format)
-    }
-    if (options.limitSize) {
-        plantUmlOptions.push("-DPLANTUML_LIMIT_SIZE=" + options.limitSize)
     }
     if (options.config) {
         plantUmlOptions.push("-config", options.config)
     }
-    if (options.pipemap) {
-        plantUmlOptions.push("-pipemap")
-    } else {
-        plantUmlOptions.push("-pipe")
-    }
+    debug("PlantUML Java process options " + plantUmlOptions)
 
     return plantUmlOptions
 }
@@ -50,7 +43,7 @@ const pipePuml = (
     plantUmlOptions: string[]
 ): Promise<number> => {
     return new Promise<number>(async (resolve, reject) => {
-        const child = spawn("java", plantUmlOptions)
+        const child = spawn("java", plantUmlOptions, { detached: true })
         pumlStream.pipe(child.stdin)
         child.stdout.pipe(outputStream)
 

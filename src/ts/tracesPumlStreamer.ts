@@ -105,6 +105,7 @@ export const writeParticipants = (
     plantUmlStream.push("\n")
 
     // output remaining contracts as actors or participants
+    let participantType = "actor"
     for (const [address, contract] of Object.entries(contracts)) {
         // Do not write contract as a participant if min depth greater than trace depth
         if (options.depth > 0 && contract.minDepth > options.depth) continue
@@ -116,12 +117,12 @@ export const writeParticipants = (
         if (contract.contractName) name += `<<${contract.contractName}>>`
 
         debug(`Write lifeline ${shortAddress(address)} with stereotype ${name}`)
-        const participantType = contract.noContract ? "actor" : "participant"
         plantUmlStream.push(
             `${participantType} "${shortAddress(address)}" as ${participantId(
                 address
             )} ${name}\n`
         )
+        participantType = "participant"
     }
 }
 
@@ -186,11 +187,7 @@ export const writeMessages = (
     // for each trace
     for (const trace of traces) {
         if (trace.depth > options.depth) continue
-        debug(
-            `Write message ${trace.id} from ${shortAddress(
-                trace.from
-            )} to ${shortAddress(trace.to)}`
-        )
+        debug(`Write message ${trace.id} from ${trace.from} to ${trace.to}`)
         // return from lifeline if processing has moved to a different contract
         if (trace.delegatedFrom !== previousTrace?.to) {
             // contractCallStack is mutated in the loop so make a copy
@@ -212,17 +209,27 @@ export const writeMessages = (
             )
             // TODO add ETH value transfer to refund address if there was a contract balance
         } else {
-            plantUmlStream.push(
-                `${participantId(trace.from)} ${genArrow(
-                    trace
-                )} ${participantId(trace.to)}: ${genFunctionText(
-                    trace,
-                    options.noParams
-                )}${genGasUsage(trace.gasUsed, options.noGas)}${genEtherValue(
-                    trace,
-                    options.noEther
-                )}\n`
-            )
+            const beforeParams = `${participantId(trace.from)} ${genArrow(
+                trace
+            )} ${participantId(trace.to)}: `
+
+            const afterParams = `${genGasUsage(
+                trace.gasUsed,
+                options.noGas
+            )}${genEtherValue(trace, options.noEther)}\n`
+
+            const rawParams = `${genFunctionText(trace, options.noParams)}`
+            const maxParamLength =
+                2000 - beforeParams.length - afterParams.length
+
+            const truncatedParams = rawParams.slice(0, maxParamLength)
+            if (maxParamLength < rawParams.length)
+                console.warn(
+                    `params were truncated by ${
+                        truncatedParams.length - maxParamLength
+                    } characters`
+                )
+            plantUmlStream.push(beforeParams + truncatedParams + afterParams)
 
             if (trace.type === MessageType.DelegateCall) {
                 plantUmlStream.push(
@@ -330,6 +337,8 @@ const genFunctionText = (trace: Trace, noParams: boolean = false): string => {
     if (!trace.funcName) {
         return `${trace.funcSelector}`
     }
+    if (noParams) return trace.funcName
+
     return noParams
         ? trace.funcName
         : `${trace.funcName}(${genParams(trace.inputParams)})`

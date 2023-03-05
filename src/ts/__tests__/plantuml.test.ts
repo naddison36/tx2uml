@@ -28,7 +28,7 @@ describe("Test Plant UML", () => {
   return
 
   @endumls`)
-        const exitCode = await streamPlantUml(plantUmlStream, outputPng)
+        const exitCode = await streamPlantUml(plantUmlStream, outputPng, {})
         expect(exitCode).toEqual(0)
     })
 
@@ -36,7 +36,7 @@ describe("Test Plant UML", () => {
         const plantUmlStream = Readable.from("invalid")
         expect.assertions(1)
         try {
-            await streamPlantUml(plantUmlStream, outputPng)
+            await streamPlantUml(plantUmlStream, outputPng, {})
         } catch (err) {
             expect(err).toBeInstanceOf(Error)
         }
@@ -51,7 +51,7 @@ participant "0x1111..2222" as 11112222
 @endumls`)
         expect.assertions(1)
         try {
-            await streamPlantUml(plantUmlStream, outputPng)
+            await streamPlantUml(plantUmlStream, outputPng, {})
         } catch (err) {
             expect(err).toBeInstanceOf(Error)
         }

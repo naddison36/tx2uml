@@ -7,7 +7,7 @@
 
 The following *contract call* and *value transfer* diagrams are for the Uniswap V1 transaction [0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca](https://etherscan.io/tx/0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca) that removes MKR liquidity from the Uniswap V1 MKR pool.
 
-![Contract call example](./examples/uniswapMKRRemove.png) 
+![Contract call example](./examples/uniswapMKRRemove.svg) 
 *Contract calls*
 
 See a lot more call diagram examples with different options [here](./examples/README.md).
@@ -56,27 +56,19 @@ block explorer
 Options:
   -f, --outputFormat <value>    output file format (choices: "png", "svg", "eps", "puml", default: "svg")
   -o, --outputFileName <value>  output file name. Defaults to the transaction hash
-  -u, --url <url>               URL of the archive node with trace transaction support (default:
-                                "http://localhost:8545", env: ARCHIVE_NODE_URL)
-  -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli",
-                                "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche",
-                                "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom", "testnet.fantom",
-                                "moonbeam", "optimistic", "kovan-optimistic", "gnosisscan", default: "mainnet", env:
-                                ETH_NETWORK)
-  -cf, --configFile <value>     name of the json configuration file that can override contract details like name and
-                                ABI (default: "tx.config.json")
+  -u, --url <url>               URL of the archive node with trace transaction support (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
+  -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli", "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche", "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom", "testnet.fantom", "moonbeam", "optimistic",
+                                "kovan-optimistic", "gnosisscan", default: "mainnet", env: ETH_NETWORK)
+  -cf, --configFile <value>     name of the json configuration file that can override contract details like name and ABI (default: "tx.config.json")
+  -m, --memory <gigabytes>      max Java memory of PlantUML process in gigabytes. Java default is 1/4 of physical memory. Large txs in png format will need up to 12g. svg format is much better for large transactions.
   -v, --verbose                 run with debugging statements (default: false)
   -V, --version                 output the version number
   -h, --help                    display help for command
 
 Commands:
-  call [options] <txHash(s)>    Generates a UML sequence diagram of transaction contract calls between contracts
-                                (default).
-  value <txHash(s)>             Generates a UML sequence diagram of token and ether value transfers between accounts
-                                and contracts. This requires an archive node that supports debug_traceTransaction with
-                                custom EVM tracers which are Geth, Erigon or Anvil.
-  copy [options] <txHash(s)>    Copies one or more transactions from one chain to another. This is either relayed with
-                                the original signature or impersonated with a different signer.
+  call [options] <txHash(s)>    Generates a UML sequence diagram of transaction contract calls between contracts (default).
+  value <txHash(s)>             Generates a UML sequence diagram of token and ether value transfers between accounts and contracts. This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth, Erigon or Anvil.
+  copy [options] <txHash(s)>    Copies one or more transactions from one chain to another. This is either relayed with the original signature or impersonated with a different signer.
   help [command]                display help for command
 ```
 
@@ -327,14 +319,13 @@ Good online resources for learning UML
 -   [Ashley's PlantUML Doc](https://plantuml-documentation.readthedocs.io/en/latest/diagrams/sequence.html)
 -   [UML 2 Sequence Diagramming Guidelines](http://www.agilemodeling.com/style/sequenceDiagram.htm)
 
-# Similar transaction visualisation tools
+# Similar Visualisation Tools
 
--   [Parity Trace Decoder](https://github.com/k06a/parity-trace-decoder)
--   [Tenderly](https://dashboard.tenderly.dev/)
+-   [Transaction Tracer](https://openchain.xyz/trace)
+-   [Tenderly](https://dashboard.tenderly.co/)
 -   [EthTx info](http://ethtx.info/)
 -   [Bloxy](https://bloxy.info/)
 -   [Etherscan](https://etherscan.io/txs)
--   [tokenflow](https://tokenflow.xyz/)
 
 ## Development
 
@@ -346,7 +337,7 @@ If you are using [Archive Node](https://archivenode.io/), you need to replace <y
 ```
 export ARCHIVE_NODE_URL=https://api.archivenode.io/<your api key>/nethermind
 export NETHERMIND_URL=https://api.archivenode.io/<your api key>/nethermind
-export TURBO_GETH_URL=https://api.archivenode.io/<your api key>/turbogeth
+export ERIGON_GETH_URL=https://api.archivenode.io/<your api key>/erigon
 npm run test
 ```
 
@@ -359,6 +350,7 @@ npm build and publish commands
 ```bash
 npm run prettier:fix
 npm run clean
+npm run package-lock
 npm run build
 # make tx2uml globally available for local testing
 npm link

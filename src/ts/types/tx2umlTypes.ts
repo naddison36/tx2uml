@@ -63,6 +63,7 @@ export type Contract = {
     constructorInputs?: string
     events?: Event[]
     minDepth?: number
+    labels?: string[]
 }
 export type Contracts = { [address: string]: Contract }
 
@@ -194,13 +195,13 @@ export type OutputFormat = (typeof outputFormats)[number]
 export interface OutputOptions {
     outputFilename?: string
     outputFormat?: OutputFormat
+    memory?: number
 }
 
 export interface PlantUmlOptions {
     format?: OutputFormat
-    limitSize?: number
     config?: string
-    pipemap?: boolean
+    memory?: number
 }
 
 export interface TracePumlGenerationOptions extends OutputOptions {
