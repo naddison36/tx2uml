@@ -1,7 +1,7 @@
 import axios from "axios"
 import { BigNumber } from "ethers"
 
-import { MessageType, Trace, TransactionDetails } from "../types/tx2umlTypes"
+import { MessageType, Network, Trace, TransactionDetails } from "../types/tx2umlTypes"
 import { transactionHash } from "../utils/regEx"
 import { hexlify } from "ethers/lib/utils"
 import EthereumNodeClient from "./EthereumNodeClient"
@@ -42,8 +42,11 @@ export type TraceResponse = {
 export default class OpenEthereumClient extends EthereumNodeClient {
     private jsonRpcId = 0
 
-    constructor(public readonly url: string = "http://localhost:8545") {
-        super(url)
+    constructor(
+        public readonly url: string = "http://localhost:8545",
+        public readonly network: Network = "mainnet"
+    ) {
+        super(url, network)
     }
 
     async getTransactionTrace(txHash: string): Promise<Trace[]> {

@@ -15,6 +15,7 @@ const etherscanBaseUrls: { [network: string]: string } = {
     sepolia: "https://api-sepolia.etherscan.io/api",
     polygon: "https://api.polygonscan.com/api",
     bsc: "https://api.bscscan.com/api",
+    optimistic: "https://api-optimistic.etherscan.io/api",
     arbitrum: "https://api.arbiscan.io/api",
 }
 

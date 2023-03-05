@@ -3,6 +3,7 @@ import { BigNumber } from "ethers"
 
 import {
     MessageType,
+    Network,
     Trace,
     TransactionDetails,
     Transfer,
@@ -48,8 +49,11 @@ export type CallTransferResponse = {
 export default class GethClient extends EthereumNodeClient {
     private jsonRpcId = 0
 
-    constructor(public readonly url: string = "http://localhost:8545") {
-        super(url)
+    constructor(
+        public readonly url: string = "http://localhost:8545",
+        public readonly network: Network = "mainnet"
+    ) {
+        super(url, network)
     }
 
     async getTransactionTrace(txHash: string): Promise<Trace[]> {

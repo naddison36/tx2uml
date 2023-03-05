@@ -14,7 +14,7 @@ export const generateValueDiagram = async (
     hashes: string[],
     options: TransferPumlGenerationOptions
 ) => {
-    const gethClient = new GethClient(options.url)
+    const gethClient = new GethClient(options.url, options.chain)
 
     // Initiate Etherscan client
     const etherscanClient = new EtherscanClient(
