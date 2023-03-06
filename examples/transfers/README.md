@@ -77,7 +77,7 @@ tx2uml value 0x142536caeb5e6cd552ed6885a5efe2a44756a403140f5e8d84b60532ec05f4f8 
 ## Polygon Only Token Transfers
 
 If there is no access to a node provider that supports `debug_traceTransaction` with a custom EVM tracer, you can generate a value transfer diagram just from the token events.
-Use the `-ot --onlyToken` option just get the token events. This means no ETH transfers in the transaction will be included which are sourced from calling `debug_traceTransaction`.
+Use the `-e --onlyToken` option to just get the token events. This means no ETH transfers in the transaction will be included which are sourced from calling `debug_traceTransaction`.
 
 The following example is a mStable mUSD swap transaction on Polygon [0xd96e4fa0b545652e99b35aee027246cb14739e27e7d74d92eb3875380f1e71ea](https://polygonscan.com/tx/0xd96e4fa0b545652e99b35aee027246cb14739e27e7d74d92eb3875380f1e71ea).
 
