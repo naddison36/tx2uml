@@ -33,10 +33,14 @@ export class TransactionManager {
         public apiConcurrencyLimit = 2
     ) {}
 
-    async getTransactions(txHashes: string[]): Promise<TransactionDetails[]> {
+    async getTransactions(
+        txHashes: string[],
+        network: string
+    ): Promise<TransactionDetails[]> {
         const transactions: TransactionDetails[] = []
         for (const txHash of txHashes) {
-            transactions.push(await this.getTransaction(txHash))
+            const tx = await this.getTransaction(txHash)
+            transactions.push({ ...tx, network })
         }
 
         return transactions

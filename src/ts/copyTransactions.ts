@@ -10,8 +10,9 @@ export const copyTransactions = async (
     hashes: string[],
     options: CopyOptions
 ) => {
-    const source = new GethClient(options.url)
-    const destination = new GethClient(options.destUrl)
+    // the network doesn't matter for copy as only the JSON RPC provider from the url is used.
+    const source = new GethClient(options.url, "mainnet")
+    const destination = new GethClient(options.destUrl, "mainnet")
 
     const destSigner = options.impersonate
         ? await destination.impersonate(options.impersonate)

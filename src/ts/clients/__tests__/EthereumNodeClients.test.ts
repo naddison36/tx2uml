@@ -24,8 +24,11 @@ const externallyOwnerAccount = "0xbbabad191e7802f526c289c15909a8cba2a5ff2a"
 
 describe("Ethereum Node Clients", () => {
     const clients: { [clientName: string]: EthereumNodeClient } = {
-        Erigon: new GethClient(process.env.ERIGON_URL),
-        Nethermind: new OpenEthereumClient(process.env.NETHERMIND_URL),
+        Erigon: new GethClient(process.env.ERIGON_URL, "mainnet"),
+        Nethermind: new OpenEthereumClient(
+            process.env.NETHERMIND_URL,
+            "mainnet"
+        ),
     }
     describe.each(Object.entries(clients))("%s", (clientName, nodeClient) => {
         describe("Parse Transfer events", () => {

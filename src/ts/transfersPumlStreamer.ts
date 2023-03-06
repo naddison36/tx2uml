@@ -48,6 +48,7 @@ export const multiTransfers2PumlStream = (
     participants: Readonly<Participants>
 ) => {
     pumlStream.push(`@startuml\n`)
+    pumlStream.push(genCaption(transactions))
 
     // Filter out any participants that don't have a transfer from or to.
     // This will be token contracts that don't mint or burn
@@ -285,10 +286,25 @@ export const writeBalances = (
     })
 }
 
-const genCaption = (details: Readonly<TransactionDetails>): string => {
-    return `caption block ${
-        details.blockNumber
-    }, ${details.timestamp.toUTCString()}`
+const genCaption = (
+    details: Readonly<TransactionDetails> | readonly TransactionDetails[]
+): string => {
+    if (Array.isArray(details)) {
+        let caption = "footer\n"
+        details.forEach(
+            detail =>
+                (caption += `${detail.network}, block ${
+                    detail.blockNumber
+                }, ${detail.timestamp.toUTCString()}\n`)
+        )
+        caption += "\nendfooter"
+        return caption
+    } else {
+        const detail = details as TransactionDetails
+        return `\ncaption ${detail.network}, block ${
+            detail.blockNumber
+        }, ${detail.timestamp.toUTCString()}`
+    }
 }
 
 const genTokenBalance = (

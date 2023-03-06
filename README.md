@@ -101,7 +101,9 @@ Arguments:
   txHash(s)   transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces
 
 Options:
-  -h, --help  display help for command
+  -e, --onlyToken  get transfers only from token events. No ETH transfers will be included. Use when provider does not
+                   support debug_traceTransaction with custom tracer. (default: false)
+  -h, --help       display help for command
 ```
 
 ### Copy command

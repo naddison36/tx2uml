@@ -61,6 +61,7 @@ export const multiTxTraces2PumlStream = (
     options: TracePumlGenerationOptions = {}
 ) => {
     pumlStream.push(`@startuml\n`)
+    pumlStream.push(genCaption(transactions))
     writeParticipants(pumlStream, contracts, options)
     let i = 0
     for (const transaction of transactions) {
@@ -85,7 +86,7 @@ export const singleTx2PumlStream = (
     options: TracePumlGenerationOptions
 ): Readable => {
     pumlStream.push(`@startuml\ntitle ${transaction.hash}\n`)
-    pumlStream.push(genCaption(transaction, options))
+    pumlStream.push(genCaption(transaction))
     writeParticipants(pumlStream, contracts, options)
     writeTransactionDetails(pumlStream, transaction, options)
     writeMessages(pumlStream, traces, options)
@@ -433,12 +434,24 @@ const genEtherValue = (trace: Trace, noEtherValue: boolean = false): string => {
 }
 
 const genCaption = (
-    details: TransactionDetails,
-    options: TracePumlGenerationOptions
+    details: Readonly<TransactionDetails> | readonly TransactionDetails[]
 ): string => {
-    return `caption ${options.chain || ""}, block ${
-        details.blockNumber
-    }, ${details.timestamp.toUTCString()}`
+    if (Array.isArray(details)) {
+        let caption = "footer\n"
+        details.forEach(
+            detail =>
+                (caption += `${detail.network}, block ${
+                    detail.blockNumber
+                }, ${detail.timestamp.toUTCString()}\n`)
+        )
+        caption += "\nendfooter"
+        return caption
+    } else {
+        const detail = details as TransactionDetails
+        return `\ncaption ${detail.network}, block ${
+            detail.blockNumber
+        }, ${detail.timestamp.toUTCString()}`
+    }
 }
 
 export const writeEvents = (
