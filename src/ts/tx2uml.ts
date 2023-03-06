@@ -147,6 +147,11 @@ program
     .description(
         `Generates a UML sequence diagram of token and ether value transfers between accounts and contracts. This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth, Erigon or Anvil.`
     )
+    .option(
+        "-e, --onlyToken",
+        "get transfers only from token events. No ETH transfers will be included. Use when provider does not support debug_traceTransaction with custom tracer.",
+        false
+    )
     .action(async (hashes: string[], options, command) => {
         debug(`About to generate value transfers for ${hashes}`)
         const outputFilename = parseFilename(

@@ -1,32 +1,70 @@
 import axios from "axios"
 import { BigNumber, Contract as EthersContract } from "ethers"
 
-import { Contract, Network, Token } from "../types/tx2umlTypes"
+import { Contract, Network, networks, Token } from "../types/tx2umlTypes"
 import { ethereumAddress } from "../utils/regEx"
 
 const debug = require("debug")("tx2uml")
-
-const etherscanBaseUrls: { [network: string]: string } = {
-    mainnet: "https://api.etherscan.io/api",
-    ropsten: "https://api-ropsten.etherscan.io/api",
-    rinkeby: "https://api-rinkeby.etherscan.io/api",
-    kovan: "https://api-kovan.etherscan.io/api",
-    goerli: "https://api-goerli.etherscan.io/api",
-    sepolia: "https://api-sepolia.etherscan.io/api",
-    polygon: "https://api.polygonscan.com/api",
-    bsc: "https://api.bscscan.com/api",
-    arbitrum: "https://api.arbiscan.io/api",
-}
 
 export default class EtherscanClient {
     public readonly url: string
 
     constructor(
-        // Register your API key at https://etherscan.io/myapikey
+        // Register your API key at https://etherscan.io/myapiKey
         public readonly apiKey: string = "Q35WDQ2354617I8E2Z1E4WU3MIEP89DW9H",
         public readonly network: Network = "mainnet"
     ) {
-        this.url = etherscanBaseUrls[network]
+        if (!networks.includes(network)) {
+            throw new Error(
+                `Invalid network "${network}". Must be one of ${networks}`
+            )
+        } else if (network === "mainnet") {
+            this.url = "https://api.etherscan.io/api"
+        } else if (network === "polygon") {
+            this.url = "https://api.polygonscan.com/api"
+            this.apiKey = "AMHGNTV5A7XYGX2M781JB3RC1DZFVRWQEB"
+        } else if (network === "testnet.polygon") {
+            this.url = "https://api-testnet.polygonscan.com/api"
+            this.apiKey = "AMHGNTV5A7XYGX2M781JB3RC1DZFVRWQEB"
+        } else if (network === "arbitrum") {
+            this.url = "https://api.arbiscan.io/api"
+            this.apiKey = "ZGTK2TAGWMAB6IAC12BMK8YYPNCPIM8VDQ"
+        } else if (network === "testnet.arbitrum") {
+            this.url = "https://api-testnet.arbiscan.io/api"
+            this.apiKey = "ZGTK2TAGWMAB6IAC12BMK8YYPNCPIM8VDQ"
+        } else if (network === "avalanche") {
+            this.url = "https://api.snowtrace.io/api"
+            this.apiKey = "U5FAN98S5XNH5VI83TI4H35R9I4TDCKEJY"
+        } else if (network === "testnet.avalanche") {
+            this.url = "https://api-testnet.snowtrace.io/api"
+            this.apiKey = "U5FAN98S5XNH5VI83TI4H35R9I4TDCKEJY"
+        } else if (network === "bsc") {
+            this.url = "https://api.bscscan.com/api"
+            this.apiKey = "APYH49FXVY9UA3KTDI6F4WP3KPIC86NITN"
+        } else if (network === "testnet.bsc") {
+            this.url = "https://api-testnet.bscscan.com/api"
+            this.apiKey = "APYH49FXVY9UA3KTDI6F4WP3KPIC86NITN"
+        } else if (network === "crono") {
+            this.url = "https://api.cronoscan.com/api"
+            this.apiKey = "76A3RG5WHTPMMR66E9SFI2EIDT6MP976W2"
+        } else if (network === "fantom") {
+            this.url = "https://api.ftmscan.com/api"
+            this.apiKey = "71KRX13XPZMGR3D1Q85W78G2DSZ4JPMAEX"
+        } else if (network === "testnet.fantom") {
+            this.url = "https://api-testnet.ftmscan.com/api"
+            this.apiKey = "71KRX13XPZMGR3D1Q85W78G2DSZ4JPMAEX"
+        } else if (network === "optimistic" || network === "kovan-optimistic") {
+            this.url = `https://api-${network}.etherscan.io/api`
+            this.apiKey = "FEXS1HXVA4Y2RNTMEA8V1UTK21S4JWHH9U"
+        } else if (network === "moonbeam") {
+            this.url = "https://api-moonbeam.moonscan.io/api"
+            this.apiKey = "5EUFXW6TDC16VERF3D9SCWRRU6AEMTBHNJ"
+        } else if (network === "gnosisscan") {
+            this.url = "https://api.gnosisscan.io/api"
+            this.apiKey = "2RWGXIWK538EJ8XSP9DE2JUINSCG7UCSJB"
+        } else {
+            this.url = `https://api-${network}.etherscan.io/api`
+        }
     }
 
     async getContract(contractAddress: string): Promise<Contract> {

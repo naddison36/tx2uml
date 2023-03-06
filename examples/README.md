@@ -89,6 +89,18 @@ tx2uml 0x44e34b97bccd7406f199ec18e61489baa6619e4093269e1df559735dd31b25bf
 
 ![Aragon MultiSig Wallet](./aragonMultiSig.svg)
 
+## Multi transactions
+
+Multiple transactions can be included in a contract call diagram by passing a comma-separated list of transaction hashes without any white spaces.
+
+Here's an example of a WETH deposit and withdraw.
+
+```
+tx2uml 0x883e76ca9590e6cf37138548f04b5c3317e0e8d62c44665d2083cbee70152bd1,0x13142a10fe690b3e4c10708a68037e795fb85e048d70ccf15c639efb339e2e43
+```
+
+![multiple transactions](./wethDepositWithddraw.svg)
+
 ## Crypto Kitties
 
 [Crypto Kitties](https://www.cryptokitties.co/)

@@ -42,7 +42,7 @@ export default abstract class EthereumNodeClient {
 
     constructor(
         public readonly url: string = "http://localhost:8545",
-        public readonly network: Network = "mainnet"
+        public readonly network: Network
     ) {
         this.ethersProvider = new providers.JsonRpcProvider(url)
         if (!tokenInfoAddresses[network])

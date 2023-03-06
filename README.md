@@ -35,12 +35,6 @@ To upgrade run
 npm install tx2uml -g
 ```
 
-To see which version you are using
-
-```bash
-npm ls tx2uml
-```
-
 # Usage
 
 ## Command Line Interface (CLI)
@@ -107,7 +101,9 @@ Arguments:
   txHash(s)   transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces
 
 Options:
-  -h, --help  display help for command
+  -e, --onlyToken  get transfers only from token events. No ETH transfers will be included. Use when provider does not
+                   support debug_traceTransaction with custom tracer. (default: false)
+  -h, --help       display help for command
 ```
 
 ### Copy command
@@ -264,8 +260,8 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 |---|---|---|---|---|---|---|---|
 | trace_transaction | X | X | X | X | X | X | |
 | debug_traceTransaction | X | X | X | X | | | |
-| debug_traceTransaction call tracer | X | X | X | | | | |
-| debug_traceTransaction custom tracer | X | | | | | | |
+| debug_traceTransaction call tracer | X | X | X | X | | | |
+| debug_traceTransaction custom tracer | X | | X | X | | | |
 
 Most Ethereum API providers do not provide tracing or debugging APIs as they are resource intensive on the server side.
 
@@ -275,7 +271,7 @@ Most Ethereum API providers do not provide tracing or debugging APIs as they are
 
 - [QuickNode](https://www.quicknode.com/) supports both [trace_transaction](https://www.quicknode.com/docs/ethereum/trace_transaction) and [debug_traceTransaction](https://www.quicknode.com/docs/ethereum/debug_traceTransaction) on their paid plan. The in-built `call` and `prestate` tracers are supported. Custom tracers can be requested via support and approved if within resourcing limits.
 
-- [Chainstack](https://chainstack.com/) supports both [trace_transaction](https://docs.chainstack.com/api/ethereum/trace_transaction) and [debug_traceTransaction](https://docs.chainstack.com/api/ethereum/debug_traceTransaction) on their Business plan. Tracers are not supported.
+- [Chainstack](https://chainstack.com/) supports both [trace_transaction](https://docs.chainstack.com/api/ethereum/trace_transaction) and [debug_traceTransaction](https://docs.chainstack.com/api/ethereum/debug_traceTransaction) on their Growth plan when a dedicated Geth or Erigon archive node is deployed. For Erigon, this includes built-in and custom tracer support.
 
 - [GetBlock](https://getblock.io/) supports [trace_transaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/trace_transaction/) but not [debug_traceTransaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/debug_traceTransaction/).
 

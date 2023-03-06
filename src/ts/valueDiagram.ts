@@ -1,4 +1,5 @@
 import {
+    TransactionDetails,
     Transfer,
     TransferPumlGenerationOptions,
     TransferType,
@@ -9,12 +10,13 @@ import { transfers2PumlStream } from "./transfersPumlStreamer"
 import { generateFile } from "./fileGenerator"
 import EthereumNodeClient from "./clients/EthereumNodeClient"
 import { TransactionManager } from "./transaction"
+import { getAddress } from "ethers/lib/utils"
 
 export const generateValueDiagram = async (
     hashes: string[],
     options: TransferPumlGenerationOptions
 ) => {
-    const gethClient = new GethClient(options.url)
+    const gethClient = new GethClient(options.url, options.chain)
 
     // Initiate Etherscan client
     const etherscanClient = new EtherscanClient(
@@ -23,8 +25,35 @@ export const generateValueDiagram = async (
     )
     const txManager = new TransactionManager(gethClient, etherscanClient)
 
-    let transactions = await txManager.getTransactions(hashes)
+    let transactions = await txManager.getTransactions(hashes, options.chain)
 
+    const transactionTransfers = options.onlyToken
+        ? await getTransfersFromEvents(hashes, transactions)
+        : await getTransfersFromTrace(hashes, transactions, gethClient)
+
+    // Get all the participating contracts from the transfers
+    const participants = await txManager.getTransferParticipants(
+        transactionTransfers,
+        transactions[0].blockNumber,
+        options.configFile
+    )
+
+    // Convert transactions and transfers to readable stream
+    const pumlStream = transfers2PumlStream(
+        transactions,
+        transactionTransfers,
+        participants
+    )
+
+    // Pipe readable stream to PlantUML's Java process which then writes to a file
+    await generateFile(pumlStream, options)
+}
+
+const getTransfersFromTrace = async (
+    hashes: string[],
+    transactions: TransactionDetails[],
+    gethClient: GethClient
+): Promise<Transfer[][]> => {
     // Get Ether and ERC20 transfers from custom EVM tx tracer
     // The values of the ERC20 transfers may not be correct.
     // Transactions -> Transfers
@@ -60,8 +89,8 @@ export const generateValueDiagram = async (
     transactions.forEach((tx, i) => {
         if (tx.value?.gt(0)) {
             transactionTransfers[i].unshift({
-                from: tx.from,
-                to: tx.to,
+                from: getAddress(tx.from),
+                to: getAddress(tx.to),
                 value: tx.value,
                 pc: 0,
                 type: TransferType.Transfer,
@@ -69,20 +98,25 @@ export const generateValueDiagram = async (
         }
     })
 
-    // Get all the participating contracts from the transfers
-    const participants = await txManager.getTransferParticipants(
-        transactionTransfers,
-        transactions[0].blockNumber,
-        options.configFile
-    )
+    return transactionTransfers
+}
 
-    // Convert transactions and transfers to readable stream
-    const pumlStream = transfers2PumlStream(
-        transactions,
-        transactionTransfers,
-        participants
-    )
+const getTransfersFromEvents = async (
+    hashes: string[],
+    transactions: TransactionDetails[]
+): Promise<Transfer[][]> => {
+    // Get Ether and ERC20 transfers from custom EVM tx tracer
+    // The values of the ERC20 transfers may not be correct.
+    // Transactions -> Transfers
+    const transactionTransfers: Transfer[][] = []
 
-    // Pipe readable stream to PlantUML's Java process which then writes to a file
-    await generateFile(pumlStream, options)
+    // For each tx, update the trace transfer value with the value from the tx receipt logs
+    transactions.forEach((tx, i) => {
+        // get ERC20 Transfer events from logs in the tx receipt
+        transactionTransfers[i] = EthereumNodeClient.parseTransferEvents(
+            tx.logs
+        )
+    })
+
+    return transactionTransfers
 }

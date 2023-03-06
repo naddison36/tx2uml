@@ -7,7 +7,7 @@ export default abstract class EthereumNodeClient {
     readonly network: Network;
     readonly ethersProvider: JsonRpcProvider;
     private tokenInfoAddress;
-    constructor(url?: string, network?: Network);
+    constructor(url: string, network: Network);
     abstract getTransactionTrace(txHash: string): Promise<Trace[]>;
     abstract getTransactionError(tx: TransactionDetails): Promise<string>;
     getTransactionDetails(txHash: string): Promise<TransactionDetails>;

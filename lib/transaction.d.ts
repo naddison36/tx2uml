@@ -7,7 +7,7 @@ export declare class TransactionManager {
     readonly etherscanClient: EtherscanClient;
     apiConcurrencyLimit: number;
     constructor(ethereumNodeClient: EthereumNodeClient, etherscanClient: EtherscanClient, apiConcurrencyLimit?: number);
-    getTransactions(txHashes: string[]): Promise<TransactionDetails[]>;
+    getTransactions(txHashes: string[], network: string): Promise<TransactionDetails[]>;
     getTransaction(txHash: string): Promise<TransactionDetails>;
     getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;
     getContractsFromTraces(transactionsTraces: Trace[][], configFilename?: string): Promise<Contracts>;

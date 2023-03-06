@@ -123,6 +123,7 @@ export type Transfer = {
 };
 export interface TransactionDetails {
     hash: string;
+    network?: string;
     from: string;
     to: string;
     data: string;
@@ -162,7 +163,6 @@ export interface PlantUmlOptions {
     memory?: number;
 }
 export interface TracePumlGenerationOptions extends OutputOptions {
-    chain?: Network;
     depth?: number;
     noGas?: boolean;
     noParams?: boolean;
@@ -172,6 +172,7 @@ export interface TracePumlGenerationOptions extends OutputOptions {
     noDelegates?: boolean;
 }
 export interface CallDiagramOptions extends TracePumlGenerationOptions {
+    chain?: Network;
     url?: string;
     nodeType: string;
     noAddresses?: string[];
@@ -183,8 +184,10 @@ export interface TransferPumlGenerationOptions extends OutputOptions {
     url?: string;
     etherscanKey?: string;
     configFile?: string;
+    onlyToken?: boolean;
 }
 export interface CopyOptions {
+    chain: Network;
     destUrl: string;
     url: string;
     nodeType?: string;
