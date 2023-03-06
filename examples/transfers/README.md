@@ -84,7 +84,7 @@ The following example is a mStable mUSD swap transaction on Polygon [0xd96e4fa0b
 The `-c, --chain` option is used so the contract ABIs are retrieved from [Polygonscan](https://polygonscan.com/) and the Polygon token details contract is used.
 
 ```
-tx2uml value 0xd96e4fa0b545652e99b35aee027246cb14739e27e7d74d92eb3875380f1e71ea -onlyToken --chain polygon -o ./polygon-musd-swap
+tx2uml value 0xd96e4fa0b545652e99b35aee027246cb14739e27e7d74d92eb3875380f1e71ea --onlyToken --chain polygon -o ./polygon-musd-swap
 ```
 
 ![Polygon mUSD swap](./polygon-musd-swap.svg)
