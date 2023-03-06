@@ -61,7 +61,7 @@ const getRawTransaction = (tx: Transaction) => {
 
     // Extract the relevant parts of the transaction and signature
     const txFields =
-        "accessList chainId data gasPrice gasLimit maxFeePerGas maxPriorityFeePerGas nonce to type value".split(
+        "chainId data gasPrice gasLimit maxFeePerGas maxPriorityFeePerGas nonce to type value".split(
             " "
         )
     const sigFields = "v r s".split(" ")
