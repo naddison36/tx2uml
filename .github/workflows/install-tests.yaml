@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm link tx2uml --only=production
+      - run: tx2uml --version
       - name: Uniswap V1 call
         run: tx2uml 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca -v -p
         env:

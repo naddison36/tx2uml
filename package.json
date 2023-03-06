@@ -1,11 +1,11 @@
 {
   "name": "tx2uml",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "Ethereum transaction visualizer that generates UML sequence diagrams.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
-    "build": "tsc --build ./tsconfig.json",
+    "build": "tsc --build ./tsconfig.json; chmod 775 lib/tx2uml.js",
     "clean": "tsc --build --clean ./tsconfig.json",
     "package-lock": "npm i --package-lock-only",
     "examples": "java -jar ./lib/plantuml.jar ./examples/syntax.puml ./examples/delegate.puml",

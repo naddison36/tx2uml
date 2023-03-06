@@ -18,6 +18,7 @@ jobs:
       - run: npm install
       - run: npm run build --if-present
       - run: npm link
+      - run: tx2uml --version
       - name: Uniswap V1 value
         run: tx2uml 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca -v
         env:

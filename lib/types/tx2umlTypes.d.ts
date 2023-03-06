@@ -187,7 +187,6 @@ export interface TransferPumlGenerationOptions extends OutputOptions {
     onlyToken?: boolean;
 }
 export interface CopyOptions {
-    chain: Network;
     destUrl: string;
     url: string;
     nodeType?: string;
