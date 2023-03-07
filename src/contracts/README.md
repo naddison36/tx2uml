@@ -5,19 +5,13 @@ tx2uml uses the [TokenDetails](./TokenInfo.sol) contract to get the following pr
 * Is the contract an NFT?
 * The `symbol` and `name` if they exist.
 * The `decimals` if it exists.
+* The ENS name if it exists.
 
 ## Interface
 
-tx2uml uses the [getInfoBatch](./TokenInfo.sol#L37) function which wraps the property calls in try/catch blocks so if one address fails the other token details will still be returned.
+### Solidity
 
-```Solidity
-function getInfoBatch(address[] memory tokens)
-external
-view
-returns (Info[] memory infos)
-```
-
-The `Info` structs returned in an array is
+tx2uml uses the [getInfoBatch](./TokenInfo.sol#L54) function which wraps the property calls in try/catch blocks so if one address fails the other token details will still be returned.
 
 ```Solidity
 struct Info {
@@ -26,10 +20,27 @@ struct Info {
     uint256 decimals;
     bool noContract;
     bool nft;
+    string ensName;
+}
+
+interface ITokenInfo {
+    function getInfoBatch(address[] calldata tokens) external view returns (Info[] memory infos);
+
+    function getInfo(address token) external view returns (Info memory info);
+
+    function isContract(address account) external view returns (bool);
+
+    function getEnsName(address account) external view returns (string memory ensName);
 }
 ```
 
-tx2uml calls `getInfoBatch` on the `TokenDetails` contract using the [getTokenDetails](../ts/clients/EthereumNodeClient.ts#06) function on the [EthereumNodeClient](../ts/clients/EthereumNodeClient.ts) class.
+Other external functions like `getStringProperties`, `getBytes32Properties`, `getDecimals` and `isNFT` are not protected with a try/catch so will throw an error if the contract is not a token or NFT.
+
+The full Solidity interface is [ITokenInfo.sol](./ITokenInfo.sol).
+
+### TypeScript
+
+tx2uml calls `getInfoBatch` on the `TokenDetails` contract using the [getTokenDetails](../ts/clients/EthereumNodeClient.ts#134) function on the [EthereumNodeClient](../ts/clients/EthereumNodeClient.ts) class.
 
 ```ts
 const tokenInfo = new Contract(
@@ -46,6 +57,7 @@ try {
         tokenSymbol: result.symbol,
         tokenName: result.name,
         decimals: result.decimals.toNumber(),
+        ensName: result.ensName,
     }))
     // more code not included here
 } catch(err) {
@@ -53,13 +65,20 @@ try {
 }
 ```
 
-## Deployments
+## Ethereum Name Service
 
-| Chain | Address |
-| --- | --- |
-| Mainnet | [0x05b4671B2cC4858A7E72c2B24e202a87520cf14e](https://etherscan.io/address/0x05b4671b2cc4858a7e72c2b24e202a87520cf14e#code) | 
-| Polygon | [0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003](https://polygonscan.com/address/0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003#code) |
-| Goerli | [0x8E2587265C68CD9EE3EcBf22DC229980b47CB960](https://goerli.etherscan.io/address/0x8E2587265C68CD9EE3EcBf22DC229980b47CB960#code) |
-| Sepolia | [0x8E2587265C68CD9EE3EcBf22DC229980b47CB960](https://sepolia.etherscan.io/address/0x8E2587265C68CD9EE3EcBf22DC229980b47CB960#code) |
-| Optimism | [0x149a692a94eEe18e7854CEA1CEaab557618D4D46](https://optimistic.etherscan.io/address/0x149a692a94eEe18e7854CEA1CEaab557618D4D46#code) |
+tx2uml uses [Ethereum Name Service (ENS)](https://ens.domains/)'s `ReverseRecords` contract to get the ENS name for an address. This is only available on Goerli and Mainnet.
+
+See ENS's [Reverse records](https://github.com/ensdomains/reverse-records/#deployed-contract-address) repo for more information including the deployment addresses.
+
+## TokenDetails Contract Deployments
+
+| Chain | Address | ENS |
+| --- | --- | --- |
+| Mainnet | [0x1c91347f2A44538ce62453BEBd9Aa907C662b4bD](https://etherscan.io/address/0x1c91347f2A44538ce62453BEBd9Aa907C662b4bD#code) | Yes |
+| Goerli | [0x466D9AbFf7c91f170b4906Ddb4A75f50B4a16faD](https://goerli.etherscan.io/address/0x466D9AbFf7c91f170b4906Ddb4A75f50B4a16faD#code) | Yes |
+| Sepolia | [0x8E2587265C68CD9EE3EcBf22DC229980b47CB960](https://sepolia.etherscan.io/address/0x8E2587265C68CD9EE3EcBf22DC229980b47CB960#code) | No |
+| Polygon | [0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003](https://polygonscan.com/address/0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003#code) | No |
+| Optimism | [0x149a692a94eEe18e7854CEA1CEaab557618D4D46](https://optimistic.etherscan.io/address/0x149a692a94eEe18e7854CEA1CEaab557618D4D46#code) | No |
+| Arbitrum | [0x43B3BCe874EC872EFbCC784c1e3CD03005E529a9](https://arbiscan.io/address/0x43B3BCe874EC872EFbCC784c1e3CD03005E529a9#code) | No |
 

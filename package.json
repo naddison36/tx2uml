@@ -1,17 +1,19 @@
 {
   "name": "tx2uml",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "Ethereum transaction visualizer that generates UML sequence diagrams.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
-    "build": "tsc --build ./tsconfig.json; chmod 775 lib/tx2uml.js",
+    "build": "tsc --build ./tsconfig.json",
+    "permit": " chmod 775 lib/tx2uml.js",
     "clean": "tsc --build --clean ./tsconfig.json",
     "package-lock": "npm i --package-lock-only",
     "examples": "java -jar ./lib/plantuml.jar ./examples/syntax.puml ./examples/delegate.puml",
     "prettier:check": "prettier --check --no-semi '**/*.{ts,md}'",
     "prettier:fix": "prettier --write --no-semi '**/*.{ts,md}'",
-    "test": "npx jest"
+    "test": "npx jest",
+    "prepublishOnly": "npm run clean && npm run package-lock && npm run build && npm run permit"
   },
   "author": "Nick Addison",
   "repository": "github:naddison36/tx2uml",

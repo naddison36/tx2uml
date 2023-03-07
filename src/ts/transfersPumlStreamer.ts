@@ -8,7 +8,7 @@ import {
     Transfer,
     TransferType,
 } from "./types/tx2umlTypes"
-import { participantId, shortAddress } from "./utils/formatters"
+import { participantId, shortAddress, shortTokenId } from "./utils/formatters"
 import { commify, formatUnits } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
 
@@ -169,11 +169,11 @@ const netParticipantValues = (
                 // add to removedIds
                 participantPositions[transfer.from][
                     transfer.tokenAddress
-                ].removedIds.add(transfer.tokenId)
+                ].removedIds.add(transfer.tokenId.toString())
                 // remove from addedIds
                 participantPositions[transfer.from][
                     transfer.tokenAddress
-                ].addedIds.delete(transfer.tokenId)
+                ].addedIds.delete(transfer.tokenId.toString())
             }
 
             if (transfer.type !== TransferType.Burn) {
@@ -181,11 +181,11 @@ const netParticipantValues = (
                 // add remove removedIds
                 participantPositions[transfer.to][
                     transfer.tokenAddress
-                ].removedIds.delete(transfer.tokenId)
+                ].removedIds.delete(transfer.tokenId.toString())
                 // add to addedIds
                 participantPositions[transfer.to][
                     transfer.tokenAddress
-                ].addedIds.add(transfer.tokenId)
+                ].addedIds.add(transfer.tokenId.toString())
             }
         }
     })
@@ -193,8 +193,8 @@ const netParticipantValues = (
 
 const createEmptyPosition = (): Position => ({
     balance: BigNumber.from(0),
-    addedIds: new Set<number>(),
-    removedIds: new Set<number>(),
+    addedIds: new Set<string>(),
+    removedIds: new Set<string>(),
 })
 
 export const writeParticipants = (
@@ -214,6 +214,7 @@ export const writeParticipants = (
         if (participant.tokenName || participant.name)
             name += `<<${participant.tokenName || participant.name}>>`
         if (participant.tokenSymbol) name += `<<(${participant.tokenSymbol})>>`
+        if (participant.ensName) name += `<<(${participant.ensName})>>`
 
         debug(`Write lifeline for ${address} with stereotype ${name}`)
         const participantType = participant.noContract ? "actor" : "participant"
@@ -239,9 +240,9 @@ export const writeMessages = (
             ? `${transfer.event || ""} ${commify(
                   formatUnits(transfer.value, transfer.decimals || 0)
               )} ${transfer.tokenSymbol || "ETH"}`
-            : `${transfer.event || ""} ${transfer.tokenSymbol} id ${
-                  transfer.tokenId
-              }`
+            : `${transfer.event || ""} ${
+                  transfer.tokenSymbol
+              } id ${shortTokenId(transfer.tokenId)}`
         plantUmlStream.push(
             `${participantId(transfer.from)} ${genArrow(
                 transfer
@@ -331,12 +332,12 @@ const genNftChanges = (
     }
     if (position.removedIds.size > 0) {
         position.removedIds.forEach(id => {
-            plantUmlStream.push(`\n  -${id}`)
+            plantUmlStream.push(`\n  -${shortTokenId(id)}`)
         })
     }
     if (position.addedIds.size > 0) {
         position.addedIds.forEach(id => {
-            plantUmlStream.push(`\n  +${id}`)
+            plantUmlStream.push(`\n  +${shortTokenId(id)}`)
         })
     }
 }

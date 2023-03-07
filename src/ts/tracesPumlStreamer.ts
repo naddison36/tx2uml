@@ -116,6 +116,7 @@ export const writeParticipants = (
         if (contract.tokenName) name += `<<${contract.tokenName}>>`
         if (contract.symbol) name += `<<(${contract.symbol})>>`
         if (contract.contractName) name += `<<${contract.contractName}>>`
+        if (contract.ensName) name += `<<(${contract.ensName})>>`
 
         debug(`Write lifeline ${shortAddress(address)} with stereotype ${name}`)
         plantUmlStream.push(

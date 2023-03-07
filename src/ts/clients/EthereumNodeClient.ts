@@ -26,13 +26,14 @@ require("axios-debug-log")
 const debug = require("debug")("tx2uml")
 
 const tokenInfoAddresses: { [network: string]: string } = {
-    mainnet: "0x05b4671B2cC4858A7E72c2B24e202a87520cf14e",
+    mainnet: "0x0b27a79cb9C0B38eE06Ca3d94DAA68e0Ed17F953",
     polygon: "0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003",
     optimistic: "0x149a692a94eEe18e7854CEA1CEaab557618D4D46",
-    goerli: "0x8E2587265C68CD9EE3EcBf22DC229980b47CB960",
+    goerli: "0x466D9AbFf7c91f170b4906Ddb4A75f50B4a16faD",
     sepolia: "0x8E2587265C68CD9EE3EcBf22DC229980b47CB960",
     arbitrum: "0x43B3BCe874EC872EFbCC784c1e3CD03005E529a9",
 }
+
 const ProxySlot =
     "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
 
@@ -140,6 +141,7 @@ export default abstract class EthereumNodeClient {
                         tokenSymbol: result.symbol,
                         tokenName: result.name,
                         decimals: result.decimals.toNumber(),
+                        ensName: result.ensName,
                     })
                 )
                 tokenDetails = tokenDetails.concat(mappedResponse)

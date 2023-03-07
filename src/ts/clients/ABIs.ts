@@ -16,6 +16,7 @@ export const TokenInfoABI = [
                     },
                     { internalType: "bool", name: "noContract", type: "bool" },
                     { internalType: "bool", name: "nft", type: "bool" },
+                    { internalType: "string", name: "ensName", type: "string" },
                 ],
                 internalType: "struct TokenInfo.Info[]",
                 name: "infos",

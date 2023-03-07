@@ -192,7 +192,7 @@ export class TransactionManager {
                     transfer.decimals = participant.decimals
                     // if an NFT, move the value to the tokenId
                     if (participant.nft) {
-                        transfer.tokenId = transfer.value.toNumber()
+                        transfer.tokenId = transfer.value
                         delete transfer.value
                     }
                 }
