@@ -1,4 +1,10 @@
-import { formatNumber, shortAddress, shortBytes } from "../formatters"
+import {
+    formatNumber,
+    participantId,
+    shortAddress,
+    shortBytes,
+    shortTokenId,
+} from "../formatters"
 
 describe("Value formatters", () => {
     describe("Numbers", () => {
@@ -49,6 +55,30 @@ describe("Value formatters", () => {
         ])("%s expect %s", (value, expected) => {
             // @ts-ignore
             expect(shortAddress(value)).toEqual(expected)
+        })
+    })
+    describe("Participant id", () => {
+        test.each([
+            ["0xf8ed0f78ddda1c28f261153b733dff2b470c8209", "f8ed8209"],
+            ["0x3449fc1cd036255ba1eb19d65ff4ba2b8903a69a", "3449a69a"],
+        ])("%s expect %s", (value, expected) => {
+            // @ts-ignore
+            expect(participantId(value)).toEqual(expected)
+        })
+    })
+    describe("Shorten token id", () => {
+        test.each([
+            ["0", "0"],
+            ["1", "1"],
+            ["10", "10"],
+            ["999", "999"],
+            ["123456", "123456"],
+            ["1234567", "123..567"],
+            ["9876543210123456789", "987..789"],
+            ["010", "010"],
+        ])("%s expect %s", (value, expected) => {
+            // @ts-ignore
+            expect(shortTokenId(value)).toEqual(expected)
         })
     })
     describe("Shorten bytes", () => {

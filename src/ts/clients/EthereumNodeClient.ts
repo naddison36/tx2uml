@@ -33,8 +33,8 @@ const tokenInfoAddresses: {
     [network: string]: AddressEns
 } = {
     mainnet: {
-        address: "0x05b4671B2cC4858A7E72c2B24e202a87520cf14e",
-        ens: false,
+        address: "0x0ea78daff41c6d648045e5e9b0925ceda679719a",
+        ens: true,
     },
     polygon: {
         address: "0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003",
