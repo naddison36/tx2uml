@@ -14,6 +14,7 @@ import {
     Event,
     Labels,
     MessageType,
+    Network,
     Param,
     ParamTypeInternal,
     Participants,
@@ -126,6 +127,7 @@ export class TransactionManager {
     async getTransferParticipants(
         transactionsTransfers: Transfer[][],
         block: number,
+        network: Network,
         configFilename?: string
     ): Promise<Participants> {
         // Get a unique list of all accounts that transfer from, transfer to or are token contracts.
@@ -143,12 +145,13 @@ export class TransactionManager {
             uniqueAddresses
         )
 
-        // get Etherscan labels from local file
-        // TODO check this is for mainnet and not some other chain
+        // get Etherscan labels from local file if for mainnet
         const labels: Labels =
-            basename(__dirname) === "lib"
-                ? require("./labels.json")
-                : require("../../lib/labels.json")
+            network === "mainnet"
+                ? basename(__dirname) === "lib"
+                    ? require("./labels.json")
+                    : require("../../lib/labels.json")
+                : {}
         const participants: Participants = {}
         for (const token of tokenDetails) {
             const address = token.address

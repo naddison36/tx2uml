@@ -58,6 +58,7 @@ export type Contract = {
     events?: Event[];
     minDepth?: number;
     labels?: string[];
+    ensName?: string;
 };
 export type Contracts = {
     [address: string]: Contract;
