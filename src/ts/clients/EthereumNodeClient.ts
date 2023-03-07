@@ -8,7 +8,7 @@ import {
 } from "ethers"
 import { JsonRpcProvider } from "@ethersproject/providers"
 
-import { TokenInfoABI } from "./ABIs"
+import { TokenInfoABI, TokenInfoEnsABI } from "./ABIs"
 import {
     Network,
     TokenDetails,
@@ -25,20 +25,45 @@ import { getAddress, hexDataSlice, parseEther } from "ethers/lib/utils"
 require("axios-debug-log")
 const debug = require("debug")("tx2uml")
 
-const tokenInfoAddresses: { [network: string]: string } = {
-    mainnet: "0x05b4671B2cC4858A7E72c2B24e202a87520cf14e",
-    polygon: "0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003",
-    optimistic: "0x149a692a94eEe18e7854CEA1CEaab557618D4D46",
-    goerli: "0x8E2587265C68CD9EE3EcBf22DC229980b47CB960",
-    sepolia: "0x8E2587265C68CD9EE3EcBf22DC229980b47CB960",
-    arbitrum: "0x43B3BCe874EC872EFbCC784c1e3CD03005E529a9",
+interface AddressEns {
+    address: string
+    ens: boolean
 }
+const tokenInfoAddresses: {
+    [network: string]: AddressEns
+} = {
+    mainnet: {
+        address: "0x05b4671B2cC4858A7E72c2B24e202a87520cf14e",
+        ens: false,
+    },
+    polygon: {
+        address: "0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003",
+        ens: false,
+    },
+    optimistic: {
+        address: "0x149a692a94eEe18e7854CEA1CEaab557618D4D46",
+        ens: false,
+    },
+    goerli: {
+        address: "0x466D9AbFf7c91f170b4906Ddb4A75f50B4a16faD",
+        ens: true,
+    },
+    sepolia: {
+        address: "0x8E2587265C68CD9EE3EcBf22DC229980b47CB960",
+        ens: false,
+    },
+    arbitrum: {
+        address: "0x43B3BCe874EC872EFbCC784c1e3CD03005E529a9",
+        ens: false,
+    },
+}
+
 const ProxySlot =
     "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
 
 export default abstract class EthereumNodeClient {
     public readonly ethersProvider: JsonRpcProvider
-    private tokenInfoAddress: string
+    private tokenInfoAddress: AddressEns
 
     constructor(
         public readonly url: string = "http://localhost:8545",
@@ -118,8 +143,8 @@ export default abstract class EthereumNodeClient {
         contractAddresses: string[]
     ): Promise<TokenDetails[]> {
         const tokenInfo = new Contract(
-            this.tokenInfoAddress,
-            TokenInfoABI,
+            this.tokenInfoAddress.address,
+            this.tokenInfoAddress.ens ? TokenInfoEnsABI : TokenInfoABI,
             this.ethersProvider
         ) as TokenInfo
         try {
@@ -140,6 +165,7 @@ export default abstract class EthereumNodeClient {
                         tokenSymbol: result.symbol,
                         tokenName: result.name,
                         decimals: result.decimals.toNumber(),
+                        ensName: result.ensName,
                     })
                 )
                 tokenDetails = tokenDetails.concat(mappedResponse)

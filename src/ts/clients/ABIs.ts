@@ -27,71 +27,10 @@ export const TokenInfoABI = [
     },
 ]
 
-export const TransferEventsABI = [
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                name: "owner",
-                type: "address",
-            },
-            {
-                indexed: true,
-                name: "spender",
-                type: "address",
-            },
-            {
-                indexed: false,
-                name: "value",
-                type: "uint256",
-            },
-        ],
-        name: "Approval",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                name: "from",
-                type: "address",
-            },
-            {
-                indexed: true,
-                name: "to",
-                type: "address",
-            },
-            {
-                indexed: false,
-                name: "value",
-                type: "uint256",
-            },
-        ],
-        name: "Transfer",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                name: "from",
-                type: "address",
-            },
-            {
-                indexed: true,
-                name: "to",
-                type: "address",
-            },
-            {
-                indexed: true,
-                name: "tokenId",
-                type: "uint256",
-            },
-        ],
-        name: "NFTTransfer",
-        type: "event",
-    },
-]
+// Deep clone and then add ensName to ABI
+export const TokenInfoEnsABI = JSON.parse(JSON.stringify(TokenInfoABI))
+TokenInfoEnsABI[0].outputs[0].components.push({
+    internalType: "string",
+    name: "ensName",
+    type: "string",
+})

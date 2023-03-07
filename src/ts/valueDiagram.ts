@@ -35,6 +35,7 @@ export const generateValueDiagram = async (
     const participants = await txManager.getTransferParticipants(
         transactionTransfers,
         transactions[0].blockNumber,
+        options.chain,
         options.configFile
     )
 

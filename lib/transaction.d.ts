@@ -1,7 +1,7 @@
 import { Log } from "@ethersproject/abstract-provider";
 import EtherscanClient from "./clients/EtherscanClient";
 import EthereumNodeClient from "./clients/EthereumNodeClient";
-import { Contracts, Participants, Trace, TransactionDetails, Transfer } from "./types/tx2umlTypes";
+import { Contracts, Network, Participants, Trace, TransactionDetails, Transfer } from "./types/tx2umlTypes";
 export declare class TransactionManager {
     readonly ethereumNodeClient: EthereumNodeClient;
     readonly etherscanClient: EtherscanClient;
@@ -11,7 +11,7 @@ export declare class TransactionManager {
     getTransaction(txHash: string): Promise<TransactionDetails>;
     getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;
     getContractsFromTraces(transactionsTraces: Trace[][], configFilename?: string): Promise<Contracts>;
-    getTransferParticipants(transactionsTransfers: Transfer[][], block: number, configFilename?: string): Promise<Participants>;
+    getTransferParticipants(transactionsTransfers: Transfer[][], block: number, network: Network, configFilename?: string): Promise<Participants>;
     getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
     setTokenAttributes(contracts: Contracts): Promise<void>;
     configOverrides(contracts: Contracts & Participants, filename?: string): Promise<void>;

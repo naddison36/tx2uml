@@ -30,6 +30,7 @@ export declare namespace TokenInfo {
         decimals: PromiseOrValue<BigNumberish>
         noContract: PromiseOrValue<boolean>
         nft: PromiseOrValue<boolean>
+        ensName: PromiseOrValue<string>
     }
 
     export type InfoStructOutput = [
@@ -37,13 +38,15 @@ export declare namespace TokenInfo {
         string,
         BigNumber,
         boolean,
-        boolean
+        boolean,
+        string
     ] & {
         symbol: string
         name: string
         decimals: BigNumber
         noContract: boolean
         nft: boolean
+        ensName: string
     }
 }
 
@@ -56,6 +59,7 @@ export interface TokenInfoInterface extends utils.Interface {
         "getStringProperties(address)": FunctionFragment
         "isContract(address)": FunctionFragment
         "isNFT(address)": FunctionFragment
+        "getEnsName(address)": FunctionFragment
     }
 
     getFunction(
@@ -67,6 +71,7 @@ export interface TokenInfoInterface extends utils.Interface {
             | "getStringProperties"
             | "isContract"
             | "isNFT"
+            | "getEnsName"
     ): FunctionFragment
 
     encodeFunctionData(
@@ -112,6 +117,10 @@ export interface TokenInfoInterface extends utils.Interface {
         data: BytesLike
     ): Boolean
     decodeFunctionResult(functionFragment: "isNFT", data: BytesLike): Boolean
+    decodeFunctionResult(
+        functionFragment: "getEnsName",
+        data: BytesLike
+    ): string
 
     events: {}
 }
@@ -183,6 +192,11 @@ export interface TokenInfo extends BaseContract {
             account: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<Boolean>
+
+        getEnsName(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<String>
     }
 
     getBytes32Properties(
@@ -220,6 +234,11 @@ export interface TokenInfo extends BaseContract {
         overrides?: CallOverrides
     ): Promise<Boolean>
 
+    getEnsName(
+        account: PromiseOrValue<string>,
+        overrides?: CallOverrides
+    ): Promise<string>
+
     callStatic: {
         getBytes32Properties(
             token: PromiseOrValue<string>,
@@ -255,6 +274,11 @@ export interface TokenInfo extends BaseContract {
             account: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<Boolean>
+
+        getEnsName(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<string>
     }
 
     filters: {}
@@ -294,6 +318,11 @@ export interface TokenInfo extends BaseContract {
             account: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<BigNumber>
+
+        getEnsName(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<BigNumber>
     }
 
     populateTransaction: {
@@ -328,6 +357,11 @@ export interface TokenInfo extends BaseContract {
         ): Promise<PopulatedTransaction>
 
         isNFT(
+            account: PromiseOrValue<string>,
+            overrides?: CallOverrides
+        ): Promise<PopulatedTransaction>
+
+        getEnsName(
             account: PromiseOrValue<string>,
             overrides?: CallOverrides
         ): Promise<PopulatedTransaction>

@@ -58,6 +58,7 @@ export type Contract = {
     events?: Event[];
     minDepth?: number;
     labels?: string[];
+    ensName?: string;
 };
 export type Contracts = {
     [address: string]: Contract;
@@ -70,6 +71,7 @@ export interface TokenDetails {
     tokenSymbol?: string;
     decimals?: number;
     implementation?: string;
+    ensName?: string;
 }
 export interface Participant extends TokenDetails {
     protocol?: string;
@@ -81,8 +83,8 @@ export type Participants = {
 };
 export interface Position {
     balance: BigNumber;
-    addedIds: Set<number>;
-    removedIds: Set<number>;
+    addedIds: Set<string>;
+    removedIds: Set<string>;
 }
 export type ParticipantPositions = {
     [address: string]: {
@@ -113,7 +115,7 @@ export type Transfer = {
     from: string;
     to: string;
     value?: BigNumber;
-    tokenId?: number;
+    tokenId?: BigNumber;
     event?: string;
     type: TransferType;
     tokenAddress?: string;

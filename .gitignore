@@ -13,3 +13,6 @@ output.png
 build/
 dist/
 tx.config.json
+tests/*.svg
+tests/*.png
+tests/*.puml

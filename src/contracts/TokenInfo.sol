@@ -8,16 +8,35 @@ interface IERC20Decimal {
 
 interface IERC20String {
     function symbol() external view returns (string memory);
+
     function name() external view returns (string memory);
 }
 
 interface IERC20Bytes32 {
     function symbol() external view returns (bytes32);
+
     function name() external view returns (bytes32);
 }
 
 interface IERC165 {
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
+}
+
+// https://github.com/ensdomains/reverse-records/blob/master/contracts/ReverseRecords.sol
+interface IReverseRecords {
+    function getNames(address[] calldata addresses)
+        external
+        view
+        returns (string[] memory ensNames);
+}
+
+struct Info {
+    string symbol;
+    string name;
+    uint256 decimals;
+    bool noContract;
+    bool nft;
+    string ensName;
 }
 
 /**
@@ -26,22 +45,19 @@ interface IERC165 {
  * @author Nick Addison
  */
 contract TokenInfo {
-    struct Info {
-        string symbol;
-        string name;
-        uint256 decimals;
-        bool noContract;
-        bool nft;
+    address public immutable ReverseRecords;
+
+    constructor(address _reverseRecords) {
+        ReverseRecords = _reverseRecords;
     }
 
-    function getInfoBatch(address[] memory tokens)
-        external
-        view
-        returns (Info[] memory infos)
-    {
+    function getInfoBatch(address[] calldata tokens) external view returns (Info[] memory infos) {
+        string[] memory ensNames = IReverseRecords(ReverseRecords).getNames(tokens);
+
         infos = new Info[](tokens.length);
         for (uint8 i = 0; i < tokens.length; i++) {
             infos[i] = this.getInfo(tokens[i]);
+            infos[i].ensName = ensNames[i];
         }
     }
 
@@ -57,10 +73,7 @@ contract TokenInfo {
         }
 
         // Try and get symbol and name as string
-        try this.getStringProperties(token) returns (
-            string memory _symbol,
-            string memory _name
-        ) {
+        try this.getStringProperties(token) returns (string memory _symbol, string memory _name) {
             info.symbol = _symbol;
             info.name = _name;
         } catch {
@@ -78,13 +91,14 @@ contract TokenInfo {
         try this.getDecimals(token) returns (uint256 _decimals) {
             info.decimals = _decimals;
         } catch {}
-        
+
         // Try and see if the contract is a NFT
         try this.isNFT(token) returns (bool _nft) {
             info.nft = _nft;
         } catch {}
     }
 
+    /// @dev will throw an error if the token is not a contract or does not have a symbol or name.
     function getStringProperties(address token)
         external
         view
@@ -94,6 +108,7 @@ contract TokenInfo {
         name = IERC20String(token).name();
     }
 
+    /// @dev will throw an error if the token is not a contract or does not have a symbol or name of bytes32.
     function getBytes32Properties(address token)
         external
         view
@@ -105,11 +120,7 @@ contract TokenInfo {
         name = bytes32ToString(nameBytes32);
     }
 
-    function bytes32ToString(bytes32 _bytes32)
-        internal
-        pure
-        returns (string memory)
-    {
+    function bytes32ToString(bytes32 _bytes32) internal pure returns (string memory) {
         uint8 i = 0;
         while (i < 32 && _bytes32[i] != 0) {
             i++;
@@ -121,11 +132,8 @@ contract TokenInfo {
         return string(bytesArray);
     }
 
-    function getDecimals(address token)
-        external
-        view
-        returns (uint256 decimals)
-    {
+    /// @dev will throw an error if the token is not a contract or does not have decimals.
+    function getDecimals(address token) external view returns (uint256 decimals) {
         decimals = IERC20Decimal(token).decimals();
     }
 
@@ -135,15 +143,26 @@ contract TokenInfo {
         assembly {
             size := extcodesize(account)
         }
-        
+
         return size > 0;
     }
 
     /// @notice is an address a NFT?
+    /// @dev will throw an error if the token is not a contract or does have the supportsInterface function.
     function isNFT(address account) external view returns (bool) {
-        return IERC165(account).supportsInterface(0x80ac58cd) || // ERC721
+        return
+            IERC165(account).supportsInterface(0x80ac58cd) || // ERC721
             IERC165(account).supportsInterface(0x5b5e139f) || // ERC721Metadata
             IERC165(account).supportsInterface(0x780e9d63) || // ERC721Enumerable
             IERC165(account).supportsInterface(0x9a20483d); // CryptoKitties
+    }
+
+    function getEnsName(address account) external view returns (string memory ensName) {
+        if (address(ReverseRecords) != address(0)) {
+            address[] memory addresses = new address[](1);
+            addresses[0] = account;
+            string[] memory ensNames = IReverseRecords(ReverseRecords).getNames(addresses);
+            ensName = ensNames[0];
+        }
     }
 }
