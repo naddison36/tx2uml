@@ -75,7 +75,7 @@ See ENS's [Reverse records](https://github.com/ensdomains/reverse-records/#deplo
 
 | Chain | Address | ENS |
 | --- | --- | --- |
-| Mainnet | [0x1c91347f2A44538ce62453BEBd9Aa907C662b4bD](https://etherscan.io/address/0x1c91347f2A44538ce62453BEBd9Aa907C662b4bD#code) | Yes |
+| Mainnet | [0x0ea78daff41c6d648045e5e9b0925ceda679719a](https://etherscan.io/address/0x0ea78daff41c6d648045e5e9b0925ceda679719a#code) | Yes |
 | Goerli | [0x466D9AbFf7c91f170b4906Ddb4A75f50B4a16faD](https://goerli.etherscan.io/address/0x466D9AbFf7c91f170b4906Ddb4A75f50B4a16faD#code) | Yes |
 | Sepolia | [0x8E2587265C68CD9EE3EcBf22DC229980b47CB960](https://sepolia.etherscan.io/address/0x8E2587265C68CD9EE3EcBf22DC229980b47CB960#code) | No |
 | Polygon | [0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003](https://polygonscan.com/address/0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003#code) | No |
