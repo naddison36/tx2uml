@@ -150,7 +150,7 @@ export type ParamTypeInternal = {
     components?: ParamTypeInternal[];
 };
 export declare const nodeTypes: readonly ["geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil"];
-export declare const networks: readonly ["mainnet", "goerli", "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche", "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom", "testnet.fantom", "moonbeam", "optimistic", "kovan-optimistic", "gnosisscan"];
+export declare const networks: readonly ["mainnet", "goerli", "sepolia", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis", "moonbeam"];
 export type Network = (typeof networks)[number];
 export declare const outputFormats: readonly ["png", "svg", "eps", "puml"];
 export type OutputFormat = (typeof outputFormats)[number];

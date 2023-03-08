@@ -23,26 +23,14 @@ export default class EtherscanClient {
         } else if (network === "polygon") {
             this.url = "https://api.polygonscan.com/api"
             this.apiKey = "AMHGNTV5A7XYGX2M781JB3RC1DZFVRWQEB"
-        } else if (network === "testnet.polygon") {
-            this.url = "https://api-testnet.polygonscan.com/api"
-            this.apiKey = "AMHGNTV5A7XYGX2M781JB3RC1DZFVRWQEB"
         } else if (network === "arbitrum") {
             this.url = "https://api.arbiscan.io/api"
-            this.apiKey = "ZGTK2TAGWMAB6IAC12BMK8YYPNCPIM8VDQ"
-        } else if (network === "testnet.arbitrum") {
-            this.url = "https://api-testnet.arbiscan.io/api"
             this.apiKey = "ZGTK2TAGWMAB6IAC12BMK8YYPNCPIM8VDQ"
         } else if (network === "avalanche") {
             this.url = "https://api.snowtrace.io/api"
             this.apiKey = "U5FAN98S5XNH5VI83TI4H35R9I4TDCKEJY"
-        } else if (network === "testnet.avalanche") {
-            this.url = "https://api-testnet.snowtrace.io/api"
-            this.apiKey = "U5FAN98S5XNH5VI83TI4H35R9I4TDCKEJY"
         } else if (network === "bsc") {
             this.url = "https://api.bscscan.com/api"
-            this.apiKey = "APYH49FXVY9UA3KTDI6F4WP3KPIC86NITN"
-        } else if (network === "testnet.bsc") {
-            this.url = "https://api-testnet.bscscan.com/api"
             this.apiKey = "APYH49FXVY9UA3KTDI6F4WP3KPIC86NITN"
         } else if (network === "crono") {
             this.url = "https://api.cronoscan.com/api"
@@ -50,16 +38,13 @@ export default class EtherscanClient {
         } else if (network === "fantom") {
             this.url = "https://api.ftmscan.com/api"
             this.apiKey = "71KRX13XPZMGR3D1Q85W78G2DSZ4JPMAEX"
-        } else if (network === "testnet.fantom") {
-            this.url = "https://api-testnet.ftmscan.com/api"
-            this.apiKey = "71KRX13XPZMGR3D1Q85W78G2DSZ4JPMAEX"
-        } else if (network === "optimistic" || network === "kovan-optimistic") {
-            this.url = `https://api-${network}.etherscan.io/api`
+        } else if (network === "optimisim") {
+            this.url = "https://api-optimistic.etherscan.io/api"
             this.apiKey = "FEXS1HXVA4Y2RNTMEA8V1UTK21S4JWHH9U"
         } else if (network === "moonbeam") {
             this.url = "https://api-moonbeam.moonscan.io/api"
             this.apiKey = "5EUFXW6TDC16VERF3D9SCWRRU6AEMTBHNJ"
-        } else if (network === "gnosisscan") {
+        } else if (network === "gnosis") {
             this.url = "https://api.gnosisscan.io/api"
             this.apiKey = "2RWGXIWK538EJ8XSP9DE2JUINSCG7UCSJB"
         } else {

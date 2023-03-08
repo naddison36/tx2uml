@@ -7,13 +7,16 @@
 
 The following *contract call* and *value transfer* diagrams are for the Uniswap V1 transaction [0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca](https://etherscan.io/tx/0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca) that removes MKR liquidity from the Uniswap V1 MKR pool.
 
+### Contract Call Diagram
+
 ![Contract call example](./examples/uniswapMKRRemove.svg) 
-*Contract calls*
+
 
 See a lot more call diagram examples with different options [here](./examples/README.md).
 
+## Value Transfer Diagrams
+
 ![Value transfer example](./examples/transfers/uniswapMKRRemove.svg)
-*Value transfers*
 
 More value transfer diagram examples can be found [here](./examples/transfers/README.md).
 
@@ -51,8 +54,8 @@ Options:
   -f, --outputFormat <value>    output file format (choices: "png", "svg", "eps", "puml", default: "svg")
   -o, --outputFileName <value>  output file name. Defaults to the transaction hash
   -u, --url <url>               URL of the archive node with trace transaction support (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
-  -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli", "sepolia", "polygon", "testnet.polygon", "arbitrum", "testnet.arbitrum", "avalanche", "testnet.avalanche", "bsc", "testnet.bsc", "crono", "fantom", "testnet.fantom", "moonbeam", "optimistic",
-                                "kovan-optimistic", "gnosisscan", default: "mainnet", env: ETH_NETWORK)
+  -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli", "sepolia", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis",
+                                "moonbeam", default: "mainnet", env: ETH_NETWORK)
   -cf, --configFile <value>     name of the json configuration file that can override contract details like name and ABI (default: "tx.config.json")
   -m, --memory <gigabytes>      max Java memory of PlantUML process in gigabytes. Java default is 1/4 of physical memory. Large txs in png format will need up to 12g. svg format is much better for large transactions.
   -v, --verbose                 run with debugging statements (default: false)

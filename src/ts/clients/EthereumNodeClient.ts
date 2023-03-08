@@ -33,27 +33,27 @@ const tokenInfoAddresses: {
     [network: string]: AddressEns
 } = {
     mainnet: {
-        address: "0x0ea78daff41c6d648045e5e9b0925ceda679719a",
+        address: "0x625b79e703eBC5156d8092ABC15741F8b2e7a70E",
         ens: true,
     },
     polygon: {
-        address: "0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003",
+        address: "0x8f17a4A27521972F7708696B7D563D270C008F24",
         ens: false,
     },
-    optimistic: {
+    optimisim: {
         address: "0x149a692a94eEe18e7854CEA1CEaab557618D4D46",
         ens: false,
     },
     goerli: {
-        address: "0x466D9AbFf7c91f170b4906Ddb4A75f50B4a16faD",
+        address: "0x796c008d8ADDCc33Da3e946Ca457432a35913c85",
         ens: true,
     },
     sepolia: {
-        address: "0x8E2587265C68CD9EE3EcBf22DC229980b47CB960",
+        address: "0x796c008d8ADDCc33Da3e946Ca457432a35913c85",
         ens: false,
     },
     arbitrum: {
-        address: "0x43B3BCe874EC872EFbCC784c1e3CD03005E529a9",
+        address: "0xe17ed31629488028110BeEBabC6E476ffA647bd9",
         ens: false,
     },
 }
@@ -157,16 +157,27 @@ export default abstract class EthereumNodeClient {
                     i + chunkSize
                 )
                 const results = await tokenInfo.getInfoBatch(cunkedAddresses)
+                debug(`Got ${results.length} token details`)
+                debug("address, noContract, nft, symbol, name, decimals, ens")
                 const mappedResponse: TokenDetails[] = results.map(
-                    (result, r) => ({
-                        address: contractAddresses[i + r],
-                        noContract: result.noContract,
-                        nft: result.nft,
-                        tokenSymbol: result.symbol,
-                        tokenName: result.name,
-                        decimals: result.decimals.toNumber(),
-                        ensName: result.ensName,
-                    })
+                    (result, r) => {
+                        debug(
+                            `${contractAddresses[i + r]}, ${
+                                result.noContract
+                            }, ${result.nft}, ${result.symbol}, ${
+                                result.name
+                            }, ${result.decimals.toNumber()}, ${result.ensName}`
+                        )
+                        return {
+                            address: contractAddresses[i + r],
+                            noContract: result.noContract,
+                            nft: result.nft,
+                            tokenSymbol: result.symbol || result.name,
+                            tokenName: result.name,
+                            decimals: result.decimals.toNumber(),
+                            ensName: result.ensName,
+                        }
+                    }
                 )
                 tokenDetails = tokenDetails.concat(mappedResponse)
             }

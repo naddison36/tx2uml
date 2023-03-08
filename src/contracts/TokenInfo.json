@@ -1,0 +1,196 @@
+[
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_reverseRecords",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [],
+        "name": "ReverseRecords",
+        "outputs": [
+            { "internalType": "address", "name": "", "type": "address" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "token", "type": "address" }
+        ],
+        "name": "getBytes32Name",
+        "outputs": [
+            { "internalType": "string", "name": "name", "type": "string" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "token", "type": "address" }
+        ],
+        "name": "getBytes32Symbol",
+        "outputs": [
+            { "internalType": "string", "name": "symbol", "type": "string" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "token", "type": "address" }
+        ],
+        "name": "getDecimals",
+        "outputs": [
+            { "internalType": "uint256", "name": "decimals", "type": "uint256" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "account", "type": "address" }
+        ],
+        "name": "getEnsName",
+        "outputs": [
+            { "internalType": "string", "name": "ensName", "type": "string" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "token", "type": "address" }
+        ],
+        "name": "getInfo",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "symbol",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "decimals",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "noContract",
+                        "type": "bool"
+                    },
+                    { "internalType": "bool", "name": "nft", "type": "bool" },
+                    {
+                        "internalType": "string",
+                        "name": "ensName",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct Info",
+                "name": "info",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address[]",
+                "name": "tokens",
+                "type": "address[]"
+            }
+        ],
+        "name": "getInfoBatch",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "symbol",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "decimals",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "noContract",
+                        "type": "bool"
+                    },
+                    { "internalType": "bool", "name": "nft", "type": "bool" },
+                    {
+                        "internalType": "string",
+                        "name": "ensName",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct Info[]",
+                "name": "infos",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "token", "type": "address" }
+        ],
+        "name": "getName",
+        "outputs": [
+            { "internalType": "string", "name": "name", "type": "string" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "token", "type": "address" }
+        ],
+        "name": "getSymbol",
+        "outputs": [
+            { "internalType": "string", "name": "symbol", "type": "string" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "account", "type": "address" }
+        ],
+        "name": "isContract",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "account", "type": "address" }
+        ],
+        "name": "isNFT",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
