@@ -45,14 +45,22 @@ struct Info {
  * @author Nick Addison
  */
 contract TokenInfo {
+    /// @notice The address of the Ethereum Name Service's ReverseRecords contract
+    /// @dev Only available on Mainnet and Goerli.
     address public immutable ReverseRecords;
 
+    /// @param _reverseRecords The address of the Ethereum Name Service's ReverseRecords contract
     constructor(address _reverseRecords) {
         ReverseRecords = _reverseRecords;
     }
 
+    /// @notice Gets contract and token information for a list of address.
+    /// Getting the token name, symbol, decimals and NFT interface checks are wrapped
+    /// in a try catch to prevent the batch from reverting if one of the addresses is not a token.
     function getInfoBatch(address[] calldata tokens) external view returns (Info[] memory infos) {
-        string[] memory ensNames = IReverseRecords(ReverseRecords).getNames(tokens);
+        string[] memory ensNames = address(ReverseRecords) != address(0)
+            ? IReverseRecords(ReverseRecords).getNames(tokens)
+            : new string[](tokens.length);
 
         infos = new Info[](tokens.length);
         for (uint8 i = 0; i < tokens.length; i++) {
@@ -61,6 +69,9 @@ contract TokenInfo {
         }
     }
 
+    /// @notice Gets contract and token information for a an address.
+    /// Getting the token name, symbol, decimals and NFT interface checks are wrapped
+    /// in a try catch to prevent the call from reverting if the address is not a token.
     function getInfo(address token) external view returns (Info memory info) {
         // Does code exists for the token?
         uint32 size;
@@ -72,17 +83,22 @@ contract TokenInfo {
             return info;
         }
 
-        // Try and get symbol and name as string
-        try this.getStringProperties(token) returns (string memory _symbol, string memory _name) {
+        // Try and get symbol as string
+        try this.getSymbol(token) returns (string memory _symbol) {
             info.symbol = _symbol;
+        } catch {
+            // Try and get symbol as bytes32
+            try this.getBytes32Symbol(token) returns (string memory _symbol) {
+                info.symbol = _symbol;
+            } catch {}
+        }
+
+        // Try and get name as string
+        try this.getName(token) returns (string memory _name) {
             info.name = _name;
         } catch {
-            // Try and get symbol and name as bytes32
-            try this.getBytes32Properties(token) returns (
-                string memory _symbol,
-                string memory _name
-            ) {
-                info.symbol = _symbol;
+            // Try and get name as bytes32
+            try this.getBytes32Name(token) returns (string memory _name) {
                 info.name = _name;
             } catch {}
         }
@@ -98,25 +114,29 @@ contract TokenInfo {
         } catch {}
     }
 
-    /// @dev will throw an error if the token is not a contract or does not have a symbol or name.
-    function getStringProperties(address token)
-        external
-        view
-        returns (string memory symbol, string memory name)
-    {
+    /// @return symbol of the token contract.
+    /// @dev will revert if the token is not a contract or does not have a symbol.
+    function getSymbol(address token) external view returns (string memory symbol) {
         symbol = IERC20String(token).symbol();
+    }
+
+    /// @return name of the token contract.
+    /// @dev will revert if the token is not a contract or does not have a name.
+    function getName(address token) external view returns (string memory name) {
         name = IERC20String(token).name();
     }
 
-    /// @dev will throw an error if the token is not a contract or does not have a symbol or name of bytes32.
-    function getBytes32Properties(address token)
-        external
-        view
-        returns (string memory symbol, string memory name)
-    {
+    /// @return symbol of the token contract.
+    /// @dev will revert if the token is not a contract or does not have a symbol of bytes32.
+    function getBytes32Symbol(address token) external view returns (string memory symbol) {
         bytes32 symbolBytes32 = IERC20Bytes32(token).symbol();
-        bytes32 nameBytes32 = IERC20Bytes32(token).name();
         symbol = bytes32ToString(symbolBytes32);
+    }
+
+    /// @return name of the token contract.
+    /// @dev will revert if the token is not a contract or does not have a name of bytes32.
+    function getBytes32Name(address token) external view returns (string memory name) {
+        bytes32 nameBytes32 = IERC20Bytes32(token).name();
         name = bytes32ToString(nameBytes32);
     }
 
@@ -132,12 +152,14 @@ contract TokenInfo {
         return string(bytesArray);
     }
 
-    /// @dev will throw an error if the token is not a contract or does not have decimals.
+    /// @return decimals of the token contract.
+    /// @dev will revert if the token is not a contract or does not have decimals.
     function getDecimals(address token) external view returns (uint256 decimals) {
         decimals = IERC20Decimal(token).decimals();
     }
 
-    /// @notice is an address a contract or eternally owned account?
+    /// @notice is an address a contract or externally owned account?
+    /// @dev this will not revert if the address is an externally owned account (EOA).
     function isContract(address account) external view returns (bool) {
         uint32 size;
         assembly {
@@ -148,7 +170,7 @@ contract TokenInfo {
     }
 
     /// @notice is an address a NFT?
-    /// @dev will throw an error if the token is not a contract or does have the supportsInterface function.
+    /// @dev will revert if the token is not a contract or does have the `supportsInterface` function.
     function isNFT(address account) external view returns (bool) {
         return
             IERC165(account).supportsInterface(0x80ac58cd) || // ERC721
@@ -157,6 +179,9 @@ contract TokenInfo {
             IERC165(account).supportsInterface(0x9a20483d); // CryptoKitties
     }
 
+    /// @notice Gets the primary Ethereum Name Service name for an address.
+    /// @return ensName address 0 will be returned if ENS is not available on the chain
+    /// or the address does not have a name.
     function getEnsName(address account) external view returns (string memory ensName) {
         if (address(ReverseRecords) != address(0)) {
             address[] memory addresses = new address[](1);

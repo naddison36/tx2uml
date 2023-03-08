@@ -5,7 +5,7 @@ tx2uml uses the [TokenDetails](./TokenInfo.sol) contract to get the following pr
 * Is the contract an NFT?
 * The `symbol` and `name` if they exist.
 * The `decimals` if it exists.
-* The ENS name if it exists.
+* The primary ENS name if it exists.
 
 ## Interface
 
@@ -37,6 +37,8 @@ interface ITokenInfo {
 Other external functions like `getStringProperties`, `getBytes32Properties`, `getDecimals` and `isNFT` are not protected with a try/catch so will throw an error if the contract is not a token or NFT.
 
 The full Solidity interface is [ITokenInfo.sol](./ITokenInfo.sol).
+
+The Application Binary Interface (ABI) for the contract is [TokenInfoABI.json](./TokenInfoABI.json).
 
 ### TypeScript
 
@@ -73,12 +75,19 @@ See ENS's [Reverse records](https://github.com/ensdomains/reverse-records/#deplo
 
 ## TokenDetails Contract Deployments
 
-| Chain | Address | ENS |
-| --- | --- | --- |
-| Mainnet | [0x0ea78daff41c6d648045e5e9b0925ceda679719a](https://etherscan.io/address/0x0ea78daff41c6d648045e5e9b0925ceda679719a#code) | Yes |
-| Goerli | [0x466D9AbFf7c91f170b4906Ddb4A75f50B4a16faD](https://goerli.etherscan.io/address/0x466D9AbFf7c91f170b4906Ddb4A75f50B4a16faD#code) | Yes |
-| Sepolia | [0x8E2587265C68CD9EE3EcBf22DC229980b47CB960](https://sepolia.etherscan.io/address/0x8E2587265C68CD9EE3EcBf22DC229980b47CB960#code) | No |
-| Polygon | [0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003](https://polygonscan.com/address/0x92aFa83874AA86c7f71F293F8A097ca7fE0ff003#code) | No |
-| Optimism | [0x149a692a94eEe18e7854CEA1CEaab557618D4D46](https://optimistic.etherscan.io/address/0x149a692a94eEe18e7854CEA1CEaab557618D4D46#code) | No |
-| Arbitrum | [0x43B3BCe874EC872EFbCC784c1e3CD03005E529a9](https://arbiscan.io/address/0x43B3BCe874EC872EFbCC784c1e3CD03005E529a9#code) | No |
+[TokenDetails](./TokenInfo.sol) takes a constructor parameter `_reverseRecords` which is the address of Ethereum Name Service's `ReverseRecords` contract. This is only used on Goerli and Mainnet. 
 
+| Chain | Address | _reverseRecords |
+| --- | --- | --- |
+| Mainnet | [0x625b79e703eBC5156d8092ABC15741F8b2e7a70E](https://etherscan.io/address/0x625b79e703eBC5156d8092ABC15741F8b2e7a70E#code) | [0x3671aE578E63FdF66ad4F3E12CC0c0d71Ac7510C](https://etherscan.io/address/0x3671aE578E63FdF66ad4F3E12CC0c0d71Ac7510C) |
+| Goerli | [0x796c008d8ADDCc33Da3e946Ca457432a35913c85](https://goerli.etherscan.io/address/0x796c008d8ADDCc33Da3e946Ca457432a35913c85#code) | [0x333Fc8f550043f239a2CF79aEd5e9cF4A20Eb41e](https://goerli.etherscan.io/address/0x333Fc8f550043f239a2CF79aEd5e9cF4A20Eb41e) |
+| Sepolia | [0x796c008d8ADDCc33Da3e946Ca457432a35913c85](https://sepolia.etherscan.io/address/0x796c008d8ADDCc33Da3e946Ca457432a35913c85#code) | 0x0000000000000000000000000000000000000000 |
+| Polygon | [0x8f17a4A27521972F7708696B7D563D270C008F24](https://polygonscan.com/address/0x8f17a4A27521972F7708696B7D563D270C008F24#code) | 0x0000000000000000000000000000000000000000 |
+| Arbitrum | [0xe17ed31629488028110BeEBabC6E476ffA647bd9](https://arbiscan.io/address/0xe17ed31629488028110BeEBabC6E476ffA647bd9#code) | 0x0000000000000000000000000000000000000000 |
+| Optimism | [0x149a692a94eEe18e7854CEA1CEaab557618D4D46](https://optimistic.etherscan.io/address/0x149a692a94eEe18e7854CEA1CEaab557618D4D46#code) | 0x0000000000000000000000000000000000000000 |
+| Avalanche |  | 0x0000000000000000000000000000000000000000 |
+| BSC |  | 0x0000000000000000000000000000000000000000 |
+| Crono |  | 0x0000000000000000000000000000000000000000 |
+| Fantom |  | 0x0000000000000000000000000000000000000000 |
+| Moonbeam |  | 0x0000000000000000000000000000000000000000 |
+| Gnosis |  | 0x0000000000000000000000000000000000000000 |
