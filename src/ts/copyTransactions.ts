@@ -21,7 +21,7 @@ export const copyTransactions = async (
     for (const hash of hashes) {
         // Get the transaction from the source chains
         const sourceTx = await source.ethersProvider.getTransaction(hash)
-        debug(`Got raw tx ${sourceTx.raw} for source ${hash}.`)
+        debug(`Got tx ${hash} from source chain.`)
 
         let destTx: TransactionResponse
         if (destSigner) {
@@ -33,6 +33,7 @@ export const copyTransactions = async (
                 gasLimit: sourceTx.gasLimit,
                 gasPrice: sourceTx.gasPrice,
                 accessList: sourceTx.accessList,
+                // chainId: sourceTx.chainId,   // is populated by sendTransaction
                 // type: sourceTx.type,
                 // maxFeePerGas: sourceTx.maxFeePerGas,
                 // maxPriorityFeePerGas: sourceTx.maxPriorityFeePerGas,
@@ -44,16 +45,17 @@ export const copyTransactions = async (
         }
 
         debug(`${destTx.hash} is hash of replayed source tx ${hash}.`)
-        await destTx.wait()
-        debug(`${destTx.hash} replayed tx has been mined.`)
+        const receipt = await destTx.wait(0)
+        debug(`replayed tx has been mined with status ${receipt?.status}.`)
     }
 }
 
 // Taken from Ethers.js Cookbook
 // https://docs.ethers.org/v5/cookbook/transactions/#cookbook--compute-raw-transaction
 const getRawTransaction = (tx: Transaction) => {
+    console.log(tx)
     function addKey(accum: any, key: keyof Transaction) {
-        if (tx[key] !== undefined) {
+        if (tx?.[key] !== undefined) {
             debug(`adding ${key}: ${tx[key]}`)
             accum[key] = tx[key]
         }

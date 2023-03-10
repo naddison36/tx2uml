@@ -56,6 +56,10 @@ const tokenInfoAddresses: {
         address: "0xe17ed31629488028110BeEBabC6E476ffA647bd9",
         ens: false,
     },
+    avalanche: {
+        address: "0x8ac84f0F6019E41A7e8255f0C32747cf8ADa2Ec3",
+        ens: false,
+    },
 }
 
 const ProxySlot =

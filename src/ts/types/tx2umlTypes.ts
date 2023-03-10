@@ -186,6 +186,23 @@ export const networks = <const>[
 ]
 export type Network = (typeof networks)[number]
 
+export const setNetworkCurrency = (network: Network) =>
+    network === "avalanche"
+        ? "AVAX"
+        : network === "polygon"
+        ? "MATIC"
+        : network === "bsc"
+        ? "BNB"
+        : network === "crono"
+        ? "CRO"
+        : network === "fantom"
+        ? "FTM"
+        : network === "gnosis"
+        ? "xDAI"
+        : network === "moonbeam"
+        ? "GLMR"
+        : "ETH"
+
 export const outputFormats = <const>["png", "svg", "eps", "puml"]
 export type OutputFormat = (typeof outputFormats)[number]
 
@@ -209,6 +226,7 @@ export interface TracePumlGenerationOptions extends OutputOptions {
     noTxDetails?: boolean
     noLogDetails?: boolean
     noDelegates?: boolean
+    chain?: Network
 }
 
 export interface CallDiagramOptions extends TracePumlGenerationOptions {

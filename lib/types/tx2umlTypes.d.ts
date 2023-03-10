@@ -152,6 +152,7 @@ export type ParamTypeInternal = {
 export declare const nodeTypes: readonly ["geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil"];
 export declare const networks: readonly ["mainnet", "goerli", "sepolia", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis", "moonbeam"];
 export type Network = (typeof networks)[number];
+export declare const setNetworkCurrency: (network: Network) => "AVAX" | "MATIC" | "BNB" | "CRO" | "FTM" | "xDAI" | "GLMR" | "ETH";
 export declare const outputFormats: readonly ["png", "svg", "eps", "puml"];
 export type OutputFormat = (typeof outputFormats)[number];
 export interface OutputOptions {
@@ -172,6 +173,7 @@ export interface TracePumlGenerationOptions extends OutputOptions {
     noTxDetails?: boolean;
     noLogDetails?: boolean;
     noDelegates?: boolean;
+    chain?: Network;
 }
 export interface CallDiagramOptions extends TracePumlGenerationOptions {
     chain?: Network;

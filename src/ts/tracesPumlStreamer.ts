@@ -6,6 +6,7 @@ import {
     Contracts,
     MessageType,
     Param,
+    setNetworkCurrency,
     Trace,
     TracePumlGenerationOptions,
     TransactionDetails,
@@ -23,12 +24,15 @@ const DelegateLifelineColor = "#809ECB"
 const DelegateMessageColor = "#3471CD"
 const FailureFillColor = "#FFAAAA"
 
+let networkCurrency = "ETH"
+
 export const traces2PumlStream = (
     transactions: TransactionDetails[],
     traces: Trace[][],
     contracts: Contracts,
     options: TracePumlGenerationOptions
 ): Readable => {
+    networkCurrency = setNetworkCurrency(options.chain)
     const pumlStream = new Readable({
         read() {},
     })
@@ -171,7 +175,7 @@ const writeTransactionDetails = (
     const txFeeInWei = transaction.gasUsed.mul(transaction.gasPrice)
     const txFeeInEther = formatEther(txFeeInWei)
     const tFeeInEtherFormatted = Number(txFeeInEther).toLocaleString()
-    plantUmlStream.push(`Tx Fee: ${tFeeInEtherFormatted} ETH\n`)
+    plantUmlStream.push(`Tx Fee: ${tFeeInEtherFormatted} ${networkCurrency}\n`)
     plantUmlStream.push("end note\n")
 }
 
@@ -431,7 +435,7 @@ const genEtherValue = (trace: Trace, noEtherValue: boolean = false): string => {
     // Add thousand commas. Can't use formatNumber for this as it doesn't handle decimal numbers.
     // Assuming the amount of ether is not great than JS number limit.
     const etherFormatted = Number(ether).toLocaleString()
-    return `\\n${etherFormatted} ETH`
+    return `\\n${etherFormatted} ${networkCurrency}`
 }
 
 const genCaption = (
