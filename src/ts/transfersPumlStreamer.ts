@@ -1,9 +1,11 @@
 import { Readable } from "stream"
 
 import {
+    Network,
     ParticipantPositions,
     Participants,
     Position,
+    setNetworkCurrency,
     TransactionDetails,
     Transfer,
     TransferType,
@@ -14,11 +16,15 @@ import { BigNumber } from "ethers"
 
 const debug = require("debug")("tx2uml")
 
+let networkCurrency = "ETH"
+
 export const transfers2PumlStream = (
     transactions: readonly Readonly<TransactionDetails>[],
     transfers: readonly Readonly<Transfer>[][],
-    participants: Readonly<Participants>
+    participants: Readonly<Participants>,
+    network: Network
 ): Readable => {
+    networkCurrency = setNetworkCurrency(network)
     const pumlStream = new Readable({
         read() {},
     })
@@ -269,7 +275,7 @@ export const writeBalances = (
         Object.keys(participantBalances[participant]).forEach(tokenAddress => {
             // Get token details or use Ether details
             const token = participants[tokenAddress] || {
-                tokenSymbol: "ETH",
+                tokenSymbol: networkCurrency,
                 decimals: 18,
             }
             genTokenBalance(

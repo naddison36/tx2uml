@@ -43,7 +43,8 @@ export const generateValueDiagram = async (
     const pumlStream = transfers2PumlStream(
         transactions,
         transactionTransfers,
-        participants
+        participants,
+        options.chain
     )
 
     // Pipe readable stream to PlantUML's Java process which then writes to a file

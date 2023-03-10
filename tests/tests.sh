@@ -17,7 +17,7 @@ tx2uml value 0xf61e53f06564935e6be7b5f8d96b7c9092710c764306bb6182f1c0a9e99c3bad 
 # simple Ether transfer with emoji ens name
 tx2uml value 0x4ed0dd60431a618b336babd6699219216568b5580972bc6cc549d3073c6e97d8 -v
 
-# Moonbirds with BLur Pool token that doesn't have a symbol
+# Moonbirds with Blur Pool token that doesn't have a symbol
 tx2uml value 0x0dc73f341aae83c1ed93e29b5ac5c658daeaad86c3db263cb4678fe7bedc7057 -v
 
 ##### Goerli
@@ -59,4 +59,19 @@ tx2uml value 0xd96e4fa0b545652e99b35aee027246cb14739e27e7d74d92eb3875380f1e71ea 
 
 ## BSC
 
-tx2uml 0xfb153c572e304093023b4f9694ef39135b6ed5b2515453173e81ec02df2e2104 -v -onlyToken --chain bsc
+tx2uml 0xfb153c572e304093023b4f9694ef39135b6ed5b2515453173e81ec02df2e2104 -v --chain bsc
+
+##### Avalanche
+
+## Unwrapping WETH.e
+tx2uml value 0xb145f0f6838cd75b1d9086bc52577eefb14f18ac25f443fe60c55bcaff198dde -v --onlyToken --chain avalanche
+# ParaSwap 393.94480757 BTC.b for 5,355.278278395507586356 WETH.e
+tx2uml value 0x4004463020db2f6cc0a3c266a4a30327f01b97cbce55636991d26f207b01c14c -v --onlyToken --chain avalanche -f png
+# Simple AVAX transfer
+anvil --fork-block-number 27239142 --steps-tracing -f $ARCHIVE_NODE_URL
+tx2uml copy 0x6686f964a8db99d6e4c8eb336c0b47365055f7ca54111339848f293cdbb225a6 -v
+tx2uml call 0x6686f964a8db99d6e4c8eb336c0b47365055f7ca54111339848f293cdbb225a6 -v -n anvil --chain avalanche --url http://localhost:8545
+# will not work as "non-default tracer not supported yet" in Anvil
+#tx2uml value 0x6686f964a8db99d6e4c8eb336c0b47365055f7ca54111339848f293cdbb225a6 -v --chain avalanche --url http://localhost:8545
+
+tx2uml call 0xb210b804f269b8ecbb799ef13a5c06636aa8b7690ecd6ef595c289be691794a4 -v -n anvil --url http://localhost:8545
