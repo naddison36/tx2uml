@@ -39,6 +39,12 @@ tx2uml copy 0xd44ea70656c70fe64d29783815b9d3eb3d3b8ef92fa213c59c996baafbe2ecc1
 tx2uml 0xd44ea70656c70fe64d29783815b9d3eb3d3b8ef92fa213c59c996baafbe2ecc1 -v --chain goerli -n anvil --url http://localhost:8545
 tx2uml value 0xd44ea70656c70fe64d29783815b9d3eb3d3b8ef92fa213c59c996baafbe2ecc1 -v --chain goerli --url http://localhost:8545
 
+# Account Abstraction
+anvil --fork-block-number 8633347 --steps-tracing -f $ARCHIVE_NODE_URL
+tx2uml copy 0xc2ed857dd8396e4029c9f9d7a6f5c5eedad3210fd0bf2b3da4d8e29af06b6167
+tx2uml call 0xc2ed857dd8396e4029c9f9d7a6f5c5eedad3210fd0bf2b3da4d8e29af06b6167 -v --chain goerli -n anvil --url http://localhost:8545
+
+
 ###### Sepolia
 #export ARCHIVE_NODE_URL=https://sepolia.infura.io/v3/your-api
 # MiladyColaTest

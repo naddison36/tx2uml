@@ -3,6 +3,7 @@ import { BigNumber, Contract as EthersContract } from "ethers"
 
 import { Contract, Network, networks, Token } from "../types/tx2umlTypes"
 import { ethereumAddress } from "../utils/regEx"
+import { sleep } from "../utils/time"
 
 const debug = require("debug")("tx2uml")
 
@@ -76,6 +77,8 @@ export default class EtherscanClient {
                 debug(
                     `Contract ${contractAddress} is not verified on Etherscan`
                 )
+                // Sleep for a 0.8 seconds if no contract was returned to avoid Etherscan rate limits
+                await sleep(800)
                 return {
                     address: contractAddress,
                     noContract: false,
