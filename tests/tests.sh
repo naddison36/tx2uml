@@ -39,11 +39,36 @@ tx2uml copy 0xd44ea70656c70fe64d29783815b9d3eb3d3b8ef92fa213c59c996baafbe2ecc1
 tx2uml 0xd44ea70656c70fe64d29783815b9d3eb3d3b8ef92fa213c59c996baafbe2ecc1 -v --chain goerli -n anvil --url http://localhost:8545
 tx2uml value 0xd44ea70656c70fe64d29783815b9d3eb3d3b8ef92fa213c59c996baafbe2ecc1 -v --chain goerli --url http://localhost:8545
 
-# Account Abstraction
+# Account Abstraction Stackup
 anvil --fork-block-number 8633347 --steps-tracing -f $ARCHIVE_NODE_URL
 tx2uml copy 0xc2ed857dd8396e4029c9f9d7a6f5c5eedad3210fd0bf2b3da4d8e29af06b6167
+# this delegate calls
 tx2uml call 0xc2ed857dd8396e4029c9f9d7a6f5c5eedad3210fd0bf2b3da4d8e29af06b6167 -v --chain goerli -n anvil --url http://localhost:8545
+# no delegate calls
+tx2uml call 0xc2ed857dd8396e4029c9f9d7a6f5c5eedad3210fd0bf2b3da4d8e29af06b6167 -v -x --chain goerli -n anvil --url http://localhost:8545
 
+# Account Abstraction my contracts
+anvil --fork-block-number 8645315 --steps-tracing -f $ARCHIVE_NODE_URL
+# Deploy SimpleAccountFactory
+tx2uml copy 0xdcf4f2b59ebe51cd09438f310c08e39f1358162b676cfb62b0c078127cfc82d6
+tx2uml call 0xdcf4f2b59ebe51cd09438f310c08e39f1358162b676cfb62b0c078127cfc82d6 -v --chain goerli -n anvil --url http://localhost:8545
+# Create Account with salt
+anvil --fork-block-number 8646391 --steps-tracing -f $ARCHIVE_NODE_URL
+tx2uml copy 0x62ed9f7f678b9bb8161876b69a874af855286d8d36e88cb6f9c2aa665bb58359
+tx2uml call 0x62ed9f7f678b9bb8161876b69a874af855286d8d36e88cb6f9c2aa665bb58359 -v --chain goerli -n anvil --url http://localhost:8545
+
+# Create Account with 0 salt
+anvil --fork-block-number 8650302 --steps-tracing -f $ARCHIVE_NODE_URL
+tx2uml copy 0xb9faada5808916e4bb0ccd9757bb5971698a089bf8ebe6fa73ef12e6b7d471e6
+tx2uml call 0xb9faada5808916e4bb0ccd9757bb5971698a089bf8ebe6fa73ef12e6b7d471e6 -v --chain goerli -n anvil --url http://localhost:8545
+# Send ETH from abstract account wallet to owner's signer account
+anvil --fork-block-number 8651997 --steps-tracing -f $ARCHIVE_NODE_URL
+tx2uml copy 0xec3076b33e04ff331e27bdf3188c50e3520d570580f794f253de1ed5298df9af
+tx2uml call 0xec3076b33e04ff331e27bdf3188c50e3520d570580f794f253de1ed5298df9af -v --chain goerli -n anvil --url http://localhost:8545
+# Send ETH from abstract account wallet to two different EOAs
+anvil --fork-block-number 8661585 --steps-tracing -f $ARCHIVE_NODE_URL
+tx2uml copy 0x3afa8fe219e83fb6cc30e5db6e9e6d2ea1e701ea338c3c47c9beb18c6b7e571a
+tx2uml call 0x3afa8fe219e83fb6cc30e5db6e9e6d2ea1e701ea338c3c47c9beb18c6b7e571a -v --chain goerli -n anvil --url http://localhost:8545
 
 ###### Sepolia
 #export ARCHIVE_NODE_URL=https://sepolia.infura.io/v3/your-api
