@@ -21,6 +21,7 @@ const mStableUSDProxy = "0xe2f2a5C287993345a840Db3B0845fbC70f5935a5"
 const mStableUSDImpl = "0xE0d0D052d5B1082E52C6b8422Acd23415c3DF1c4"
 const cryptoKitties = "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d"
 const externallyOwnerAccount = "0xbbabad191e7802f526c289c15909a8cba2a5ff2a"
+const previouslyFailingContract = "0xE8c060F8052E07423f71D445277c61AC5138A2e5"
 
 describe("Ethereum Node Clients", () => {
     const clients: { [clientName: string]: EthereumNodeClient } = {
@@ -143,7 +144,7 @@ describe("Ethereum Node Clients", () => {
                 expect(tx.error).toBeUndefined()
             })
         })
-        test("Get token details", async () => {
+        test.only("Get token details", async () => {
             const tokenDetails = await nodeClient.getTokenDetails([
                 maker, // bytes32
                 uniswap, // string
@@ -154,6 +155,7 @@ describe("Ethereum Node Clients", () => {
                 dai,
                 cryptoKitties,
                 externallyOwnerAccount,
+                previouslyFailingContract,
             ])
             expect(tokenDetails[0].tokenSymbol).toEqual("MKR")
             expect(tokenDetails[0].tokenName).toEqual("Maker")
@@ -188,6 +190,12 @@ describe("Ethereum Node Clients", () => {
             expect(tokenDetails[8].noContract).toEqual(true)
             expect(tokenDetails[8].nft).toEqual(false)
             expect(tokenDetails[8].address).toEqual(externallyOwnerAccount)
+            expect(tokenDetails[9].tokenSymbol).toEqual("")
+            expect(tokenDetails[9].tokenName).toEqual("")
+            expect(tokenDetails[9].decimals).toEqual(0)
+            expect(tokenDetails[9].noContract).toEqual(false)
+            expect(tokenDetails[9].nft).toEqual(false)
+            expect(tokenDetails[9].address).toEqual(previouslyFailingContract)
         })
         test("Fail to get token info from a contract that is not a token", async () => {
             const tokenDetails = await nodeClient.getTokenDetails([
