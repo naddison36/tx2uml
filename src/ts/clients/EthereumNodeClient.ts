@@ -33,31 +33,35 @@ const tokenInfoAddresses: {
     [network: string]: AddressEns
 } = {
     mainnet: {
-        address: "0x625b79e703eBC5156d8092ABC15741F8b2e7a70E",
+        address: "0xEf6B7d3885f4Af1bDfcB66FE0370D6012B38a8Db",
         ens: true,
     },
     polygon: {
-        address: "0x8f17a4A27521972F7708696B7D563D270C008F24",
+        address: "0xf59659DB5f39F1f96D2DC1f32D3d16A45b8746Fa",
         ens: false,
     },
     optimisim: {
-        address: "0x149a692a94eEe18e7854CEA1CEaab557618D4D46",
+        address: "0x8E2587265C68CD9EE3EcBf22DC229980b47CB960",
         ens: false,
     },
     goerli: {
-        address: "0x796c008d8ADDCc33Da3e946Ca457432a35913c85",
+        address: "0x0395f995f2cecc40e2bf45d4905004313fcece6e",
         ens: true,
     },
     sepolia: {
-        address: "0x796c008d8ADDCc33Da3e946Ca457432a35913c85",
+        address: "0xe147cb7d90b9253844130e2c4a7ef0ffb641c3ea",
         ens: false,
     },
     arbitrum: {
-        address: "0xe17ed31629488028110BeEBabC6E476ffA647bd9",
+        address: "0x787ebd7a770fc07814adfd3a24f171d416371c2b",
         ens: false,
     },
     avalanche: {
-        address: "0x8ac84f0F6019E41A7e8255f0C32747cf8ADa2Ec3",
+        address: "0x4e557a2936D3a4Ec2cA4981e6cCCfE330C1634DF",
+        ens: false,
+    },
+    gnosis: {
+        address: "0x04a05bE01C94d576B3eA3e824aF52668BAC606c0",
         ens: false,
     },
 }
