@@ -41,7 +41,7 @@ const tokenInfoAddresses: {
         ens: false,
     },
     optimisim: {
-        address: "0x149a692a94eEe18e7854CEA1CEaab557618D4D46",
+        address: "0x8E2587265C68CD9EE3EcBf22DC229980b47CB960",
         ens: false,
     },
     goerli: {
@@ -58,6 +58,10 @@ const tokenInfoAddresses: {
     },
     avalanche: {
         address: "0x4e557a2936D3a4Ec2cA4981e6cCCfE330C1634DF",
+        ens: false,
+    },
+    gnosis: {
+        address: "0x04a05bE01C94d576B3eA3e824aF52668BAC606c0",
         ens: false,
     },
 }
