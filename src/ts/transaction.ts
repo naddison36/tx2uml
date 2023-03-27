@@ -12,7 +12,6 @@ import {
     Contract,
     Contracts,
     Event,
-    Labels,
     MessageType,
     Network,
     Param,
@@ -22,7 +21,7 @@ import {
     TransactionDetails,
     Transfer,
 } from "./types/tx2umlTypes"
-import { basename } from "path"
+import { loadLabels } from "./utils/labels"
 
 const debug = require("debug")("tx2uml")
 
@@ -65,7 +64,8 @@ export class TransactionManager {
 
     async getContractsFromTraces(
         transactionsTraces: Trace[][],
-        configFilename?: string
+        configFilename?: string,
+        network: Network = "mainnet"
     ): Promise<Contracts> {
         const flatTraces = transactionsTraces.flat()
         const participantAddresses: string[] = []
@@ -117,7 +117,7 @@ export class TransactionManager {
         }
 
         // Get token name and symbol from chain
-        await this.setTokenAttributes(contracts)
+        await this.setTokenAttributes(contracts, network)
         // Override contract details like name, token symbol and ABI
         await this.configOverrides(contracts, configFilename)
 
@@ -145,13 +145,8 @@ export class TransactionManager {
             uniqueAddresses
         )
 
-        // get Etherscan labels from local file if for mainnet
-        const labels: Labels =
-            network === "mainnet"
-                ? basename(__dirname) === "lib"
-                    ? require("./labels.json")
-                    : require("../../lib/labels.json")
-                : {}
+        // Try and get Etherscan labels from local file
+        const labels = loadLabels(network)
         const participants: Participants = {}
         for (const token of tokenDetails) {
             const address = token.address
@@ -223,17 +218,14 @@ export class TransactionManager {
         return contracts
     }
 
-    async setTokenAttributes(contracts: Contracts) {
+    async setTokenAttributes(contracts: Contracts, network: Network) {
         // get the token details
         const contractAddresses = Object.keys(contracts)
         const tokensDetails = await this.ethereumNodeClient.getTokenDetails(
             contractAddresses
         )
 
-        const labels: Labels =
-            basename(__dirname) === "lib"
-                ? require("./labels.json")
-                : require("../../lib/labels.json")
+        const labels = loadLabels(network)
         for (const [address, contract] of Object.entries(contracts)) {
             contract.labels = labels[address]?.labels
             const tokenDetail = tokensDetails.find(td => td.address === address)

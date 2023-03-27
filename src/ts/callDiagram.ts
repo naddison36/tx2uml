@@ -44,7 +44,8 @@ export const generateCallDiagram = async (
     const transactionTracesUnfiltered = await txManager.getTraces(transactions)
     const contracts = await txManager.getContractsFromTraces(
         transactionTracesUnfiltered,
-        options.configFile
+        options.configFile,
+        options.chain
     )
     TransactionManager.parseTraceParams(transactionTracesUnfiltered, contracts)
     const [transactionTraces, usedContracts] =

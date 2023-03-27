@@ -1,0 +1,6779 @@
+{
+  "": {
+    "name": "Sum of 5 Accounts",
+    "labels": [
+      "0x-protocol",
+      "aave",
+      "alpaca-finance",
+      "anyswap",
+      "based-finance",
+      "beethoven-x",
+      "bridge",
+      "bridged-token",
+      "burn",
+      "contract-deployer",
+      "defi",
+      "deprecated",
+      "dex",
+      "donate",
+      "exchange",
+      "exploit",
+      "factory-contract",
+      "fantom",
+      "gaming",
+      "hundred-finance",
+      "hyperjump",
+      "interoperability-cross-chain",
+      "market-protocol",
+      "morpheus-swap",
+      "multichain",
+      "old-contract",
+      "oracle",
+      "phish-hack",
+      "scream",
+      "spiritswap",
+      "spookyswap",
+      "staking",
+      "tarot",
+      "token-contract",
+      "tomb-finance",
+      "vaults",
+      "wigoswap",
+      "yield-farming"
+    ]
+  },
+  "0xcb0ff14cac96add86223c8c7e8a6129cd92919ab": {
+    "name": "Cyber Fantoms (CYBER)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x11111112542d85b3ef69ae05771c2dccff4faa26": {
+    "name": "Fake 1inch Contract",
+    "labels": [
+      "exploit",
+      "phish-hack"
+    ]
+  },
+  "0x9631be8566fC71d91970b10AcfdEe29F21Da6C27": {
+    "name": "Intelligent Monsters (IMON)",
+    "labels": [
+      "artificial-intelligence",
+      "nft"
+    ]
+  },
+  "0xa588c99de311d93479c0c4b4eaa24b751f443efa": {
+    "name": "MCash Exchange: Old MBCASH Token",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0xa3ef376a62ab008114c8a608c2d5393592bab649": {
+    "name": "Death: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xdfb5a6b5136186f4ffcf3fe055b48f27793cdbd2": {
+    "name": "Random (anyRNDM)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xd5c313de2d33bf36014e6c659f13ace112b80a8e": {
+    "name": "MPX LP (MLP)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xddc0385169797937066bbd8ef409b5b3c0dfeb52": {
+    "name": "Wrapped MEMO (wMEMO)",
+    "labels": [
+      "bridged-token"
+    ]
+  },
+  "0x43de2d77bf8027e25dbd179b491e8d64f38398aa": {
+    "name": "deBridgeGate",
+    "labels": [
+      "bridge"
+    ]
+  },
+  "0x21ada0d2ac28c3a5fa3cd2ee30882da8812279b6": {
+    "name": "Oath Token (OATH)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x22DEa64A0e9ecbB13d2B0dD2d95a91A06DACb23B": {
+    "name": "DaemonPunks (DMNPUNK)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x543acd673960041eee1305500893260f1887b679": {
+    "name": "Allbridge (ABR)",
+    "labels": [
+      "bridge",
+      "stablecoin"
+    ]
+  },
+  "0x9d5b051685d9272d20af3c94134cb7ac41db5648": {
+    "name": "",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xa1dc8780380dd99bdc1622ff4364b381ec4f937f": {
+    "name": "WigoSwap: Seed Funder 1 180 DayTimelock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x9a2d0935e6cc558aaba4ebd280f03a74b4752add": {
+    "name": "Pebble (PBL)",
+    "labels": [
+      "decentralized-web",
+      "defi"
+    ]
+  },
+  "0xd31fcd1f7ba190dbc75354046f6024a9b86014d7": {
+    "name": "Solidex (SEX)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x5e983ff70de345de15dbdcf0529640f14446cdfa": {
+    "name": "Staked Fantohm (sFHM)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x3b53D2C7B44d40BE05Fa5E2309FFeB6eB2492d88": {
+    "name": "Okse (OKSE)",
+    "labels": [
+      "decentralized-web"
+    ]
+  },
+  "0xb9bbe9355828a1ad0e2d605480f969c6903ad9e4": {
+    "name": "WigoBank Token (xWIGO)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xb35e0dc5c7ef75c36688f6699262025697a64c0e": {
+    "name": "Specter Share (SSHARE)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x3e9f34309b2f046f4f43c0376efe2fdc27a10251": {
+    "name": "Tarot: Supply Vault Router",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0xfe83475880d3592833249baaacfec5ed51e29d82": {
+    "name": "ChainPort: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x9611579c926294b0e29e5371a81a3e463650be17": {
+    "name": "Anyswap: BCP Token",
+    "labels": [
+      "anyswap",
+      "token-contract"
+    ]
+  },
+  "0xB3a7F462033C26c254360d4589157e5C3ceee284": {
+    "name": "IronBank (anyIB)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x50956f965F321c1DE62d2E103620881597d76809": {
+    "name": "Bridged RPTR (RPTR)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xca24c90f45837417dd81031ba13d2c511a930ef4": {
+    "name": "STAKE1 (STAKE1)",
+    "labels": [
+      "loans"
+    ]
+  },
+  "0xa6097a4DbEF3EB44c50bad6286a5ED2bc4418AA2": {
+    "name": "Build Token (BUILD)",
+    "labels": [
+      "technology"
+    ]
+  },
+  "0x9eA7a3f50044EEBFCeA7aCb08069E4Fd238Ba1fD": {
+    "name": "Wrapped YieldTopia (wYIELD)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x075b7f7e2960d49c67c5a44134928e5e2896283a": {
+    "name": "Tarot: Supply Vault Strategy V2",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x582423c10c9e83387a96d00a69ba3d11ee47b7b5": {
+    "name": "OneRing (RING)",
+    "labels": [
+      "interoperability-cross-chain",
+      "yield-farming"
+    ]
+  },
+  "0xd2df8db1af84e9454fc1df16c7420acb15093e91": {
+    "name": "Boba Network: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x8F4DC1d7139F87ee7602b331De556a1dbd4db27C": {
+    "name": "EarlyRareBearz (ERAREBEARZ)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x5cc61a78f164885776aa610fb0fe1257df78e59b": {
+    "name": "SpiritSwap Token (SPIRIT)",
+    "labels": [
+      "dex",
+      "yield-farming"
+    ]
+  },
+  "0x4a1c3ad6ed28a636ee1751c69071f6be75deb8b8": {
+    "name": "Aave: vFTM Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xfda8355e8ce22ac44f2d175f4acfec8fac7472d7": {
+    "name": "MetaGaming Guild [via ChainPort.io] (MGG)",
+    "labels": [
+      "gaming",
+      "metaverse"
+    ]
+  },
+  "0xd6070ae98b8069de6b494332d1a1a81b6179d960": {
+    "name": "Beefy.Finance (BIFI)",
+    "labels": [
+      "bridged-token"
+    ]
+  },
+  "0x3967e99b02d86ffc84fb69fd9a7c136952906201": {
+    "name": "DEUS Finance: Oracle",
+    "labels": [
+      "oracle"
+    ]
+  },
+  "0x9767203e89dcd34851240b3919d4900d3e5069f1": {
+    "name": "A4 Finance: A4 Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x8ce95561ec220df4178899dd3c500daae2b5f5bd": {
+    "name": "Multichain: Router V6",
+    "labels": [
+      "bridge",
+      "multichain"
+    ]
+  },
+  "0x32439f5a7dc35590e83aac0a80762de27ab76046": {
+    "name": "Tomb Finance: Dev Wallet",
+    "labels": [
+      "tomb-finance"
+    ]
+  },
+  "0x2e79205648b85485731cfe3025d66cf2d3b059c4": {
+    "name": "SCARAB (SCARAB)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0x83633dca596e741c80f4fa032c75518cc251b09b": {
+    "name": "Lair of Wisdom: Lair",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xfd000ddcea75a2e23059881c3589f6425bff1abb": {
+    "name": "PaintSwap: Router",
+    "labels": [
+      "dex"
+    ]
+  },
+  "0x466ebd9ec2027776fa11a982e9bbe4f67aa6e86b": {
+    "name": "Tarot: xTAROT Staking Pool Controller",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x1b6382dbdea11d97f24495c9a90b7c88469134a4": {
+    "name": "Axelar Wrapped USDC (axlUSDC)",
+    "labels": [
+      "decentralized-web"
+    ]
+  },
+  "0x8f0224e841b78bf380649b6b19503e2bfc76efc7": {
+    "name": "Hertz Token (anyHTZ)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xce761d788df608bd21bdd59d6f4b54b2e27f25bb": {
+    "name": "Rarity Manifested (RM)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xad870b277b3f74f42965ed9bb9e737ca5ffac709": {
+    "name": "Anyswap: AnyWFTM Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x07e6332dd090d287d3489245038daf987955dcfb": {
+    "name": "Geist DAI (gDAI)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0xfd6f3c1845604c8ae6c6e402ad17fb9885160754": {
+    "name": "Aave: Aave Oracle V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x489a8756c18c0b8b24ec2a2b9ff3d4d447f79bec": {
+    "name": "BNB Bridge Exploiter",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0x47f01db18a38261e4cb153bae6db7d3743acb33c": {
+    "name": "0x: Transformer Deployer",
+    "labels": [
+      "0x-protocol"
+    ]
+  },
+  "0x6362496bef53458b20548a35a2101214ee2be3e0": {
+    "name": "Fantom (anyFTM)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x5316f8106d71362e40d0f01724ee6218007e620d": {
+    "name": "GasBack.Tech (GASB)",
+    "labels": [
+      "gas"
+    ]
+  },
+  "0xb54ff1ebc9950fce19ee9e055a382b1219f862f0": {
+    "name": "Portalheads (PH)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x2272ecf43a7481088fa2d4ba9109804ed5a31901": {
+    "name": "Circuits of Value: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x39720e5fe53beeeb9de4759cb91d8e7d42c17b76": {
+    "name": "ProtoFi: Factory",
+    "labels": [
+      "factory-contract"
+    ]
+  },
+  "0xbb23dfe92c75c682c00e4c47613efa287dd4e31f": {
+    "name": "DexBrowser: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x8d9aed9882b4953a0c9fa920168fa1fdfa0ebe75": {
+    "name": "Scream.sh: scDAI",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0x4c093134657904a7c3f1e47a6d9a38955094ebef": {
+    "name": "Tarot: Early Lender",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x1d43697d67cb5d0436cc38d583ca473a1bfebc7a": {
+    "name": "Fantom Doge (RIP)",
+    "labels": [
+      "decentralized-web"
+    ]
+  },
+  "0x454d4bae7c2adab588d837aff4db16db19d46a33": {
+    "name": "#GMFTM (GMFTM)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x33dbc435ff3ec866d4d95bce35695943af3d074b": {
+    "name": "Fantasm Finance: Oracle FSM - FTM",
+    "labels": [
+      "oracle"
+    ]
+  },
+  "0x0000000000000000000000000000000000000002": {
+    "name": "Null: 0x000...002",
+    "labels": [
+      "burn"
+    ]
+  },
+  "0x23cD2E6b283754Fd2340a75732f9DdBb5d11807e": {
+    "name": "EverRise NFT Stakes (nftRISE)",
+    "labels": [
+      "nft",
+      "staking"
+    ]
+  },
+  "0xd67de0e0a0fd7b15dc8348bb9be742f3c5850454": {
+    "name": "Binance (BNB)",
+    "labels": [
+      "bridge",
+      "spookyswap"
+    ]
+  },
+  "0x11eb3aa66fe1f2b75cb353d3e874e96968182bda": {
+    "name": "AlphaToken (ALPHA)",
+    "labels": [
+      "staking",
+      "yield-farming"
+    ]
+  },
+  "0xca64d4225804f2ae069760cb5ff2f1d8bac1c2f9": {
+    "name": "0x: Liquidity Provider Sandbox",
+    "labels": [
+      "0x-protocol"
+    ]
+  },
+  "0xcbe0ca46399af916784cadf5bcc3aed2052d6c45": {
+    "name": "LSHARE (LSHARE)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x91fa20244Fb509e8289CA630E5db3E9166233FDc": {
+    "name": "Governance OHM (gOHM)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0x5fdf0b736b0eb0564b50baf0d15a1a8ae6c6c1d9": {
+    "name": "Mainstream For The Underground (MFTU)",
+    "labels": [
+      "metaverse"
+    ]
+  },
+  "0x87d57f92852d7357cf32ac4f6952204f2b0c1a27": {
+    "name": "Random (RNDM)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x67Be56c53d1b0f3D3590E71186B3bA6124229e66": {
+    "name": "MAGA Frens (FRENS)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xe43d8f9e2ea875c6e342e7b3f78acbbae0a9110b": {
+    "name": "Fake_Phishing7",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0x15b7c0c907e4C6b9AdaAaabC300C08991D6CEA05": {
+    "name": "Gelato Network Token (GEL)",
+    "labels": [
+      "smart-contract"
+    ]
+  },
+  "0x80c0771dff78d0eba670f170c2b4dbbe1eaa292c": {
+    "name": "Metavault DAO: Staking Helper",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x03894d86cc6e1e41e8bba17469204d304c4e92b8": {
+    "name": "Fantom: Foundation Wallet 13",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0xDfed31E640b7280F76f046a97179E5E369D209b5": {
+    "name": "OmniWhirl (WHIRL)",
+    "labels": [
+      "multichain"
+    ]
+  },
+  "0x8a88b501a68cea5844b9d95f41892b05c4cd1d73": {
+    "name": "Manga Token (MAN)",
+    "labels": [
+      "gaming",
+      "metaverse"
+    ]
+  },
+  "0xc758295cd1a564cdb020a78a681a838cf8e0627d": {
+    "name": "FantomStarter (FS)",
+    "labels": [
+      "defi",
+      "platform"
+    ]
+  },
+  "0xc165d941481e68696f43ee6e99bfb2b23e0e3114": {
+    "name": "0xDAO (OXD)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x6f373cD69c329B1DA2e00b861Ad950e59454aa18": {
+    "name": "Doge Yellow Coin (DOGEY)",
+    "labels": [
+      "meme"
+    ]
+  },
+  "0xb9f211a9e73509f0bd5fc69ba5cf2f5d6dca49f8": {
+    "name": "ForgottenSkulls (FGS)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x64674d26df0fd7cf8e9d5c8d721bc202c6b98822": {
+    "name": "Catoshi (CATS)",
+    "labels": [
+      "bridge"
+    ]
+  },
+  "0xf31778d591c558140398f46feca42a6a2dbffe90": {
+    "name": "hoge.finance (HOGE)",
+    "labels": [
+      "defi",
+      "meme",
+      "nft"
+    ]
+  },
+  "0xe5130D3DbfaC6Ae7d73a24D719762df74d8E4c27": {
+    "name": "Alchemix USD (alUSD)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x08b1c9a96c663ee1e0cd7029f13aced7dcf5e373": {
+    "name": "Dark Planet (DP)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x248cb87dda803028dfead98101c9465a2fbda0d4": {
+    "name": "Charm Token (CHARM)",
+    "labels": [
+      "governance",
+      "yield-farming"
+    ]
+  },
+  "0x2f085edec7113e54a1747bD9572b213E662C6165": {
+    "name": "ZARP Stablecoin (ZARP)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0xfccf3cabbe80101232d343252614b6a3ee81c989": {
+    "name": "Aave: vUSDC Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x51af0532e6bd89695266e714a1b09fd1ac297dc7": {
+    "name": "Fantom: Foundation Wallet 14",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0xca81dbbbb9389a5387f0acad4d018756a04d7f2c": {
+    "name": "Fantom: Foundation Wallet 2",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0xe3d17c7e840ec140a7a51aca351a482231760824": {
+    "name": "xSCREAM (xSCREAM)",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0x2b2929e785374c651a81a63878ab22742656dcdd": {
+    "name": "SpookySwap: MasterChef LP Staking Pool",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0x373e768f79c820aa441540d254dca6d045c6d25b": {
+    "name": "Mainstream For The Underground (anyMFTU)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x13c716188c38ce27b9b2b672a59543cf1170eabe": {
+    "name": "Alchemix Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x5b2af7fd27e2ea14945c82dd254c79d3ed34685e": {
+    "name": "JEFE TOKEN (JEFE)",
+    "labels": [
+      "gaming",
+      "metaverse",
+      "nft"
+    ]
+  },
+  "0xc417d14f3a527cce4a1bfc0ac7ce38f8121c0030": {
+    "name": "MiniVerse Finance: Oracle",
+    "labels": [
+      "oracle"
+    ]
+  },
+  "0x131c7afb4E5f5c94A27611f7210dfEc2215E85Ae": {
+    "name": "Power (POWER)",
+    "labels": [
+      "defi",
+      "protocol"
+    ]
+  },
+  "0x911d1FEaE99e112B5014cfa60038325d863352f1": {
+    "name": "Wolf Ventures (WV)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x8166994d9ebbe5829ec86bd81258149b87facfd3": {
+    "name": "Beethoven X: MasterChef",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0x90e892fed501ae00596448aecf998c88816e5c0f": {
+    "name": "DarkMatter (DMD)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x8145edddf43f50276641b55bd3ad95944510021e": {
+    "name": "Aave: Pool Configurator V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x078eef5a2fb533e1a4d487ef64b27df113d12c32": {
+    "name": "fBAND (FBAND)",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x6a1a8368d607c7a808f7bba4f7aed1d9ebde147a": {
+    "name": "Enchantment (ENCHANT)",
+    "labels": [
+      "dex",
+      "protocol"
+    ]
+  },
+  "0x2a1651c38927bdede04f4e07cfcc55bd1c81fe72": {
+    "name": "Anyswap: Deployer 4",
+    "labels": [
+      "anyswap",
+      "contract-deployer"
+    ]
+  },
+  "0x9ec66b9409d4cd8d4a4c90950ff0fd26bb39ad84": {
+    "name": "Based Finance: Based Genesis Reward Pool",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0xb42bf10ab9df82f9a47b86dd76eee4ba848d0fa2": {
+    "name": "Ankr Fantom Reward Earning Bond (aFTMb)",
+    "labels": [
+      "defi",
+      "staking"
+    ]
+  },
+  "0x05f024C6F5a94990d32191D6f36211E3Ee33504e": {
+    "name": "MiniVerse Dollar (anyMvDOLLAR)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xd3b71117e6c1558c1553305b44988cd944e97300": {
+    "name": "YEL Token (YEL)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x633b207dd676331c413d4c013a6294b0fe47cd0e": {
+    "name": "Aave: sWBTC Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x7b5a8f4c92ba4796c932654ba1daaa1e74c1a3b2": {
+    "name": "BorgSwap: SAFEBORG Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xd4d94f70d9ef449ea6d3d90c4dd4c2c73c21ab67": {
+    "name": "UltraNote Infinity (FXUNI)",
+    "labels": [
+      "privacy"
+    ]
+  },
+  "0xEe9801669C6138E84bD50dEB500827b776777d28": {
+    "name": "O3 Swap Token (O3)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x16327e3fbdaca3bcf7e38f5af2599d2ddc33ae52": {
+    "name": "SpiritSwap: Router",
+    "labels": [
+      "dex",
+      "spiritswap"
+    ]
+  },
+  "0x5494b29f78714397e96086ba7542e364842a74df": {
+    "name": "Tarot: Claim Aggregator",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x0defef0c977809db8c1a3f13fd8dacbd565d968e": {
+    "name": "Tarot FTM Supply Vault (tFTM)",
+    "labels": [
+      "defi",
+      "vaults"
+    ]
+  },
+  "0xba14c06011f4af5970cfde4364ba6320e190bd4b": {
+    "name": "Aave: Ui Incentive Data Provider V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x95bf7e307bc1ab0ba38ae10fc27084bc36fcd605": {
+    "name": "USDC (anyUSDC)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xb0fdcdd7e920a036331abe9ffc7313322c0abba0": {
+    "name": "Tarot (anyTAROT)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x5badadd7afff73687596793173257cc69a82bd76": {
+    "name": "GSHARE (GSHARE)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x2b2d2320bed24e032e9ac352495479f85f54a775": {
+    "name": "DexoSwap (DEXO)",
+    "labels": [
+      "dex"
+    ]
+  },
+  "0xd598Ca14eaff048bB98F8E56475cc6b1F3E5D319": {
+    "name": "Shares.GasBack.Tech (GASS)",
+    "labels": [
+      "gas"
+    ]
+  },
+  "0xde5ed76e7c05ec5e4572cfc88d1acea165109e44": {
+    "name": "DEUS (DEUS)",
+    "labels": [
+      "staking",
+      "yield-farming"
+    ]
+  },
+  "0x8e1701cfd85258ddb8dfe89bc4c7350822b9601d": {
+    "name": "MEXC: Hot Wallet",
+    "labels": [
+      "exchange"
+    ]
+  },
+  "0x9ba3e4f84a34df4e08c112e1a0ff148b81655615": {
+    "name": "Shiba (Shiba)",
+    "labels": [
+      "charity",
+      "meme"
+    ]
+  },
+  "0x904f51a2e7eeaf76aaf0418cbaf0b71149686f4a": {
+    "name": "FAME (FAME)",
+    "labels": [
+      "blockchain"
+    ]
+  },
+  "0x2ffc59d32a524611bb891cab759112a51f9e33c0": {
+    "name": "Ankr: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x731eb04c1013f9c5fe94ba8707b98de3b3a2d39f": {
+    "name": "Tutipila (Pila)",
+    "labels": [
+      "currency"
+    ]
+  },
+  "0x9F3c6e1bD483cd977DF9B36734E1cD684f1Be621": {
+    "name": "Dope Token DeGen Haus (DOPE)",
+    "labels": [
+      "deflationary-token"
+    ]
+  },
+  "0x2f4382e946420024edcb2251759b95567eD6aD5D": {
+    "name": "Carv Events (CARV-EVNT)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xC5cd01e988cD0794E05ab80F2BCdbDF13cE08BD3": {
+    "name": "Wrapped Nova USD (nUSD)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x260b3e40c714ce8196465ec824cd8bb915081812": {
+    "name": "Iron Finance ICE Token (IronICE)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0xc6920d3a369e7c8bd1a22dbe385e11d1f7af948f": {
+    "name": "Beethoven X: Protocol Fees Collector",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0x1ccbfec508da8d5242d5c1b368694ab0066b39f1": {
+    "name": "Aave: Ui Pool Data Provider V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x4c3c043f8c4103c048de6fb437b95ef8209038d1": {
+    "name": "WigoSwap: Core Team Initial Liquidity Lock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x110f2c886f8173c9075866d87f78111f8da2b3cd": {
+    "name": "Market Protocol: SpiritSwap wFTM TWAP Oracle",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0x5aa53f03197e08c4851cad8c92c7922da5857e5d": {
+    "name": "Scream.sh: scWFTM",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0x986a4ea3679afe15b5963a6ec3437be859279bc1": {
+    "name": "Atmosphere CCG (anyATMSSFT)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xE509Db88B3c26D45f1fFf45b48E7c36A8399B45A": {
+    "name": "Vive La Bouje (VIVE)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x0a190202ad82f2bea8be994e34d588f6e235083e": {
+    "name": "Hundred Finance: Beets HND Rewarder",
+    "labels": [
+      "hundred-finance"
+    ]
+  },
+  "0xe0654c8e6fd4d733349ac7e09f6f23da256bf475": {
+    "name": "Scream.sh: SCREAM Token",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0x0615dbba33fe61a31c7ed131bda6655ed76748b1": {
+    "name": "Ankr (ANKR)",
+    "labels": [
+      "blockchain",
+      "cloud",
+      "computing"
+    ]
+  },
+  "0xf8aeed344d9fbfacd16f78f463f151d409a2e755": {
+    "name": "A4 Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xdc79afce5ae2300834b2bb575bc40cf78ef7b5e3": {
+    "name": "Batasm Protocol BFTM Token (BFTM)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xc5e2b037d30a390e62180970b3aa4e91868764cd": {
+    "name": "Tarot (TAROT)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x12efed3512ea7b76f79bcde4a387216c7bce905e": {
+    "name": "One Ring Finance Exploiter",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0x5444c30210d8a0a156178cfb8048b4137c0d40d1": {
+    "name": "Propel (PROPEL)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xe2fb177009ff39f52c0134e8007fa0e4baacbd07": {
+    "name": "SoulPower (SOUL)",
+    "labels": [
+      "dex",
+      "loans",
+      "protocol"
+    ]
+  },
+  "0x09b62a821d821df165c95a6d059b4d51fc9668f5": {
+    "name": "MangaMon Egglets Nft (Egglets)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xed940c1db02a8e7dc2e6748aff3aab165b59c7e3": {
+    "name": "OperaSwap Finance (OPERA)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x330b6ba54f16df0db2e1092f1ba06ffd95d5d10e": {
+    "name": "WigoSwap: Seed Funder 1 Initial Timelock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0xa4611527777c68583ba25eddc22d362cc0bab14c": {
+    "name": "Colorful Pixel Bunnies: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x7381eD41F6dE418DdE5e84B55590422a57917886": {
+    "name": "Beefy Escrowed Fantom (beFTM)",
+    "labels": [
+      "escrow"
+    ]
+  },
+  "0x2241fabdf45c54ca330c34c783b114e6bcaae7e7": {
+    "name": "theghost.finance (GHOST)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0xb0c96020aac0003e61c609bd51e1629389e43674": {
+    "name": "Fantom Node Capital: Old FNC Token",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0xd12bff069ba1212e82b594c741ec19f374c5c417": {
+    "name": "Beast Bull Club: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x3c55364b886d5ea7477cc181341d8ae2ef0d3edc": {
+    "name": "Biconomy: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B": {
+    "name": "Aave (AAVE)",
+    "labels": [
+      "defi",
+      "loans"
+    ]
+  },
+  "0x6437adac543583c4b31bf0323a0870430f5cc2e7": {
+    "name": "3SHARE Token (3SHARES)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xc0ad1703d2062fb32db92cb31492bd41220d16d1": {
+    "name": "Based Finance: Team Wallet 11",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x838b7f64fa89d322c563a6f904851a13a164f84c": {
+    "name": "Alpaca Finance: Mini FL",
+    "labels": [
+      "alpaca-finance"
+    ]
+  },
+  "0x702bf114d3e80c98694389749d42ff645f0b6128": {
+    "name": "Based Finance: Team Wallet 6",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x1f797FDeBD1C9Bf015643D0cc8BD00ecE9e709D7": {
+    "name": "Powerful (PWFL)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x4389b230d15119c347b9e8bea6d930a21aadf6ba": {
+    "name": "Boba Network: BOBA Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x876f890135091381c23be437fa1cec2251b7c117": {
+    "name": "YieldWolf: Vaults",
+    "labels": [
+      "vaults"
+    ]
+  },
+  "0x3E01B7E242D5AF8064cB9A8F9468aC0f8683617c": {
+    "name": "Orbs (ORBS)",
+    "labels": [
+      "multichain"
+    ]
+  },
+  "0xd17584633bc8d190e5a14502976dad9640456d6d": {
+    "name": "Tangle (TNGL)",
+    "labels": [
+      "data"
+    ]
+  },
+  "0x84b0b7718f8480a9eda3133fd385d7edf2b1d1c4": {
+    "name": "DefySwap (DFY)",
+    "labels": [
+      "defi",
+      "dex"
+    ]
+  },
+  "0x59bdd7397e3f988af72ffa3245b1f5bb452aaa42": {
+    "name": "Based Finance: Team Wallet",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x37112524d6ecc9efd713cc38fa0eb2be1c5efebb": {
+    "name": "Blockchain Adventurers Guild: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x143a6fe8f4ef99f56716abd31bdd6eccbc04691c": {
+    "name": "Deflationary: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xc87cee866ebdfc4f0e07e80157f0f4cbb7ad329e": {
+    "name": "MultiPrint (MPRINT)",
+    "labels": [
+      "defi",
+      "staking"
+    ]
+  },
+  "0xf760c5b88d970d6f97e64e264dac5a3767dafd74": {
+    "name": "0x: Exchange Proxy Governor",
+    "labels": [
+      "0x-protocol"
+    ]
+  },
+  "0x2ef4a574b72e1f555185afa8a09c6d1a8ac4025c": {
+    "name": "BeethovenxToken (anyBEETS)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xddcb3ffd12750b45d32e084887fdf1aabab34239": {
+    "name": "Anyswap (ANY)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0xc45a479877e1e9dfe9fcd4056c699575a1045daa": {
+    "name": "Aave: aSUSHI Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xD2c244D5c3b530b9310C34962bF9B48c08dC0BcB": {
+    "name": "RadioShack Token (anyRADIO)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x6d80113e533a2c0fe82eabd35f1875dcea89ea97": {
+    "name": "Aave: aFTM Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xda00c4fec58dc0acce8fbdcd52428a7f66dcc433": {
+    "name": "0xDAO: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x2130d2a1e51112d349ccf78d2a1ee65843ba36e0": {
+    "name": "UniDex (UNIDX)",
+    "labels": [
+      "interoperability-cross-chain",
+      "platform",
+      "trading"
+    ]
+  },
+  "0x5b3c1f260e09e653290f24f75abc5e466fd42310": {
+    "name": "Assent Protocol: ASNT Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x0edfcc1b8d082cd46d13db694b849d7d8151c6d5": {
+    "name": "Beethoven X: Team Fund Multisig Wallet",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0xda5db6c2a2fd53a2d3fc4246bbd8acce5f93bae1": {
+    "name": "ZombI (ZombI)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x2f6f07cdcf3588944bf4c42ac74ff24bf56e7590": {
+    "name": "StargateToken (STG)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x1BCF4DC879979C68fA255f731FE8Dcf71970c9bC": {
+    "name": "Syfin (SYF)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0x5dbe7bc9df169f4df905690f68c94d1c272b3876": {
+    "name": "ULE (anyULE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x9e73f99ee061c8807f69f9c6ccc44ea3d8c373ee": {
+    "name": "Frax Ether (frxETH)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x622265eab66a45fa05bac9b8d2262aa548fa449e": {
+    "name": "Electron Token (ELCT)",
+    "labels": [
+      "marketplace"
+    ]
+  },
+  "0xa7b9123f4b15fe0ff01f469ff5eab2b41296dc0e": {
+    "name": "Tomb Finance: Tomb Rewards Pool",
+    "labels": [
+      "tomb-finance"
+    ]
+  },
+  "0xbfaf328fe059c53d936876141f38089df0d1503d": {
+    "name": "MMToken (MM)",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xB6e72EDC1B7abD33d34E0572677C7A55d9B89D5E": {
+    "name": "FANTOM sSpellPrinter (sSpellP)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC": {
+    "name": "Sushi (SUSHI)",
+    "labels": [
+      "defi",
+      "yield-farming"
+    ]
+  },
+  "0x6e3a003042380d559175cDb8d372B6a07eC511b1": {
+    "name": "OGTBOND (OGTBOND)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x6b2a7b82d3f7a6e1f5a5831ab40666ec717645d5": {
+    "name": "Waterfall (WATERFALL)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xd8ad37849950903571df17049516a5cd4cbe55f6": {
+    "name": "Aave: sWETH Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x6c021ae822bea943b2e66552bde1d2696a53fbb7": {
+    "name": "TOMB (TOMB)",
+    "labels": [
+      "stablecoin",
+      "yield-farming"
+    ]
+  },
+  "0xA91ADe2730bF6041ce9DE1Ba9cB22eE7Fea2B009": {
+    "name": "Vamp Token (VAMP)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xa2503804ec837d1e4699932d58a3bdb767dea505": {
+    "name": "Beethoven X: Team Fund Linear Vesting",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0x8e4129141be6fffaa6c1e520fa407a0d022dd97e": {
+    "name": "Market Protocol: Lens V3",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0x38540b4613d2e57ecf190d3486ae6f74591eb8a9": {
+    "name": "AliumToken on Fantom (ALM)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0x31911223bb3ff5b773af3e677fc0ac5760215e4e": {
+    "name": "Paintswap Beardies (BEARDIES)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x58b1bd5e631bae7739ef5b9350aebdcc7ae4ed90": {
+    "name": "WigoSwap: Seed Funder 1 60 DayTimelock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0xd3c325848d7c6e29b574cb0789998b2ff901f17e": {
+    "name": "ArtWallet (1ART)",
+    "labels": [
+      "marketplace"
+    ]
+  },
+  "0x2d21b401e0ab6347165113dcf29997630163e59d": {
+    "name": "69420 Frogs (Frogs)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xfc74d58550485e54dc3a001f6f371741dceea094": {
+    "name": "Atmosphere CCG (ATMSSFT)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x287d95c954bbfc19720b320a8bfb1a60cc8cf41b": {
+    "name": "Fantasm Finance: Oracle XFTM- FTM",
+    "labels": [
+      "oracle"
+    ]
+  },
+  "0x181f3f22c9a751e2ce673498a03e1fdfc0ebbfb6": {
+    "name": "Ester Token (EST)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x7f9893ef9726d23e249518eaa1424677b7fed6a9": {
+    "name": "BabyChimpGang: BCG Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xf24be6c063bee7c7844dd90a21fdf7d783d41a94": {
+    "name": "WingSwap (WIS)",
+    "labels": [
+      "dex",
+      "yield-farming"
+    ]
+  },
+  "0xfd09f0296af88ac777c137ecd92d85583a9b9e4a": {
+    "name": "Fantom: Foundation Wallet 9",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x625e7708f30ca75bfd92586e17077590c60eb4cd": {
+    "name": "Aave: aUSDC Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x8C739564345DfCb7e4C7e520B0E8fA142c358a78": {
+    "name": "SPIRAL (SPR)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x3ce2ad7261cd6ea10a0bdbbefce4b9e4f1b0dc70": {
+    "name": "RoyalCrows (RC)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x93059a766fdac8771114de2ab13e0320bc3ac6fb": {
+    "name": "Boneyard: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x1bffb3a232e06e06a5d9e93c8df3321f768197c2": {
+    "name": "Fantom: Foundation Wallet 1",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x6f782fb2e2c7ca617612ae111634023dddbb47d2": {
+    "name": "BitDaemons: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x053d7e3611eedb390db9b8fc9381d215069e0276": {
+    "name": "Hundred Finance: Olympus Pro Bond Treasury",
+    "labels": [
+      "hundred-finance"
+    ]
+  },
+  "0x944a05c5acc46c9777aca7d8dd92b048b1b6d3e0": {
+    "name": "MMToken (anyMM)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xc73b84eac512a04f139d4a200aae0ff24c4a5cbc": {
+    "name": "Fantom: Foundation Wallet 11",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0xd0660cd418a64a1d44e9214ad8e459324d8157f1": {
+    "name": "Woofy (WOOFY)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x3b57f3feaaf1e8254ec680275ee6e7727c7413c7": {
+    "name": "Exodia (EXOD)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xB01E8419d842beebf1b70A7b5f7142abbaf7159D": {
+    "name": "Cover Protocol Governance (COVER)",
+    "labels": [
+      "insurance",
+      "yield-farming"
+    ]
+  },
+  "0xefc9200cd50ae935da5d79d122660ddb53620e74": {
+    "name": "Fantom: Foundation Wallet 7",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x7c598c96d02398d89fbcb9d41eab3df0c16f227d": {
+    "name": "Nexo (NEXO)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0x53d831e1db0947c74e8a52618f662209ec5de0ce": {
+    "name": "Sing Token (SING)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x627524d78B4fC840C887ffeC90563c7A42b671fD": {
+    "name": "Cryptokek.com (KEK)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x174c7106aeecdc11389f7dd21342f05f46ccb40f": {
+    "name": "DEVIL Token (DEVIL)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x5ec86d4d826bf3e12ee2486b9df01d7cfa99b6ca": {
+    "name": "Rarity Game: Donate",
+    "labels": [
+      "donate"
+    ]
+  },
+  "0x449eadd544cb6de7e12dbc0b522ee518a7641561": {
+    "name": "Tarot: Token Splitter",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x44f7237df00e386af8e79b817d05ed9f6fe0f296": {
+    "name": "SOL (SOL)",
+    "labels": [
+      "blockchain"
+    ]
+  },
+  "0x62b10f5b7132d6c3419dedf79c6c1dfe275d699c": {
+    "name": "New Aisiki (NAK)",
+    "labels": [
+      "e-commerce"
+    ]
+  },
+  "0x1adbeb67d9986ba12cbd41076a03c64f573435a4": {
+    "name": "Beast Bull Club: SBB Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xe705af5f63fcabdcdf5016aa838eaaac35d12890": {
+    "name": "MagicCraft (MCRT)",
+    "labels": [
+      "blockchain",
+      "gaming"
+    ]
+  },
+  "0xeafbcc0e7e3453ecc997707be816ddc3b68d5a02": {
+    "name": "OneRing (anyRING)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xcab46f1397fdf4b0f31cef05345141e51f877edb": {
+    "name": "Alpaca Finance: Simple Oracle",
+    "labels": [
+      "alpaca-finance"
+    ]
+  },
+  "0xa1a938855735c0651a6cfe2e93a32a28a236d0e9": {
+    "name": "WigoSwap: Master Farmer",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x9a1331A6f638cfbDFb263fb7fE4718EABba27e2B": {
+    "name": "GBOND (anyGBOND)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xac0fa95058616d7539b6eecb6418a68e7c18a746": {
+    "name": "Based Finance: BShare Reward Pool",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0xa882ceac81b22fc2bef8e1a82e823e3e9603310b": {
+    "name": "PanicSwap (PANIC)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x37c045be4641328dfeb625f1dde610d061613497": {
+    "name": "JustYours (JUST)",
+    "labels": [
+      "adult"
+    ]
+  },
+  "0x13cbc2ba1d9ee5b8ebb6d58099820424e172f32a": {
+    "name": "BNBBack: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x74e23df9110aa9ea0b6ff2faee01e740ca1c642e": {
+    "name": "TOR (TOR)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x9611579c926294b0e29E5371A81a3e463650Be17": {
+    "name": "PieDAO Balanced Crypto Pie (BCP)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x0091371eaef2da68c8dd77975358c91e8570640f": {
+    "name": "Deflationary (DEF)",
+    "labels": [
+      "deflationary-token"
+    ]
+  },
+  "0xe1e6b01ae86ad82b1f1b4eb413b219ac32e17bf6": {
+    "name": "Thorstarter Token (XRUNE)",
+    "labels": [
+      "dao",
+      "defi"
+    ]
+  },
+  "0xa31de1ba6c1b2bd564a3a4908f1cf2f23d7f005a": {
+    "name": "",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xee65d8b88f86ace0f7ba42ba2d2c679b6f604bf0": {
+    "name": "TAZOR (TAZOR)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x07e796368ac8480f74b57eba6391733ede0dcad7": {
+    "name": "Kitten Royalties (rKITTEN)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x65768e988006e0be65c6d6ab378a6d7509c6cf40": {
+    "name": "Based Finance: Team Wallet 9",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x953a573793604af8d41f306feb8274190db4ae0e": {
+    "name": "Aave: vLINK Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xe8450dc5d6d88be26087272db46c08fa36455904": {
+    "name": "Market Protocol: Lens V3 Paginate",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0xabb63bfcbbe7a928864bd3eb75ff06746e1b8a40": {
+    "name": "Blockchain Adventurers Guild [BAG B... (BAG)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436": {
+    "name": "Kanpeki (KAE)",
+    "labels": [
+      "loans"
+    ]
+  },
+  "0x078f358208685046a11c85e8ad32895ded33a249": {
+    "name": "Aave: aWBTC Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x05e481b19129b560e921e487adb281e70bdba463": {
+    "name": "START Vesting (VEST)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xeF4B763385838FfFc708000f884026B8c0434275": {
+    "name": "XEN Crypto (fmXEN)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x2AA5d15Eb36E5960d056e8FeA6E7BB3e2a06A351": {
+    "name": "Hedgeys (HDGY)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xd94112b5b62d53c9402e7a60289c6810def1dc9b": {
+    "name": "Aave: sDAI Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x5f0456F728E2D59028b4f5B8Ad8C604100724C6A": {
+    "name": "L3USD (L3USD)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0xa97684ead0e402dc232d5a977953df7ecbab3cdb": {
+    "name": "Aave: Pool Addresses Provider V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x444444443b0fcb2733b93f23c910580fba52fffa": {
+    "name": "XY Token (XY)",
+    "labels": [
+      "finance",
+      "protocol"
+    ]
+  },
+  "0xa007a9716dba05289df85a90d0fd9d39bee808de": {
+    "name": "Fraxswap: Router V1",
+    "labels": [
+      "deprecated"
+    ]
+  },
+  "0x3eaE16259168F6ac04eFDd555a03304B6B53eB89": {
+    "name": "SyncDAO Governance (SDG)",
+    "labels": [
+      "defi",
+      "governance"
+    ]
+  },
+  "0xF6ee08FA550E1cb08C0821a4DA8CEa57b8909D2e": {
+    "name": "ReflectorCollector (RC)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x55530fa1b042582d5fa3c313a7e02d21af6b82f4": {
+    "name": "Tomb Finance: Oracle",
+    "labels": [
+      "tomb-finance"
+    ]
+  },
+  "0x574dc5842e00cf0d96545bfa680183f3499ae866": {
+    "name": "Excalibur Exchange: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x31efc4aeaa7c39e54a33fdc3c46ee2bd70ae0a09": {
+    "name": "xPollinate: Transaction Manager",
+    "labels": [
+      "bridge",
+      "dex"
+    ]
+  },
+  "0x6a545f9c64d8f7b957d8d2e6410b52095a9e6c29": {
+    "name": "CyberFi Token (CFi)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x23ab88eef24ad383a2dff9e10aedf3a5eee71b80": {
+    "name": "Coffin Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xbbc4a8d076f4b1888fec42581b6fc58d242cf2d5": {
+    "name": "Font (FONT)",
+    "labels": [
+      "marketplace"
+    ]
+  },
+  "0xf705a58359243182e61cacf7f655ab40e5fc3090": {
+    "name": "Governance Metavault (gMVD)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0xfc2d09642a3ef8b9bef2264138e23e6dceac20db": {
+    "name": "Hundred Finance: Olympus Pro Custom Bond",
+    "labels": [
+      "hundred-finance"
+    ]
+  },
+  "0xc54a1684fd1bef1f077a336e6be4bd9a3096a6ca": {
+    "name": "2SHARE Token (2SHARES)",
+    "labels": [
+      "algorithmic-stablecoin"
+    ]
+  },
+  "0xe20b9e246db5a0d21bf9209e4858bc9a3ff7a034": {
+    "name": "Wrapped Banano (wBAN)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x754c8232a9ad41cc305e7f7c5f5bc2a86b4b8437": {
+    "name": "OGTSHARE (OGTSHARE)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x0def844ed26409c5c46dda124ec28fb064d90d27": {
+    "name": "CoffinDollar (CoUSD)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0xe2d27f06f63d98b8e11b38b5b08a75d0c8dd62b9": {
+    "name": "TerraUSD (UST)",
+    "labels": [
+      "blockchain"
+    ]
+  },
+  "0x93194b30fa85d1927852769bab1822dd2b6818e1": {
+    "name": "Fantom: Foundation Wallet 10",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x744c01bb3a9cb59392e7f0d515f6b3e92b11c2ef": {
+    "name": "Doaibu (DOA)",
+    "labels": [
+      "decentralized-web",
+      "exchange"
+    ]
+  },
+  "0x2f60c28fb2fdc90a2a5644442d0f6d8998101e76": {
+    "name": "zLOT (zLOT)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x63d5554b748598c191ab0cbd0e0e1c638ffebee6": {
+    "name": "Tarot: Supply Positions 1",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x84051Efb5e0c61AC1863B5de72Cd5bC3221870E4": {
+    "name": "Hundred Finance (anyHND)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xbe019533519fe5b5b5ca57be2ad563e15e623dcf": {
+    "name": "TOMB (anyTOMB)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x2777dac3024f42a3d90f935f4e0e65468cdbdf25": {
+    "name": "Batasm Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xde1c04855c2828431ba637675b6929a684f84c7f": {
+    "name": "LlamaPay: Factory",
+    "labels": [
+      "factory-contract"
+    ]
+  },
+  "0x73dB844FEa1Fb6fC6ea3DdAaCBb0d0dc00714753": {
+    "name": "JemHadar (JEHMAD)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x9c95de6923ede356c86be6506ab4e676f7e9cca3": {
+    "name": "Deus Finance: Deployer 2",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x18cef75c2b032d7060e9cf96f29adf74a9a17ce6": {
+    "name": "SpiritSwap: Fee Distributor",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0xc772ba6c2c28859b7a0542faa162a56115ddce25": {
+    "name": "Scream.sh: scWETH",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0x68EFc4716507709691d5e7AD9906a44FaBCdb1CA": {
+    "name": "Mine Empire (GEM)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x96d9e2f9415d145ffc30a8a78ff7653f4bbc34aa": {
+    "name": "Portalpassenger (PP)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xea97c7c1c89d4084e0bfb88284fa90243779da9f": {
+    "name": "PAPER (PAPER)",
+    "labels": [
+      "interoperability-cross-chain"
+    ]
+  },
+  "0x049d68029688eabf473097a2fc38ef61633a3c7a": {
+    "name": "Frapped USDT (fUSDT)",
+    "labels": [
+      "anyswap",
+      "bridged-token",
+      "stablecoin"
+    ]
+  },
+  "0xa72636cbcaa8f5ff95b2cc47f3cdee83f3294a0b": {
+    "name": "Aave: ACL Manager V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x9a775700694b0af4b0dea668f809d453eac4cbcd": {
+    "name": "Seven of Nine Token (SON)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0xF75565B89BA076b8fc7B9708d14855FD3dA89e97": {
+    "name": "5table Token (any5TABLE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x0bf34815d05f0f6cc91a6fccb3ceacd4a1254ea1": {
+    "name": "SpiritSwap: Burner",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0xae45a827625116d6c0c40b5d7359ecf68f8e9afd": {
+    "name": "Comb Finance (COMB)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0x5704aed90e870ee8a96b0ff6baf836e4cffb2229": {
+    "name": "EqualMoney: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xcA4CDC336FdeB7Ee618dD7745bd27758c8e03a91": {
+    "name": "MBOND (MBOND)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x0E1b539Eaf71d5D025f8ce90cA2256b4Cf3e94B1": {
+    "name": "Moo Curve g3CRV (anymooCurveG3CRV)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xc6E3f3083a15468350976369898381Eec5cfE10f": {
+    "name": "IceBreak-R (ICEBRK)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0x08f6fe8f4dc577cf81e40e03e561d29b8b33e19b": {
+    "name": "Anyswap: DIGG Token",
+    "labels": [
+      "anyswap",
+      "token-contract"
+    ]
+  },
+  "0xb355f4f4cc84a9429a59d5c2b98d77016f7ec482": {
+    "name": "BitcoinBR (BTCBR)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xbb4f92034927d4ce195b7d8f0acd4b3f661c5c45": {
+    "name": "CASH (CASH)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xa6f44e21c31a1e474d74cd8c06282b21d5a2e721": {
+    "name": "FD: Dealerz (FDD)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x75bdef24285013387a47775828bec90b91ca9a5f": {
+    "name": "Staked Hector (sHEC)",
+    "labels": [
+      "dao",
+      "staking"
+    ]
+  },
+  "0x38aca5484b8603373acc6961ecd57a6a594510a3": {
+    "name": "Geist WBTC (gWBTC)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0xc0d9784fdba39746919bbf236eb73bc015fd351d": {
+    "name": "FTML (Fantom-L)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x2ab5c606a5aa2352f8072b9e2e8a213033e2c4c9": {
+    "name": "Magicats (MGC)",
+    "labels": [
+      "nft",
+      "spookyswap"
+    ]
+  },
+  "0xbb25f1dd6c8756fdb22df724ce3e2a9e83d1b938": {
+    "name": "Aquarius Protocol: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x3be3a2cd1d02f273c28e452e45bcd7c92b2d2e0b": {
+    "name": "Beethoven X: Locked Liquidity Vesting 3",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0xc0320736b61e181f7c84e80096723147665a0b25": {
+    "name": "EarlyRareBearz: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x0b2e90c831626a65a26f75153be54aeaaeeb8363": {
+    "name": "Fantom: Foundation Wallet 18",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x0c35b3b57cde4a3007398045b274548a6592e9d0": {
+    "name": "Morpheus Swap: MORPH-PILLS Swapper",
+    "labels": [
+      "morpheus-swap"
+    ]
+  },
+  "0x5cec66f552b1d3406f65eb1a4a4914f448f98e9c": {
+    "name": "SpiritSwap: Spirit Maker",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0xa78ea447ce5aa4669a5f0cd8d27bf5883e1bf20f": {
+    "name": "DEUS Finance: DEI-USDC Staking",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x3303a565741d0d41d026c12259ff2d4772d3622e": {
+    "name": "Tarot: LGE Bonus",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0xda0053f0befcbcac208a3f867bb243716734d809": {
+    "name": "0xDAO: oxSOLID Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x7a6e4e3cc2ac9924605dca4ba31d1831c84b44ae": {
+    "name": "2omb Token (2OMB)",
+    "labels": [
+      "algorithmic-stablecoin"
+    ]
+  },
+  "0xf7d3ac82f6732dc5ee64acdb77d98a41b5d6536d": {
+    "name": "Anyswap: AnyWETH Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xd3ac016b1b8c80eeadde4d186a9138c9324e4189": {
+    "name": "Okcash (OK)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0xa71353bb71dda105d383b02fc2dd172c4d39ef8b": {
+    "name": "Rai Reflex Index (RAI)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0xa91ade2730bf6041ce9de1ba9cb22ee7fea2b009": {
+    "name": "Batasm Finance: VAMP Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x84B67E43474a403Cde9aA181b02Ba07399a54573": {
+    "name": "Qi Dao Protocol (anyQI)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x68Aa691a8819B07988B18923F712F3f4C8d36346": {
+    "name": "Qi Dao Protocol (QI)",
+    "labels": [
+      "finance",
+      "protocol"
+    ]
+  },
+  "0xB66b5D38E183De42F21e92aBcAF3c712dd5d6286": {
+    "name": "PILLS Token (PILLS)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x6bc5fc9d0d908ef8444a7d8f6a7e1a7050a82084": {
+    "name": "Elk Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x14def7584a6c52f470ca4f4b9671056b22f4ffde": {
+    "name": "3OMB Token (3OMB)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x89d976629b7055ff1ca02b927ba3e020f22a44e4": {
+    "name": "Aave: sLINK Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x70effc565db6eef7b927610155602d31b670e802": {
+    "name": "Aave: sUSDT Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xc396b190f251d7f79c583fd06347a09781f085c9": {
+    "name": "YFI-ERC20 (anyYFI)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0xcea59DCE6A6d73a24e6d6944CFaBc330814c098A": {
+    "name": "MAGIK (anyMAGIK)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x8bb765ae3e2320fd9447889d10b9dc7ce4970da5": {
+    "name": "BitDaemons: TINYDMN Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xffffffffffffffffffffffffffffffffffffffff": {
+    "name": "Null: 0xfff...fff",
+    "labels": [
+      "burn"
+    ]
+  },
+  "0x5410a97d58ea2cfe21f3b97c7b9717c73ecf46ba": {
+    "name": "Cerby Token: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xa57adce1d2fe72949e4308867d894cd7e7de0ef2": {
+    "name": "Axelar: Deployer 1",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x85c85647e1a79c2b8bc3ed2b6a1dde326eec66c5": {
+    "name": "HyperJump: HyperMechs",
+    "labels": [
+      "hyperjump"
+    ]
+  },
+  "0x99af40c84de03e4dc27a3882309bd2cb67434403": {
+    "name": "Based Finance: Team Wallet 7",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0xFF35B597F47bBF952457c076e6b01480C896C1Dc": {
+    "name": "True Degenerates (TD)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x1D1764F04DE29da6b90ffBef372D1A45596C4855": {
+    "name": "MIMO Parallel Governance Token (MIMO)",
+    "labels": [
+      "decentralized-web",
+      "protocol"
+    ]
+  },
+  "0x6eced8e16eda61e65292f019b165542a5906ecd6": {
+    "name": "PUMPKINS (KINS)",
+    "labels": [
+      "deflationary-token"
+    ]
+  },
+  "0xd652776de7ad802be5ec7bebfafda37600222b48": {
+    "name": "Dai Stablecoin (anyDAI)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x323D0dba53ee9A6F0fAA464FB099ec562b591fC7": {
+    "name": "BetSwirl Token (BETS)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xa625ab01b08ce023b2a342dbb12a16f2c8489a8f": {
+    "name": "Alpaca Finance: Proxy Admin",
+    "labels": [
+      "alpaca-finance"
+    ]
+  },
+  "0x4a78d38ccaecf3be5644d63370091356805953c0": {
+    "name": "Based Finance: Team Wallet 10",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x604042aec0be77bf5d64e3707e143eb845fb953c": {
+    "name": "Radiant Nebula (Nebula)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x22dea64a0e9ecbb13d2b0dd2d95a91a06dacb23b": {
+    "name": "BitDaemons: DMNPUNK Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xc132e5d5fa7a3e3f78d005c1b651ae0de047d5e9": {
+    "name": "fLibero Bank (XFLIBERO)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xde1e704dae0b4051e80dabb26ab6ad6c12262da0": {
+    "name": "DEI (DEI)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x08cb71192985e936c7cd166a8b268035e400c3c3": {
+    "name": "Aave: sCRV Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x386b5ab400a0546db9c8831e5b0e6c1a77be3885": {
+    "name": "Based Finance: Team Wallet 12",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x8881acf21d569ec8182441ed381ff1945bfec5e5": {
+    "name": "Creditum: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x00000087c4cebffb95746d1935de7fbcab092f40": {
+    "name": "2omb Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x9613288dcf37c14324ab64eb53b2e7be7292d724": {
+    "name": "FTMLaunch (FTML)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475": {
+    "name": "Scream (SCREAM)",
+    "labels": [
+      "loans"
+    ]
+  },
+  "0x180cd52a9e03f7fc8d74d3ff402bf0fcb83d9167": {
+    "name": "Sendlify (SENDL)",
+    "labels": [
+      "payments"
+    ]
+  },
+  "0x5ab6215ab8344c28b899efde93bee47b124200fb": {
+    "name": "Market Protocol: Old LensV1",
+    "labels": [
+      "deprecated",
+      "market-protocol"
+    ]
+  },
+  "0xfaef6a702d15428e588d4c0614aefb4348d83d48": {
+    "name": "Aave: sAAVE Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x29ddb4c4f9baae366dbd40eff79d364e004425b0": {
+    "name": "Hundred Finance: Rewards Treasury",
+    "labels": [
+      "hundred-finance"
+    ]
+  },
+  "0xfbdb4e2e7271f37714c4000814ce2487da57f925": {
+    "name": "PaintSwap Colorful Coal (COAL)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xd2f38621c3c65300ecaba7020c05d1350f9c265c": {
+    "name": "Bison (BISON)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0x0cd022dde27169b20895e0e2b2b8a33b25e63579": {
+    "name": "EverRise: Old RISE Token",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0x7dcd01e3a119c8592a5aed681cdc9ed163090362": {
+    "name": "Nodeify (NDFI)",
+    "labels": [
+      "platform"
+    ]
+  },
+  "0x3923e7edbcb3d0ce78087ac58273e732fffb82cf": {
+    "name": "Revest Finance: Token Vault",
+    "labels": [
+      "vaults"
+    ]
+  },
+  "0x022fc3e5df5d474ec1b40dbb83bd71c23fb8c664": {
+    "name": "Fantasm Finance: Master Oracle",
+    "labels": [
+      "oracle"
+    ]
+  },
+  "0xC4f89DFB7CEC4d3500b8785a1573327EaBd389B2": {
+    "name": "Metti Team Six (MT6)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xb4eb2a636a5d2160573d4473bd0f99b963e95e8c": {
+    "name": "Nova: Operations",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xf15f26710c827dde8acba678682f3ce24f2fb56e": {
+    "name": "Aave: sFTM Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x405b3ca1047c933f8d0714009bfa43b5f1da6376": {
+    "name": "EGG Protocol: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x90df158ff7c31ad1d81dddb1d8ab9d0ecbceda20": {
+    "name": "HyperJump: HyperPlanet",
+    "labels": [
+      "hyperjump"
+    ]
+  },
+  "0xa48d959ae2e88f1daa7d5f611e01908106de7598": {
+    "name": "Boo MirrorWorld (xBOO)",
+    "labels": [
+      "spookyswap",
+      "yield-farming"
+    ]
+  },
+  "0x09e145a1d53c0045f41aeef25d8ff982ae74dd56": {
+    "name": "ZOO (ZOO)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xf640259e4032ef4f7e0a1b7a14b2473373c0245c": {
+    "name": "HyperJump: BurnMachine V3",
+    "labels": [
+      "hyperjump"
+    ]
+  },
+  "0x8183c18887ac4386ce09dbdf5df7c398dacb2b5a": {
+    "name": "Secure (SCR)",
+    "labels": [
+      "dao",
+      "protocol"
+    ]
+  },
+  "0x42614e5acf9c084a8afdff402ecd89d19f675c00": {
+    "name": "Orbital Station Excelsior (OSEX)",
+    "labels": [
+      "charity"
+    ]
+  },
+  "0x70f9fd19f857411b089977e7916c05a0fc477ac9": {
+    "name": "Alchemix Finance: gALCX Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xccdb6c5818116a2a93ee6ec28cf92445d56c623e": {
+    "name": "Nova: Grants & Donations",
+    "labels": [
+      "donate"
+    ]
+  },
+  "0x2c26617034c840c9412cd67ae0fc68a6755d00bf": {
+    "name": "Zest Synthetic Protocol (ZSP)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x75e0eb8e6d92ab832bb11e46c041d06a89ac5f0d": {
+    "name": "BIOS (BIOS)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x8764de60236c5843d9faeb1b638fbce962773b67": {
+    "name": "Tomb Finance: Masonry",
+    "labels": [
+      "tomb-finance"
+    ]
+  },
+  "0xba2b469778083572b56e7347eef2ebf751fcea73": {
+    "name": "Word (WORD)",
+    "labels": [
+      "platform"
+    ]
+  },
+  "0x8a41f13a4fae75ca88b1ee726ee9d52b148b0498": {
+    "name": "Ripae (PAE)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x78ee91ea69132e5838699c42f0c07fa98da90161": {
+    "name": "MiniVerse Finance: MiniLand Staking",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x16dbd24713c1e6209142bcfeed8c170d83f84924": {
+    "name": "fantoms.art Token (OPR)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x5a33869045db8a6a16c9f351293501cfd92cf7ed": {
+    "name": "Betswap.gg (BSGG)",
+    "labels": [
+      "bridged-token"
+    ]
+  },
+  "0x7d016eec9c25232b01f23ef992d98ca97fc2af5a": {
+    "name": "Frax Share (FXS)",
+    "labels": [
+      "defi",
+      "stablecoin"
+    ]
+  },
+  "0xfb66e49e303a186a4c57414ceeed651a7a78161a": {
+    "name": "Orkan (ORKAN)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0xcef2b88d5599d578c8d92E7a6e6235FBfaD01eF4": {
+    "name": "Bastille De La Bouje (BASTILLE)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x05848b832e872d9edd84ac5718d58f21fd9c9649": {
+    "name": "SteakToken (STEAK)",
+    "labels": [
+      "protocol",
+      "yield-farming"
+    ]
+  },
+  "0x69fa688f1dc47d4b5d8029d5a35fb7a548310654": {
+    "name": "Aave: Pool Data Provider V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x991152411a7b5a14a8cf0cdde8439435328070df": {
+    "name": "HyperJump: HyperSwap Factory",
+    "labels": [
+      "hyperjump"
+    ]
+  },
+  "0x511a986e427ffa281acfcf07aad70d03040dbec0": {
+    "name": "88mph: MPH Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xfd1dc8bf39bc0e373068746787c1296a5aef31ee": {
+    "name": "Banano: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xf185cf59c710a0e83362fb7b8813b633ba073600": {
+    "name": "Pumpkittens (PK)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x4b649A521DE7CfEBEbCA88e82AbB3e39FB42CC90": {
+    "name": "PSHARE (anyPSHARE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x02a2b736f9150d36c0919f3acee8ba2a92fbbb40": {
+    "name": "agEUR (agEUR)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x34d33dc8ac6f1650d94a7e9a972b47044217600b": {
+    "name": "Smart Token (SMART)",
+    "labels": [
+      "investment"
+    ]
+  },
+  "0xf4c90bba1747cac1ca332d9483fa54845948e3c4": {
+    "name": "SpookySwap: Magicat Royalties",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0xEDf5e2Ac09002094Cc51B597CebE58C70182ADC5": {
+    "name": "MakiSwap (MAKI)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x9edb4a82b9a7413238b3d5527983a3a21e45e811": {
+    "name": "Staked Metavault (sMVD)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x1eac591b4c741e6dcac1eb90f538e64be5328649": {
+    "name": "Fantom Node Capital (FNC)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x27746007e821aeec6f9c65cbfda04870c236346c": {
+    "name": "Metavault (MVD)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xccb00a288d88aafa6c0019b6431c1c1e164b742b": {
+    "name": "Cross-Chain Bridge: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x7fc5670b2041d34414b0b2178fc660b1e1faf801": {
+    "name": "Trusted Node (TNODE)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x39b3bd37208cbade74d0fcbdbb12d606295b430a": {
+    "name": "Geist FTM (gFTM)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x60e6AFEb3ac2fBc82A8d312BEa3B47DC6b4848d2": {
+    "name": "Ooze (OOZE)",
+    "labels": [
+      "nft",
+      "staking"
+    ]
+  },
+  "0x3448872bba4b87ca48cae98602795a9ceb9c57c1": {
+    "name": "Fake_Phishing8",
+    "labels": [
+      "phish-hack"
+    ]
+  },
+  "0x191c10aa4af7c30e871e70c95db0e4eb77237530": {
+    "name": "Aave: aLINK Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x132331815a1d519ca461e85949c8f2ed0feaece9": {
+    "name": "BabyChimpGang: BNA Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xbdc8fd437c489ca3c6da3b5a336d11532a532303": {
+    "name": "Ethereum (anyETH)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x018a2e4D1Afc7d7671cDc428F88452b5Cf31599A": {
+    "name": "OwlGames USD Credit (USDO)",
+    "labels": [
+      "gambling"
+    ]
+  },
+  "0x3dc57b391262e3aae37a08d91241f9ba9d58b570": {
+    "name": "Yoshi.exchange (YOSHI)",
+    "labels": [
+      "exchange"
+    ]
+  },
+  "0xf1b9c667a53a800b48b55b14f7612d2638607288": {
+    "name": "Million (MM)",
+    "labels": [
+      "payments"
+    ]
+  },
+  "0x8b6663725d7e7368b01eefddc16be085e492498e": {
+    "name": "Kishimoto Inu (KISHIMOTO)",
+    "labels": [
+      "decentralized-web"
+    ]
+  },
+  "0xda004964446e99a4b6326aec6b04199f75153228": {
+    "name": "0xDAO: Ox Pool Factory",
+    "labels": [
+      "factory-contract"
+    ]
+  },
+  "0x8031c44b96Ec8c9B66aB16c2c164e8dEEb361a3f": {
+    "name": "Lira (LIRA)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0xd0bb8e4e4dd5fdcd5d54f78263f5ec8f33da4c95": {
+    "name": "Hundred Finance: Governance Multisig",
+    "labels": [
+      "hundred-finance"
+    ]
+  },
+  "0x619bf493e5027a6f4cc8c802a3c02fd560a83b3e": {
+    "name": "MetaGold (MGV)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x9879abdea01a879644185341f7af7d8343556b7a": {
+    "name": "TrueUSD (TUSD)",
+    "labels": [
+      "bridged-token"
+    ]
+  },
+  "0x0c84331e39d6658cd6e6b9ba04736cc4c4734351": {
+    "name": "Aave: vWETH Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xc10ef9f491c9b59f936957026020c321651ac078": {
+    "name": "Multichain: anyCall V6",
+    "labels": [
+      "bridge",
+      "multichain"
+    ]
+  },
+  "0x05F2972cd67705E7f2DcBfFD0Daa3F939B61020B": {
+    "name": "SGEM (anySGEM)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x92868a5255c628da08f550a858a802f5351c5223": {
+    "name": "Cross-Chain Bridge Token (BRIDGE)",
+    "labels": [
+      "bridge",
+      "protocol"
+    ]
+  },
+  "0x431e81e5dfb5a24541b5ff8762bdef3f32f96354": {
+    "name": "Fantom: Foundation Wallet 4",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x9a896d3c54d7e45b558bd5fff26bf1e8c031f93b": {
+    "name": "Tomb Finance: Genesis Rewards Pool",
+    "labels": [
+      "tomb-finance"
+    ]
+  },
+  "0x6a6d593ed7458b8213fa71f1adc4a9e5fd0b5a58": {
+    "name": "One Ring Finance Exploit Contract",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0x7bc05ff03397950e8dee098b354c37f449907c20": {
+    "name": "Synapse: Bridge Zap",
+    "labels": [
+      "bridge"
+    ]
+  },
+  "0xE5586582E1a60E302a53e73E4FaDccAF868b459a": {
+    "name": "Arcane Relic (XRLC)",
+    "labels": [
+      "gaming",
+      "nft"
+    ]
+  },
+  "0x3e131c1ad2be479b411ffd7087214ca877b3c58c": {
+    "name": "",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x8bb93979901cd159bf6763b223fbb315c31ccf7b": {
+    "name": "INTDESTCOIN (INTD)",
+    "labels": [
+      "technology"
+    ]
+  },
+  "0xf72f6fba7d55b00c25f2e5205e6bca9aaa470434": {
+    "name": "Fantom: Foundation Wallet 21",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x47091e015b294b935babda2d28ad44e3ab07ae8d": {
+    "name": "Fantasm Finance Exploiter",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0xc30d1b0ce932c3dd3373a2c23ada4e9608caf345": {
+    "name": "Casper DeFi: Old CASPER Token",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0x1f7a54df8b04ca31ac875cef5acaa247c87420ed": {
+    "name": "Tarot: Liquidity Generator",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83": {
+    "name": "Wrapped Fantom (WFTM)",
+    "labels": [
+      "defi",
+      "tools"
+    ]
+  },
+  "0x255861b569d44df3e113b6ca090a1122046e6f89": {
+    "name": "GRAIL (GRAIL)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xa3b6ca020da0861017ff4906c435da268efb50db": {
+    "name": "WigoSwap: Seed Funder 1 240 DayTimelock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0xc690fe0d47803ed50e1ea7109a9750360117aa22": {
+    "name": "Degen Haus: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xc167f62e93775acadeb3d2b0940bce560171fdf3": {
+    "name": "Ripae (anyPAE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x5C4FDfc5233f935f20D2aDbA572F770c2E377Ab0": {
+    "name": "Hector (HEC)",
+    "labels": [
+      "dao",
+      "staking"
+    ]
+  },
+  "0xe35c2d87607dc6816c9d0492177b4da70a0a5ccb": {
+    "name": "BabyChimpGang: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xe1610bb38ce95254dd77cbc82f9c1148569b560e": {
+    "name": "Byte Masons: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x602a3ad311e66b6f5e567a13016b712aba0625c6": {
+    "name": "Unit Protocol (DUCK)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x415742c217ea4941b706ff358bf6178985590cfa": {
+    "name": "Morpheus Swap: Neo Pool",
+    "labels": [
+      "morpheus-swap"
+    ]
+  },
+  "0x386aa44439e9c7181b1f0f1cac0efa478b623b27": {
+    "name": "Fantom: Foundation Wallet 19",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0xb238a595e9797e009efd5f938c9918181662066c": {
+    "name": "BoringDAO Token (BORING)",
+    "labels": [
+      "interoperability-cross-chain",
+      "staking"
+    ]
+  },
+  "0xbbd946041824416a4e2eb37d5880718b3812c9cb": {
+    "name": "Catnip Token (CATNIP)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x6a07a792ab2965c72a5b8088d3a069a7ac3a993b": {
+    "name": "Aave: AAVE Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x387dfb7fca2606acaacd769fb59803f6539c8269": {
+    "name": "Based Finance: Team Wallet 2",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x124b06c5ce47de7a6e9efda71a946717130079e6": {
+    "name": "SeanceCircle (SEANCE)",
+    "labels": [
+      "dex",
+      "marketplace"
+    ]
+  },
+  "0x65c9d9d080714cda7b5d58989dc27f897f165179": {
+    "name": "TETU Reward Token (TETU)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x6ab5660f0b1f174cfa84e9977c15645e4848f5d6": {
+    "name": "GSCARAB (GSCARAB)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0x64ee4f41a15d6c431ab6607d4e95462169d50f6c": {
+    "name": "xDollar Interverse Money (anyXIM)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xf619d97e6ab59e0b51a2154ba244d2e8157223fe": {
+    "name": "RSHARE (RSHARE)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xc7f7f217ba205487add3861561d0c46b1cedcd3f": {
+    "name": "GasRefund (GASR)",
+    "labels": [
+      "gas"
+    ]
+  },
+  "0xd927ce147f098ce634301e6c4281541b1939a132": {
+    "name": "Beefy Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xeaf26191ac1d35ae30baa19a5ad5558dd8156aef": {
+    "name": "Anyswap: NORD Token",
+    "labels": [
+      "anyswap",
+      "token-contract"
+    ]
+  },
+  "0xda25293b6186d597ddf4986c82245f2a48cd6b4d": {
+    "name": "FANTOM ETHPrinter (FETHp)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xf26d401c8051c664c1d2047f0cbc34105ac68cd0": {
+    "name": "Beethoven X: Locked Liquidity Vesting 2",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0x9fb9a33956351cf4fa040f65a13b835a3c8764e3": {
+    "name": "Multichain (MULTI)",
+    "labels": [
+      "dex"
+    ]
+  },
+  "0x90a5cf7d19ed8a3e813c796541ef5125920d8a82": {
+    "name": "NFT Stakehouse (BONES)",
+    "labels": [
+      "nft",
+      "staking"
+    ]
+  },
+  "0x3554f3369a3530abc031d938d2f717006fe01fa1": {
+    "name": "Master inSPIRIT (minSPIRIT)",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0x447bfd0947846eb1d7c54069d7f7457a54793447": {
+    "name": "LIF3 Trade LP (LLP)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xa366820f4781049e0f183697252bc6cbc4fcd9e1": {
+    "name": "EverRise: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x14418c22165553251b002b289f8abe4d1ed41d76": {
+    "name": "Fear NFTs [via ChainPort.io] (FEAR)",
+    "labels": [
+      "entertainment"
+    ]
+  },
+  "0x48f7572cfbc4f246600cf816c668271034d81f8f": {
+    "name": "Fantom: Foundation Wallet 16",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x5636e55e4a72299a0f194c001841e2ce75bb527a": {
+    "name": "ReaperFarm Exploiter 1",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0xdefc385d7038f391eb0063c2f7c238cfb55b206c": {
+    "name": "Grim Finance Exploiter 1",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0xf751575ED3390f6C02B4358f9E165e7B44877032": {
+    "name": "Aave (anyAAVE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x7fcd4c128ae7684c0c03cf2ad64dddc6b498c7e0": {
+    "name": "RareBearz Token (BEARZ)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x77fA9d9D4eF0b3862c6F5B279Ce0fa576888Bc31": {
+    "name": "WigoSwap Wiggies (WIGGY)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xc055c698f3793577707b3e6979b089f50c314d3a": {
+    "name": "Anyswap: HH Token",
+    "labels": [
+      "anyswap",
+      "token-contract"
+    ]
+  },
+  "0x1a8c7d27abb6c2976e35a42299674d62e775dd4d": {
+    "name": "Tarot: Fee Processor",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0xdd5f7e9af286c2eb9e0886eba481da5da533265a": {
+    "name": "Octus TIGER (octTIGER)",
+    "labels": [
+      "meme"
+    ]
+  },
+  "0x10010078a54396f62c96df8532dc2b4847d47ed3": {
+    "name": "Hundred Finance (HND)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xeD3516AA436B630b50960A3D19bA7a2e46D0E368": {
+    "name": "Build Token (anyBUILD)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xc831a5cbfb4ac2da5ed5b194385dfd9bf5bfcba7": {
+    "name": "WigoSwap: Factory",
+    "labels": [
+      "factory-contract",
+      "wigoswap"
+    ]
+  },
+  "0x953Cd009a490176FcEB3a26b9753e6F01645ff28": {
+    "name": "xDEUS (xDEUS)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x6e85f63449f090856ca5850d19611c50488bd7fd": {
+    "name": "Fantoms on Opera (FTMOPR)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xc8ca9026ad0882133ef126824f6852567c571a4e": {
+    "name": "MSHARE (MSHARE)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x47931e0d42b254dc17871ce74b1d9a37a5a36d67": {
+    "name": "Beast Bull Club: BBC Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xbf60e7414ef09026733c1e7de72e7393888c64da": {
+    "name": "LIF3 (LIF3)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xC17c30e98541188614dF99239cABD40280810cA3": {
+    "name": "EverRise (RISE)",
+    "labels": [
+      "interoperability-cross-chain"
+    ]
+  },
+  "0xec41b6233c080c591443473cc83c7e3f50bc1f9e": {
+    "name": "Dante Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x086bb1bCCc2B4b0d2ea48D392f27d2C7B94ca9cD": {
+    "name": "st0ked (st0ked)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x025ed00ce40c63f1d4c97d986a001f0fb8ed2499": {
+    "name": "Futuregoldcoin (FCI)",
+    "labels": [
+      "payments"
+    ]
+  },
+  "0x9e7f8d1e52630d46e8749c8f81e91d4e934f3589": {
+    "name": "Mutated fantoms.art Token (xOPR)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x011734f6Ed20E8D011d85Cf7894814B897420acf": {
+    "name": "Moo Boo USDC-MAI (anymooBooUSDC-MAI)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xa4e26bd6dcba9021dcd3a1159ba52e97cd770b8a": {
+    "name": "Babylonia: BABY Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x44e314190d9e4ce6d4c0903459204f8e21ff940a": {
+    "name": "binSPIRIT (binSPIRIT)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x8a7dc00bbfcd44344de7bc6e01d82d518032110c": {
+    "name": "Nova Token (NBK)",
+    "labels": [
+      "exchange"
+    ]
+  },
+  "0xabebd514e778704c16f7bb14a029adab5624df23": {
+    "name": "Energy (NRGY)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x1539c63037d95f84a5981f96e43850d1451b6216": {
+    "name": "OBOL (OBOL)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0x5055e1d92779fb8400b922dc5f6d953786a68833": {
+    "name": "DecentraWorld: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xad996a45fd2373ed0b10efa4a8ecb9de445a4302": {
+    "name": "AlpacaToken (ALPACA)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x525b43A49bE2Ed530e3516C22bd7ECbcF1586AD4": {
+    "name": "UNI (anyUNI)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xdef189deaef76e379df891899eb5a00a94cbc250": {
+    "name": "0x: Exchange Proxy",
+    "labels": [
+      "0x-protocol"
+    ]
+  },
+  "0xd4db215db60035c7d7a3d4e91ab09c75584fd52e": {
+    "name": "Scream.sh: Comptroller Storage",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0xef324fae34199cbdfdccd4fa2a8e68e2bff919fc": {
+    "name": "Boneyard (BNYD)",
+    "labels": [
+      "dao"
+    ]
+  },
+  "0x8c77057c3343b7dcc97ca21da274730396162a98": {
+    "name": "Supernova Token (anySNT)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x410a7bf502414b2f0caad204de5782077ac6478f": {
+    "name": "Frax Share (anyFXS)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x888ef71766ca594ded1f0fa3ae64ed2941740a20": {
+    "name": "Solidly (SOLID)",
+    "labels": [
+      "defi",
+      "dex"
+    ]
+  },
+  "0xbbbd1bbb4f9b936c3604906d7592a644071de884": {
+    "name": "Allbridge: Bridge",
+    "labels": [
+      "bridge"
+    ]
+  },
+  "0x507633a6076dc92b2587acee01349c21e5f3b985": {
+    "name": "Frog Nation DAO (FRG)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0xab41861399eb56896b24fbaabaa8bce45e4a626b": {
+    "name": "0xMonero (0xMR)",
+    "labels": [
+      "dex",
+      "wallet-app"
+    ]
+  },
+  "0x1001009911e3fe1d5b45ff8efea7732c33a6c012": {
+    "name": "Hundred Finance: Admin",
+    "labels": [
+      "hundred-finance"
+    ]
+  },
+  "0xfb288d60d3b66f9c3e231a9a39ed3f158a4269aa": {
+    "name": "Wrapped sSPA (anywsSPA)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x18b4287fa4155efd149aece678a75bbd69ede0b8": {
+    "name": "Deus Finance: Deployer 3",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x74d1d2a851e339b8cb953716445be7e8abdf92f4": {
+    "name": "Staked TAROT (xTAROT)",
+    "labels": [
+      "defi",
+      "staking"
+    ]
+  },
+  "0x0e249130b3545a2a287de9f27d805cab95f03db9": {
+    "name": "Firebird Aggregator (FBA)",
+    "labels": [
+      "defi",
+      "dex"
+    ]
+  },
+  "0xc8a0a1b63f65c53f565dddb7fbcfdd2eabe868ed": {
+    "name": "XCOFFIN (xCOFFIN)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x3129662808bec728a27ab6a6b9afd3cbaca8a43c": {
+    "name": "Dola USD Stablecoin (DOLA)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0xf5df3d0e928f18c02e06b5e7db54f42a8b931078": {
+    "name": "WigoSwap: Seed Funder 2 Initial Timelock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x3264810174f577F82DDD4FD08818F368AC363505": {
+    "name": "MiniPanther (MP)",
+    "labels": [
+      "dao"
+    ]
+  },
+  "0x192303cd027fa2cb10edbca7d9ea198d0a35efd2": {
+    "name": "Auto Busd: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x44b26e839eb3572c5e959f994804a5de66600349": {
+    "name": "Hegic (HEGIC)",
+    "labels": [
+      "options-trading"
+    ]
+  },
+  "0x44f750eb065596c150b3479b1df6957da300a332": {
+    "name": "BitDaemons: Deployer 1",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xf80341de9199aa2cc4c218f8b991e05d5aac6073": {
+    "name": "BITCOIN INTERNATIONAL: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x365e82adad2c86d38bec033be04768c8ecd108e4": {
+    "name": "Dark Matter DeFi: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xca79f97d3af4bce5bfaa9821a0887e50542636f7": {
+    "name": "Spooky Swap: Brew BOO",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0xd204e3dc1937d3a30fc6f20abc48ac5506c94d1e": {
+    "name": "Tarot: Supply Positions 2",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x7deCeb882539466D5F6a9C68c694915C469A4c37": {
+    "name": "RBOND (RBOND)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xcf7e516e2dd67c3b0bd52266da41f403a0f19a07": {
+    "name": "Yorocoon (YORO)",
+    "labels": [
+      "deflationary-token"
+    ]
+  },
+  "0x141FaA507855E56396EAdBD25EC82656755CD61e": {
+    "name": "SMELT (SMELT)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x513c7e3a9c69ca3e22550ef58ac1c0088e918fff": {
+    "name": "Aave: aCRV Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x070eb1a48725622de867a7e3d1dd4f0108966ed1": {
+    "name": "Poopsicle (POOP)",
+    "labels": [
+      "meme"
+    ]
+  },
+  "0x924828a9Fb17d47D0eb64b57271D10706699Ff11": {
+    "name": "Spice (SFI)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x4f851750a3e6f80f1e1f89c67b56960bfc29a934": {
+    "name": "Kalmar Token (KALM)",
+    "labels": [
+      "defi",
+      "gaming"
+    ]
+  },
+  "0xf4cFE59Eb340d4B23D795d7C81B5E2Fe6D5B412F": {
+    "name": "Perpetual Vault Token (PVT)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x152888854378201e173490956085c711f1DeD565": {
+    "name": "Monster (MST)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x0e121961DD741C9D49C9A04379da944A9D2FAc7a": {
+    "name": "TosDis (DIS)",
+    "labels": [
+      "interoperability-cross-chain",
+      "staking"
+    ]
+  },
+  "0x12e62ceca188e4bc266d3844781c619638eccf29": {
+    "name": "SeedSwap Token (SEED)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0xc511be0bc8f9c8b9b25326d6b154df38ae4c422a": {
+    "name": "Allbridge: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x91f1430833879272643658f8ed07d60257ddf321": {
+    "name": "Growth-Peg Token (GRO)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xb90ccd563918ff900928dc529aa01046795ccb4a": {
+    "name": "Staked Frax Ether (sfrxETH)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xe45ac34e528907d0a0239ab5db507688070b20bf": {
+    "name": "Scream.sh: scUSDC",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0x753fbc5800a8C8e3Fb6DC6415810d627A387Dfc9": {
+    "name": "Badger (BADGER)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x8bb765AE3e2320fd9447889D10b9DC7CE4970DA5": {
+    "name": "TinyDaemons (TINYDMN)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x1252e3f03e0caa840cbb35442d817a1686a62586": {
+    "name": "Based Finance: Deployer",
+    "labels": [
+      "based-finance",
+      "contract-deployer"
+    ]
+  },
+  "0x7ab4c5738e39e613186affd4c50dbfdff6c22065": {
+    "name": "DEUS Finance: Bridge",
+    "labels": [
+      "bridge"
+    ]
+  },
+  "0xaf41a65f786339e7911f4acdad6bd49426f2dc6b": {
+    "name": "Synapse: Bridge",
+    "labels": [
+      "bridge"
+    ]
+  },
+  "0x66eed5ff1701e6ed8470dc391f05e27b1d0657eb": {
+    "name": "MPX (MPX)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x584B521912d5F8CFDdcD84083b475daF92FE2865": {
+    "name": "STABL3 (STABL3)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x10476afcb828fc2320c5b4af83c56e068f4d0286": {
+    "name": "Fantom Drugz (FDR)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x7beb05cf5681f402e762f8569c2fc138a2172978": {
+    "name": "Billion Happiness: BHC Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x541e408443a592c38e01bed0cb31f9de8c1322d0": {
+    "name": "Fantom: Foundation Wallet 5",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0xc2a45fe7d40bcac8369371b08419ddafd3131b4a": {
+    "name": "Lucidao (LCD)",
+    "labels": [
+      "dao"
+    ]
+  },
+  "0xa344465df9af11a629d0cac25b31a3b6f5031d32": {
+    "name": "BitcoinBR: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x1474a87eaaf4346dc73459edf1c279d94d553909": {
+    "name": "Colorful Pixel Bunnies Token (CPBT)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x9e26530fbb883e92f27a2596d649f19840fd6b32": {
+    "name": "Catoshi: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xe6a025845e9ab116a135dbaec6de0f521219782b": {
+    "name": "Casper DeFi: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x53c153a0df7e050bbefbb70ee9632061f12795fb": {
+    "name": "HyperJump: HyperSwap Router",
+    "labels": [
+      "hyperjump"
+    ]
+  },
+  "0x50884e84e427432ea0aac7d9bb915c2b10bb4b33": {
+    "name": "Tomb Finance: Airdrop Wallet",
+    "labels": [
+      "tomb-finance"
+    ]
+  },
+  "0x841fad6eae12c286d1fd18d1d525dffa75c7effe": {
+    "name": "SpookyToken (BOO)",
+    "labels": [
+      "dex",
+      "governance",
+      "yield-farming"
+    ]
+  },
+  "0xe83cE6bfb580583bd6A62B4Be7b34fC25F02910D": {
+    "name": "Fantom ABBC (FABBC)",
+    "labels": [
+      "interoperability-cross-chain"
+    ]
+  },
+  "0x4bfcbc6d507c6cf6b419b4f65670e3f7a81ea93f": {
+    "name": "Frax Protocol: Deployer",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x19193f450086d0442157b852081976d41657ad56": {
+    "name": "Marlin POND (anyPOND)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x515be0f005e657222d059c764726895598f0a911": {
+    "name": "WigoSwap: Seed Funder 2 240 DayTimelock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x81382e9693dE2aFc33F69B70a6C12CA9B3a73F47": {
+    "name": "FantomStarter (anyFS)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x08589a0f5fcf62001d59cc671f4fd042548be138": {
+    "name": "CursedTransistor: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x4a4f77d74cf5fd4ea4ab71ba79988c055a5c27b2": {
+    "name": "LessToken (LESS)",
+    "labels": [
+      "defi",
+      "interoperability-cross-chain"
+    ]
+  },
+  "0xfa1fbb8ef55a4855e5688c0ee13ac3f202486286": {
+    "name": "Fantohm (FHM)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xb6319cc6c8c27a8f5daf0dd3df91ea35c4720dd7": {
+    "name": "LayerZero: Fantom Endpoint",
+    "labels": [
+      "bridge"
+    ]
+  },
+  "0x47a88fa16f48a91c201a523cc796e31ef0efc630": {
+    "name": "WigoSwap: Seed Funder 2 180 DayTimelock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x92b42c66840c7ad907b4bf74879ff3ef7c529473": {
+    "name": "Aave: vWBTC Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xe1fe8b5c3f5b592613305fc6ff551c67cbe40e17": {
+    "name": "Tarot: Early Borrower",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0xf99231d26437a5a24928fbf2cb4424d1f8010ea1": {
+    "name": "Batasm Finance: VSHARE Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x374b8a9f3ec5eb2d97eca84ea27aca45aa1c57ef": {
+    "name": "Celer Network: cBridge",
+    "labels": [
+      "bridge"
+    ]
+  },
+  "0x929ec64c34a17401f460460d4b9390518e5b473e": {
+    "name": "Aave: Incentives V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xeff11197247ac09e0239ec9f83f7de13c186caa6": {
+    "name": "PRNTR (PRNTR)",
+    "labels": [
+      "interoperability-cross-chain",
+      "stablecoin"
+    ]
+  },
+  "0x1f269c1b8aa6dbe1b2bcb97c451a0e51a17a645c": {
+    "name": "SpookySwap: 60 Days Token Vesting Timelock",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0xceddec9a3134a440e77c7dcad6f35fdf398a49fc": {
+    "name": "Nectar (NECT)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xf8a363cf116b6b633faedf66848ed52895ce703b": {
+    "name": "Levolution.io Token (LEVL)",
+    "labels": [
+      "technology"
+    ]
+  },
+  "0x2c78f1b70ccf63cdee49f9233e9faa99d43aa07e": {
+    "name": "Celsius (CEL)",
+    "labels": [
+      "loans"
+    ]
+  },
+  "0x86a64fe7fcd86446da62f95aea39952f6f056ad5": {
+    "name": "Market Protocol: SpookySwap USDC TWAP Oracle",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0xD2cDcB6BdEE6f78DE7988a6A60d13F6eF0b576D9": {
+    "name": "Orion Protocol (ORN)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x9bf58B083EC184139B8e34049937d6B38D7AfD80": {
+    "name": "Madbyte (MADX)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xa23c4e69e5eaf4500f2f9301717f12b578b948fb": {
+    "name": "Protofi Token (PROTO)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x1ad2870510e1ce60c1f3951208b99d4ab79f5ba6": {
+    "name": "SpookySwap: 120 Days Token Vesting Timelock",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0x616e302f89d1b21a2e3ec2ab8dac01e01cbbadfb": {
+    "name": "Fantom Frens (FFS)",
+    "labels": [
+      "deflationary-token"
+    ]
+  },
+  "0x318315ac34494caaec9028cbb63eff15c7b3b2e4": {
+    "name": "OGTOMB (OGTOMB)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x11223344d5b43ec0930af1236f4cf67bf7d81217": {
+    "name": "QUANTUM (QTM)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x242f1d956236d0b8714840c282f045a9defc897d": {
+    "name": "Fantom Tigers (FANTOM TIGER)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x6ea8de8f643ba65d8be39bd8d3b72f6daada7e77": {
+    "name": "Metavault DAO: Staking",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x2127b96A05f9bF9095913d1e8b7bdB203a683A9f": {
+    "name": "Shack Token (anySHACK)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x29b0Da86e484E1C0029B56e817912d778aC0EC69": {
+    "name": "yearn.finance (YFI)",
+    "labels": [
+      "bridged-token",
+      "defi",
+      "governance"
+    ]
+  },
+  "0x7ef2416e62cfa60ea946d0e9883654d3a6c3c56e": {
+    "name": "Nova: Burning Allocations",
+    "labels": [
+      "burn"
+    ]
+  },
+  "0xE9e5a97aCc59BB68813bF368487fBFfd0a39713b": {
+    "name": "Takepile Token (TAKE)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xc146b7cdbaff065090077151d391f4c96aa09e0c": {
+    "name": "MultiChainCapital (MCC)",
+    "labels": [
+      "deflationary-token",
+      "yield-farming"
+    ]
+  },
+  "0x2148ff3d74d800bdb27516aae716b67416fba093": {
+    "name": "EasyBackup: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xaf91585359632568cb3fac12cf3dfd832039c14e": {
+    "name": "EGG Protocol (EGG)",
+    "labels": [
+      "interoperability-cross-chain"
+    ]
+  },
+  "0xc0fcf8403e10b65f1d18f1b81b093004b1127275": {
+    "name": "88mph: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xf347b0e405249c78d8b261b7c493449b9275b946": {
+    "name": "Hundred Finance: B.Protocol Backtop MasterChef",
+    "labels": [
+      "hundred-finance"
+    ]
+  },
+  "0x753fbc5800a8c8e3fb6dc6415810d627a387dfc9": {
+    "name": "Anyswap: BADGER Token",
+    "labels": [
+      "anyswap",
+      "token-contract"
+    ]
+  },
+  "0x68d211bc1e66814575d89bbe4f352b4cdbdacdfb": {
+    "name": "Tarot USDC Supply Vault (tUSDC)",
+    "labels": [
+      "defi",
+      "vaults"
+    ]
+  },
+  "0xcf8660e267d44cc804ddbee6b1ce44f9ed564889": {
+    "name": "Tarot: Gauge Vault Proxy",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0xd948efcc99be419ca9bdace89b2bec31edf13adb": {
+    "name": "Trip Token Degen Haus (TRIP)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0x605750c15be264e7653c1d416650d38bcff66f55": {
+    "name": "AlphaToken (ALPHA)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x04d04f9a200d63d8ff5d2dc1f59bff49410c565a": {
+    "name": "Tarot: Fee Distributor",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0xd094619807ab28aadb12152a2258e5aa3f0d57b7": {
+    "name": "DiversiFi: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x3fd3a0c85b70754efc07ac9ac0cbbdce664865a6": {
+    "name": "Equalizer (EQUAL)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xfd14d755a3a3358aec08d0979ecf369b4a387039": {
+    "name": "Geist.Finance Protocol Token (anyGEIST)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xe1d2ca01bc88f325ff7266dd2165944f3caf0d3d": {
+    "name": "Alpaca Finance: Oracle Medianizer",
+    "labels": [
+      "alpaca-finance"
+    ]
+  },
+  "0xfB4D42BEd5618fb1a377DDB64EB56B92a6d117f2": {
+    "name": "NOKU v2 (NOKU)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0x3c301c85b191b3edada11198ef1f5277c1ee1f87": {
+    "name": "CursedTransistor (CURTRX)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x0e7d754a8d1a82220432148c10715497a0569bd7": {
+    "name": "Market Protocol: Pool Directory",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0xc45d2733819b9c9e2ec87088c1ab82bcd256c3c4": {
+    "name": "OwlDAO: Old OWL Token",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0x6671e20b83ba463f270c8c75dae57e3cc246cb2b": {
+    "name": "Luxor (LUX)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x321162Cd933E2Be498Cd2267a90534A804051b11": {
+    "name": "Bitcoin (BTC)",
+    "labels": [
+      "bitcoin-pegged",
+      "bridged-token"
+    ]
+  },
+  "0x7eC94C4327dC757601B4273cD67014d7760Be97E": {
+    "name": "GrimToken (GRIM)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0x86a52094522e2ea5d55c7702895508fedbc217ec": {
+    "name": "Degen Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xac1f25aee575d35c668b0a4d336f20e3e92adcd2": {
+    "name": "Billion Happiness: HPS Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xfbc3c04845162f067a0b6f8934383e63899c3524": {
+    "name": "Fantums of Opera Token (FOO)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xB67FA6deFCe4042070Eb1ae1511Dcd6dcc6a532E": {
+    "name": "Alchemix USD (alUSD)",
+    "labels": [
+      "services-solutions"
+    ]
+  },
+  "0xcc0a87f7e7c693042a9cc703661f5060c80acb43": {
+    "name": "Tomb Finance: TSHARE Rewards Pool",
+    "labels": [
+      "tomb-finance"
+    ]
+  },
+  "0xc60d7067dfbc6f2caf30523a064f416a5af52963": {
+    "name": "Treeb (TREEB)",
+    "labels": [
+      "payments"
+    ]
+  },
+  "0xfbfae0dd49882e503982f8eb4b8b1e464eca0b91": {
+    "name": "Timechain Swap Token (TCS)",
+    "labels": [
+      "dex"
+    ]
+  },
+  "0x74b4db963738a2a95bfcb1833b123495ccc220e2": {
+    "name": "Vox.Finance (VOX)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x63aad0448f58ae1b98d75456cfc6f39235e353f6": {
+    "name": "Dark Spartans (fSPA)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x33280d3a65b96eb878dd711abe9b2c0dbf740579": {
+    "name": "EverRise: Deployer 2",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x2f4d6f72ab9be667b09ff4da6efd4bef94ec556d": {
+    "name": "TSHARE (anyTSHARE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xeb581140a7f1d6266a56f726a58de4c93a6d26a8": {
+    "name": "Liquid Driver (anyLQDR)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x75ab56f4efe81598a78ef3079a331f1d0336765d": {
+    "name": "Fantastic Protocol Peg-FTM (FTMX) T... (FTMX)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0x2a5062d22adcfaafbd5c541d4da82e4b450d4212": {
+    "name": "Keep3r (KP3R)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0xA4E26Bd6DCBa9021DCd3A1159BA52e97CD770b8a": {
+    "name": "Babylonia Token (BABY)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x13082681E8CE9bd0aF505912d306403592490Fc7": {
+    "name": "PAR Stablecoin (PAR)",
+    "labels": [
+      "decentralized-web",
+      "protocol"
+    ]
+  },
+  "0xa4db7f3b07c7bf1b5e8283bf9e8aa889569fc2e7": {
+    "name": "Rubik Token (RUBIK)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x5d0a9c5aac3024b1100b0f76c2c17a13453f3f33": {
+    "name": "Beethoven X: Locked Liquidity Vesting 4",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0x08b3cca975a82cfa6f912e0eedde53a629770d3f": {
+    "name": "Excalibur Exchange: Factory",
+    "labels": [
+      "factory-contract"
+    ]
+  },
+  "0x94ccf60f700146bea8ef7832820800e2dfa92eda": {
+    "name": "Wrapped sHEC (wsHEC)",
+    "labels": [
+      "dao",
+      "staking"
+    ]
+  },
+  "0xb44f26deb0060abb49c1750bdd35d93c9e80eae8": {
+    "name": "EARTH Token (EARTH)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x9709d8960bef188f70620a317db04a282b95a602": {
+    "name": "Market Protocol: SpookySwap wFTM TWAP Oracle",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0xA2f9A3323e3664B9684Fbc9fb64861DC493085df": {
+    "name": "Serenity V2 (anySERENE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xB214d491a58a250A99f11cE01C361E7fAd4d3E69": {
+    "name": "Batasm Protocol BSM Token (BSM)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x9fb0935d1f6e2bce2b5fd78e8cd28c8c420f7998": {
+    "name": "Fantom: Foundation Wallet 17",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0xe26ae3d881f3d5def58d795f611753804e7a6b26": {
+    "name": "SpiritSwap Token (anySPIRIT)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x6474239b1a83cEB3789CD8dDb2218e6f5C6840Dd": {
+    "name": "Fear NFTs [via ChainPort.io] (anyFEAR)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x84c882a4d8eb448ce086ea19418ca0f32f106117": {
+    "name": "Bifrost (BFC)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x8619d80fb0141ba7f184cbf22fd724116d9f7ffc": {
+    "name": "Aave: vDAI Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xf9c6e3C123f0494A4447100bD7dbd536F43CC33A": {
+    "name": "rainSpirit (RAINSPIRIT)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0xde12c7959e1a72bbe8a5f7a1dc8f8eef9ab011b3": {
+    "name": "Deus Finance: Old DEI Token 2",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0x9274a59595dee0b16463796fcc853cb8becb564f": {
+    "name": "DexoSwap: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x69d17c151ef62421ec338a0c92ca1c1202a427ec": {
+    "name": "Supernova Token (SNT)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xBEa7c3F2D91a9c6fD7F5aA9c803d4C31C1dB8db9": {
+    "name": "BitDaemons (BDMN)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x9623f62b056f06c392f764286893e14066c46928": {
+    "name": "DefySwap: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x18f7f88be24a1d1d0a4e61b6ebf564225398adb0": {
+    "name": "Fantohm USD (FHUD)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x9cf4009e62429db3f57aa9e7e8e898427cf6865f": {
+    "name": "TRITON Token (TRITON)",
+    "labels": [
+      "interoperability-cross-chain"
+    ]
+  },
+  "0xeaF45B62d9d0Bdc1D763baF306af5eDD7C0d7e55": {
+    "name": "Death (Death)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xacaca07e398d4946ad12232f40f255230e73ca72": {
+    "name": "Spooky Swap: IFO",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0xd7b78f43ab667ff671f7025ffd2216b72332acbb": {
+    "name": "Kanpeki (anyKAE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x9347d7629ad26fb60448eecf070e640dcb420915": {
+    "name": "SpookySwap: 180 Days Token Vesting Timelock",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0x36df0a76a124d8b2205fa11766ec2eff8ce38a35": {
+    "name": "Tarot: Tarot Price Oracle",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x54779b78d6641d7c8c7c15eef2e97d51aaba76ce": {
+    "name": "Carv: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x84d85013035bbff5dd106ca7828c8781af331b84": {
+    "name": "Aave: Pull Rewards Transfer Strategy V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x3122e55914638cf162bea3c96632b64caa5516d5": {
+    "name": "Beethoven X: Locked Liquidity Vesting 5",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0x323d0dba53ee9a6f0faa464fb099ec562b591fc7": {
+    "name": "BetSwirl: BETS Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x9486fda4c1192db69a08ca7235e2e6baf31b467b": {
+    "name": "Partial Token (PARTIAL)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x3a4cab3dcfab144fe7eb2b5a3e288cc03dc07659": {
+    "name": "fantomGO (FTG)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xe2c1e83fe35a0a64a51d5d7f9fb5423a86843b7e": {
+    "name": "MiBO (MIBO)",
+    "labels": [
+      "wallet-app"
+    ]
+  },
+  "0xbc2451aad349b6b43fd05f4f0cc327f8a6bca2d4": {
+    "name": "HyperAurora (AURORA)",
+    "labels": [
+      "staking",
+      "yield-farming"
+    ]
+  },
+  "0x701428525cbac59dae7af833f19d9c3aaa2a37cb": {
+    "name": "DEUS Finance Exploiter 2",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0xf1b86a431f6c990fb37d57866bdc7ebd2f151e72": {
+    "name": "Based Finance: Team Wallet 8",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x5157629E486b36f5862d163C119c4E86506cA15e": {
+    "name": "Static (anyStatic)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xc2d12c37acbfd5593bcae162bd12a161e0d2786e": {
+    "name": "Nova Exploiter 3",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0x77ca01483f379e58174739308945f044e1a764dc": {
+    "name": "Aave: vCRV Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xA74bb2C6e5fE2805a0086D05e37c256274935690": {
+    "name": "Tank Gold Token (TGOLD)",
+    "labels": [
+      "decentralized-web",
+      "gaming"
+    ]
+  },
+  "0x524CAbe5b2F66CBd6F6b08dEf086F18F8DdE033a": {
+    "name": "Biconomy Token (Wormhole) (BICO)",
+    "labels": [
+      "tools"
+    ]
+  },
+  "0x511a986E427FFa281ACfCf07AAd70d03040DbEc0": {
+    "name": "88mph.app (MPH)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x772918d032cfd4ff09ea7af623e56e2d8d96bb65": {
+    "name": "Hundred Finance: Reward Policy",
+    "labels": [
+      "hundred-finance"
+    ]
+  },
+  "0x46E7628E8b4350b2716ab470eE0bA1fa9e76c6C5": {
+    "name": "Band (BAND)",
+    "labels": [
+      "data",
+      "protocol"
+    ]
+  },
+  "0xe47d957f83f8887063150aaf7187411351643392": {
+    "name": "ChillPill (CHILL)",
+    "labels": [
+      "meme"
+    ]
+  },
+  "0x57976c467608983513c9355238dc6de1b1abbcca": {
+    "name": "MiniVerse Dollar (MvDOLLAR)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0xcca3E26Be51b8905f1A01872524f17eb55Bd02fb": {
+    "name": "Parabolic (PARA)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x2578850d2a34e7DcE51355895dB05F3bBE562822": {
+    "name": "Wrapped TLC (TLC)",
+    "labels": [
+      "blockchain"
+    ]
+  },
+  "0x666a3776b3e82F171CB1dFF7428B6808D2Cd7d02": {
+    "name": "Aladdin cvxCRV (aCRV)",
+    "labels": [
+      "dao"
+    ]
+  },
+  "0x81e97e584f9acf9b57adecbd839bdfedad03534e": {
+    "name": "Market Protocol: Safe Liquidator V2",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0xa9cad0165c155f3998b0001b3ef30bca0aa6b591": {
+    "name": "WalletNow (WNOW)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x4ae3Fa715E21f328c2B61c037B9CC1761B6aF0bD": {
+    "name": "Poseidon (POS)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x084d4ba0a80bd5d35a0eb6c47b417fc60cb351d0": {
+    "name": "Based Finance: Team Wallet 13",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0xcef2b88d5599d578c8d92e7a6e6235fbfad01ef4": {
+    "name": "Bouje Finance: BASTILLE Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x8d7d3409881b51466b483b11ea1b8a03cded89ae": {
+    "name": "BASED (BASED)",
+    "labels": [
+      "based-finance",
+      "defi"
+    ]
+  },
+  "0x870c3f3bd7f1898e76640fefb43ba7cbcf9f7642": {
+    "name": "WigoSwap: Seed Funder 1 120 DayTimelock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x89b61Ab033584918103698953870F07D6db412A3": {
+    "name": "KungFuu (KNGFUU)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xfc5C0e5d0BA6386fbb7d921E5073FD04082a5b49": {
+    "name": "MSHARE (anyMSHARE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xb42b5c914d9df60eb8585edb8f84f7b461ec1d00": {
+    "name": "Babylonia: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x86665ef1660418ad0992c96929e02f97bcbf4698": {
+    "name": "Decentralized USD: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x188a168280589bc3e483d77aae6b4a1d26bd22dc": {
+    "name": "Penguin Karts (PGK)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x8c64d18e9d4a7b8e8c10c5c5a4b8d6d83cb15002": {
+    "name": "Partial Share (PSHARE)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x307ffe186f84a3bc2613d1ea417a5737d69a7007": {
+    "name": "Aave: sUSDC Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xfb98b335551a418cd0737375a2ea0ded62ea213b": {
+    "name": "miMATIC (miMATIC)",
+    "labels": [
+      "bridged-token"
+    ]
+  },
+  "0x2406dce4da5ab125a18295f4fb9fd36a0f7879a2": {
+    "name": "Bitcoin (anyBTC)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x0d3d5bf98d7b9961c602fbfb8032c7bdc6a0c386": {
+    "name": "TPIGGY (TPIGGY)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x1ed5112b32486840071b7cdd2584ded2c66198dd": {
+    "name": "Deus Finance Exploiter",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0xdc301622e621166bd8e82f2ca0a26c13ad0be355": {
+    "name": "Frax (FRAX)",
+    "labels": [
+      "defi",
+      "stablecoin"
+    ]
+  },
+  "0xc976be9ddbb3e2b2effd9af4845c38b6195dab71": {
+    "name": "yieldwatch (WATCH)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x1d3918043d22de2d799a4d80f72efd50db90b5af": {
+    "name": "pDollar Share (sPDO)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x5f7f94a1dd7b15594d17543beb8b30b111dd464c": {
+    "name": "Space Token (SPACE)",
+    "labels": [
+      "interoperability-cross-chain"
+    ]
+  },
+  "0xe7F04E0FBdE4b16FEb4a67747133F251E4DBcCd7": {
+    "name": "DSHARE (anyDSHARE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x477a9d5df9beda06f6b021136a2efe7be242fcc9": {
+    "name": "TravaFinance Token (TRAVA)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xafd1eb025bf584a11112a3fc790bd715ed9a98b1": {
+    "name": "Alpaca Finance: Timelock",
+    "labels": [
+      "alpaca-finance"
+    ]
+  },
+  "0x50eb82cc284e3d35936827023b048106aaecfc5f": {
+    "name": "Fusion (anyFSN)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0xe5009dd5912a68b0d7c6f874cd0b4492c9f0e5cd": {
+    "name": "Based Finance: Acropolis",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0xe523f25dd88ee2b77efb3ab1fb23beef5724819a": {
+    "name": "Axelar: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xfa9da51631268a30ec3ddd1ccbf46c65fad99251": {
+    "name": "Multichain: Deployer 2",
+    "labels": [
+      "multichain"
+    ]
+  },
+  "0x696c1cc6bd689b764be36eecb019c2d9bea761ca": {
+    "name": "INK (INK)",
+    "labels": [
+      "interoperability-cross-chain",
+      "stablecoin"
+    ]
+  },
+  "0xcfc785741dc0e98ad4c9f6394bb9d43cd1ef5179": {
+    "name": "Ankr Staked FTM (ankrFTM)",
+    "labels": [
+      "defi",
+      "staking"
+    ]
+  },
+  "0xB04B8e9ddffCb6Ca45B5aa5C0C18e90C8C8643ca": {
+    "name": "Fantoms Fury (FANTOMSFURY)",
+    "labels": [
+      "metaverse"
+    ]
+  },
+  "0x9315E82618c83D350af5888a10EA59a5b6d2A7B4": {
+    "name": "Warp Token (WARP)",
+    "labels": [
+      "defi",
+      "gaming"
+    ]
+  },
+  "0x56ee926bD8c72B2d5fa1aF4d9E4Cbb515a1E3Adc": {
+    "name": "Synthetix Network (SNX)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xad260f380c9a30b1d60e4548a75010ede630b665": {
+    "name": "BiFi (BiFi)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x5dfbf7c7dffb2b95d6eaa84474d24f04e2db59cb": {
+    "name": "Market Protocol: Fee Distributor",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0x47931e0d42B254DC17871CE74b1D9A37a5a36d67": {
+    "name": "BeastBullClub (BBC)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xb576c9403f39829565bd6051695e2ac7ecf850e2": {
+    "name": "Multichain: Router V4 2",
+    "labels": [
+      "bridge",
+      "multichain"
+    ]
+  },
+  "0x34e2ed44ef7466d5f9e0b782b5c08b57475e7907": {
+    "name": "Aave: vSUSHI Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x4565dc3ef685e4775cdf920129111ddf43b9d882": {
+    "name": "Scream.sh: scWBTC",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0xcf726a06f3dcec8ef2b033336d138caa0eae5af2": {
+    "name": "Rari Governance Token (RGT)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0xcf799767d366d789e8B446981C2D578E241fa25c": {
+    "name": "Decentralized USD (USDD)",
+    "labels": [
+      "algorithmic-stablecoin"
+    ]
+  },
+  "0x76bfcd12502990cb01bfa134338e5c5bdc0f414e": {
+    "name": "Based Finance: Team Wallet 3",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x39bb82e080e8a1b0895ab74b20a737498c56c18e": {
+    "name": "Based Finance: Team Wallet 5",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0xb9d62c829fbf7eaff1eba4e50f3d0480b66c1748": {
+    "name": "pDollar (PDO)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x8aa68ca9e25aab6f9f41bf341d12ab407ae099e2": {
+    "name": "Aave: Fallback Oracle V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x08f6fE8f4dC577CF81E40E03E561d29B8b33E19b": {
+    "name": "Digg (DIGG)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x4f56f5e76c91e3676e806eb1b2e00e1d18f8f897": {
+    "name": "Tarot ETH Supply Vault (tETH)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xe401e06c977cef1a87d9e9ab9346df87fd2c8077": {
+    "name": "Romulans (ROMS)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x010da5ff62b6e45f89fa7b2d8ced5a8b5754ec1b": {
+    "name": "Beefy Finance: Deployer 2",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x8ac868293d97761a1fed6d4a01e9ff17c5594aa3": {
+    "name": "Morpheus Swap: Router",
+    "labels": [
+      "morpheus-swap"
+    ]
+  },
+  "0xe64b9fd040d1f9d4715c645e0d567ef69958d3d9": {
+    "name": "Modefi (MOD)",
+    "labels": [
+      "decentralized-web",
+      "services-solutions"
+    ]
+  },
+  "0x1Adbeb67D9986BA12CBD41076A03C64f573435A4": {
+    "name": "SpecialBeastBull (SBB)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x2b7c5841997275d2d548ce9b19d54b655725ebfc": {
+    "name": "Specter Finance (SPECTER)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x0422b63182798ae9876cae3cabd225d96b284d14": {
+    "name": "Defido Coin (BASE)",
+    "labels": [
+      "meme"
+    ]
+  },
+  "0x05dddf0ae24992bcc937569cf7018fef311d945a": {
+    "name": "Equalizer DEX: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xc0f0cfbbd0382bce3b93234e4bfb31b2aabe36ad": {
+    "name": "Aave: Treasury Controller V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x1f56ccfe85dc55558603230d013e9f9bfe8e086c": {
+    "name": "",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0x27da479a25603f1045f90f8d93231a0405a06a25": {
+    "name": "Devil Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x524cabe5b2f66cbd6f6b08def086f18f8dde033a": {
+    "name": "Biconomy: BICO Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xfb00ac187a8eb5afae4eace434f493eb62672df7": {
+    "name": "Aave: vUSDT Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x009c921e9b8be47c055fdb6a50c0f604a4c9c9b4": {
+    "name": "Fantom: Foundation Wallet 15",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0xa6ed5bf2c86cc267bf9b88cbd6f6587f72b2ef0c": {
+    "name": "Anyswap: Deployer 3",
+    "labels": [
+      "anyswap",
+      "contract-deployer"
+    ]
+  },
+  "0x93d01402fc51dd906bbaadb2431ddc2ff535eaac": {
+    "name": "Tarot: Supply Vault Strategy V1",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0xb214d491a58a250a99f11ce01c361e7fad4d3e69": {
+    "name": "Batasm Finance: BSM Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x3d8f1accee8e263f837138829b6c4517473d0688": {
+    "name": "JetSwap Fantom Token (fWINGS)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0x7Dd7eAf5872E260F35Dc60a54E0F25193128c765": {
+    "name": "Grape Finance (GRAPE)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x16c243a961f56819688e2cefeba9a268ce40abd0": {
+    "name": "CoinBiten: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x17d013c19fe25cf4d911ce85ed5f40fe8880f46f": {
+    "name": "Aave: WETH Gateway V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x84b630eb9568bd5021524855543022c2d170e85b": {
+    "name": "Doge Floki: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x1a8fd04b7eBEB82605829EEA91324D81b41d6dcf": {
+    "name": "Excalibur dividend token (GRAIL)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xda307d1dcf885b0a0eed1d42f7327254c3b1c763": {
+    "name": "DIVO Global Platform: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xc76930c9fba70bd24ddbce15982401c1630e3bda": {
+    "name": "Auto Busd: ABS Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x8aa7e17f96647e08a54880521b2f3e7f99aa11ca": {
+    "name": "Based Finance: Oracle",
+    "labels": [
+      "based-finance",
+      "oracle"
+    ]
+  },
+  "0x3028b4395f98777123c7da327010c40f3c7cc4ef": {
+    "name": "Premia (PREMIA)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x1E4F97b9f9F913c46F1632781732927B9019C68b": {
+    "name": "Curve DAO (CRV)",
+    "labels": [
+      "bridged-token",
+      "defi"
+    ]
+  },
+  "0x2add64a6077aa946282da263a839dd0caa0d1668": {
+    "name": "Dark Spartans: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xdda7da47f3b53aa1fcb341650c614daf554f3e57": {
+    "name": "Gold Pressed Latinum (GPL)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x6fd0c2f6cef3b83c2a463d561739d6f7ca9cf809": {
+    "name": "Based Finance: Team Wallet 4",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x82F8Cb20c14F134fe6Ebf7aC3B903B2117aAfa62": {
+    "name": "Frax Share (FXS)",
+    "labels": [
+      "decentralized-web",
+      "stablecoin"
+    ]
+  },
+  "0x413fbfdce9b5afb65b6147fbbc970148b79e706a": {
+    "name": "dYEL Index Token (anydYel)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x63C4DbC02c6198daaE6adac6190d575541E2E2e0": {
+    "name": "Blow Token DeGen Haus (BLOW)",
+    "labels": [
+      "deflationary-token"
+    ]
+  },
+  "0xd833bb1267c58544965f5530bf3df0a55a49be4c": {
+    "name": "ABBC: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x1F7216fdB338247512Ec99715587bb97BBf96eae": {
+    "name": "Badger Sett Badger (bBADGER)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0xb3654dc3d10ea7645f8319668e8f54d2574fbdc8": {
+    "name": "ChainLink (LINK)",
+    "labels": [
+      "bridged-token",
+      "oracle"
+    ]
+  },
+  "0xbb8b2f05a88108f7e9227b954358110c20e97e26": {
+    "name": "DEI (anyDEI)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x152ee697f2e276fa89e96742e9bb9ab1f2e61be3": {
+    "name": "SpookySwap: Factory",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0xED2a7edd7413021d440b09D654f3b87712abAB66": {
+    "name": "nUSD (nUSD)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xBeFbED384F7638B51f0C7C46982B7376B7d63111": {
+    "name": "Doge Floki Coin (DOFI)",
+    "labels": [
+      "meme"
+    ]
+  },
+  "0x66b5666b2b9ad101fc6d3784f995bbf461970ede": {
+    "name": "Iodone (IODN)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0xe80761ea617f66f96274ea5e8c37f03960ecc679": {
+    "name": "Aave: vAAVE Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x0f390559f258eb8591c8e31cf0905e97cf36ace2": {
+    "name": "Hundred Finance: Comptroller",
+    "labels": [
+      "hundred-finance"
+    ]
+  },
+  "0x7a6c1d5de483688d5dcd8c3cf33cfa2eaad6e000": {
+    "name": "Debt_Consolidation (anyDCT)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x666a3776b3e82f171cb1dff7428b6808d2cd7d02": {
+    "name": "AladdinDAO: aCRV Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x90b89e881961E1053AeaDdbA13217d56F747349a": {
+    "name": "HYVE (HYVE)",
+    "labels": [
+      "decentralized-web"
+    ]
+  },
+  "0x24248cd1747348bdc971a5395f4b3cd7fee94ea0": {
+    "name": "TBOND (TBOND)",
+    "labels": [
+      "rebase-token"
+    ]
+  },
+  "0x84F8D24231DfbBfae7f39415cD09c8f467729fc8": {
+    "name": "CosmicCash (CSC)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xb07fddd8a191d540b913a7e360119fa2e1064358": {
+    "name": "SpookySwap: 360 Days LP Vesting Timelock",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0x765277eebeca2e31912c9946eae1021199b39c61": {
+    "name": "",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xa0e0f462d66de459711bc721ce1fdcc3d9405831": {
+    "name": "Based Finance: DAO Wallet",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x73ef0b4a0ae027a34fbcbdb3a1588d42a6a3aecf": {
+    "name": "BabyChimpGang: Deployer 2",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x7fce87e203501c3a035cbbc5f0ee72661976d6e1": {
+    "name": "Solidex Finance: Staking Rewards",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0xfF7B22053219eDf569499A3794829FB71D6F8821": {
+    "name": "TOR (anyTOR)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9": {
+    "name": "Liquid Driver (LQDR)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x69739a7618469eed0685330d164d50ac19a9411a": {
+    "name": "Beethoven X: Strategic Partnership Multisig Wallet",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0xeb8a4eadd643ea3873dfecfba18bd709d3206919": {
+    "name": "Fantom: Foundation Wallet 3",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x3795c36e7d12a8c252a20c5a7b455f7c57b60283": {
+    "name": "Celer Network: cBridge 2",
+    "labels": [
+      "bridge",
+      "deprecated"
+    ]
+  },
+  "0x71c7656ec7ab88b098defb751b7401b5f6d8976f": {
+    "name": "FTMScan: Donate",
+    "labels": [
+      "donate"
+    ]
+  },
+  "0xda2a4abc17a87f6f7b532a37ab8b707343a97334": {
+    "name": "MiniVerse Finance: MiniGuineas Staking",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x8fb778209176622de9e3564302211f9c13405858": {
+    "name": "Tomb Finance: Tax Office",
+    "labels": [
+      "tomb-finance"
+    ]
+  },
+  "0x40df1ae6074c35047bff66675488aa2f9f6384f3": {
+    "name": "MATIC (MATIC)",
+    "labels": [
+      "bridged-token",
+      "decentralized-web",
+      "multichain"
+    ]
+  },
+  "0x0cd61b1bf6f8f2b6ba03cc8bcc57c941b7cc47a4": {
+    "name": "vDEUS (anyvDEUS)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xf45439A5f85a41Fc2D626e80fA44FB5A2DD4fF6B": {
+    "name": "Barrel (BARL)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0xF99231D26437a5A24928fbF2cB4424d1F8010EA1": {
+    "name": "Vamp Share Token (VSHARE)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xf6036dd216b6b97482510cb647c5d1feb83ce910": {
+    "name": "PSHARE (PSHARE)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x70f8892b9aed192b3e794f9398b62d50cf2fbbf8": {
+    "name": "Scream.sh: Deployer 2",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0x4cdf39285d7ca8eb3f090fda0c069ba5f4145b37": {
+    "name": "TSHARE (TSHARE)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0xaa621d2002b5a6275ef62d7a065a865167914801": {
+    "name": "Fantasm FSM Token (FSM)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x87a58ab71b3de67340719d4fb61b97396609a6ec": {
+    "name": "Comb Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xef45d134b73241eda7703fa787148d9c9f4950b0": {
+    "name": "SpiritSwap: Factory",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0x74b23882a30290451A17c44f4F05243b6b58C76d": {
+    "name": "Ethereum (ETH)",
+    "labels": [
+      "bridged-token"
+    ]
+  },
+  "0xc031b7793f17100e9b7ad369ca05e5ec8a0f5b5c": {
+    "name": "WeaponizedCountries (WC)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x983235dc2a7b5e5a0820066480b19f04eef83986": {
+    "name": "Klingon Token (KLING)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x8e347e33d991a51f5b654245c054bc5a6bc60ce1": {
+    "name": "OxAI (OXAI)",
+    "labels": [
+      "artificial-intelligence"
+    ]
+  },
+  "0x4d9361a86d038c8ada3db2457608e2275b3e08d4": {
+    "name": "FTM-Meso (MESO)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xda763530614fb51dff9673232c8b3b3e0a67bcf2": {
+    "name": "DANTE (DANTE)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x9767203e89dcD34851240B3919d4900d3E5069f1": {
+    "name": "A4 (A4)",
+    "labels": [
+      "defi",
+      "metaverse",
+      "nft",
+      "wallet-app"
+    ]
+  },
+  "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e": {
+    "name": "Dai Stablecoin (DAI)",
+    "labels": [
+      "bridged-token",
+      "stablecoin"
+    ]
+  },
+  "0x5023882f4d1ec10544fcb2066abe9c1645e95aa0": {
+    "name": "WigoSwap: Router",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x6cc0e0aedbbd3c35283e38668d959f6eb3034856": {
+    "name": "DarkKnightSwap Token (dKNIGHT)",
+    "labels": [
+      "dex",
+      "yield-farming"
+    ]
+  },
+  "0x0000000000000000000000000000000000000000": {
+    "name": "Null: 0x000...000",
+    "labels": [
+      "burn"
+    ]
+  },
+  "0x8063115941e612021692f28748ab1ff56c23e4c6": {
+    "name": "Pepemon (PPBLZ)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0xbea7c3f2d91a9c6fd7f5aa9c803d4c31c1db8db9": {
+    "name": "BitDaemons: BDMN Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x00a35FD824c717879BF370E70AC6868b95870Dfb": {
+    "name": "IronBank (IB)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x953e94caf91a1e32337d0548b9274f337920edfa": {
+    "name": "USDV (USDV)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x31612bc2abb01ac891d1db8c01193924bfbd9c7e": {
+    "name": "Trident (TRIDENT)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x6b79d5f425e9deed2a3b83903da2bf88b31aa044": {
+    "name": "Creditum: Oracle",
+    "labels": [
+      "oracle"
+    ]
+  },
+  "0xc7dad2e953dc7b11474151134737a007049f576e": {
+    "name": "Morpheus Swap: MasterChef",
+    "labels": [
+      "morpheus-swap"
+    ]
+  },
+  "0x7d226bff737c5855254c307523afb3c464c5680b": {
+    "name": "SafeBLAST (BLAST)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xa2a1c57faeceaf330cad764a7afe1e219e82df9b": {
+    "name": "SpookySwap: 240 Days Token Vesting Timelock",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0x4f0d07209529c714ea5cafad90ed1494a3bb800a": {
+    "name": "GHOST (GHOST)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x0d52b75a02b049c6842be93fabf877304791bfde": {
+    "name": "AtmosSoft: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x6a403ffbbf8545ee0d99a63a72e5f335dfcae2bd": {
+    "name": "Rave Names: Old FNS Token",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0xf7b38053a4885c99279c4955cb843797e04455f8": {
+    "name": "DEUS (anyDEUS)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xf010b09bfab30e9db9a51562211a215115ebb0c2": {
+    "name": "Revest Finance: Uniswap Oracle",
+    "labels": [
+      "oracle"
+    ]
+  },
+  "0xaf319e5789945197e365e7f7fbfc56b130523b33": {
+    "name": "Anyswap: FRAX Token",
+    "labels": [
+      "anyswap",
+      "token-contract"
+    ]
+  },
+  "0xfd46f44a5ad3227a7325b695b6ea1aa549862309": {
+    "name": "Lira: Old LIRA Token",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0xeff6fcfbc2383857dd66ddf57efffc00d58b7d9d": {
+    "name": "JulSwap (JulD)",
+    "labels": [
+      "payments",
+      "wallet-app"
+    ]
+  },
+  "0xdda0f0e1081b8d64ab1d64621eb2679f93086705": {
+    "name": "Diamond (DIAMOND)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xd0f43199578ab0a4b17f59ada0e491dc100d4394": {
+    "name": "Exodia: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xd31b10a66c9aa407d86c250f3381b629aed9fa12": {
+    "name": "Nova: Staking & Farming",
+    "labels": [
+      "staking",
+      "yield-farming"
+    ]
+  },
+  "0xe9828045632b32e2aac7f3a4c1511c0d8965576c": {
+    "name": "TheBorg.Eth.Link (BORG)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x97e90db5ebfa2201eb3b8fb021f70406b310d2ce": {
+    "name": "BorgSwap: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x5774b2fc3e91af89f89141eacf76545e74265982": {
+    "name": "SoulPower (anySOUL)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x4272dd51961a5181ace0dc7eb6f9807311345559": {
+    "name": "Pepedex (PPDEX)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0xf50c6daaaec271b56fcddfbc38f0b56ca45e6f0d": {
+    "name": "Tomb Finance: Treasury",
+    "labels": [
+      "tomb-finance"
+    ]
+  },
+  "0x685a211c9d96d0c8c9d22b7ae309538d4c69c15c": {
+    "name": "WolfSafePoorPeople (WSPP)",
+    "labels": [
+      "charity"
+    ]
+  },
+  "0xf420c822e7849a71d06f6ab6c0a4d1a043faa26e": {
+    "name": "Alium Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x991610c455b89d6210a05e06148b482b1741afd1": {
+    "name": "Screams.finance (SCREAMS)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xb835bb6ec5219660a4e906efb3c8c00d5e6f0cef": {
+    "name": "SpiritSwap: Smart Wallet Whitelist",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0xe83ce6bfb580583bd6a62b4be7b34fc25f02910d": {
+    "name": "ABBC: FABBC Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x25a528af62e56512a19ce8c3cab427807c28cc19": {
+    "name": "DSLA (DSLA)",
+    "labels": [
+      "decentralized-web"
+    ]
+  },
+  "0x9564fbfd3b3819d6fb2dbc88c75e112400be8f0c": {
+    "name": "OwlDAO token (OWL)",
+    "labels": [
+      "dao"
+    ]
+  },
+  "0x8b8407c6184f1f0fd1082e83d6a3b8349caced12": {
+    "name": "Circuits of Value V2 (COVAL)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xa57e7fd8e678d9f728a789343cd85d4c5685ba87": {
+    "name": "Anyswap: AnyWBNB Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xe2463256e69e4c86345dc32e2ffed3283b0022e8": {
+    "name": "Spock Token (SPOCK)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x2244FaAB5a2A633Cb7f6e3D35E7dB8ec0136d3e2": {
+    "name": "GEM (anyGEM)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x940f41f0ec9ba1a34cf001cc03347ac092f5f6b5": {
+    "name": "Geist fUSDT (gfUSDT)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x9b3a97a65a07fc2d4f25dc9aa79a4d83b6535293": {
+    "name": "Degen Haus: Deployer 2",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x20dd72ed959b6147912c2e529f0a0c651c33c9ce": {
+    "name": "Beethoven X: Vault",
+    "labels": [
+      "beethoven-x",
+      "vaults"
+    ]
+  },
+  "0x85dec8c4b2680793661bca91a8f129607571863d": {
+    "name": "PaintSwap Token (BRUSH)",
+    "labels": [
+      "marketplace",
+      "nft",
+      "yield-farming"
+    ]
+  },
+  "0x0b631545aeb35466330ac887485e2e72e122e146": {
+    "name": "BorgSwap: Deployer 2",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x260e596dabe3afc463e75b6cc05d8c46acacfb09": {
+    "name": "Scream.sh: Unitroller",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0x3b42fd538597fd049648c9f017208bf712195b73": {
+    "name": "Plasma (PPAY)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x27749e79ad796c4251e0a0564aef45235493a0b6": {
+    "name": "OnX.finance (ONX)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xCDD6494aEB193C8d5541b5B9c5e72a3809A98fdc": {
+    "name": "DecentraWorld ($DEWO)",
+    "labels": [
+      "privacy"
+    ]
+  },
+  "0x49c290ff692149a4e16611c694fded42c954ab7a": {
+    "name": "BSHARE (BSHARE)",
+    "labels": [
+      "based-finance",
+      "defi"
+    ]
+  },
+  "0x247b5bcc806f86969e0ee5446d411283b218f645": {
+    "name": "Degen Finance (anyDEGEN)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xe74621A75C6ADa86148b62Eef0894E05444EAE69": {
+    "name": "Charge (Charge)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x6741db012578615Ee07e029C1062B46730093912": {
+    "name": "ftmGAS (ftmGAS)",
+    "labels": [
+      "gas"
+    ]
+  },
+  "0x667c856f1A624BAeFE89fC4909C8701296C86c98": {
+    "name": "Onino (ONI)",
+    "labels": [
+      "data"
+    ]
+  },
+  "0x46e7628e8b4350b2716ab470ee0ba1fa9e76c6c5": {
+    "name": "Band Protocol: BAND Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xbdba76fa2659c33ffcc2b0bc134c3a2c8a3aa94d": {
+    "name": "Frax (anyFRAX)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x915120fD4c52F104A359318A0c525EDaa44a7c10": {
+    "name": "Pebble (anyPBL)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x657A1861c15A3deD9AF0B6799a195a249ebdCbc6": {
+    "name": "Cream (CREAM)",
+    "labels": [
+      "defi",
+      "loans"
+    ]
+  },
+  "0x132b56763c0e73f95beca9c452badf89802ba05e": {
+    "name": "Fantastic Protocol FXM Token (FXM)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x8503eb4a136bdbeb323e37aa6e0fa0c772228378": {
+    "name": "BOMB (BOMB)",
+    "labels": [
+      "deflationary-token"
+    ]
+  },
+  "0xf329e36c7bf6e5e86ce2150875a84ce77f477375": {
+    "name": "Aave: aAAVE Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xb688e18f34e6e424c44b247318f22367ed7df3e2": {
+    "name": "ANY Ethereum (anyETH)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x4e5d8794f08f2792dc51016d0a4b9a205cafc63a": {
+    "name": "DEUS Finance: DEI-DEUS Staking",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x3401cf2a1064346bf1c4bf9836a44de0529c3eac": {
+    "name": "Assent Protocol: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x373559e2c2d6898af6c4e3c1b93789ca4cb06074": {
+    "name": "Wrapped Cyber Fantoms (wCYBER)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x39263a476aadf768be43a99b24c4e461098524a4": {
+    "name": "SoliMax (SLM)",
+    "labels": [
+      "dao"
+    ]
+  },
+  "0x5089a0553c08212256ed72a65dcac91b5d91f7ff": {
+    "name": "Nova Exploiter 1",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0x2352b745561e7e6fcd03c093ce7220e3e126ace0": {
+    "name": "SpookySwap: AcaLab xBOO Staking",
+    "labels": [
+      "spookyswap",
+      "staking"
+    ]
+  },
+  "0x7e5f7da8b5d70b40397487780fdf89384cfebb9a": {
+    "name": "Tarot: Supply Vault Strategy V3",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x9d8F97A3C2f9f397B6D46Cbe2d39CC1D8Cf19010": {
+    "name": "OpenOcean (OOE)",
+    "labels": [
+      "interoperability-cross-chain"
+    ]
+  },
+  "0x42ae8468a1fddb965d420bd71368a87ec3a2b4b8": {
+    "name": "Metti Inu (Metti)",
+    "labels": [
+      "meme"
+    ]
+  },
+  "0x504ec4f9af7bbf8cad73ccc2121a3a7fb4c81bcf": {
+    "name": "ChainPort Token [via ChainPort.io] (PORTX)",
+    "labels": [
+      "blockchain",
+      "bridge"
+    ]
+  },
+  "0xbcf339df10d78f2b44aa760ead0f715a7a7d7269": {
+    "name": "SpookyToken (anyBOO)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x76FBa02e148cab052f86dc1d8f4b10e64EfC7046": {
+    "name": "pSHARE (anypSHARE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x0f7adb77b6334b9b5a3c4f78aaa073ea1d915bf6": {
+    "name": "AQU (AQU)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0xf76028d7b33897403a1f4f5ee17ad498b3f3ddee": {
+    "name": "Market Protocol: Jump Rate V1 Cream Stables Major",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0x6ab707aca953edaefbc4fd23ba73294241490620": {
+    "name": "Aave: aUSDT Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x55638a37d2c29a1c602dc0e3f81751a54dc504f0": {
+    "name": "Deus Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x728d2765716820f0F101a390ca124914635ffD0b": {
+    "name": "SNFT (S)",
+    "labels": [
+      "marketplace"
+    ]
+  },
+  "0x770ef9f4fe897e59dacc474ef11238303f9552b6": {
+    "name": "Aave: Pool Addresses Provider Registry V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x2f3bca2631fff538b8a55207f6c2081457e229f7": {
+    "name": "Oath Token (anyOATH)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xc1be9a4d5d45beeacae296a7bd5fadbfc14602c4": {
+    "name": "Graviton (GTON)",
+    "labels": [
+      "defi",
+      "interoperability-cross-chain"
+    ]
+  },
+  "0xeb86B05cFEE3e48DB9a44275701Ed099462c8ba0": {
+    "name": "Frankenstein Finance (FRANK)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x59b46fbb487aa974de815f31601cbe6ba7368a01": {
+    "name": "Scream.sh: Compound Lens",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0xe2d7d415640249ec37d30458c71f73972146ea20": {
+    "name": "Nova Exploiter 2",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0x82b83ed9587c92b1ca45a5ede74a059d485d4e4d": {
+    "name": "Dark Planet: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xe27c0a2c2fea3c6c7fc42af05861381d8411ad65": {
+    "name": "Metavault DAO: Staking Distributor",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0xae84001Ad422C494Ee80630a6C03D7A12935610a": {
+    "name": "Strange Monsters (STM)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0xbcacf1c62202a07e6107f250b788b10677045833": {
+    "name": "ANY Litecoin (anyLTC)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0xed8f2c964b47d4d607a429d4eea972b186e6f111": {
+    "name": "Ola Fantom (oFTM)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x02224765bc8d54c21bb51b0951c80315e1c263f9": {
+    "name": "Scream.sh: scfUSDT",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0xe9cd20bbf0ca4988db14d30ac059e76a2b692756": {
+    "name": "SNFT Collections (SCF)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x6Fc9383486c163fA48becdEC79d6058f984f62cA": {
+    "name": "USD Balance (USDB)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0xc5713B6a0F26bf0fdC1c52B90cd184D950be515C": {
+    "name": "linSpirit (LINSPIRIT)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0xfe351f5ed699fd5ea80b906f89dfdad2f885a46c": {
+    "name": "",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x0a77866C01429941BFC7854c0c0675dB1015218b": {
+    "name": "Grim EVO Token (GRIM EVO)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x7381ed41f6de418dde5e84b55590422a57917886": {
+    "name": "Beefy Finance: beFTM Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x0d284265b8682afea68f2ae9cec4e014fde7006d": {
+    "name": "ChillPill: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x5d5530eb3147152fe78d5c4bfeede054c8d1442a": {
+    "name": "Feeder.finance (FEED)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x04068da6c83afcfa0e13ba15a6696662335d5b75": {
+    "name": "USD Coin (USDC)",
+    "labels": [
+      "bridged-token",
+      "stablecoin"
+    ]
+  },
+  "0xe50fa9b3c56ffb159cb0fca61f5c9d750e8128c8": {
+    "name": "Aave: aWETH Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x05cf468c96d8ae739222ad856d8d3c0b2d0d02ac": {
+    "name": "Revest Finance: Chainlink Oracle",
+    "labels": [
+      "oracle"
+    ]
+  },
+  "0x1c174f6ab0753162befbb916c69def2cc1bfdec1": {
+    "name": "Tempus (TEMP)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x0ddb88e14494546d07fcd94c3f0ef6d3296b1cd7": {
+    "name": "SummitToken (SUMMIT)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x7f9d1dbaf84d827b0840e38f555a490969978d20": {
+    "name": "Fantom: Foundation Wallet 8",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x9c454510848906fddc846607e4baa27ca999fbb6": {
+    "name": "Morpheus Swap: Factory",
+    "labels": [
+      "morpheus-swap"
+    ]
+  },
+  "0x8564bA78F88B744FcC6F9407B9AF503Ad35adAFC": {
+    "name": "Hector (anyHEC)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xbf77e7b4ccc92bbaff26dd08a6a00609d05ff459": {
+    "name": "Yoshi.exchange (anyYOSHI)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x4a89338a2079a01edbf5027330eac10b615024e5": {
+    "name": "USDL (USDL Stablecoin)",
+    "labels": [
+      "defi",
+      "stablecoin"
+    ]
+  },
+  "0x8b1f4432f943c465a973fedc6d7aa50fc96f1f65": {
+    "name": "Axelar (AXL)",
+    "labels": [
+      "security"
+    ]
+  },
+  "0xf62fafc9b31b016484dcb779d8c3a0b26e9815a6": {
+    "name": "Tarot: Safe Wallet",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x82e64f49ed5ec1bc6e43dad4fc8af9bb3a2312ee": {
+    "name": "Aave: aDAI Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x92fcfc79187bc2db094c784d2a1b09e427ede24f": {
+    "name": "Morpheus Swap: Multisig",
+    "labels": [
+      "morpheus-swap"
+    ]
+  },
+  "0x627524d78b4fc840c887ffec90563c7a42b671fd": {
+    "name": "Cryptokek: KEK Token",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x82f0b8b456c1a451378467398982d4834b6829c1": {
+    "name": "Magic Internet Money (MIM)",
+    "labels": [
+      "bridged-token",
+      "defi"
+    ]
+  },
+  "0x551c61db482289994e7d426fc4db6493918bb81d": {
+    "name": "Undead Finance (UNDEAD)",
+    "labels": [
+      "gaming",
+      "nft"
+    ]
+  },
+  "0x0299461ee055bbb6de11fafe5a0636a0c3bd5e8d": {
+    "name": "Fast Yield Token (FAST)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x16a9aaee145f288673a0a8a8c5c224708a5284b4": {
+    "name": "Kavian Fantom (fKAVIAN)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x4c5b4f27bc268594ecacc3dfce68ad70bd21487c": {
+    "name": "MiniVerse Finance: MiniChillas Staking",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x596288a9090c9eedf87bb5f2da5d8e1bbc7bb935": {
+    "name": "Fantom: Foundation Wallet 20",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x77e4b42c3d788735bc27ad7f494362b07ccd9f04": {
+    "name": "Morpheus Swap: Timelock",
+    "labels": [
+      "morpheus-swap"
+    ]
+  },
+  "0x84cebca6bd17fe11f7864f7003a1a30f2852b1dc": {
+    "name": "L3USD (anyL3USD)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x6e99e0676a90b2a5a722c44109db22220382cc9f": {
+    "name": "Excalibur token (EXC)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xeaF26191ac1D35AE30Baa19a5ad5558DD8156Aef": {
+    "name": "Nord Token (NORD)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x03943c3ef00d92e130185cebc0bcc435def2cc94": {
+    "name": "Follow Me (FM)",
+    "labels": [
+      "social-media"
+    ]
+  },
+  "0x0fa5a3b6f8e26a7c2c67bd205ffcfa9f89b0e8d1": {
+    "name": "Tomb Finance: DAO Wallet",
+    "labels": [
+      "tomb-finance"
+    ]
+  },
+  "0x16b6deee778bbcf427e40ffa3c14c4840be10e6a": {
+    "name": "",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0x593ab53baffaf1e821845cf7080428366f030a9c": {
+    "name": "CoffinToken (COFFIN)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x628f094c6ef383271f37516df7abf869046d6aaf": {
+    "name": "QuikNode (QUIK)",
+    "labels": [
+      "phish-hack"
+    ]
+  },
+  "0x0E1694483eBB3b74d3054E383840C6cf011e518e": {
+    "name": "Synth sUSD (sUSD)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0xEFFd4874AcA3Acd19a24dF3281b5cdAdD823801A": {
+    "name": "SOR (SOR)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x3fde0292d94140b0d45e0ed0a8cbf6a269899a3d": {
+    "name": "Elyseos: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xa9937092c4e2b0277c16802cc8778d252854688a": {
+    "name": "OliveCash Token (fOLIVE)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0xc106d7962831c952026c23fe6f6ed465373ddd9b": {
+    "name": "Zombie Spectre Token (SPECz)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x9AeA86C37598CDBE6b0F8Db95AC3cae62A3259bf": {
+    "name": "Treeb (anyTREEB)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x89c4434119b237922069673439c35f90025563c9": {
+    "name": "Zebrocoin (ZEBRO)",
+    "labels": [
+      "e-commerce",
+      "payments"
+    ]
+  },
+  "0x283e62cfe14b352db8e30a9575481dcbf589ad98": {
+    "name": "Tarot: Router",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x59c6606ed2af925f270733e378d6af7829b5b3cf": {
+    "name": "War Bond Token (WBOND)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0xfa9343c3897324496a05fc75abed6bac29f8a40f": {
+    "name": "Stone Token (STN)",
+    "labels": [
+      "defi",
+      "staking"
+    ]
+  },
+  "0x306e974624511e3937f37e551c5736f1b2ad21eb": {
+    "name": "Gitshock Finance (GTFX)",
+    "labels": [
+      "defi",
+      "smart-contract"
+    ]
+  },
+  "0x08d70A47D3f28BbF755ae050a783844b40ae5761": {
+    "name": "KELVIN (KELVIN)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x2823d10da533d9ee873fed7b16f4a962b2b7f181": {
+    "name": "Frapped USDT (anyUSDT)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x062f2724f64bfefbf7075a7974eaff47e74a1ce0": {
+    "name": "DarkOpera Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xc5c71cd0b734dae8c6eba9d79c3db693d112dda1": {
+    "name": "Charge (anyCharge)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xa45776cd3bd348c330bce66bf9dba149d8c3d452": {
+    "name": "Tarot BTC Supply Vault (tBTC)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xb16bc9fb77437d86ece369ca40ef22b918934a29": {
+    "name": "WigoSwap: Seed Funder 2 60 DayTimelock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x64310ff7ee9cd7b1e8c74056f6d9f93548a9ae02": {
+    "name": "D20Token (D20)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x42b458056f887fd665ed6f160a59afe932e1f559": {
+    "name": "Hundred Finance: Minter",
+    "labels": [
+      "hundred-finance"
+    ]
+  },
+  "0xc3f069d7439baf6d4d6e9478d9cc77778e62d147": {
+    "name": "Fantom Libero Financial Freedom (FLIBERO)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x2d5408f2287bf9f9b05404794459a846651d0a59": {
+    "name": "Alpaca Finance: Multi Call",
+    "labels": [
+      "alpaca-finance"
+    ]
+  },
+  "0x9b17baadf0f21f03e35249e0e59723f34994f806": {
+    "name": "Iron Finance ICE Token (anyICE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x2217aec3440e8fd6d49a118b1502e539f88dba55": {
+    "name": "Tarot: B Deployer",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x73db844fea1fb6fc6ea3ddaacbb0d0dc00714753": {
+    "name": "BorgSwap: JEHMAD Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x46fcde1b89d61f5cbfaab05c2914c367f8301f30": {
+    "name": "Tarot: C Deployer",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0xd4fcd1d1252bf4a3134e0e848479ad90a60979ef": {
+    "name": "Tarot: Tarot LGE",
+    "labels": [
+      "tarot"
+    ]
+  },
+  "0x609D6eA495E00c982Df8f76fDbAA14cD8F922d16": {
+    "name": "Modefi (anyMOD)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x6626c47c00f1d87902fc13eecfac3ed06d5e8d8a": {
+    "name": "Wootrade Network (WOO)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x37517c5d880c5c282437a3da4d627b4457c10beb": {
+    "name": "Scream.sh: Comptroller",
+    "labels": [
+      "scream"
+    ]
+  },
+  "0xe55e19fb4f2d85af758950957714292dac1e25b2": {
+    "name": "Synapse (SYN)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x6ade5eaf6825dfc4ec1c812e9e9240b6301b12b8": {
+    "name": "Market Protocol: Jump Rate Model V2 Cream Major",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0x8867F422Cd9Cf0C66ba71D22bC8edc641e91949d": {
+    "name": "Ultron (ULX)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xa01c3d760738c79e10334408ae59684aa36b1131": {
+    "name": "Degen Haus: Factory",
+    "labels": [
+      "factory-contract"
+    ]
+  },
+  "0xe578c856933d8e1082740bf7661e379aa2a30b26": {
+    "name": "Geist USDC (gUSDC)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0xdbf31df14b66535af65aac99c32e9ea844e14501": {
+    "name": "renBTC (renBTC)",
+    "labels": [
+      "bitcoin-pegged",
+      "interoperability-cross-chain"
+    ]
+  },
+  "0xaf319E5789945197e365E7f7fbFc56B130523B33": {
+    "name": "Frax (FRAX)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x87a5c9b60a3aaf1064006fe64285018e50e0d020": {
+    "name": "MAGIK (MAGIK)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x94a7f270cd12545a277e656266aef5e27df3eb28": {
+    "name": "Fantom-Peg Stream (FSTRM)",
+    "labels": [
+      "communication"
+    ]
+  },
+  "0xbc790382b3686abffe4be14a030a96ac6154023a": {
+    "name": "Aave: Wallet Balance Provider V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0x280ebb7c9f2c90ac6dd136516598a2f9efe70507": {
+    "name": "BNBBACK (BNBBACK)",
+    "labels": [
+      "decentralized-web"
+    ]
+  },
+  "0x420b17f69618610de18cacd1499460efb29e1d8f": {
+    "name": "SpiritSwap: Gauge Proxy",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0x80f2b8cdbc470c4db4452cc7e4a62f5277db7061": {
+    "name": "VOID (VOID)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x89D5e71E275B4bE094Df9551627BCF4E3b24cE22": {
+    "name": "Statera (STA)",
+    "labels": [
+      "deflationary-token"
+    ]
+  },
+  "0x3d8e0bb811c45845687baa32b6e092238c919ed9": {
+    "name": "LSHARE (anyLSHARE)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0xe4042ae1c40913ba00619392de669bdb3beced50": {
+    "name": "Bulls Inc: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x332730a4f6e03d9c55829435f10360e13cfa41ff": {
+    "name": "Foundry Logistics Token (FRY)",
+    "labels": [
+      "dao"
+    ]
+  },
+  "0xb67fa6defce4042070eb1ae1511dcd6dcc6a532e": {
+    "name": "Alchemix Finance: alUSD Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0x33333ee26a7d02e41c33828b42fb1e0889143477": {
+    "name": "LIQR (LIQR)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x530759199116b9c261211d95686fd46a5f9b3175": {
+    "name": "XR Coin: Old XR Token",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0x06a87F6aFEc4a739c367bEF69eEfE383D27106bd": {
+    "name": "Doobie Love (DOOBIE)",
+    "labels": [
+      "meme",
+      "nft"
+    ]
+  },
+  "0xe992beab6659bff447893641a378fbbf031c5bd6": {
+    "name": "WigoSwap Token (WIGO)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x462Fa81050f0fF732D59df121BFd9b8Bab072018": {
+    "name": "Shack Token (SHACK)",
+    "labels": [
+      "blockchain",
+      "protocol",
+      "technology"
+    ]
+  },
+  "0x27182C8b647fd83603bB442C0E450DE7445ccfB8": {
+    "name": "Static (Static)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x54f5a04417e29ff5d7141a6d33cb286f50d5d50e": {
+    "name": "Multichain: Anyswap Create2",
+    "labels": [
+      "multichain"
+    ]
+  },
+  "0x45a09b27a99a4d0a32cd5e67ac7cf4816e2d950f": {
+    "name": "",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x6e209329a33a63c463dbb65ae2d6655fe5c98411": {
+    "name": "DSHARE (DSHARE)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0xa1e849b1d6c2fd31c63eef7822e9e0632411ada7": {
+    "name": "Beethoven X: Treasury Multisig Wallet",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0x3d41cf7df8cb8ff3ce51254f59b0cf41849ca69d": {
+    "name": "Amicable Koala (NFT5)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x84051efb5e0c61ac1863b5de72cd5bc3221870e4": {
+    "name": "Multichain: anyHND Token",
+    "labels": [
+      "multichain"
+    ]
+  },
+  "0xe83dfaaafd3310474d917583ae9633b4f68fb036": {
+    "name": "Raini (RAINI)",
+    "labels": [
+      "metaverse",
+      "nft"
+    ]
+  },
+  "0x1bc7f589d6ca55d466c917899ce7f50506703a39": {
+    "name": "Market Protocol: Jump Rate Model V2 Cream Gov",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0x1FD67aEc5BbE5E128A6E6bE6b120630afdf8cc53": {
+    "name": "Staked Frog Nation DAO (sFRG)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x27e611fd27b276acbd5ffd632e5eaebec9761e40": {
+    "name": "Curve.fi DAI/USDC (DAI+USDC)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0xA064e15e284D5D288281cc24d94DD8ed39d42AA4": {
+    "name": "Governance TurtleCoin (gTRTL)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0x9ad4266000f068e20b2f4e574b2b47cabb448717": {
+    "name": "LIF3 (anyLIF3)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x95478c4f7d22d1048f46100001c2c69d2ba57380": {
+    "name": "SpookySwap: Deployer",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0x79f8e9862c5240f316fabf31e5406e497d65484d": {
+    "name": "BITCOIN INTERNATIONAL: BTCI Token",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xd99eb02d73bc1c1d80334acf5ea9588742a7b20c": {
+    "name": "Charge DeFi: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x5B3C1F260E09e653290f24F75abC5e466fD42310": {
+    "name": "Assent Protocol Token (ASNT)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x35701189d211215cb38393f407b4767886deb03a": {
+    "name": "Fantom: Foundation Wallet 6",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0xb4d961671cadfed687e040b076eee29840c142e5": {
+    "name": "0x: Flash Wallet",
+    "labels": [
+      "0x-protocol"
+    ]
+  },
+  "0xa1388e73c51b37383b1ab9dce8317ef5a0349cc5": {
+    "name": "BIG Token (anyBIG)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x0000000000000000000000000000000000000001": {
+    "name": "Null: 0x000...001",
+    "labels": [
+      "burn"
+    ]
+  },
+  "0x68f598280a843a5ce07c1b9fb0d3af00cd085c31": {
+    "name": "SpookySwap: BrewBooV2",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0x57e1b84dc3fee985eb05a3e0648588aafdb23e2c": {
+    "name": "HellHound (HELD)",
+    "labels": [
+      "governance"
+    ]
+  },
+  "0x1f7216fdb338247512ec99715587bb97bbf96eae": {
+    "name": "Anyswap: bBADGER Token",
+    "labels": [
+      "anyswap",
+      "token-contract"
+    ]
+  },
+  "0x25c130b2624cf12a4ea30143ef50c5d68cefa22f": {
+    "name": "Geist ETH (gETH)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0xdef1fac7bf08f173d286bbbdcbeeade695129840": {
+    "name": "Cerby Token (CERBY)",
+    "labels": [
+      "defi",
+      "interoperability-cross-chain"
+    ]
+  },
+  "0xc009300bcfd76ced1e44ed76e2cac1a8bedd3d55": {
+    "name": "Doaibu: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x22a6ac883b2f5007486c0d0ebc520747c0702ad5": {
+    "name": "Mor Stablecoin (MOR)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xd8321aa83fb0a4ecd6348d4577431310a6e0814d": {
+    "name": "Geist.Finance Protocol Token (GEIST)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0xe3a486c1903ea794eed5d5fa0c9473c7d7708f40": {
+    "name": "Creditum USD (cUSD)",
+    "labels": [
+      "stablecoin"
+    ]
+  },
+  "0x2ad402655243203fcfa7dcb62f8a08cc2ba88ae0": {
+    "name": "CRE8R DAO (CRE8R)",
+    "labels": [
+      "decentralized-web",
+      "defi"
+    ]
+  },
+  "0x26a0d46a4df26e9d7deee9107a27ee979935f237": {
+    "name": "EasyBlock (EASY)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B": {
+    "name": "Staked Spell Tokens (sSPELL)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0xf491e7b69e4244ad4002bc14e878a34207e38c29": {
+    "name": "SpookySwap: Router",
+    "labels": [
+      "spookyswap"
+    ]
+  },
+  "0x9083ea3756bde6ee6f27a6e996806fbd37f6f093": {
+    "name": "SpiritSwap: MasterChef LP Staking Pool",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0x01e77288b38b416f972428d562454fb329350bac": {
+    "name": "MUMMY (MMY)",
+    "labels": [
+      "defi",
+      "trading"
+    ]
+  },
+  "0xc5a9848b9d145965d821aaec8fa32aaee026492d": {
+    "name": "OXD (OXD)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0xd160d9b59508e4636eec3e0a7f734268d1ce1047": {
+    "name": "Fantom: Foundation Wallet 12",
+    "labels": [
+      "fantom"
+    ]
+  },
+  "0x164caf66c45e483f7ee647ccad275b35b4c75719": {
+    "name": "Kenshi (KENSHI)",
+    "labels": [
+      "decentralized-web"
+    ]
+  },
+  "0x99edb1be74144c45914d12dcc3dbdc5ced1de6c9": {
+    "name": "Potluck Protocol: Old Fang Token",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0xf929d3b39ae946b3c52ec247926adff101d3464e": {
+    "name": "Foreigners United (forU)",
+    "labels": [
+      "charity"
+    ]
+  },
+  "0xc5e7a99a20941cbf56e0d4de608332cdb792e23e": {
+    "name": "PAPR (PAPR)",
+    "labels": [
+      "interoperability-cross-chain",
+      "stablecoin"
+    ]
+  },
+  "0x2787bea3366335068bf8b4a253044d09ea4e1c96": {
+    "name": "GinSpirit (GINSPIRIT)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0xD52d60f1EF3f8d75E46ac3b168C03042C4dD87C9": {
+    "name": "Carv Achievements (CARV-ACHV)",
+    "labels": [
+      "gaming"
+    ]
+  },
+  "0x0575f8738efda7f512e3654f277c77e80c7d2725": {
+    "name": "HyperOrillium (ORI)",
+    "labels": [
+      "staking",
+      "yield-farming"
+    ]
+  },
+  "0x5e2e2d3ee4944d0e6c0b663625859cf8cc45ca88": {
+    "name": "archangel (ARCHA)",
+    "labels": [
+      "technology"
+    ]
+  },
+  "0x28de30951eB0cD0a54b15Ce7A92AFeA9fb5d6EAc": {
+    "name": "Fantom Kites (KITE)",
+    "labels": [
+      "nft"
+    ]
+  },
+  "0x2a32b627621408a92b230f26faefd3ce81e29c20": {
+    "name": "Nova: NBK Liquidity",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x1ccca1ce62c62f7be95d4a67722a8fdbed6eecb4": {
+    "name": "Multichain: Router V4",
+    "labels": [
+      "bridge",
+      "multichain"
+    ]
+  },
+  "0x1e7b390149abb3b891e0a7027e111188032d4540": {
+    "name": "BUILD: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x683d0ee83bd72f10d122800b38a4fa3095a28f21": {
+    "name": "Ester Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xbd5cd655be1aba80bebfa0e938cef806146ce3ab": {
+    "name": "WigoSwap: Seed Funder 2 120 DayTimelock",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x99bb54f7a11eb8af1d486fe644ebed304f52f85a": {
+    "name": "Wraith Protocol (anyWRAITH)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x0452dd4d9b5b0be57b9e98b825051833f20271ac": {
+    "name": "Scoobi-Doge (SCooBi)",
+    "labels": [
+      "meme",
+      "nft"
+    ]
+  },
+  "0xC055c698f3793577707B3e6979B089F50C314D3a": {
+    "name": "Holyheld (HH)",
+    "labels": [
+      "anyswap"
+    ]
+  },
+  "0x4fbe899d37fb7514adf2f41b0630e018ec275a0c": {
+    "name": "Beethoven X: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xb526facbfa366ad863b8d68b5d9e266e7fe12e48": {
+    "name": "Liquidearn (LEARN)",
+    "labels": [
+      "defi",
+      "yield-farming"
+    ]
+  },
+  "0xaa384df07ab828d62d5e1f88d2899a9545402c5b": {
+    "name": "FKSLURPDEV (anySLURP)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x236fb4e1f7b4e60ceda6532775d32531c2fc19a2": {
+    "name": "Doge Yellow: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0xf7c1daf7443d7307df13c81f5f0328d4c7803e7b": {
+    "name": "BoringDAO: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x2c177d20b1b1d68cc85d3215904a7bb6629ca954": {
+    "name": "ReaperFarm Exploiter 2",
+    "labels": [
+      "exploit"
+    ]
+  },
+  "0x461d52769884ca6235b685ef2040f47d30c94eb5": {
+    "name": "VesperToken (VSP)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x117db78176c8ede4f12fcd29d85cd96b91a4cbbb": {
+    "name": "ReaperToken (REAPER)",
+    "labels": [
+      "finance"
+    ]
+  },
+  "0x59d07a115fe3ffe5db3d52029d43cc0ef5e9ba08": {
+    "name": "SUPA Foundation (SUPA)",
+    "labels": [
+      "gaming",
+      "metaverse"
+    ]
+  },
+  "0x0789ff5ba37f72abc4d561d00648acadc897b32d": {
+    "name": "Morpheus Token (MORPH)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x4E8543032da7ba1ee010C4964f11cEDD7374b7D0": {
+    "name": "Mor Stablecoin (anyMOR)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x274b7eb297615ce21a1cd5b920f867389a367a8a": {
+    "name": "Dark Opera (DARKO)",
+    "labels": [
+      "protocol",
+      "yield-farming"
+    ]
+  },
+  "0xf24bcf4d1e507740041c9cfd2dddb29585adce1e": {
+    "name": "BeethovenxToken (BEETS)",
+    "labels": [
+      "protocol"
+    ]
+  },
+  "0x6496994241804d7fe2b032901931e03bcd82301f": {
+    "name": "moda (MODA)",
+    "labels": [
+      "tools"
+    ]
+  },
+  "0x23cbc7c95a13071562af2c4fb1efa7a284d0543a": {
+    "name": "fSWAMP Token (fSWAMP)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x4178e335bd36295ffbc250490edbb6801081d022": {
+    "name": "WigoSwap: Vault",
+    "labels": [
+      "wigoswap"
+    ]
+  },
+  "0x000000000000000000000000000000000000dead": {
+    "name": "Null: 0x000...dEaD",
+    "labels": [
+      "burn"
+    ]
+  },
+  "0xb83bb1a7c2d5d93525417acea9453df0c8bc6a76": {
+    "name": "Timechain Swap Token (anyTCS)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  },
+  "0x412a13c109ac30f0db80ad3bd1defd5d0a6c0ac6": {
+    "name": "Stader (Wormhole) (SD)",
+    "labels": [
+      "staking"
+    ]
+  },
+  "0x78246294a4c6fbf614ed73ccc9f8b875ca8ee841": {
+    "name": "Aave: sSUSHI Token V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xf8a05c5970ea365667cfa246bb81d8a0e3783e81": {
+    "name": "Market Protocol: Chainlink Price Oracle V2",
+    "labels": [
+      "market-protocol"
+    ]
+  },
+  "0xd2d638aa6ff4694a9147f2c8b09e86f569fa052b": {
+    "name": "Alpaca Finance: Chainlink Oracle",
+    "labels": [
+      "alpaca-finance"
+    ]
+  },
+  "0x73199ba57bbfe82a935b9c95850395d80a400937": {
+    "name": "Fantom Wrapped sFHM (fwsFHM)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x794a61358d6845594f94dc1db02a252b5b4814ad": {
+    "name": "Aave: Pool V3",
+    "labels": [
+      "aave"
+    ]
+  },
+  "0xa5365f2e77bce1cb2d42f5c808012c01b1548d3c": {
+    "name": "",
+    "labels": [
+      "token-contract"
+    ]
+  },
+  "0xc8da1a26abef9e2e41b4c89c1b345cc05ce034e8": {
+    "name": "JustYours: Old JUST Token",
+    "labels": [
+      "old-contract"
+    ]
+  },
+  "0x08101f0152a21313234edb1962e1181fb0f26e90": {
+    "name": "Beethoven X: Locked Liquidity Vesting",
+    "labels": [
+      "beethoven-x"
+    ]
+  },
+  "0xc979e70611d997aa109528c6a9aa73d82eaa2881": {
+    "name": "Oberon (OBERON)",
+    "labels": [
+      "interoperability-cross-chain"
+    ]
+  },
+  "0x3000bc6b47f08d3db621fc5810be37731d743e27": {
+    "name": "Bouje Finance: Deployer",
+    "labels": [
+      "contract-deployer"
+    ]
+  },
+  "0x4fb2bb19df86fef113b2016e051898065f963cc5": {
+    "name": "SpiritSwap: Deployer 2",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0xf55c563148ca0c0f1626834ec1b8651844d76792": {
+    "name": "Fraxswap: Factory V1",
+    "labels": [
+      "deprecated"
+    ]
+  },
+  "0xfbd2945d3601f21540ddd85c29c5c3caf108b96f": {
+    "name": "Fantasm XFTM Token (XFTM)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0x65e64963b755043ca4ffc88029ffb8305615eedd": {
+    "name": "Anyswap: Deployer 2",
+    "labels": [
+      "anyswap",
+      "contract-deployer"
+    ]
+  },
+  "0x25430e2acb1255453135b2c64436c6b1ff8153c5": {
+    "name": "Based Finance: Treasury",
+    "labels": [
+      "based-finance"
+    ]
+  },
+  "0x07e820762910672613636d44c6e70954a6c6052a": {
+    "name": "SpiritSwap: Vesting",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0x4f16b83e55b92e6f8f7da6d78dd19d5a00954864": {
+    "name": "BORGDAI (BORGDAI)",
+    "labels": [
+      "yield-farming"
+    ]
+  },
+  "0xf9f6792ece33743664fc82eeab3cc6acaf2a8fe8": {
+    "name": "SpiritSwap: Maker",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0xbe33ad085e4a5559e964fa8790ceb83905062065": {
+    "name": "veIB (veIB)",
+    "labels": [
+      "defi",
+      "staking"
+    ]
+  },
+  "0x2fbff41a9efaeae77538bd63f1ea489494acdc08": {
+    "name": "inSpirit Token (inSpirit)",
+    "labels": [
+      "spiritswap"
+    ]
+  },
+  "0x35c052bbf8338b06351782a565aa9aad173432ea": {
+    "name": "Tarot: Factory",
+    "labels": [
+      "factory-contract",
+      "tarot"
+    ]
+  },
+  "0xf04a45b429eb5930a85884141c530147db0f609e": {
+    "name": "Valhalla Dao (ODIN)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x815351731eab60e617ec4acfaa927dc3f657b216": {
+    "name": "Vampire (VAMP)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x720F133EbF5e74b4cB43f4ab4a62E3A369DD1f61": {
+    "name": "GBOND (GBOND)",
+    "labels": [
+      "defi"
+    ]
+  },
+  "0x2f50405FFe9b8AA109836D18F217929f33A177bb": {
+    "name": "DefiLaunch Token (anyfDLAUNCH)",
+    "labels": [
+      "bridged-token",
+      "multichain"
+    ]
+  }
+}

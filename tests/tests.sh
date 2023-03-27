@@ -93,7 +93,7 @@ tx2uml value 0xd96e4fa0b545652e99b35aee027246cb14739e27e7d74d92eb3875380f1e71ea 
 tx2uml 0xfb153c572e304093023b4f9694ef39135b6ed5b2515453173e81ec02df2e2104 -v --chain bsc
 
 ##### Avalanche
-
+export ARCHIVE_NODE_URL=https://api.avax.network/ext/bc/C/rpc
 ## Unwrapping WETH.e
 tx2uml value 0xb145f0f6838cd75b1d9086bc52577eefb14f18ac25f443fe60c55bcaff198dde -v --onlyToken --chain avalanche
 # ParaSwap 393.94480757 BTC.b for 5,355.278278395507586356 WETH.e
@@ -106,3 +106,11 @@ tx2uml call 0x6686f964a8db99d6e4c8eb336c0b47365055f7ca54111339848f293cdbb225a6 -
 #tx2uml value 0x6686f964a8db99d6e4c8eb336c0b47365055f7ca54111339848f293cdbb225a6 -v --chain avalanche --url http://localhost:8545
 
 tx2uml call 0xb210b804f269b8ecbb799ef13a5c06636aa8b7690ecd6ef595c289be691794a4 -v -n anvil --url http://localhost:8545
+
+#### Arbitrum
+export ARCHIVE_NODE_URL=https://arb-mainnet.g.alchemy.com/v2/your-key
+# read-only reentrancy attack
+tx2uml value 0x5db5c2400ab56db697b3cc9aa02a05deab658e1438ce2f8692ca009cc45171dd -v --onlyToken --chain arbitrum
+* Lemma Router
+tx2uml value 0xb252ebbce1aead091c767463a242feb9e470d8d920a67f89c85449e676662584 -v --onlyToken --chain arbitrum
+

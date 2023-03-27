@@ -245,7 +245,10 @@ export const writeMessages = (
         const displayValue = transfer.value
             ? `${transfer.event || ""} ${commify(
                   formatUnits(transfer.value, transfer.decimals || 0)
-              )} ${transfer.tokenSymbol || ""}`
+              )} ${
+                  transfer.tokenSymbol ||
+                  (!transfer.tokenAddress ? networkCurrency : "")
+              }`
             : `${transfer.event || ""} ${
                   transfer.tokenSymbol
               } id ${shortTokenId(transfer.tokenId)}`
