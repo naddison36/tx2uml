@@ -10,8 +10,9 @@ export declare class TransactionManager {
     getTransactions(txHashes: string[], network: string): Promise<TransactionDetails[]>;
     getTransaction(txHash: string): Promise<TransactionDetails>;
     getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;
-    getContractsFromTraces(transactionsTraces: Trace[][], configFilename?: string, network?: Network): Promise<Contracts>;
+    getContractsFromTraces(transactionsTraces: Trace[][], configFilename?: string, abiFilename?: string, network?: Network): Promise<Contracts>;
     getTransferParticipants(transactionsTransfers: Transfer[][], block: number, network: Network, configFilename?: string): Promise<Participants>;
+    fillContractsABIFromAddresses(contracts: Contracts & Participants, addresses: string[], abiFilename: string): Promise<void>;
     getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
     setTokenAttributes(contracts: Contracts, network: Network): Promise<void>;
     configOverrides(contracts: Contracts & Participants, filename?: string): Promise<void>;

@@ -50,3 +50,14 @@ export const loadConfig = async (
 
     return config
 }
+
+export const loadGenericAbi = async (
+    fileName: string = "./tx.abi.json"
+): Promise<ReadonlyArray<JsonFragment>> => {
+    let abi: ReadonlyArray<JsonFragment> = []
+    if (existsSync(fileName)) {
+        abi = JSON.parse(readFileSync(fileName, "utf-8"))
+        debug(`loaded generic abi file ${fileName}`)
+    }
+    return abi
+}
