@@ -28,3 +28,4 @@ export interface ContractsConfig {
     [address: string]: ContractConfig;
 }
 export declare const loadConfig: (fileName?: string) => Promise<ContractsConfig>;
+export declare const loadGenericAbi: (fileName?: string) => Promise<ReadonlyArray<JsonFragment>>;

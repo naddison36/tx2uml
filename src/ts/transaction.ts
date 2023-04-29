@@ -6,7 +6,7 @@ import pLimit from "p-limit"
 
 import EtherscanClient from "./clients/EtherscanClient"
 import EthereumNodeClient from "./clients/EthereumNodeClient"
-import { loadConfig } from "./config"
+import { loadConfig, loadGenericAbi } from "./config"
 
 import {
     Contract,
@@ -65,6 +65,7 @@ export class TransactionManager {
     async getContractsFromTraces(
         transactionsTraces: Trace[][],
         configFilename?: string,
+        abiFilename?: string,
         network: Network = "mainnet"
     ): Promise<Contracts> {
         const flatTraces = transactionsTraces.flat()
@@ -120,6 +121,12 @@ export class TransactionManager {
         await this.setTokenAttributes(contracts, network)
         // Override contract details like name, token symbol and ABI
         await this.configOverrides(contracts, configFilename)
+        // Override abi information with a generic abi
+        await this.fillContractsABIFromAddresses(
+            contracts,
+            uniqueAddresses,
+            abiFilename
+        )
 
         return contracts
     }
@@ -198,6 +205,27 @@ export class TransactionManager {
         })
 
         return participants
+    }
+
+    // Map contract ABI from generic abi
+    async fillContractsABIFromAddresses(
+        contracts: Contracts & Participants,
+        addresses: string[],
+        abiFilename: string
+    ) {
+        const abis = await loadGenericAbi(abiFilename)
+        const originalLog = console.log
+        console.log = function () {}
+        for (const address of addresses) {
+            if (!contracts[address].ethersContract) {
+                contracts[address].ethersContract = new EthersContract(
+                    address,
+                    abis
+                )
+                contracts[address].events = []
+            }
+        }
+        console.log = originalLog
     }
 
     // Get the contract names and ABIs from Etherscan

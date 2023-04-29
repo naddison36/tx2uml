@@ -236,6 +236,7 @@ export interface CallDiagramOptions extends TracePumlGenerationOptions {
     noAddresses?: string[]
     etherscanKey?: string
     configFile?: string
+    abiFile?: string
 }
 
 export interface TransferPumlGenerationOptions extends OutputOptions {

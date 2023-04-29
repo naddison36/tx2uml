@@ -55,6 +55,11 @@ program
         "tx.config.json"
     )
     .option(
+        "-af, --abiFile <value>",
+        "name of the json abi file that can override contract details like ABI",
+        "tx.abi.json"
+    )
+    .option(
         "-m, --memory <gigabytes>",
         "max Java memory of PlantUML process in gigabytes. Java default is 1/4 of physical memory. Large txs in png format will need up to 12g. svg format is much better for large transactions."
     )
