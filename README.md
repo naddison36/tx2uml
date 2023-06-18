@@ -57,6 +57,7 @@ Options:
   -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli", "sepolia", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis",
                                 "moonbeam", default: "mainnet", env: ETH_NETWORK)
   -cf, --configFile <value>     name of the json configuration file that can override contract details like name and ABI (default: "tx.config.json")
+  -af, --abiFile <value>        name of the json abi file that can override contract details like ABI (default: "tx.abi.json")
   -m, --memory <gigabytes>      max Java memory of PlantUML process in gigabytes. Java default is 1/4 of physical memory. Large txs in png format will need up to 12g. svg format is much better for large transactions.
   -v, --verbose                 run with debugging statements (default: false)
   -V, --version                 output the version number
@@ -199,11 +200,7 @@ The `-x` or `--noDelegates` option can be used to hide all delegate calls.
 
 `tx2uml` needs an Ethereum archive node that supports the [debug_traceTransaction](https://geth.ethereum.org/docs/interacting-with-geth/rpc/ns-debug#debugtracetransaction) or [trace_transaction](https://openethereum.github.io/JSONRPC-trace-module#trace_transaction) JSON RPC APIs.
 
-The ethereum node url can be set with the `-u` or `--url` options or by exporting the `ARCHIVE_NODE_URL` environment variable. For example
-
-```bash
-export ARCHIVE_NODE_URL=https://api.archivenode.io/<your API key>/turbogeth 
-```
+The ethereum node url can be set with the `-u` or `--url` options or by exporting the `ARCHIVE_NODE_URL` environment variable.
 
 Known Ethereum node clients that support `debug_traceTransaction` with a `tracer` parameter are:
 
@@ -259,16 +256,14 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 
 ### Ethereum API provider trace support
 
-|  | ArchiveNode | Alchemy | QuickNode | Chainstack | GetBlock | WatchData | Infura| 
-|---|---|---|---|---|---|---|---|
-| trace_transaction | X | X | X | X | X | X | |
-| debug_traceTransaction | X | X | X | X | | | |
-| debug_traceTransaction call tracer | X | X | X | X | | | |
-| debug_traceTransaction custom tracer | X | | X | X | | | |
+|  | Alchemy | QuickNode | Chainstack | GetBlock | WatchData | Infura| 
+|---|-|---|---|---|---|---|
+| trace_transaction | X | X | X | X | X | |
+| debug_traceTransaction | X | X | X | | | |
+| debug_traceTransaction call tracer | X | X | X | | | |
+| debug_traceTransaction custom tracer | | X | X | | | |
 
 Most Ethereum API providers do not provide tracing or debugging APIs as they are resource intensive on the server side.
-
-- [ArchiveNode.io](https://archivenode.io/) supports `trace_transaction` with Nethereum and full `debug_traceTransaction` support with Erigon.
 
 - [Alchemy](https://alchemyapi.io/) supports both [trace_transaction](https://docs.alchemy.com/reference/trace-transaction) and [debug_traceTransaction](https://docs.alchemy.com/reference/sdk-tracetransaction) on their paid [Growth plan](https://alchemyapi.io/pricing). Only the in-built `call` and `prestate` tracers are supported. Custom tracers is not supported.
 
