@@ -111,6 +111,7 @@ tx2uml call 0xb210b804f269b8ecbb799ef13a5c06636aa8b7690ecd6ef595c289be691794a4 -
 export ARCHIVE_NODE_URL=https://arb-mainnet.g.alchemy.com/v2/your-key
 # read-only reentrancy attack
 tx2uml value 0x5db5c2400ab56db697b3cc9aa02a05deab658e1438ce2f8692ca009cc45171dd -v --onlyToken --chain arbitrum
-* Lemma Router
+# Lemma Router
 tx2uml value 0xb252ebbce1aead091c767463a242feb9e470d8d920a67f89c85449e676662584 -v --onlyToken --chain arbitrum
-
+# 1Inch swap
+tx2uml value 0x28650d09908542f6d1e08abeb476cb576d7daf72b0cef81aa24c142206b35f7c -v --onlyToken --chain arbitrum
