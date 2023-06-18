@@ -77,8 +77,8 @@ export default class EtherscanClient {
                 debug(
                     `Contract ${contractAddress} is not verified on Etherscan`
                 )
-                // Sleep for a 0.8 seconds if no contract was returned to avoid Etherscan rate limits
-                await sleep(800)
+                // Sleep for a 1 second if no contract was returned to avoid Etherscan rate limits
+                await sleep(1000)
                 return {
                     address: contractAddress,
                     noContract: false,

@@ -160,11 +160,11 @@ export default abstract class EthereumNodeClient {
             let tokenDetails: TokenDetails[] = []
             const chunkSize = 10
             for (let i = 0; i < contractAddresses.length; i += chunkSize) {
-                const cunkedAddresses = contractAddresses.slice(
+                const chunkedAddresses = contractAddresses.slice(
                     i,
                     i + chunkSize
                 )
-                const results = await tokenInfo.getInfoBatch(cunkedAddresses)
+                const results = await tokenInfo.getInfoBatch(chunkedAddresses)
                 debug(`Got ${results.length} token details`)
                 debug("address, noContract, nft, symbol, name, decimals, ens")
                 const mappedResponse: TokenDetails[] = results.map(
