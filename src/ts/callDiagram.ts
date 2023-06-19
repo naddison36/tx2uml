@@ -46,7 +46,8 @@ export const generateCallDiagram = async (
         transactionTracesUnfiltered,
         options.configFile,
         options.abiFile,
-        options.chain
+        options.chain,
+        options.mapSource
     )
     TransactionManager.parseTraceParams(transactionTracesUnfiltered, contracts)
     const [transactionTraces, usedContracts] =

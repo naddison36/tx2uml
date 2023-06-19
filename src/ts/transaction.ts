@@ -17,6 +17,7 @@ import {
     Param,
     ParamTypeInternal,
     Participants,
+    SourceMap,
     Trace,
     TransactionDetails,
     Transfer,
@@ -66,7 +67,8 @@ export class TransactionManager {
         transactionsTraces: Trace[][],
         configFilename?: string,
         abiFilename?: string,
-        network: Network = "mainnet"
+        network: Network = "mainnet",
+        mappedSource: SourceMap[] = []
     ): Promise<Contracts> {
         const flatTraces = transactionsTraces.flat()
         const participantAddresses: string[] = []
@@ -101,8 +103,27 @@ export class TransactionManager {
         const uniqueAddresses = Array.from(new Set(participantAddresses))
         debug(`${uniqueAddresses.length} contracts in the transactions`)
 
+        // Map any addresses to different source contract
+        const remappedAddresses = uniqueAddresses.map(uniqueAddress => {
+            const mapping = mappedSource.find(
+                mapSource => mapSource.contract === uniqueAddress
+            )
+            return mapping ? mapping.source : uniqueAddress
+        })
+
         // get contract ABIs from Etherscan
-        const contracts = await this.getContractsFromAddresses(uniqueAddresses)
+        const contracts = await this.getContractsFromAddresses(
+            remappedAddresses
+        )
+
+        // Restore the mapping
+        mappedSource.forEach(ms => {
+            if (contracts[ms.source]) {
+                contracts[ms.contract] = contracts[ms.source]
+                contracts[ms.contract].address = ms.contract
+                delete contracts[ms.source]
+            }
+        })
 
         // map the delegatedToContracts on each contract
         for (const [address, toAddresses] of Object.entries(
@@ -135,7 +156,8 @@ export class TransactionManager {
         transactionsTransfers: Transfer[][],
         block: number,
         network: Network,
-        configFilename?: string
+        configFilename?: string,
+        mapSource: SourceMap[] = []
     ): Promise<Participants> {
         // Get a unique list of all accounts that transfer from, transfer to or are token contracts.
         const flatTransfers = transactionsTransfers.flat()
@@ -173,8 +195,17 @@ export class TransactionManager {
                         block
                     )
                 // try and get contract name for the contract or its proxied implementation from Etherscan
+                let sourceContract = implementation || address
+                // Remap source contract if configured
+                const mappedSourceContract = mapSource.find(
+                    ms =>
+                        ms.contract.toLowerCase() ===
+                        sourceContract.toLowerCase()
+                )
+                if (mappedSourceContract)
+                    sourceContract = mappedSourceContract.source
                 const contract = await this.etherscanClient.getContract(
-                    implementation || address
+                    sourceContract
                 )
                 participants[address].name = contract?.contractName
             }

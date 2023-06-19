@@ -175,6 +175,10 @@ export interface TracePumlGenerationOptions extends OutputOptions {
     noDelegates?: boolean;
     chain?: Network;
 }
+export interface SourceMap {
+    contract: string;
+    source: string;
+}
 export interface CallDiagramOptions extends TracePumlGenerationOptions {
     chain?: Network;
     url?: string;
@@ -183,6 +187,7 @@ export interface CallDiagramOptions extends TracePumlGenerationOptions {
     etherscanKey?: string;
     configFile?: string;
     abiFile?: string;
+    mapSource?: SourceMap[];
 }
 export interface TransferPumlGenerationOptions extends OutputOptions {
     chain?: Network;
@@ -190,6 +195,7 @@ export interface TransferPumlGenerationOptions extends OutputOptions {
     etherscanKey?: string;
     configFile?: string;
     onlyToken?: boolean;
+    mapSource?: SourceMap[];
 }
 export interface CopyOptions {
     destUrl: string;

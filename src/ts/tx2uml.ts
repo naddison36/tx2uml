@@ -9,6 +9,7 @@ import {
     validateAddresses,
     validateDepth,
     validateHashes,
+    validateMappedAddresses,
 } from "./utils/validators"
 import { networks, nodeTypes, outputFormats } from "./types/tx2umlTypes"
 import { copyTransactions } from "./copyTransactions"
@@ -30,7 +31,7 @@ program
     )
     .option(
         "-o, --outputFileName <value>",
-        "output file name. Defaults to the transaction hash"
+        "output file name. Defaults to shortened tx hashes joined together with a 'v' prefix for value transfer diagrams."
     )
     .addOption(
         new Option(
@@ -123,6 +124,15 @@ program
         "hide delegate calls from proxy contracts to their implementations and calls to deployed libraries",
         false
     )
+    .option(
+        "--mapSource <mapped-source>",
+        `Maps contracts to similar verified contracts on Etherscan. Useful for factory deployed contracts.
+Left of the colon ":" is a comma-separated list of addresses that don't have verified source code.
+In them middle is colon ":" that separates the two lists.
+Right of the colon ":" is a comma-separated list of addresses that have verified source code. 
+For example: --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163`,
+        validateMappedAddresses
+    )
     .action(async (hashes: string[], options, command) => {
         debug(`About to generate tx calls for ${hashes}`)
         const outputFilename = parseFilename(
@@ -157,11 +167,21 @@ program
         "get transfers only from token events. No ETH transfers will be included. Use when provider does not support debug_traceTransaction with custom tracer.",
         false
     )
+    .option(
+        "--mapSource <mapped-source>",
+        `Maps contracts to similar verified contracts on Etherscan. Useful for factory deployed contracts.
+Left of the colon ":" is a comma-separated list of addresses that don't have verified source code.
+In them middle is colon ":" that separates the two lists.
+Right of the colon ":" is a comma-separated list of addresses that have verified source code. 
+For example: --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163`,
+        validateMappedAddresses
+    )
     .action(async (hashes: string[], options, command) => {
         debug(`About to generate value transfers for ${hashes}`)
         const outputFilename = parseFilename(
             command.parent._optionValues.outputFileName,
-            hashes
+            hashes,
+            true
         )
         try {
             await generateValueDiagram(hashes, {

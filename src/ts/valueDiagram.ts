@@ -36,7 +36,8 @@ export const generateValueDiagram = async (
         transactionTransfers,
         transactions[0].blockNumber,
         options.chain,
-        options.configFile
+        options.configFile,
+        options.mapSource
     )
 
     // Convert transactions and transfers to readable stream

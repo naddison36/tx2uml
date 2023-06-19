@@ -52,7 +52,7 @@ block explorer
 
 Options:
   -f, --outputFormat <value>    output file format (choices: "png", "svg", "eps", "puml", default: "svg")
-  -o, --outputFileName <value>  output file name. Defaults to the transaction hash
+  -o, --outputFileName <value>  output file name. Defaults to shortened tx hashes joined together with a 'v' prefix for value transfer diagrams.
   -u, --url <url>               URL of the archive node with trace transaction support (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
   -c, --chain <value>           blockchain explorer network to get source code from (choices: "mainnet", "goerli", "sepolia", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis",
                                 "moonbeam", default: "mainnet", env: ETH_NETWORK)
@@ -81,17 +81,22 @@ Arguments:
   txHash(s)                   transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces
 
 Options:
-  -n, --nodeType <value>      type of Ethereum node the provider url is pointing to. This determines which trace API is used (choices: "geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", default: "geth", env: ARCHIVE_NODE_TYPE)
-  -k, --etherscanKey <value>  Etherscan like block explorer API key
-  -a, --noAddresses <value>   hide calls to contracts in a list of comma-separated addresses with a 0x prefix
-  -d, --depth <value>         limit the transaction call depth
-  -e, --noEther               hide ether values (default: false)
-  -g, --noGas                 hide gas usages (default: false)
-  -l, --noLogDetails          hide log details emitted from contract events (default: false)
-  -p, --noParams              hide function params and return values (default: false)
-  -t, --noTxDetails           hide transaction details like nonce, gas and tx fee (default: false)
-  -x, --noDelegates           hide delegate calls from proxy contracts to their implementations and calls to deployed libraries (default: false)
-  -h, --help                  display help for command
+  -n, --nodeType <value>       type of Ethereum node the provider url is pointing to. This determines which trace API is used (choices: "geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", default: "geth", env: ARCHIVE_NODE_TYPE)
+  -k, --etherscanKey <value>   Etherscan like block explorer API key
+  -a, --noAddresses <value>    hide calls to contracts in a list of comma-separated addresses with a 0x prefix
+  -d, --depth <value>          limit the transaction call depth
+  -e, --noEther                hide ether values (default: false)
+  -g, --noGas                  hide gas usages (default: false)
+  -l, --noLogDetails           hide log details emitted from contract events (default: false)
+  -p, --noParams               hide function params and return values (default: false)
+  -t, --noTxDetails            hide transaction details like nonce, gas and tx fee (default: false)
+  -x, --noDelegates            hide delegate calls from proxy contracts to their implementations and calls to deployed libraries (default: false)
+  --mapSource <mapped-source>  Maps contracts to similar verified contracts on Etherscan. Useful for factory deployed contracts.
+                               Left of the colon ":" is a comma-separated list of addresses that don't have verified source code.
+                               In them middle is colon ":" that separates the two lists.
+                               Right of the colon ":" is a comma-separated list of addresses that have verified source code.
+                               For example: --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163
+  -h, --help                   display help for command
 ```
 
 ### Value command
@@ -105,9 +110,13 @@ Arguments:
   txHash(s)   transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces
 
 Options:
-  -e, --onlyToken  get transfers only from token events. No ETH transfers will be included. Use when provider does not
-                   support debug_traceTransaction with custom tracer. (default: false)
-  -h, --help       display help for command
+  -e, --onlyToken              get transfers only from token events. No ETH transfers will be included. Use when provider does not support debug_traceTransaction with custom tracer. (default: false)
+  --mapSource <mapped-source>  Maps contracts to similar verified contracts on Etherscan. Useful for factory deployed contracts.
+                               Left of the colon ":" is a comma-separated list of addresses that don't have verified source code.
+                               In them middle is colon ":" that separates the two lists.
+                               Right of the colon ":" is a comma-separated list of addresses that have verified source code.
+                               For example: --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163
+  -h, --help                   display help for command
 ```
 
 ### Copy command
