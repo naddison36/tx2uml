@@ -5,12 +5,11 @@
 
 [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language) sequence diagram generator for Ethereum transaction.
 
-The following *contract call* and *value transfer* diagrams are for the Uniswap V1 transaction [0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca](https://etherscan.io/tx/0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca) that removes MKR liquidity from the Uniswap V1 MKR pool.
+The following _contract call_ and _value transfer_ diagrams are for the Uniswap V1 transaction [0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca](https://etherscan.io/tx/0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca) that removes MKR liquidity from the Uniswap V1 MKR pool.
 
 ### Contract Call Diagram
 
-![Contract call example](./examples/uniswapMKRRemove.svg) 
-
+![Contract call example](./examples/uniswapMKRRemove.svg)
 
 See a lot more call diagram examples with different options [here](./examples/README.md).
 
@@ -235,10 +234,10 @@ Anvil, Hardhat and Genache all support `debug_traceTransaction` but without the 
 
 Known Ethereum node clients that support `trace_transaction` are:
 
-- [OpenEthereum](https://github.com/openethereum/openethereum)
-- [Nethermind](https://nethermind.io/client)
-- [Hyperledger Besu](https://www.hyperledger.org/use/besu)
-- [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil)
+-   [OpenEthereum](https://github.com/openethereum/openethereum)
+-   [Nethermind](https://nethermind.io/client)
+-   [Hyperledger Besu](https://www.hyperledger.org/use/besu)
+-   [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil)
 
 You can test if your node supports `trace_transaction` with the following `curl` command
 
@@ -255,36 +254,36 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 
 ### Ethereum client trace support
 
-|  | OpenEthereum | Nethereum | Besu | Geth | Erigon | Akula | Anvil | Hardhat | Ganache |
-|---|---|---|---|---|---|---|---|---|---|
-| trace_replayTransaction | X | X | | | X | X | | | |
-| trace_transaction | X | X | X | | X | | X | | |
-| trace_rawTransaction | X | X | X | | | X | | | |
-| debug_traceTransaction | | X | X | X | X | | X | X | X |
-| debug_traceTransaction with tracer param | | | | X | X | | | | |
+|                                          | OpenEthereum | Nethereum | Besu | Geth | Erigon | Akula | Anvil | Hardhat | Ganache |
+| ---------------------------------------- | ------------ | --------- | ---- | ---- | ------ | ----- | ----- | ------- | ------- |
+| trace_replayTransaction                  | X            | X         |      |      | X      | X     |       |         |         |
+| trace_transaction                        | X            | X         | X    |      | X      |       | X     |         |         |
+| trace_rawTransaction                     | X            | X         | X    |      |        | X     |       |         |         |
+| debug_traceTransaction                   |              | X         | X    | X    | X      |       | X     | X       | X       |
+| debug_traceTransaction with tracer param |              |           |      | X    | X      |       |       |         |         |
 
 ### Ethereum API provider trace support
 
-|  | Alchemy | QuickNode | Chainstack | GetBlock | WatchData | Infura| 
-|---|-|---|---|---|---|---|
-| trace_transaction | X | X | X | X | X | |
-| debug_traceTransaction | X | X | X | | | |
-| debug_traceTransaction call tracer | X | X | X | | | |
-| debug_traceTransaction custom tracer | | X | X | | | |
+|                                      | Alchemy | QuickNode | Chainstack | GetBlock | WatchData | Infura |
+| ------------------------------------ | ------- | --------- | ---------- | -------- | --------- | ------ |
+| trace_transaction                    | X       | X         | X          | X        | X         |        |
+| debug_traceTransaction               | X       | X         | X          |          |           |        |
+| debug_traceTransaction call tracer   | X       | X         | X          |          |           |        |
+| debug_traceTransaction custom tracer |         | X         | X          |          |           |        |
 
 Most Ethereum API providers do not provide tracing or debugging APIs as they are resource intensive on the server side.
 
-- [Alchemy](https://alchemyapi.io/) supports both [trace_transaction](https://docs.alchemy.com/reference/trace-transaction) and [debug_traceTransaction](https://docs.alchemy.com/reference/sdk-tracetransaction) on their paid [Growth plan](https://alchemyapi.io/pricing). Only the in-built `call` and `prestate` tracers are supported. Custom tracers is not supported.
+-   [Alchemy](https://alchemyapi.io/) supports both [trace_transaction](https://docs.alchemy.com/reference/trace-transaction) and [debug_traceTransaction](https://docs.alchemy.com/reference/sdk-tracetransaction) on their paid [Growth plan](https://alchemyapi.io/pricing). Only the in-built `call` and `prestate` tracers are supported. Custom tracers is not supported.
 
-- [QuickNode](https://www.quicknode.com/) supports both [trace_transaction](https://www.quicknode.com/docs/ethereum/trace_transaction) and [debug_traceTransaction](https://www.quicknode.com/docs/ethereum/debug_traceTransaction) on their paid plan. The in-built `call` and `prestate` tracers are supported. Custom tracers can be requested via support and approved if within resourcing limits.
+-   [QuickNode](https://www.quicknode.com/) supports both [trace_transaction](https://www.quicknode.com/docs/ethereum/trace_transaction) and [debug_traceTransaction](https://www.quicknode.com/docs/ethereum/debug_traceTransaction) on their paid plan. The in-built `call` and `prestate` tracers are supported. Custom tracers can be requested via support and approved if within resourcing limits.
 
-- [Chainstack](https://chainstack.com/) supports both [trace_transaction](https://docs.chainstack.com/api/ethereum/trace_transaction) and [debug_traceTransaction](https://docs.chainstack.com/api/ethereum/debug_traceTransaction) on their Growth plan when a dedicated Geth or Erigon archive node is deployed. For Erigon, this includes built-in and custom tracer support.
+-   [Chainstack](https://chainstack.com/) supports both [trace_transaction](https://docs.chainstack.com/api/ethereum/trace_transaction) and [debug_traceTransaction](https://docs.chainstack.com/api/ethereum/debug_traceTransaction) on their Growth plan when a dedicated Geth or Erigon archive node is deployed. For Erigon, this includes built-in and custom tracer support.
 
-- [GetBlock](https://getblock.io/) supports [trace_transaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/trace_transaction/) but not [debug_traceTransaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/debug_traceTransaction/).
+-   [GetBlock](https://getblock.io/) supports [trace_transaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/trace_transaction/) but not [debug_traceTransaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/debug_traceTransaction/).
 
-- [WatchData](https://www.watchdata.io/) supports [trace_transaction](https://docs.watchdata.io/powered-api/trace/trace_transaction) and is available on their free plan.
+-   [WatchData](https://www.watchdata.io/) supports [trace_transaction](https://docs.watchdata.io/powered-api/trace/trace_transaction) and is available on their free plan.
 
-- [Infura](https://infura.io/) does not support either `trace_transaction` or `debug_traceTransaction`.
+-   [Infura](https://infura.io/) does not support either `trace_transaction` or `debug_traceTransaction`.
 
 ## Etherscan
 

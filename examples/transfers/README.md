@@ -1,4 +1,3 @@
-
 # Example Value Transfer Diagrams
 
 The below examples assume the `ARCHIVE_NODE_URL` environment variable has been set. For example
