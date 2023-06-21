@@ -354,16 +354,17 @@ Note two of the tests are currently failing due to bugs TurboGeth and Nethermind
 
 ### Etherscan Labels
 
-The contract labels are sourced from @brianleect Brian Lee Cheow Teng's  [etherscan-labels](https://github.com/brianleect/etherscan-labels) repository.
+The contract labels are sourced from @brianleect Brian Lee Cheow Teng's [etherscan-labels](https://github.com/brianleect/etherscan-labels) repository.
 
 Save the following
-* [data/etherscan/combined/combinedAllLabels.json ](https://github.com/brianleect/etherscan-labels/blob/main/data/etherscan/combined/combinedAllLabels.json) to [lib/labels/mainnet.json](./lib/labels/mainnet.json)
-* [data/arbiscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/arbiscan/combined/combinedAllLabels.json) to [lib/labels/arbitrum.json](./lib/labels/arbitrum.json)
-* [data/polygonscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/polygonscan/combined/combinedAllLabels.json) to [lib/labels/polygon.json](./lib/labels/polygon.json)
-* [data/avalanche/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/avalanche/combined/combinedAllLabels.json) to [lib/labels/avalanche.json](./lib/labels/avalanche.json)
-* [data/bscscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/bscscan/combined/combinedAllLabels.json) to [lib/labels/bsc.json](./lib/labels/bsc.json)
-* [data/ftmscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/ftmscan/combined/combinedAllLabels.json) to [lib/labels/fantom.json](./lib/labels/fantom.json)
-* [data/optimism/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/optimism/combined/combinedAllLabels.json) to [lib/labels/optimism.json](./lib/labels/optimism.json)
+
+-   [data/etherscan/combined/combinedAllLabels.json ](https://github.com/brianleect/etherscan-labels/blob/main/data/etherscan/combined/combinedAllLabels.json) to [lib/labels/mainnet.json](./lib/labels/mainnet.json)
+-   [data/arbiscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/arbiscan/combined/combinedAllLabels.json) to [lib/labels/arbitrum.json](./lib/labels/arbitrum.json)
+-   [data/polygonscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/polygonscan/combined/combinedAllLabels.json) to [lib/labels/polygon.json](./lib/labels/polygon.json)
+-   [data/avalanche/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/avalanche/combined/combinedAllLabels.json) to [lib/labels/avalanche.json](./lib/labels/avalanche.json)
+-   [data/bscscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/bscscan/combined/combinedAllLabels.json) to [lib/labels/bsc.json](./lib/labels/bsc.json)
+-   [data/ftmscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/ftmscan/combined/combinedAllLabels.json) to [lib/labels/fantom.json](./lib/labels/fantom.json)
+-   [data/optimism/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/optimism/combined/combinedAllLabels.json) to [lib/labels/optimism.json](./lib/labels/optimism.json)
 
 ### Publishing
 
