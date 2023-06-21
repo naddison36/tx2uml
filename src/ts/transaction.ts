@@ -121,7 +121,6 @@ export class TransactionManager {
             if (contracts[ms.source]) {
                 contracts[ms.contract] = contracts[ms.source]
                 contracts[ms.contract].address = ms.contract
-                delete contracts[ms.source]
             }
         })
 

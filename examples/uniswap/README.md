@@ -17,7 +17,7 @@ tx2uml value -v 0x519acb59e0986ce142abbcec412617378499227f83e6149c2dd4aa445dda61
 ![Uniswap V1 USDC for ETH function calls](519a6117.svg)
 
 ```
-tx2uml -v -x 0x519acb59e0986ce142abbcec412617378499227f83e6149c2dd4aa445dda6117
+tx2uml -v --noDelegates 0x519acb59e0986ce142abbcec412617378499227f83e6149c2dd4aa445dda6117
 ```
 
 ### Swap 0.1 ETH for USDC
@@ -33,7 +33,7 @@ tx2uml value -v 0x59bd1333b443de0c3f138f5051963a9831ce3605544b27e88b2bd341d6bf7b
 ![Uniswap V1 ETH for USDC function calls](59bd7b5e.svg)
 
 ```
-tx2uml -v -x 0x59bd1333b443de0c3f138f5051963a9831ce3605544b27e88b2bd341d6bf7b5e
+tx2uml -v --noDelegates 0x59bd1333b443de0c3f138f5051963a9831ce3605544b27e88b2bd341d6bf7b5e
 ```
 
 ### Swap 1 USDC for Matic
@@ -49,12 +49,12 @@ tx2uml value -v 0x5f99937fc8bcb99c1362d01006e6c48402c885b2e23830a8bb53242d394b22
 ![Uniswap V1 USDC function calls](5f992290.svg)
 
 ```
-tx2uml -v -x 0x5f99937fc8bcb99c1362d01006e6c48402c885b2e23830a8bb53242d394b2290
+tx2uml -v --noDelegates 0x5f99937fc8bcb99c1362d01006e6c48402c885b2e23830a8bb53242d394b2290
 ```
 
 ## Uniswap V2
 
-#### Swap 911 USDC for ETH
+### Swap 911 USDC for ETH
 
 [0x6b3339f2576fb1eb158c58545917b7c699187d0979a814e530199b50d4a2b9e4](https://etherscan.io/tx/0x6b3339f2576fb1eb158c58545917b7c699187d0979a814e530199b50d4a2b9e4)
 
@@ -70,7 +70,7 @@ tx2uml value -v 0x6b3339f2576fb1eb158c58545917b7c699187d0979a814e530199b50d4a2b9
 tx2uml -v --noDelegates 0x6b3339f2576fb1eb158c58545917b7c699187d0979a814e530199b50d4a2b9e4
 ```
 
-#### Swap 57 ETH for USDC
+### Swap 57 ETH for USDC
 
 [0x7025eeb06aab8614b02fff39f3cc10db439fbb4b525c9d2d87dbd19bf17c7cac](https://etherscan.io/tx/0x7025eeb06aab8614b02fff39f3cc10db439fbb4b525c9d2d87dbd19bf17c7cac)
 
@@ -84,6 +84,20 @@ tx2uml value -v 0x7025eeb06aab8614b02fff39f3cc10db439fbb4b525c9d2d87dbd19bf17c7c
 
 ```
 tx2uml -v --noDelegates 0x7025eeb06aab8614b02fff39f3cc10db439fbb4b525c9d2d87dbd19bf17c7cac
+```
+
+### Swap DERC > USDC > WETH > ETH
+
+![Uniswap V2 DERC > USDC > WETH > ETH value transfers](v687869f1.svg)
+
+```
+tx2uml value -v 0x687803e585d370abe1bc06f45bb8d4e9c783a283d05eee655ae4b5332a9069f1
+```
+
+![Uniswap V2 DERC > USDC > WETH > ETH function calls](687869f1.svg)
+
+```
+tx2uml -v --noDelegates --noAddresses 0x0000000000000000000000000000000000000001 0x687803e585d370abe1bc06f45bb8d4e9c783a283d05eee655ae4b5332a9069f1
 ```
 
 ## Uniswap V3
@@ -101,10 +115,10 @@ tx2uml value -v --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF11
 ![Uniswap V3 USDC-ETH function calls](c4ea15b9.svg)
 
 ```
-tx2uml -v -a 0x0000000000000000000000000000000000000001 --noDelegates --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163 0xc4eaff5ab7bacc93c76433753517c831fe0ff10182da4fc086cdf49ec7ec15b9
+tx2uml -v --noDelegates 0x0000000000000000000000000000000000000001 --noDelegates --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163 0xc4eaff5ab7bacc93c76433753517c831fe0ff10182da4fc086cdf49ec7ec15b9
 ```
 
-#### Swap 47 ETH for USDC
+### Swap 47 ETH for USDC
 
 [0x3f019f050e79b3c7fbb5caf67fb3c842cad53e1c993f084836ae60215e3e3370](https://etherscan.io/tx/0x3f019f050e79b3c7fbb5caf67fb3c842cad53e1c993f084836ae60215e3e3370)
 
@@ -118,4 +132,20 @@ tx2uml value -v --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF11
 
 ```
 tx2uml -v --noDelegates --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163 0x3f019f050e79b3c7fbb5caf67fb3c842cad53e1c993f084836ae60215e3e3370
+```
+
+### Swap 2,500 USDC > ETH > RPL
+
+[0x90b900dc5d340d47e18258a6cdfbba1c64087d8a1130af09c5098ed2c0ff2c08](https://etherscan.io/tx/0x90b900dc5d340d47e18258a6cdfbba1c64087d8a1130af09c5098ed2c0ff2c08)
+
+![Uniswap V3 USDC > RPL value transfers](v90b92c08.svg)
+
+```
+tx2uml value -v --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640,0xe42318eA3b998e8355a3Da364EB9D48eC725Eb45:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163,0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163 0x90b900dc5d340d47e18258a6cdfbba1c64087d8a1130af09c5098ed2c0ff2c08
+```
+
+![Uniswap V3 USDC > RPL function calls](90b92c08.svg)
+
+```
+tx2uml -v --noAddresses 0x0000000000000000000000000000000000000001 --noDelegates --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640,0xe42318eA3b998e8355a3Da364EB9D48eC725Eb45:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163,0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163 0x90b900dc5d340d47e18258a6cdfbba1c64087d8a1130af09c5098ed2c0ff2c08
 ```

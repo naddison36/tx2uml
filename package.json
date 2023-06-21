@@ -6,7 +6,7 @@
   "types": "./lib/index.d.ts",
   "scripts": {
     "build": "tsc --build ./tsconfig.json",
-    "permit": " chmod 775 lib/tx2uml.js",
+    "permit": "chmod 775 lib/tx2uml.js",
     "clean": "tsc --build --clean ./tsconfig.json",
     "package-lock": "npm i --package-lock-only",
     "examples": "java -jar ./lib/plantuml.jar ./examples/syntax.puml ./examples/delegate.puml",

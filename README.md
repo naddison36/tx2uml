@@ -13,11 +13,15 @@ The following _contract call_ and _value transfer_ diagrams are for the Uniswap 
 
 See a lot more call diagram examples with different options [here](./examples/README.md).
 
+There's also call diagram examples in the [Evolution of Uniswap](./examples/uniswap/README.md) examples.
+
 ## Value Transfer Diagrams
 
 ![Value transfer example](./examples/transfers/uniswapMKRRemove.svg)
 
 More value transfer diagram examples can be found [here](./examples/transfers/README.md).
+
+There's also value transfer diagram examples in the [Evolution of Uniswap](./examples/uniswap/README.md) examples.
 
 # Install
 
@@ -348,6 +352,19 @@ npm run test
 
 Note two of the tests are currently failing due to bugs TurboGeth and Nethermind bugs.
 
+### Etherscan Labels
+
+The contract labels are sourced from @brianleect Brian Lee Cheow Teng's  [etherscan-labels](https://github.com/brianleect/etherscan-labels) repository.
+
+Save the following
+* [data/etherscan/combined/combinedAllLabels.json ](https://github.com/brianleect/etherscan-labels/blob/main/data/etherscan/combined/combinedAllLabels.json) to [lib/labels/mainnet.json](./lib/labels/mainnet.json)
+* [data/arbiscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/arbiscan/combined/combinedAllLabels.json) to [lib/labels/arbitrum.json](./lib/labels/arbitrum.json)
+* [data/polygonscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/polygonscan/combined/combinedAllLabels.json) to [lib/labels/polygon.json](./lib/labels/polygon.json)
+* [data/avalanche/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/avalanche/combined/combinedAllLabels.json) to [lib/labels/avalanche.json](./lib/labels/avalanche.json)
+* [data/bscscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/bscscan/combined/combinedAllLabels.json) to [lib/labels/bsc.json](./lib/labels/bsc.json)
+* [data/ftmscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/ftmscan/combined/combinedAllLabels.json) to [lib/labels/fantom.json](./lib/labels/fantom.json)
+* [data/optimism/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/optimism/combined/combinedAllLabels.json) to [lib/labels/optimism.json](./lib/labels/optimism.json)
+
 ### Publishing
 
 npm build and publish commands
@@ -357,6 +374,7 @@ npm run prettier:fix
 npm run clean
 npm run package-lock
 npm run build
+npm run permit
 # make tx2uml globally available for local testing
 npm link
 # check all the files are included in the npm package
