@@ -12,6 +12,7 @@ import {
     TransactionDetails,
 } from "./types/tx2umlTypes"
 import {
+    escapeCarriageReturns,
     formatNumber,
     participantId,
     shortAddress,
@@ -407,7 +408,8 @@ export const genParams = (
         } else if (param.type.match("int")) {
             plantUml += `${formatNumber(param.value)},`
         } else {
-            plantUml += `${param.value},`
+            // Need to escape \n with \\n
+            plantUml += `${escapeCarriageReturns(param.value)},`
         }
     }
 
