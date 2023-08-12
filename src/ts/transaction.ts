@@ -31,7 +31,7 @@ export class TransactionManager {
         public readonly ethereumNodeClient: EthereumNodeClient,
         public readonly etherscanClient: EtherscanClient,
         // 3 works for smaller contracts but Etherscan will rate limit on larger contracts when set to 3
-        public apiConcurrencyLimit = 2
+        public apiConcurrencyLimit = 1
     ) {}
 
     async getTransactions(
