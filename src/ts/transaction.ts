@@ -330,7 +330,7 @@ export class TransactionManager {
                 if (trace.type === MessageType.Create) {
                     trace.funcName = "constructor"
                     addConstructorParamsToTrace(trace, contracts)
-                    return
+                    continue
                 }
                 const selectedContracts =
                     functionSelector2Contract[trace.funcSelector]
