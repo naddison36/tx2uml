@@ -100,7 +100,7 @@ export const validateDepth = (depthStr: string): number => {
         if (depth >= 0) return depth
     } catch (err) {}
     throw new InvalidOptionArgumentError(
-        `Invalid depth "${depthStr}". Must be a zero or a positive integer.`
+        `Must be a zero or a positive integer.`
     )
 }
 

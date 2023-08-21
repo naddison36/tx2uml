@@ -225,7 +225,7 @@ export const writeMessages = (
                 options.noGas
             )}${genEtherValue(trace, options.noEther)}\n`
 
-            const rawParams = `${genFunctionText(trace, options.noParams)}`
+            const rawParams = `${genFunctionText(trace, options)}`
             const maxParamLength =
                 2000 - beforeParams.length - afterParams.length
 
@@ -268,7 +268,10 @@ const genEndLifeline = (
         if (options.noParams) {
             plantUml += `return\n`
         } else {
-            plantUml += `return${genParams(trace.outputParams)}\n`
+            plantUml += `return${genParams(
+                trace.outputParams,
+                options.noParamValues
+            )}\n`
         }
         if (!options.noGas && trace.childTraces.length > 0) {
             const gasUsedLessChildCalls = calculateGasUsedLessChildTraces(trace)
@@ -322,7 +325,11 @@ const genArrow = (trace: Trace): string => {
     return `${line}${arrowColor}>`
 }
 
-const genFunctionText = (trace: Trace, noParams: boolean = false): string => {
+const genFunctionText = (
+    trace: Trace,
+    options: TracePumlGenerationOptions
+): string => {
+    const noParams = options.noParams || options.noParamValues
     if (!trace) {
         return ""
     }
@@ -332,28 +339,33 @@ const genFunctionText = (trace: Trace, noParams: boolean = false): string => {
         }
         // If we have the contract ABI so the constructor params could be parsed
         if (trace.parsedConstructorParams) {
-            return `${trace.funcName}(${genParams(trace.inputParams)})`
+            return `${trace.funcName}(${genParams(
+                trace.inputParams,
+                options.noParamValues
+            )})`
         }
         // we don't know if there was constructor params or not as the contract was not verified on Etherscan
         // hence we don't have the constructor params or the contract ABI to parse them.
         return "constructor(?)"
     }
     if (!trace.funcSelector) {
-        return noParams ? "fallback" : "fallback()"
+        return options.noParams ? "fallback" : "fallback()"
     }
     if (!trace.funcName) {
         return `${trace.funcSelector}`
     }
-    if (noParams) return trace.funcName
+    if (options.noParams) return trace.funcName
 
-    return noParams
-        ? trace.funcName
-        : `${trace.funcName}(${genParams(trace.inputParams)})`
+    return `${trace.funcName}(${genParams(
+        trace.inputParams,
+        options.noParamValues
+    )})`
 }
 
 const oneIndent = "  "
 export const genParams = (
     params: Param[],
+    noValues: boolean,
     plantUml = "",
     indent: string = ""
 ): string => {
@@ -365,7 +377,16 @@ export const genParams = (
         // The \ needs to be escaped with \\
         plantUml += "\\n" + indent
         if (param.name) {
+            if (noValues) {
+                plantUml += `${param.name},`
+                continue
+            }
             plantUml += `${param.name}: `
+        } else if (noValues) {
+            // we don't know the param name and we aren't showing values
+            // so we'll break from showing any params
+            plantUml += "?,"
+            continue
         }
         if (param.type === "address") {
             plantUml += `${shortAddress(param.value)},`
@@ -374,6 +395,7 @@ export const genParams = (
                 plantUml += `[`
                 plantUml = `${genParams(
                     param.components,
+                    noValues,
                     plantUml,
                     indent + oneIndent
                 )}`
@@ -398,6 +420,7 @@ export const genParams = (
                             type: param.type.slice(0, -2),
                         },
                     ],
+                    noValues,
                     plantUml,
                     indent + oneIndent
                 )}`
@@ -485,7 +508,10 @@ export const writeEvents = (
             for (const event of contract.events) {
                 plantUmlStream.push(`\n${event.name}:`)
                 plantUmlStream.push(
-                    `${genParams(event.params).replace(/\\n/g, "\n  ")}`
+                    `${genParams(event.params, options.noParamValues).replace(
+                        /\\n/g,
+                        "\n  "
+                    )}`
                 )
             }
             plantUmlStream.push("\nend note\n")

@@ -127,8 +127,10 @@ A [1inch exchange](https://1inch.exchange/) swap where the 4th message call fail
 
 There are also examples Delf-Destruct messages at the end of the transaction with the [Chi Gas Token](https://1inch-exchange.medium.com/1inch-introduces-chi-gastoken-d0bd5bb0f92b).
 
+As this trace is large, the parameter values have been removed with the `--noParamValues` option.
+
 ```
-tx2uml 0x34e4f8b86b5c3fe5a9e30e7cf75b242ed3e6e4eeea68cfaf3ca68ef1edb93ed1 -o 1inchFailedInternal
+tx2uml 0x5127c14ab29ad659b1f1063fcf022d990cf00970dae8160693ccc8b9561d4b4d -o 1inchFailedInternal --noParamValues
 ```
 
 ![1inch Failed Internal](./1inchFailedInternal.svg)

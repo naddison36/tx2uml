@@ -27,7 +27,7 @@ There's also value transfer diagram examples in the [Evolution of Uniswap](./exa
 
 The following installation assumes [Node.js](https://nodejs.org/en/download/) has already been installed which comes with [Node Package Manager (NPM)](https://www.npmjs.com/).
 
-`tx2uml` needs [Java](https://www.java.com/en/download/) installed as that's required by [PlantUML](https://plantuml.com/) to generate the diagrams.
+`tx2uml` needs [Java](https://www.java.com/en/download/) installed to generate the diagrams using [PlantUML](https://plantuml.com/).
 
 To install globally so you can run `tx2uml` from anywhere
 
@@ -91,7 +91,8 @@ Options:
   -e, --noEther                hide ether values (default: false)
   -g, --noGas                  hide gas usages (default: false)
   -l, --noLogDetails           hide log details emitted from contract events (default: false)
-  -p, --noParams               hide function params and return values (default: false)
+  -p, --noParams               hide function params and return values (default: false)  
+  -pv, --noParamValues         only hide function parameter values, not the names. Will display "?" if the name is not specified in the ABI (default: false)
   -t, --noTxDetails            hide transaction details like nonce, gas and tx fee (default: false)
   -x, --noDelegates            hide delegate calls from proxy contracts to their implementations and calls to deployed libraries (default: false)
   --mapSource <mapped-source>  Maps contracts to similar verified contracts on Etherscan. Useful for factory deployed contracts.
@@ -298,7 +299,7 @@ https://api.etherscan.io/api?module=contract&action=getsourcecode&address=0xBB9b
 
 [PlantUML](https://plantuml.com/) is a Java program that can convert Plant UML syntax into png, svg or eps images. tx2uml pipes the PlantUML to the spawned Java process which then pipes the image outputs to a file.
 
-[plantuml.jar version 1.2023.1](http://sourceforge.net/projects/plantuml/files/plantuml-jar-mit-1.2023.1.zip/download) under [MIT license](https://en.wikipedia.org/wiki/MIT_License) is currently shipped in the [lib](./lib) folder.
+[plantuml.jar version 1.2023.10](https://sourceforge.net/projects/plantuml/files/1.2023.10/plantuml-mit-1.2023.10.tar.gz/download) under [MIT license](https://en.wikipedia.org/wiki/MIT_License) is currently shipped in the [lib](./lib) folder.
 
 See [Recent changes](https://plantuml.com/changes) for PlantUML's release notes.
 

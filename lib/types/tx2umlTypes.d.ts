@@ -169,6 +169,7 @@ export interface TracePumlGenerationOptions extends OutputOptions {
     depth?: number;
     noGas?: boolean;
     noParams?: boolean;
+    noParamValues?: boolean;
     noEther?: boolean;
     noTxDetails?: boolean;
     noLogDetails?: boolean;

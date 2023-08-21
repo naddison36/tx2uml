@@ -39,17 +39,17 @@ describe("Validators", () => {
         test.each([
             [
                 "0xf7749B41db006860cEc0650D18b8013d69C44Eeb",
-                ["0xf7749B41db006860cEc0650D18b8013d69C44Eeb"],
+                ["0xf7749b41db006860cec0650d18b8013d69c44eeb"],
             ],
             [
                 "0x1111111254fb6c44bac0bed2854e76f90643097d",
-                ["0x1111111254fb6c44bAC0beD2854e76F90643097d"],
+                ["0x1111111254fb6c44bac0bed2854e76f90643097d"],
             ],
             [
                 "0xf7749B41db006860cEc0650D18b8013d69C44Eeb,0x1111111254fb6c44bac0bed2854e76f90643097d",
                 [
-                    "0xf7749B41db006860cEc0650D18b8013d69C44Eeb",
-                    "0x1111111254fb6c44bAC0beD2854e76F90643097d",
+                    "0xf7749b41db006860cec0650d18b8013d69c44eeb",
+                    "0x1111111254fb6c44bac0bed2854e76f90643097d",
                 ],
             ],
         ])("%s", (address, expected) => {
@@ -69,7 +69,7 @@ describe("Validators", () => {
         ])("%s", address => {
             // @ts-ignore
             expect(() => validateAddresses(address)).toThrow(
-                "Must be address or an array of addresses in hexadecimal format with a 0x prefix"
+                "Must be an address or an array of addresses in hexadecimal format with a 0x prefix"
             )
         })
     })

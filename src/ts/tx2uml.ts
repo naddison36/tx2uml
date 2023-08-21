@@ -113,7 +113,12 @@ program
         "hide log details emitted from contract events",
         false
     )
-    .option("-p, --noParams", "hide function params and return values", false)
+    .option("-p, --noParams", "hide function parameter names and values", false)
+    .option(
+        "-pv, --noParamValues",
+        'only hide function parameter values, not the names. Will display "?" if the name is not specified in the ABI',
+        false
+    )
     .option(
         "-t, --noTxDetails",
         "hide transaction details like nonce, gas and tx fee",
