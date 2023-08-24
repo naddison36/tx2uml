@@ -506,8 +506,13 @@ export const writeEvents = (
                 `\n${align}note over ${participantId(contract.address)} #aqua`
             )
             for (const event of contract.events) {
+                if (options.noParams) {
+                    plantUmlStream.push(`\n${event.name}`)
+                    continue
+                }
                 plantUmlStream.push(`\n${event.name}:`)
                 plantUmlStream.push(
+                    // replace \\n with \n and indent two spaces
                     `${genParams(event.params, options.noParamValues).replace(
                         /\\n/g,
                         "\n  "
