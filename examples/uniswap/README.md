@@ -126,10 +126,16 @@ tx2uml -v --noAddresses 0x0000000000000000000000000000000000000001 0x687803e585d
 tx2uml value -v --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163 0xc4eaff5ab7bacc93c76433753517c831fe0ff10182da4fc086cdf49ec7ec15b9
 ```
 
-![Uniswap V3 USDC-ETH function calls](c4ea15b9.svg)
+![Uniswap V3 USDC-ETH function calls](pc4ea15b9.svg)
 
 ```
-tx2uml -v --noTxDetails --noGas --noParamValues --noDelegates --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163 0xc4eaff5ab7bacc93c76433753517c831fe0ff10182da4fc086cdf49ec7ec15b9
+tx2uml -v --noTxDetails --noGas --noParamValues --noDelegates --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163 0xc4eaff5ab7bacc93c76433753517c831fe0ff10182da4fc086cdf49ec7ec15b9 --outputFileName pc4ea15b9
+```
+
+The full call diagram with proxy delegate calls is [c4ea15b9.svg](./c4ea15b9.svg)
+
+```
+tx2uml -v --noAddresses 0x0000000000000000000000000000000000000001 --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163 0xc4eaff5ab7bacc93c76433753517c831fe0ff10182da4fc086cdf49ec7ec15b9
 ```
 
 ### Swap 47 ETH for USDC
