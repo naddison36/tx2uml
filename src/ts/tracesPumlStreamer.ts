@@ -268,10 +268,11 @@ const genEndLifeline = (
         if (options.noParams) {
             plantUml += `return\n`
         } else {
-            plantUml += `return${genParams(
+            // remove the first carriage return
+            plantUml += `return ${genParams(
                 trace.outputParams,
                 options.noParamValues
-            )}\n`
+            ).replace(/\\n/, "")}\n`
         }
         if (!options.noGas && trace.childTraces.length > 0) {
             const gasUsedLessChildCalls = calculateGasUsedLessChildTraces(trace)
@@ -341,7 +342,9 @@ const genFunctionText = (
         if (trace.parsedConstructorParams) {
             return `${trace.funcName}(${genParams(
                 trace.inputParams,
-                options.noParamValues
+                options.noParamValues,
+                "",
+                oneIndent
             )})`
         }
         // we don't know if there was constructor params or not as the contract was not verified on Etherscan
@@ -358,7 +361,9 @@ const genFunctionText = (
 
     return `${trace.funcName}(${genParams(
         trace.inputParams,
-        options.noParamValues
+        options.noParamValues,
+        "",
+        oneIndent
     )})`
 }
 
@@ -512,11 +517,13 @@ export const writeEvents = (
                 }
                 plantUmlStream.push(`\n${event.name}:`)
                 plantUmlStream.push(
-                    // replace \\n with \n and indent two spaces
-                    `${genParams(event.params, options.noParamValues).replace(
-                        /\\n/g,
-                        "\n  "
-                    )}`
+                    // replace \\n with \n
+                    `${genParams(
+                        event.params,
+                        options.noParamValues,
+                        "",
+                        oneIndent
+                    ).replace(/\\n/g, "\n")}`
                 )
             }
             plantUmlStream.push("\nend note\n")
