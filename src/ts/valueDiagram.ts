@@ -21,7 +21,8 @@ export const generateValueDiagram = async (
     // Initiate Etherscan client
     const etherscanClient = new EtherscanClient(
         options.etherscanKey,
-        options.chain
+        options.chain,
+        options.explorerUrl
     )
     const txManager = new TransactionManager(gethClient, etherscanClient)
 

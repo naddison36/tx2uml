@@ -44,11 +44,17 @@ program
     .addOption(
         new Option(
             "-c, --chain <value>",
-            "blockchain explorer network to get source code from"
+            "blockchain explorer to get contract source code from. `none` will not get any source code. `custom` will use the `explorerUrl` option."
         )
             .choices(networks)
             .default("mainnet")
             .env("ETH_NETWORK")
+    )
+    .addOption(
+        new Option(
+            "-e, --explorerUrl <url>",
+            "required if a `custom` chain is used. eg a testnet like Polygon Mumbai https://api-testnet.polygonscan.com/api"
+        ).env("EXPLORER_URL")
     )
     .option(
         "-cf, --configFile <value>",

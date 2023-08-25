@@ -172,6 +172,8 @@ export const nodeTypes = [
 
 export const networks = <const>[
     "mainnet",
+    "custom",
+    "none",
     "goerli",
     "sepolia",
     "arbitrum",
@@ -183,6 +185,8 @@ export const networks = <const>[
     "fantom",
     "gnosis",
     "moonbeam",
+    "celo",
+    "base",
 ]
 export type Network = (typeof networks)[number]
 
@@ -201,6 +205,8 @@ export const setNetworkCurrency = (network: Network) =>
         ? "xDAI"
         : network === "moonbeam"
         ? "GLMR"
+        : network === "celo"
+        ? "CELO"
         : "ETH"
 
 export const outputFormats = <const>["png", "svg", "eps", "puml"]
@@ -237,6 +243,7 @@ export interface SourceMap {
 
 export interface CallDiagramOptions extends TracePumlGenerationOptions {
     chain?: Network
+    explorerUrl?: string
     url?: string
     nodeType: string
     noAddresses?: string[]
@@ -248,6 +255,7 @@ export interface CallDiagramOptions extends TracePumlGenerationOptions {
 
 export interface TransferPumlGenerationOptions extends OutputOptions {
     chain?: Network
+    explorerUrl?: string
     url?: string
     etherscanKey?: string
     configFile?: string

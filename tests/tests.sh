@@ -94,6 +94,8 @@ tx2uml 0xfb153c572e304093023b4f9694ef39135b6ed5b2515453173e81ec02df2e2104 -v --c
 
 ##### Avalanche
 export ARCHIVE_NODE_URL=https://api.avax.network/ext/bc/C/rpc
+# Using an archive node
+tx2uml call 0xb145f0f6838cd75b1d9086bc52577eefb14f18ac25f443fe60c55bcaff198dde -v --chain avalanche
 ## Unwrapping WETH.e
 tx2uml value 0xb145f0f6838cd75b1d9086bc52577eefb14f18ac25f443fe60c55bcaff198dde -v --onlyToken --chain avalanche
 # ParaSwap 393.94480757 BTC.b for 5,355.278278395507586356 WETH.e
@@ -115,3 +117,11 @@ tx2uml value 0x5db5c2400ab56db697b3cc9aa02a05deab658e1438ce2f8692ca009cc45171dd 
 tx2uml value 0xb252ebbce1aead091c767463a242feb9e470d8d920a67f89c85449e676662584 -v --onlyToken --chain arbitrum
 # 1Inch swap
 tx2uml value 0x28650d09908542f6d1e08abeb476cb576d7daf72b0cef81aa24c142206b35f7c -v --onlyToken --chain arbitrum
+# using QuickNode which supports custom tracers
+tx2uml value 0x28650d09908542f6d1e08abeb476cb576d7daf72b0cef81aa24c142206b35f7c -v --chain arbitrum
+
+### Base
+tx2uml value -c base -v 0x83fa7d62d5790e62010ad93c91eeab146171a1f4fa54897a8e540ef29ab98f17
+tx2uml value -c base -v 0x83fa7d62d5790e62010ad93c91eeab146171a1f4fa54897a8e540ef29ab98f17 -f png
+tx2uml call -c base -v 0x83fa7d62d5790e62010ad93c91eeab146171a1f4fa54897a8e540ef29ab98f17
+tx2uml call -c base -v -g -pv -l 0x83fa7d62d5790e62010ad93c91eeab146171a1f4fa54897a8e540ef29ab98f17

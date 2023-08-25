@@ -1,9 +1,7 @@
-import { Contract, Network, Token } from "../types/tx2umlTypes";
+import { Contract, Network } from "../types/tx2umlTypes";
 export default class EtherscanClient {
-    readonly apiKey: string;
-    readonly network: Network;
+    readonly apiKey?: string;
     readonly url: string;
-    constructor(apiKey?: string, network?: Network);
+    constructor(apiKey?: string, network?: Network, url?: string);
     getContract(contractAddress: string): Promise<Contract>;
-    getToken(contractAddress: string): Promise<Token | null>;
 }

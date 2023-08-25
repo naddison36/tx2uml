@@ -150,7 +150,7 @@ export type ParamTypeInternal = {
     components?: ParamTypeInternal[];
 };
 export declare const nodeTypes: readonly ["geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil"];
-export declare const networks: readonly ["mainnet", "goerli", "sepolia", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis", "moonbeam"];
+export declare const networks: readonly ["mainnet", "custom", "none", "goerli", "sepolia", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis", "moonbeam", "celo", "base"];
 export type Network = (typeof networks)[number];
 export declare const setNetworkCurrency: (network: Network) => "AVAX" | "MATIC" | "BNB" | "CRO" | "FTM" | "xDAI" | "GLMR" | "ETH";
 export declare const outputFormats: readonly ["png", "svg", "eps", "puml"];
@@ -182,6 +182,7 @@ export interface SourceMap {
 }
 export interface CallDiagramOptions extends TracePumlGenerationOptions {
     chain?: Network;
+    explorerUrl?: string;
     url?: string;
     nodeType: string;
     noAddresses?: string[];
@@ -192,6 +193,7 @@ export interface CallDiagramOptions extends TracePumlGenerationOptions {
 }
 export interface TransferPumlGenerationOptions extends OutputOptions {
     chain?: Network;
+    explorerUrl?: string;
     url?: string;
     etherscanKey?: string;
     configFile?: string;

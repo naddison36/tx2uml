@@ -64,6 +64,10 @@ const tokenInfoAddresses: {
         address: "0x04a05bE01C94d576B3eA3e824aF52668BAC606c0",
         ens: false,
     },
+    base: {
+        address: "0x04a05bE01C94d576B3eA3e824aF52668BAC606c0",
+        ens: false,
+    },
 }
 
 const ProxySlot =
@@ -78,10 +82,6 @@ export default abstract class EthereumNodeClient {
         public readonly network: Network
     ) {
         this.ethersProvider = new providers.JsonRpcProvider(url)
-        if (!tokenInfoAddresses[network])
-            throw Error(
-                `Can not get token info from ${network} as TokenInfo contract has not been deployed`
-            )
         this.tokenInfoAddress = tokenInfoAddresses[network]
     }
 
@@ -150,6 +150,12 @@ export default abstract class EthereumNodeClient {
     async getTokenDetails(
         contractAddresses: string[]
     ): Promise<TokenDetails[]> {
+        if (!this.tokenInfoAddress) {
+            return contractAddresses.map(address => ({
+                address,
+                noContract: false,
+            }))
+        }
         const tokenInfo = new Contract(
             this.tokenInfoAddress.address,
             this.tokenInfoAddress.ens ? TokenInfoEnsABI : TokenInfoABI,

@@ -29,7 +29,8 @@ export const generateCallDiagram = async (
 
     const etherscanClient = new EtherscanClient(
         options.etherscanKey,
-        options.chain
+        options.chain,
+        options.explorerUrl
     )
     const txManager = new TransactionManager(
         ethereumNodeClient,
