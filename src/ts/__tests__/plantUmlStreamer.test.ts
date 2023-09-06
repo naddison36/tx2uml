@@ -85,7 +85,7 @@ describe("Stream Plant UML", () => {
             expect(plantUmlBuf.toString()).toEqual(
                 "\n00001111 -> 11112222: first()\\n1,234 gas\n" +
                     "activate 11112222\n" +
-                    "return\n"
+                    "return \n"
             )
         })
         test("0->1->2", () => {
@@ -112,8 +112,8 @@ describe("Stream Plant UML", () => {
                     "activate 11112222\n" +
                     "11112222 -> 22223333: second()\\n12,345 gas\n" +
                     "activate 22223333\n" +
-                    "return\n" +
-                    "return\n"
+                    "return \n" +
+                    "return \n"
             )
         })
         test("0->1 0->1", () => {
@@ -136,10 +136,10 @@ describe("Stream Plant UML", () => {
             expect(plantUmlBuf.toString()).toEqual(
                 "\n00001111 -> 11112222: first()\\n1,234 gas\n" +
                     "activate 11112222\n" +
-                    "return\n" +
+                    "return \n" +
                     "00001111 -> 11112222: second()\\n12,345 gas\n" +
                     "activate 11112222\n" +
-                    "return\n"
+                    "return \n"
             )
         })
         test("0->1->2 0->2", () => {
@@ -172,11 +172,11 @@ describe("Stream Plant UML", () => {
                     "activate 11112222\n" +
                     "11112222 -> 22223333: second()\\n1,234 gas\n" +
                     "activate 22223333\n" +
-                    "return\n" +
-                    "return\n" +
+                    "return \n" +
+                    "return \n" +
                     "00001111 -> 22223333: third()\\n1,234 gas\n" +
                     "activate 22223333\n" +
-                    "return\n"
+                    "return \n"
             )
         })
         test("0->1->2 1->3", () => {
@@ -210,11 +210,11 @@ describe("Stream Plant UML", () => {
                     "activate 11112222\n" +
                     "11112222 -> 22223333: second()\\n1,234 gas\n" +
                     "activate 22223333\n" +
-                    "return\n" +
+                    "return \n" +
                     "11112222 -> 33334444: third()\\n1,234 gas\n" +
                     "activate 33334444\n" +
-                    "return\n" +
-                    "return\n"
+                    "return \n" +
+                    "return \n"
             )
         })
         test("0->1->2 1->0", () => {
@@ -248,11 +248,11 @@ describe("Stream Plant UML", () => {
                     "activate 11112222\n" +
                     "11112222 -> 22223333: second()\\n1,234 gas\n" +
                     "activate 22223333\n" +
-                    "return\n" +
+                    "return \n" +
                     "11112222 -> 00001111: third()\\n1,234 gas\n" +
                     "activate 00001111\n" +
-                    "return\n" +
-                    "return\n"
+                    "return \n" +
+                    "return \n"
             )
         })
         test("0->1->2->0->1", () => {
@@ -296,10 +296,10 @@ describe("Stream Plant UML", () => {
                     "activate 00001111\n" +
                     "00001111 -> 11112222: forth()\\n1,234 gas\n" +
                     "activate 11112222\n" +
-                    "return\n" +
-                    "return\n" +
-                    "return\n" +
-                    "return\n"
+                    "return \n" +
+                    "return \n" +
+                    "return \n" +
+                    "return \n"
             )
         })
         test("0->1->3->2", () => {
@@ -333,9 +333,9 @@ describe("Stream Plant UML", () => {
                     "activate 33334444\n" +
                     "33334444 -> 22223333: third()\\n1,234 gas\n" +
                     "activate 22223333\n" +
-                    "return\n" +
-                    "return\n" +
-                    "return\n"
+                    "return \n" +
+                    "return \n" +
+                    "return \n"
             )
         })
         test("0->1->0 1->2", () => {
@@ -371,11 +371,11 @@ describe("Stream Plant UML", () => {
                     "activate 11112222\n" +
                     "11112222 -> 00001111: fallback()\\n0 gas\\n1.1 ETH\n" +
                     "activate 00001111\n" +
-                    "return\n" +
+                    "return \n" +
                     "11112222 -> 22223333: third call()\\n1,234 gas\n" +
                     "activate 22223333\n" +
-                    "return\n" +
-                    "return\n"
+                    "return \n" +
+                    "return \n"
             )
         })
         test("0->1->2-D>3 2->4->5 2->4 2->4 1->2->4", () => {
@@ -466,23 +466,23 @@ describe("Stream Plant UML", () => {
                     "activate 44445555\n" +
                     "44445555 -> 55556666: not a delegate call()\\n1,234 gas\n" +
                     "activate 55556666\n" +
-                    "return\n" +
-                    "return\n" +
+                    "return \n" +
+                    "return \n" +
                     "22223333 -[#3471CD]> 44445555: 2nd delegated call from 0x2222..3333()\\n1,234 gas\n" +
                     "activate 44445555\n" +
-                    "return\n" +
-                    "return\n" +
+                    "return \n" +
+                    "return \n" +
                     "22223333 -> 44445555: not a delegate call()\\n1,234 gas\n" +
                     "activate 44445555\n" +
-                    "return\n" +
-                    "return\n" +
+                    "return \n" +
+                    "return \n" +
                     "11112222 -> 22223333: not a delegate call()\\n1,234 gas\n" +
                     "activate 22223333\n" +
                     "22223333 -> 44445555: not a delegate call()\\n1,234 gas\n" +
                     "activate 44445555\n" +
-                    "return\n" +
-                    "return\n" +
-                    "return\n"
+                    "return \n" +
+                    "return \n" +
+                    "return \n"
             )
         })
     })
