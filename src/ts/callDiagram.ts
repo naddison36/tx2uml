@@ -19,6 +19,7 @@ export const generateCallDiagram = async (
             case "nether":
             case "anvil":
             case "besu":
+            case "reth":
                 debug("Using OpenEthereum client.")
                 return new OpenEthereumClient(options.url, options.chain)
             default:

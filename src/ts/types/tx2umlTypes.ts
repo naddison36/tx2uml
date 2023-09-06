@@ -168,6 +168,7 @@ export const nodeTypes = [
     "tgeth",
     "besu",
     "anvil",
+    "reth",
 ] as const
 
 export const networks = <const>[

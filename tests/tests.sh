@@ -125,3 +125,8 @@ tx2uml value -c base -v 0x83fa7d62d5790e62010ad93c91eeab146171a1f4fa54897a8e540e
 tx2uml value -c base -v 0x83fa7d62d5790e62010ad93c91eeab146171a1f4fa54897a8e540ef29ab98f17 -f png
 tx2uml call -c base -v 0x83fa7d62d5790e62010ad93c91eeab146171a1f4fa54897a8e540ef29ab98f17
 tx2uml call -c base -v -g -pv -l 0x83fa7d62d5790e62010ad93c91eeab146171a1f4fa54897a8e540ef29ab98f17
+
+# rETH node
+
+tx2uml call --nodeType reth 0x720e126ea17f4e0b2fcf021e6c6b90b55c5283527cdf50d4c2eb3cdbc012dbfc -v
+tx2uml value --nodeType reth 0x720e126ea17f4e0b2fcf021e6c6b90b55c5283527cdf50d4c2eb3cdbc012dbfc -v

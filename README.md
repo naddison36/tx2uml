@@ -84,14 +84,14 @@ Arguments:
   txHash(s)                   transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces
 
 Options:
-  -n, --nodeType <value>       type of Ethereum node the provider url is pointing to. This determines which trace API is used (choices: "geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", default: "geth", env: ARCHIVE_NODE_TYPE)
+  -n, --nodeType <value>       type of Ethereum node the provider url is pointing to. This determines which trace API is used (choices: "geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", "reth", default: "geth", env: ARCHIVE_NODE_TYPE)
   -k, --etherscanKey <value>   Etherscan like block explorer API key
   -a, --noAddresses <value>    hide calls to contracts in a list of comma-separated addresses with a 0x prefix
   -d, --depth <value>          limit the transaction call depth
   -e, --noEther                hide ether values (default: false)
   -g, --noGas                  hide gas usages (default: false)
   -l, --noLogDetails           hide log details emitted from contract events (default: false)
-  -p, --noParams               hide function params and return values (default: false)  
+  -p, --noParams               hide function params and return values (default: false)
   -pv, --noParamValues         only hide function parameter values, not the names. Will display "?" if the name is not specified in the ABI (default: false)
   -t, --noTxDetails            hide transaction details like nonce, gas and tx fee (default: false)
   -x, --noDelegates            hide delegate calls from proxy contracts to their implementations and calls to deployed libraries (default: false)
@@ -211,7 +211,9 @@ The `-x` or `--noDelegates` option can be used to hide all delegate calls.
 
 ## Archive node that supports tracing transactions
 
-`tx2uml` needs an Ethereum archive node that supports the [debug_traceTransaction](https://geth.ethereum.org/docs/interacting-with-geth/rpc/ns-debug#debugtracetransaction) or [trace_transaction](https://openethereum.github.io/JSONRPC-trace-module#trace_transaction) JSON RPC APIs.
+`tx2uml` needs an Ethereum archive node that supports the
+[debug_traceTransaction](https://geth.ethereum.org/docs/interacting-with-geth/rpc/ns-debug#debugtracetransaction) or
+[trace_transaction](https://openethereum.github.io/JSONRPC-trace-module#trace_transaction) JSON RPC APIs.
 
 The ethereum node url can be set with the `-u` or `--url` options or by exporting the `ARCHIVE_NODE_URL` environment variable.
 
@@ -259,13 +261,13 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 
 ### Ethereum client trace support
 
-|                                          | OpenEthereum | Nethereum | Besu | Geth | Erigon | Akula | Anvil | Hardhat | Ganache |
-| ---------------------------------------- | ------------ | --------- | ---- | ---- | ------ | ----- | ----- | ------- | ------- |
-| trace_replayTransaction                  | X            | X         |      |      | X      | X     |       |         |         |
-| trace_transaction                        | X            | X         | X    |      | X      |       | X     |         |         |
-| trace_rawTransaction                     | X            | X         | X    |      |        | X     |       |         |         |
-| debug_traceTransaction                   |              | X         | X    | X    | X      |       | X     | X       | X       |
-| debug_traceTransaction with tracer param |              |           |      | X    | X      |       |       |         |         |
+|                                          | OpenEthereum | Nethereum | Besu | Geth | Erigon | rETH | Akula | Anvil | Hardhat | Ganache |
+| ---------------------------------------- | ------------ | --------- | ---- | ---- | ------ | ---- | ----- | ----- | ------- | ------- |
+| trace_replayTransaction                  | X            | X         |      |      | X      | X    | X     |       |         |         |
+| trace_transaction                        | X            | X         | X    |      | X      | X    |       | X     |         |         |
+| trace_rawTransaction                     | X            | X         | X    |      |        | X    | X     |       |         |         |
+| debug_traceTransaction                   |              | X         | X    | X    | X      | X    |       | X     | X       | X       |
+| debug_traceTransaction with tracer param |              |           |      | X    | X      |      |       |       |         |         |
 
 ### Ethereum API provider trace support
 

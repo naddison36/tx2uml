@@ -149,7 +149,7 @@ export type ParamTypeInternal = {
     baseType: string;
     components?: ParamTypeInternal[];
 };
-export declare const nodeTypes: readonly ["geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil"];
+export declare const nodeTypes: readonly ["geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", "reth"];
 export declare const networks: readonly ["mainnet", "custom", "none", "goerli", "sepolia", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis", "moonbeam", "celo", "base"];
 export type Network = (typeof networks)[number];
 export declare const setNetworkCurrency: (network: Network) => "AVAX" | "MATIC" | "BNB" | "CRO" | "FTM" | "xDAI" | "GLMR" | "CELO" | "ETH";
