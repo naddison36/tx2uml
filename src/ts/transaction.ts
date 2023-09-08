@@ -379,26 +379,25 @@ export class TransactionManager {
                         contract.ethersContract.interface.parseLog(log)
                     contract.events.push(parseEvent(contract, event))
                 } catch (err) {
-                    debug(
-                        `Failed to parse log with topic ${log?.topics[0]} on contract ${log.address}`
-                    )
+                    // try to parse the event from the delegated to contracts
+                    for (const delegatedToContract of contract?.delegatedToContracts) {
+                        // try and parse the log topic
+                        try {
+                            const event =
+                                delegatedToContract.ethersContract.interface.parseLog(
+                                    log
+                                )
+                            contract.events.push(parseEvent(contract, event))
+                            // Found the event so no need to keep trying
+                            break
+                        } catch (err) {
+                            debug(
+                                `Failed to parse log with topic ${log?.topics[0]} on contract ${log.address}`
+                            )
+                        }
+                    }
                 }
             }
-            // also parse the events on any contracts that are delegated to
-            contract?.delegatedToContracts?.forEach(delegatedToContract => {
-                // try and parse the log topic
-                try {
-                    const event =
-                        delegatedToContract.ethersContract.interface.parseLog(
-                            log
-                        )
-                    contract.events.push(parseEvent(contract, event))
-                } catch (err) {
-                    debug(
-                        `Failed to parse log with topic ${log?.topics[0]} on contract ${log.address}`
-                    )
-                }
-            })
         }
     }
 
@@ -638,24 +637,30 @@ const addConstructorParamsToTrace = (trace: Trace, contracts: Contracts) => {
 const parseEvent = (contract: Contract, log: LogDescription): Event => {
     const params: Param[] = []
 
-    // For each event param
-    log.eventFragment.inputs.forEach((param, i) => {
-        const components = addValuesToComponents(
-            log.eventFragment.inputs[i],
-            param
-        )
+    try {
+        // For each event param
+        log.eventFragment.inputs.forEach((param, i) => {
+            const components = addValuesToComponents(
+                log.eventFragment.inputs[i],
+                param
+            )
 
-        params.push({
-            name: log.eventFragment.inputs[i].name,
-            type: log.eventFragment.inputs[i].type,
-            value: log.args[i],
-            components,
+            params.push({
+                name: log.eventFragment.inputs[i].name,
+                type: log.eventFragment.inputs[i].type,
+                value: log.args[i],
+                components,
+            })
         })
-    })
 
-    return {
-        name: log.name,
-        params,
+        return {
+            name: log.name,
+            params,
+        }
+    } catch (err) {
+        throw Error(
+            `Failed to parse event ${log.name} on the ${contract.contractName} contract at ${contract.address} with error ${err}`
+        )
     }
 }
 

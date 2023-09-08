@@ -6,7 +6,6 @@ const debug = require("debug")("tx2uml")
 
 export const loadLabels = (network: Network): Labels => {
     const parentFolder = join(__dirname, `..`)
-    debug(`Label __dirname ${__dirname}`)
     // Try and get Etherscan labels from local file
     const labelsFile =
         // get parent folder name of parent
