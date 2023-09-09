@@ -201,6 +201,7 @@ export interface TransferPumlGenerationOptions extends OutputOptions {
     configFile?: string;
     onlyToken?: boolean;
     mapSource?: SourceMap[];
+    hideBalances?: boolean;
 }
 export interface CopyOptions {
     destUrl: string;

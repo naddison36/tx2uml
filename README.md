@@ -62,6 +62,7 @@ Options:
   -cf, --configFile <value>     name of the json configuration file that can override contract details like name and ABI (default: "tx.config.json")
   -af, --abiFile <value>        name of the json abi file that can override contract details like ABI (default: "tx.abi.json")
   -m, --memory <gigabytes>      max Java memory of PlantUML process in gigabytes. Java default is 1/4 of physical memory. Large txs in png format will need up to 12g. svg format is much better for large transactions.
+  -hf, --hideFooter             Hides the boxes at the bottom of the contract lifelines. (default: false)
   -v, --verbose                 run with debugging statements (default: false)
   -V, --version                 output the version number
   -h, --help                    display help for command
@@ -120,6 +121,7 @@ Options:
                                In them middle is colon ":" that separates the two lists.
                                Right of the colon ":" is a comma-separated list of addresses that have verified source code.
                                For example: --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163
+  -hb, --hideBalances          Hides the changes in ether and token balances at the bottom. (default: false)
   -h, --help                   display help for command
 ```
 

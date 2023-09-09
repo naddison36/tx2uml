@@ -23,7 +23,8 @@ export const transfers2PumlStream = (
     transfers: readonly Readonly<Transfer>[][],
     participants: Readonly<Participants>,
     network: Network,
-    hideFooter: boolean
+    hideFooter: boolean,
+    hideBalances: boolean
 ): Readable => {
     networkCurrency = setNetworkCurrency(network)
     const pumlStream = new Readable({
@@ -35,7 +36,8 @@ export const transfers2PumlStream = (
             transactions,
             transfers,
             participants,
-            hideFooter
+            hideFooter,
+            hideBalances
         )
     } else {
         singleTransfer2PumlStream(
@@ -43,7 +45,8 @@ export const transfers2PumlStream = (
             transactions[0],
             transfers[0],
             participants,
-            hideFooter
+            hideFooter,
+            hideBalances
         )
     }
 
@@ -55,7 +58,8 @@ export const multiTransfers2PumlStream = (
     transactions: readonly TransactionDetails[],
     transfers: readonly Transfer[][],
     participants: Readonly<Participants>,
-    hideFooter: boolean
+    hideFooter: boolean,
+    hideBalances: boolean
 ) => {
     pumlStream.push(`@startuml\n`)
     if (hideFooter) {
@@ -81,12 +85,16 @@ export const multiTransfers2PumlStream = (
         netParticipantValues(transfers[i], totalParticipantPositions)
         const txParticipantPositions: ParticipantPositions = {}
         netParticipantValues(transfers[i], txParticipantPositions)
-        writeBalances(pumlStream, txParticipantPositions, participants)
+        if (!hideBalances) {
+            writeBalances(pumlStream, txParticipantPositions, participants)
+        }
         pumlStream.push("\nend")
         i++
     }
 
-    writeBalances(pumlStream, totalParticipantPositions, participants)
+    if (!hideBalances) {
+        writeBalances(pumlStream, totalParticipantPositions, participants)
+    }
 
     pumlStream.push("\n@endumls")
     pumlStream.push(null)
@@ -99,7 +107,8 @@ export const singleTransfer2PumlStream = (
     transaction: Readonly<TransactionDetails>,
     transfers: readonly Transfer[],
     participants: Readonly<Participants>,
-    hideFooter: boolean
+    hideFooter: boolean,
+    hideBalances: boolean
 ): Readable => {
     pumlStream.push(`@startuml\ntitle ${transaction.hash}\n`)
     if (hideFooter) {
@@ -117,7 +126,9 @@ export const singleTransfer2PumlStream = (
 
     writeParticipants(pumlStream, filteredContracts)
     writeMessages(pumlStream, transfers)
-    writeBalances(pumlStream, participantPositions, participants)
+    if (!hideBalances) {
+        writeBalances(pumlStream, participantPositions, participants)
+    }
 
     pumlStream.push("\n@endumls")
     pumlStream.push(null)

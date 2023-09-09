@@ -192,6 +192,11 @@ Right of the colon ":" is a comma-separated list of addresses that have verified
 For example: --mapSource 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640:0x8f8EF111B67C04Eb1641f5ff19EE54Cda062f163`,
         validateMappedAddresses
     )
+    .option(
+        "-hb, --hideBalances",
+        "Hides the changes in ether and token balances at the bottom.",
+        false
+    )
     .action(async (hashes: string[], options, command) => {
         debug(`About to generate value transfers for ${hashes}`)
         const outputFilename = parseFilename(

@@ -47,7 +47,8 @@ export const generateValueDiagram = async (
         transactionTransfers,
         participants,
         options.chain,
-        options.hideFooter
+        options.hideFooter,
+        options.hideBalances
     )
 
     // Pipe readable stream to PlantUML's Java process which then writes to a file
