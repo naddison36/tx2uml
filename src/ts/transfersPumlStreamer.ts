@@ -238,11 +238,10 @@ export const writeParticipants = (
         participant.labels?.forEach(label => {
             name += `<<${label}>>`
         })
-        // Use token name, else the label or Etherscan name
-        if (participant.tokenName || participant.name)
-            name += `<<${participant.tokenName || participant.name}>>`
+        if (participant.tokenName) name += `<<${participant.tokenName}>>`
         if (participant.tokenSymbol) name += `<<(${participant.tokenSymbol})>>`
         if (participant.ensName) name += `<<(${participant.ensName})>>`
+        if (participant.contractName) name += `<<${participant.contractName}>>`
 
         debug(`Write lifeline for ${address} with stereotype ${name}`)
         const participantType = participant.noContract ? "actor" : "participant"

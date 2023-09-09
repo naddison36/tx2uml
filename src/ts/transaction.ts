@@ -23,6 +23,7 @@ import {
     Transfer,
 } from "./types/tx2umlTypes"
 import { loadLabels } from "./utils/labels"
+import { getAddress } from "@ethersproject/address"
 
 const debug = require("debug")("tx2uml")
 
@@ -182,11 +183,7 @@ export class TransactionManager {
                 ...token,
                 ...labels[address.toLowerCase()],
             }
-            if (
-                !token.noContract &&
-                !token.tokenSymbol &&
-                !participants[address].name
-            ) {
+            if (!token.noContract) {
                 // Check if the contract is proxied
                 const implementation =
                     await this.ethereumNodeClient.getProxyImplementation(
@@ -206,7 +203,7 @@ export class TransactionManager {
                 const contract = await this.etherscanClient.getContract(
                     sourceContract
                 )
-                participants[address].name = contract?.contractName
+                participants[address].contractName = contract?.contractName
             }
         }
 
@@ -300,7 +297,7 @@ export class TransactionManager {
     ) {
         const configs = await loadConfig(filename)
         for (const [contractAddress, config] of Object.entries(configs)) {
-            const address = contractAddress.toLowerCase()
+            const address = getAddress(contractAddress)
             if (contracts[address]) {
                 if (config.contractName)
                     contracts[address].contractName = config.contractName

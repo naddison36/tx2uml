@@ -75,7 +75,7 @@ export interface TokenDetails {
 }
 export interface Participant extends TokenDetails {
     protocol?: string;
-    name?: string;
+    contractName?: string;
     labels?: string[];
 }
 export type Participants = {

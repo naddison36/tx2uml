@@ -45,7 +45,7 @@ export const loadConfig = async (
     let config: ContractsConfig = {}
     if (existsSync(fileName)) {
         config = JSON.parse(readFileSync(fileName, "utf-8"))
-        debug(`loaded config file ${fileName}`)
+        debug(`Loaded config file ${fileName}`)
     }
 
     return config
