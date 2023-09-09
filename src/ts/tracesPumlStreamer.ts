@@ -66,6 +66,9 @@ export const multiTxTraces2PumlStream = (
     options: TracePumlGenerationOptions = {}
 ) => {
     pumlStream.push(`@startuml\n`)
+    if (options.hideFooter) {
+        pumlStream.push(`hide footbox\n`)
+    }
     pumlStream.push(genCaption(transactions))
     writeParticipants(pumlStream, contracts, options)
     let i = 0
@@ -91,6 +94,9 @@ export const singleTx2PumlStream = (
     options: TracePumlGenerationOptions
 ): Readable => {
     pumlStream.push(`@startuml\ntitle ${transaction.hash}\n`)
+    if (options.hideFooter) {
+        pumlStream.push(`hide footbox\n`)
+    }
     pumlStream.push(genCaption(transaction))
     writeParticipants(pumlStream, contracts, options)
     writeTransactionDetails(pumlStream, transaction, options)

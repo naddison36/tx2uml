@@ -160,6 +160,7 @@ export interface OutputOptions {
     outputFilename?: string;
     outputFormat?: OutputFormat;
     memory?: number;
+    hideFooter?: boolean;
 }
 export interface PlantUmlOptions {
     format?: OutputFormat;

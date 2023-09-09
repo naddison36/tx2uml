@@ -22,7 +22,8 @@ export const transfers2PumlStream = (
     transactions: readonly Readonly<TransactionDetails>[],
     transfers: readonly Readonly<Transfer>[][],
     participants: Readonly<Participants>,
-    network: Network
+    network: Network,
+    hideFooter: boolean
 ): Readable => {
     networkCurrency = setNetworkCurrency(network)
     const pumlStream = new Readable({
@@ -33,14 +34,16 @@ export const transfers2PumlStream = (
             pumlStream,
             transactions,
             transfers,
-            participants
+            participants,
+            hideFooter
         )
     } else {
         singleTransfer2PumlStream(
             pumlStream,
             transactions[0],
             transfers[0],
-            participants
+            participants,
+            hideFooter
         )
     }
 
@@ -51,9 +54,13 @@ export const multiTransfers2PumlStream = (
     pumlStream: Readable,
     transactions: readonly TransactionDetails[],
     transfers: readonly Transfer[][],
-    participants: Readonly<Participants>
+    participants: Readonly<Participants>,
+    hideFooter: boolean
 ) => {
     pumlStream.push(`@startuml\n`)
+    if (hideFooter) {
+        pumlStream.push(`hide footbox\n`)
+    }
     pumlStream.push(genCaption(transactions))
 
     // Filter out any participants that don't have a transfer from or to.
@@ -91,9 +98,13 @@ export const singleTransfer2PumlStream = (
     pumlStream: Readable,
     transaction: Readonly<TransactionDetails>,
     transfers: readonly Transfer[],
-    participants: Readonly<Participants>
+    participants: Readonly<Participants>,
+    hideFooter: boolean
 ): Readable => {
     pumlStream.push(`@startuml\ntitle ${transaction.hash}\n`)
+    if (hideFooter) {
+        pumlStream.push(`hide footbox\n`)
+    }
     pumlStream.push(genCaption(transaction))
 
     // Filter out any contracts that don't have a transfer from or to
