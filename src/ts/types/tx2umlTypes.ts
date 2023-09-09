@@ -157,6 +157,7 @@ export type ParamTypeInternal = {
     name: string
     type: string
     baseType: string
+    arrayChildren?: ParamTypeInternal
     components?: ParamTypeInternal[]
 }
 

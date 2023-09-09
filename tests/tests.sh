@@ -20,6 +20,10 @@ tx2uml value 0x4ed0dd60431a618b336babd6699219216568b5580972bc6cc549d3073c6e97d8 
 # Moonbirds with Blur Pool token that doesn't have a symbol
 tx2uml value 0x0dc73f341aae83c1ed93e29b5ac5c658daeaad86c3db263cb4678fe7bedc7057 -v
 
+# Curve crvUSD Peg Keeping with fixed sized array params in AddLiquidity event
+# also has Transfer event declared in the proxy and implementation
+tx2uml 0x2f170663a580f6641ca37a326a05615ed96dfeb0ba95b08112bcb0afe415f1c4 -v
+
 ##### Goerli
 export ARCHIVE_NODE_URL=https://eth-goerli.g.alchemy.com/v2/rU87yfwzx4Xv0HSrZAENZO0Otr1x4hqo
 

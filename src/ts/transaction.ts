@@ -640,10 +640,7 @@ const parseEvent = (contract: Contract, log: LogDescription): Event => {
     try {
         // For each event param
         log.eventFragment.inputs.forEach((param, i) => {
-            const components = addValuesToComponents(
-                log.eventFragment.inputs[i],
-                param
-            )
+            const components = addValuesToComponents(param, log.args[i])
 
             params.push({
                 name: log.eventFragment.inputs[i].name,
@@ -686,19 +683,17 @@ const addValuesToComponents = (
     } else {
         // If an array of components
         return args.map((row: any, r: number) => {
-            // Remove the last two [] characters from the type.
-            // For example, tuple[] becomes tuple and tuple[][] becomes tuple[]
-            const childType = paramType.type.slice(0, -2)
-            // If a multi dimensional array then the baseType is still an array. Otherwise it becomes a tuple
-            const childBaseType =
-                childType.slice(-2) === "[]" ? "array" : childType
             const components = addValuesToComponents(
-                { ...paramType, type: childType, baseType: childBaseType },
+                {
+                    ...paramType,
+                    type: paramType.arrayChildren?.type,
+                    baseType: paramType.arrayChildren?.baseType,
+                },
                 row
             )
             return {
                 name: r.toString(),
-                type: childType,
+                type: paramType.arrayChildren?.type,
                 value: row,
                 components,
             }

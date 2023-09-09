@@ -147,6 +147,7 @@ export type ParamTypeInternal = {
     name: string;
     type: string;
     baseType: string;
+    arrayChildren?: ParamTypeInternal;
     components?: ParamTypeInternal[];
 };
 export declare const nodeTypes: readonly ["geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", "reth"];
