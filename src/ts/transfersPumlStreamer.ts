@@ -8,6 +8,7 @@ import {
     setNetworkCurrency,
     TransactionDetails,
     Transfer,
+    TransferPumlGenerationOptions,
     TransferType,
 } from "./types/tx2umlTypes"
 import { participantId, shortAddress, shortTokenId } from "./utils/formatters"
@@ -23,8 +24,7 @@ export const transfers2PumlStream = (
     transfers: readonly Readonly<Transfer>[][],
     participants: Readonly<Participants>,
     network: Network,
-    hideFooter: boolean,
-    hideBalances: boolean
+    options: TransferPumlGenerationOptions = {}
 ): Readable => {
     networkCurrency = setNetworkCurrency(network)
     const pumlStream = new Readable({
@@ -36,8 +36,7 @@ export const transfers2PumlStream = (
             transactions,
             transfers,
             participants,
-            hideFooter,
-            hideBalances
+            options
         )
     } else {
         singleTransfer2PumlStream(
@@ -45,8 +44,7 @@ export const transfers2PumlStream = (
             transactions[0],
             transfers[0],
             participants,
-            hideFooter,
-            hideBalances
+            options
         )
     }
 
@@ -58,11 +56,13 @@ export const multiTransfers2PumlStream = (
     transactions: readonly TransactionDetails[],
     transfers: readonly Transfer[][],
     participants: Readonly<Participants>,
-    hideFooter: boolean,
-    hideBalances: boolean
+    options: TransferPumlGenerationOptions = {}
 ) => {
     pumlStream.push(`@startuml\n`)
-    if (hideFooter) {
+    if (options.title) {
+        pumlStream.push(`title "${options.title}"\n`)
+    }
+    if (options.hideFooter) {
         pumlStream.push(`hide footbox\n`)
     }
     pumlStream.push(genCaption(transactions))
@@ -85,14 +85,14 @@ export const multiTransfers2PumlStream = (
         netParticipantValues(transfers[i], totalParticipantPositions)
         const txParticipantPositions: ParticipantPositions = {}
         netParticipantValues(transfers[i], txParticipantPositions)
-        if (!hideBalances) {
+        if (!options.hideBalances) {
             writeBalances(pumlStream, txParticipantPositions, participants)
         }
         pumlStream.push("\nend")
         i++
     }
 
-    if (!hideBalances) {
+    if (!options.hideBalances) {
         writeBalances(pumlStream, totalParticipantPositions, participants)
     }
 
@@ -107,11 +107,13 @@ export const singleTransfer2PumlStream = (
     transaction: Readonly<TransactionDetails>,
     transfers: readonly Transfer[],
     participants: Readonly<Participants>,
-    hideFooter: boolean,
-    hideBalances: boolean
+    options: TransferPumlGenerationOptions = {}
 ): Readable => {
-    pumlStream.push(`@startuml\ntitle ${transaction.hash}\n`)
-    if (hideFooter) {
+    pumlStream.push(`@startuml\n`)
+    if (options.title) {
+        pumlStream.push(`title "${options.title || transaction.hash}"\n`)
+    }
+    if (options.hideFooter) {
         pumlStream.push(`hide footbox\n`)
     }
     pumlStream.push(genCaption(transaction))
@@ -126,7 +128,7 @@ export const singleTransfer2PumlStream = (
 
     writeParticipants(pumlStream, filteredContracts)
     writeMessages(pumlStream, transfers)
-    if (!hideBalances) {
+    if (!options.hideBalances) {
         writeBalances(pumlStream, participantPositions, participants)
     }
 

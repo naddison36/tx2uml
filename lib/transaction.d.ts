@@ -10,14 +10,13 @@ export declare class TransactionManager {
     getTransactions(txHashes: string[], network: string): Promise<TransactionDetails[]>;
     getTransaction(txHash: string): Promise<TransactionDetails>;
     getTraces(transactions: TransactionDetails[]): Promise<Trace[][]>;
+    static parseTransactionLogs(txHash: string, logs: Array<Log>, contracts: Contracts): void;
     getContractsFromTraces(transactionsTraces: Trace[][], configFilename?: string, abiFilename?: string, network?: Network, mappedSource?: SourceMap[]): Promise<Contracts>;
-    getTransferParticipants(transactionsTransfers: Transfer[][], block: number, network: Network, configFilename?: string, mapSource?: SourceMap[]): Promise<Participants>;
     fillContractsABIFromAddresses(contracts: Contracts & Participants, addresses: string[], abiFilename: string): Promise<void>;
     getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
     setTokenAttributes(contracts: Contracts, network: Network): Promise<void>;
-    static parseTransactionLogs(txHash: string, logs: Array<Log>, contracts: Contracts): void;
+    getTransferParticipants(transactionsTransfers: Transfer[][], block: number, network: Network, configFilename?: string, mapSource?: SourceMap[]): Promise<Participants>;
     static parseTraceParams(traces: Trace[][], contracts: Contracts): void;
-
     configOverrides(contracts: Contracts & Participants, filename?: string, encodedAddresses?: boolean): Promise<void>;
     static parseTraceDepths(traces: Trace[][], contracts: Contracts): void;
     static filterTransactionTraces(transactionTraces: Trace[][], contracts: Contracts, options: {

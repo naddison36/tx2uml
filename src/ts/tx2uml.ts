@@ -70,6 +70,7 @@ program
         "-m, --memory <gigabytes>",
         "max Java memory of PlantUML process in gigabytes. Java default is 1/4 of physical memory. Large txs in png format will need up to 12g. svg format is much better for large transactions."
     )
+    .option("--title <value>", "Diagram title at the top (default: tx hash)")
     .option(
         "-hf, --hideFooter",
         "Hides the boxes at the bottom of the contract lifelines.",

@@ -220,6 +220,7 @@ export interface OutputOptions {
     outputFormat?: OutputFormat
     memory?: number
     hideFooter?: boolean
+    title?: string
 }
 
 export interface PlantUmlOptions {

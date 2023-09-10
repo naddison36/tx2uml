@@ -66,6 +66,9 @@ export const multiTxTraces2PumlStream = (
     options: TracePumlGenerationOptions = {}
 ) => {
     pumlStream.push(`@startuml\n`)
+    if (options.title) {
+        pumlStream.push(`title ${options.title}\n`)
+    }
     if (options.hideFooter) {
         pumlStream.push(`hide footbox\n`)
     }
@@ -93,7 +96,8 @@ export const singleTx2PumlStream = (
     contracts: Contracts,
     options: TracePumlGenerationOptions
 ): Readable => {
-    pumlStream.push(`@startuml\ntitle ${transaction.hash}\n`)
+    pumlStream.push("@startuml\n")
+    pumlStream.push(`title ${options.title || transaction.hash}\n`)
     if (options.hideFooter) {
         pumlStream.push(`hide footbox\n`)
     }
