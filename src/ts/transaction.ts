@@ -64,6 +64,52 @@ export class TransactionManager {
         return transactionsTraces
     }
 
+    static parseTransactionLogs(
+        txHash: string,
+        logs: Array<Log>,
+        contracts: Contracts
+    ) {
+        // for each tx log
+        for (const log of logs) {
+            // see if we have the contract source for the log
+            const contract = contracts[log.address.toLowerCase()]
+            if (contract?.ethersContract) {
+                // try and parse the log topic
+                try {
+                    const event =
+                        contract.ethersContract.interface.parseLog(log)
+                    contract.events.push(parseEvent(txHash, contract, event))
+                } catch (err) {
+                    if (!contract?.delegatedToContracts) {
+                        debug(
+                            `Failed to parse log with topic ${log?.topics[0]} on contract ${log.address}`
+                        )
+                        continue
+                    }
+                    // try to parse the event from the delegated to contracts
+                    for (const delegatedToContract of contract?.delegatedToContracts) {
+                        // try and parse the log topic
+                        try {
+                            const event =
+                                delegatedToContract.ethersContract.interface.parseLog(
+                                    log
+                                )
+                            contract.events.push(
+                                parseEvent(txHash, contract, event)
+                            )
+                            // Found the event so no need to keep trying
+                            break
+                        } catch (err) {
+                            debug(
+                                `Failed to parse log with topic ${log?.topics[0]} on contract ${log.address}`
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     async getContractsFromTraces(
         transactionsTraces: Trace[][],
         configFilename?: string,
@@ -141,7 +187,7 @@ export class TransactionManager {
         // Get token name and symbol from chain
         await this.setTokenAttributes(contracts, network)
         // Override contract details like name, token symbol and ABI
-        await this.configOverrides(contracts, configFilename)
+        await this.configOverrides(contracts, configFilename, false)
         // Override abi information with a generic abi
         await this.fillContractsABIFromAddresses(
             contracts,
@@ -150,88 +196,6 @@ export class TransactionManager {
         )
 
         return contracts
-    }
-
-    async getTransferParticipants(
-        transactionsTransfers: Transfer[][],
-        block: number,
-        network: Network,
-        configFilename?: string,
-        mapSource: SourceMap[] = []
-    ): Promise<Participants> {
-        // Get a unique list of all accounts that transfer from, transfer to or are token contracts.
-        const flatTransfers = transactionsTransfers.flat()
-        const addressSet = new Set<string>()
-        flatTransfers.forEach(transfer => {
-            addressSet.add(transfer.from)
-            addressSet.add(transfer.to)
-            if (transfer.tokenAddress) addressSet.add(transfer.tokenAddress)
-        })
-        const uniqueAddresses = Array.from(addressSet)
-
-        // get token details from on-chain
-        const tokenDetails = await this.ethereumNodeClient.getTokenDetails(
-            uniqueAddresses
-        )
-
-        // Try and get Etherscan labels from local file
-        const labels = loadLabels(network)
-        const participants: Participants = {}
-        for (const token of tokenDetails) {
-            const address = token.address
-            participants[token.address] = {
-                ...token,
-                ...labels[address.toLowerCase()],
-            }
-            if (!token.noContract) {
-                // Check if the contract is proxied
-                const implementation =
-                    await this.ethereumNodeClient.getProxyImplementation(
-                        address,
-                        block
-                    )
-                // try and get contract name for the contract or its proxied implementation from Etherscan
-                let sourceContract = implementation || address
-                // Remap source contract if configured
-                const mappedSourceContract = mapSource.find(
-                    ms =>
-                        ms.contract.toLowerCase() ===
-                        sourceContract.toLowerCase()
-                )
-                if (mappedSourceContract)
-                    sourceContract = mappedSourceContract.source
-                const contract = await this.etherscanClient.getContract(
-                    sourceContract
-                )
-                participants[address].contractName = contract?.contractName
-            }
-        }
-
-        // Override contract details like name, token symbol and ABI
-        await this.configOverrides(participants, configFilename)
-
-        // Add the token symbol, name, decimal and nft flag to each transfer
-        transactionsTransfers.forEach(transfers => {
-            transfers.forEach(transfer => {
-                if (!transfer.tokenAddress) {
-                    transfer.decimals = 18
-                    return
-                }
-                const participant = participants[transfer.tokenAddress]
-                if (participant) {
-                    transfer.tokenSymbol = participant.tokenSymbol
-                    transfer.tokenName = participant.tokenName
-                    transfer.decimals = participant.decimals
-                    // if an NFT, move the value to the tokenId
-                    if (participant.nft) {
-                        transfer.tokenId = transfer.value
-                        delete transfer.value
-                    }
-                }
-            })
-        })
-
-        return participants
     }
 
     // Map contract ABI from generic abi
@@ -291,32 +255,86 @@ export class TransactionManager {
         }
     }
 
-    async configOverrides(
-        contracts: Contracts & Participants,
-        filename?: string
-    ) {
-        const configs = await loadConfig(filename)
-        for (const [contractAddress, config] of Object.entries(configs)) {
-            const address = getAddress(contractAddress)
-            if (contracts[address]) {
-                if (config.contractName)
-                    contracts[address].contractName = config.contractName
-                if (config.tokenName)
-                    contracts[address].tokenName = config.tokenName
-                if (config.tokenSymbol)
-                    contracts[address].symbol = config.tokenSymbol
-                if (config.protocolName)
-                    contracts[address].protocol = config.protocolName
-                if (config?.nft) contracts[address].nft = config?.nft
-                if (config.abi) {
-                    contracts[address].ethersContract = new EthersContract(
+    async getTransferParticipants(
+        transactionsTransfers: Transfer[][],
+        block: number,
+        network: Network,
+        configFilename?: string,
+        mapSource: SourceMap[] = []
+    ): Promise<Participants> {
+        // Get a unique list of all accounts that transfer from, transfer to or are token contracts.
+        const flatTransfers = transactionsTransfers.flat()
+        const addressSet = new Set<string>()
+        flatTransfers.forEach(transfer => {
+            addressSet.add(transfer.from)
+            addressSet.add(transfer.to)
+            if (transfer.tokenAddress) addressSet.add(transfer.tokenAddress)
+        })
+        const uniqueAddresses = Array.from(addressSet)
+
+        // get token details from on-chain
+        const tokenDetails = await this.ethereumNodeClient.getTokenDetails(
+            uniqueAddresses
+        )
+
+        // Try and get Etherscan labels from local file
+        const labels = loadLabels(network)
+        const participants: Participants = {}
+        for (const token of tokenDetails) {
+            const address = token.address
+            participants[token.address] = {
+                ...token,
+                ...labels[address.toLowerCase()],
+            }
+            if (!token.noContract) {
+                // Check if the contract is proxied
+                const implementation =
+                    await this.ethereumNodeClient.getProxyImplementation(
                         address,
-                        config.abi
+                        block
                     )
-                    contracts[address].events = []
-                }
+                // try and get contract name for the contract or its proxied implementation from Etherscan
+                let sourceContract = implementation || address
+                // Remap source contract if configured
+                const mappedSourceContract = mapSource.find(
+                    ms =>
+                        ms.contract.toLowerCase() ===
+                        sourceContract.toLowerCase()
+                )
+                if (mappedSourceContract)
+                    sourceContract = mappedSourceContract.source
+                const contract = await this.etherscanClient.getContract(
+                    sourceContract
+                )
+                participants[address].contractName = contract?.contractName
             }
         }
+
+        // Override contract details like name, token symbol and ABI
+        await this.configOverrides(participants, configFilename, true)
+
+        // Add the token symbol, name, decimal and nft flag to each transfer
+        transactionsTransfers.forEach(transfers => {
+            transfers.forEach(transfer => {
+                if (!transfer.tokenAddress) {
+                    transfer.decimals = 18
+                    return
+                }
+                const participant = participants[transfer.tokenAddress]
+                if (participant) {
+                    transfer.tokenSymbol = participant.tokenSymbol
+                    transfer.tokenName = participant.tokenName
+                    transfer.decimals = participant.decimals
+                    // if an NFT, move the value to the tokenId
+                    if (participant.nft) {
+                        transfer.tokenId = transfer.value
+                        delete transfer.value
+                    }
+                }
+            })
+        })
+
+        return participants
     }
 
     static parseTraceParams(traces: Trace[][], contracts: Contracts) {
@@ -364,35 +382,32 @@ export class TransactionManager {
         }
     }
 
-    static parseTransactionLogs(logs: Array<Log>, contracts: Contracts) {
-        // for each tx log
-        for (const log of logs) {
-            // see if we have the contract source for the log
-            const contract = contracts[log.address.toLowerCase()]
-            if (contract?.ethersContract) {
-                // try and parse the log topic
-                try {
-                    const event =
-                        contract.ethersContract.interface.parseLog(log)
-                    contract.events.push(parseEvent(contract, event))
-                } catch (err) {
-                    // try to parse the event from the delegated to contracts
-                    for (const delegatedToContract of contract?.delegatedToContracts) {
-                        // try and parse the log topic
-                        try {
-                            const event =
-                                delegatedToContract.ethersContract.interface.parseLog(
-                                    log
-                                )
-                            contract.events.push(parseEvent(contract, event))
-                            // Found the event so no need to keep trying
-                            break
-                        } catch (err) {
-                            debug(
-                                `Failed to parse log with topic ${log?.topics[0]} on contract ${log.address}`
-                            )
-                        }
-                    }
+    async configOverrides(
+        contracts: Contracts & Participants,
+        filename?: string,
+        encodedAddresses: boolean = true
+    ) {
+        const configs = await loadConfig(filename)
+        for (const [contractAddress, config] of Object.entries(configs)) {
+            const address = encodedAddresses
+                ? getAddress(contractAddress)
+                : contractAddress.toLowerCase()
+            if (contracts[address]) {
+                if (config.contractName)
+                    contracts[address].contractName = config.contractName
+                if (config.tokenName)
+                    contracts[address].tokenName = config.tokenName
+                if (config.tokenSymbol)
+                    contracts[address].symbol = config.tokenSymbol
+                if (config.protocolName)
+                    contracts[address].protocol = config.protocolName
+                if (config?.nft) contracts[address].nft = config?.nft
+                if (config.abi) {
+                    contracts[address].ethersContract = new EthersContract(
+                        address,
+                        config.abi
+                    )
+                    contracts[address].events = []
                 }
             }
         }
@@ -631,7 +646,11 @@ const addConstructorParamsToTrace = (trace: Trace, contracts: Contracts) => {
     debug(`Decoded ${trace.inputParams.length} constructor params.`)
 }
 
-const parseEvent = (contract: Contract, log: LogDescription): Event => {
+const parseEvent = (
+    txHash: string,
+    contract: Contract,
+    log: LogDescription
+): Event => {
     const params: Param[] = []
 
     try {
@@ -649,6 +668,7 @@ const parseEvent = (contract: Contract, log: LogDescription): Event => {
 
         return {
             name: log.name,
+            txHash,
             params,
         }
     } catch (err) {

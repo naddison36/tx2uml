@@ -63,7 +63,7 @@ export const generateCallDiagram = async (
         )
     TransactionManager.parseTraceDepths(transactionTraces, usedContracts)
     transactions.forEach(tx =>
-        TransactionManager.parseTransactionLogs(tx.logs, usedContracts)
+        TransactionManager.parseTransactionLogs(tx.hash, tx.logs, usedContracts)
     )
 
     const pumlStream = traces2PumlStream(

@@ -6,4 +6,4 @@ export declare const singleTx2PumlStream: (pumlStream: Readable, transaction: Tr
 export declare const writeParticipants: (plantUmlStream: Readable, contracts: Contracts, options?: TracePumlGenerationOptions) => void;
 export declare const writeMessages: (plantUmlStream: Readable, traces: Trace[], options?: TracePumlGenerationOptions) => void;
 export declare const genParams: (params: Param[], noValues: boolean, plantUml?: string, indent?: string) => string;
-export declare const writeEvents: (plantUmlStream: Readable, contracts: Contracts, options?: TracePumlGenerationOptions) => void;
+export declare const writeEvents: (txHash: string, plantUmlStream: Readable, contracts: Contracts, options?: TracePumlGenerationOptions) => void;

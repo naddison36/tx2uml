@@ -76,7 +76,7 @@ export const multiTxTraces2PumlStream = (
         pumlStream.push(`\ngroup ${transaction.hash}`)
         writeTransactionDetails(pumlStream, transaction, options)
         writeMessages(pumlStream, traces[i++], options)
-        writeEvents(pumlStream, contracts, options)
+        writeEvents(transaction.hash, pumlStream, contracts, options)
         pumlStream.push("\nend")
     }
 
@@ -101,7 +101,7 @@ export const singleTx2PumlStream = (
     writeParticipants(pumlStream, contracts, options)
     writeTransactionDetails(pumlStream, transaction, options)
     writeMessages(pumlStream, traces, options)
-    writeEvents(pumlStream, contracts, options)
+    writeEvents(transaction.hash, pumlStream, contracts, options)
 
     pumlStream.push("\n@endumls")
     pumlStream.push(null)
@@ -496,6 +496,7 @@ const genCaption = (
 }
 
 export const writeEvents = (
+    txHash: string,
     plantUmlStream: Readable,
     contracts: Contracts,
     options: TracePumlGenerationOptions = {}
@@ -511,12 +512,15 @@ export const writeEvents = (
             contract.events?.length &&
             (options.depth === undefined || contract.minDepth <= options.depth)
         ) {
+            const txEvents = contract.events.filter(e => e.txHash === txHash)
+            if (txEvents.length === 0) continue
+
             const align = firstEvent ? "" : "/ "
             firstEvent = false
             plantUmlStream.push(
                 `\n${align}note over ${participantId(contract.address)} #aqua`
             )
-            for (const event of contract.events) {
+            for (const event of txEvents) {
                 if (options.noParams) {
                     plantUmlStream.push(`\n${event.name}`)
                     continue

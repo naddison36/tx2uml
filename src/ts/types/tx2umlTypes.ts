@@ -44,6 +44,7 @@ export type Trace = {
 
 export type Event = {
     name: string
+    txHash: string
     params: Param[]
 }
 

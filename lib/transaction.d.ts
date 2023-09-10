@@ -15,9 +15,10 @@ export declare class TransactionManager {
     fillContractsABIFromAddresses(contracts: Contracts & Participants, addresses: string[], abiFilename: string): Promise<void>;
     getContractsFromAddresses(addresses: string[]): Promise<Contracts>;
     setTokenAttributes(contracts: Contracts, network: Network): Promise<void>;
-    configOverrides(contracts: Contracts & Participants, filename?: string): Promise<void>;
+    static parseTransactionLogs(txHash: string, logs: Array<Log>, contracts: Contracts): void;
     static parseTraceParams(traces: Trace[][], contracts: Contracts): void;
-    static parseTransactionLogs(logs: Array<Log>, contracts: Contracts): void;
+
+    configOverrides(contracts: Contracts & Participants, filename?: string, encodedAddresses?: boolean): Promise<void>;
     static parseTraceDepths(traces: Trace[][], contracts: Contracts): void;
     static filterTransactionTraces(transactionTraces: Trace[][], contracts: Contracts, options: {
         noDelegates?: boolean;
