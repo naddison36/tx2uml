@@ -65,7 +65,9 @@ export const multiTransfers2PumlStream = (
     if (options.hideFooter) {
         pumlStream.push(`hide footbox\n`)
     }
-    pumlStream.push(genCaption(transactions))
+    if (!options.hideCaption) {
+        pumlStream.push(genCaption(transactions))
+    }
 
     // Filter out any participants that don't have a transfer from or to.
     // This will be token contracts that don't mint or burn
@@ -116,7 +118,9 @@ export const singleTransfer2PumlStream = (
     if (options.hideFooter) {
         pumlStream.push(`hide footbox\n`)
     }
-    pumlStream.push(genCaption(transaction))
+    if (!options.hideCaption) {
+        pumlStream.push(genCaption(transaction))
+    }
 
     // Filter out any contracts that don't have a transfer from or to
     const filteredContracts = filterParticipantContracts(

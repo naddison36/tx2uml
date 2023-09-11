@@ -63,6 +63,7 @@ Options:
   -af, --abiFile <value>        name of the json abi file that can override contract details like ABI (default: "tx.abi.json")
   -m, --memory <gigabytes>      max Java memory of PlantUML process in gigabytes. Java default is 1/4 of physical memory. Large txs in png format will need up to 12g. svg format is much better for large transactions.
   -hf, --hideFooter             Hides the boxes at the bottom of the contract lifelines. (default: false)
+  -hc, --hideCaption            Hides the network, block number and timestamp at the bottom of the diagram. (default: false)
   -v, --verbose                 run with debugging statements (default: false)
   -V, --version                 output the version number
   -h, --help                    display help for command

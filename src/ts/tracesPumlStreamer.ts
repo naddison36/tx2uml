@@ -72,7 +72,10 @@ export const multiTxTraces2PumlStream = (
     if (options.hideFooter) {
         pumlStream.push(`hide footbox\n`)
     }
-    pumlStream.push(genCaption(transactions))
+    if (!options.hideCaption) {
+        pumlStream.push(genCaption(transactions))
+    }
+
     writeParticipants(pumlStream, contracts, options)
     let i = 0
     for (const transaction of transactions) {
@@ -101,7 +104,10 @@ export const singleTx2PumlStream = (
     if (options.hideFooter) {
         pumlStream.push(`hide footbox\n`)
     }
-    pumlStream.push(genCaption(transaction))
+    if (!options.hideCaption) {
+        pumlStream.push(genCaption(transaction))
+    }
+
     writeParticipants(pumlStream, contracts, options)
     writeTransactionDetails(pumlStream, transaction, options)
     writeMessages(pumlStream, traces, options)

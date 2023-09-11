@@ -161,8 +161,9 @@ export interface OutputOptions {
     outputFilename?: string;
     outputFormat?: OutputFormat;
     memory?: number;
-    hideFooter?: boolean;
     title?: string;
+    hideFooter?: boolean;
+    hideCaption?: boolean;
 }
 export interface PlantUmlOptions {
     format?: OutputFormat;

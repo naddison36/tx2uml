@@ -76,6 +76,11 @@ program
         "Hides the boxes at the bottom of the contract lifelines.",
         false
     )
+    .option(
+        "-hc, --hideCaption",
+        "Hides the network, block number and timestamp at the bottom of the diagram.",
+        false
+    )
     .option("-v, --verbose", "run with debugging statements", false)
 
 const version =
