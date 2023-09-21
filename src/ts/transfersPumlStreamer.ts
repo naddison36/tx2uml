@@ -112,9 +112,7 @@ export const singleTransfer2PumlStream = (
     options: TransferPumlGenerationOptions = {}
 ): Readable => {
     pumlStream.push(`@startuml\n`)
-    if (options.title) {
-        pumlStream.push(`title "${options.title || transaction.hash}"\n`)
-    }
+    pumlStream.push(`title "${options.title || transaction.hash}"\n`)
     if (options.hideFooter) {
         pumlStream.push(`hide footbox\n`)
     }
