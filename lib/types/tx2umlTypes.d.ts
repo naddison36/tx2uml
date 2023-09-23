@@ -82,14 +82,11 @@ export interface Participant extends TokenDetails {
 export type Participants = {
     [address: string]: Participant;
 };
-export interface Position {
-    balance: BigNumber;
-    addedIds: Set<string>;
-    removedIds: Set<string>;
-}
 export type ParticipantPositions = {
     [address: string]: {
-        [address: string]: Position;
+        [address: string]: {
+            [address: string]: BigNumber;
+        };
     };
 };
 export interface Label {

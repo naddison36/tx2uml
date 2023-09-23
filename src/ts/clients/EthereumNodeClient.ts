@@ -274,6 +274,34 @@ export default abstract class EthereumNodeClient {
                         })
                     }
                 }
+                // If TransferSingle(address,address,address,uint256,uint256)
+                else if (
+                    "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62" ===
+                    log.topics[0]
+                ) {
+                    const fromAddress = parseAddress(log, 2)
+                    const toAddress = parseAddress(log, 3)
+                    transferEvents.push({
+                        ...baseTransfer,
+                        from:
+                            fromAddress === constants.AddressZero
+                                ? getAddress(log.address)
+                                : fromAddress,
+                        to:
+                            toAddress === constants.AddressZero
+                                ? getAddress(log.address)
+                                : toAddress,
+                        value: parseValue(log, 5),
+                        event: "TransferSingle",
+                        tokenId: parseValue(log, 4),
+                        type:
+                            fromAddress === constants.AddressZero
+                                ? TransferType.Mint
+                                : toAddress === constants.AddressZero
+                                ? TransferType.Burn
+                                : TransferType.Transfer,
+                    })
+                }
             } catch (err) {
                 throw new Error(`Failed to parse the event log ${i}`, {
                     cause: err,

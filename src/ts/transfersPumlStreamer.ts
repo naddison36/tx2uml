@@ -4,7 +4,6 @@ import {
     Network,
     ParticipantPositions,
     Participants,
-    Position,
     setNetworkCurrency,
     TransactionDetails,
     Transfer,
@@ -160,74 +159,50 @@ const netParticipantValues = (
 ) => {
     // for each transfer
     transfers.forEach(transfer => {
+        const tokenId = transfer.tokenId?.toString() || "erc20"
         // Add empty position for the from token
         if (!participantPositions[transfer.from]) {
             participantPositions[transfer.from] = {}
         }
         if (!participantPositions[transfer.from][transfer.tokenAddress]) {
-            participantPositions[transfer.from][transfer.tokenAddress] =
-                createEmptyPosition()
+            participantPositions[transfer.from][transfer.tokenAddress] = {}
+        }
+        if (
+            !participantPositions[transfer.from][transfer.tokenAddress][tokenId]
+        ) {
+            participantPositions[transfer.from][transfer.tokenAddress][
+                tokenId
+            ] = BigNumber.from(0)
         }
         // Add empty position for the to token
         if (!participantPositions[transfer.to]) {
             participantPositions[transfer.to] = {}
         }
         if (!participantPositions[transfer.to][transfer.tokenAddress]) {
-            participantPositions[transfer.to][transfer.tokenAddress] =
-                createEmptyPosition()
+            participantPositions[transfer.to][transfer.tokenAddress] = {}
         }
-        // If a transfer of a token or ether
-        if (transfer.value) {
-            if (transfer.type !== TransferType.Mint) {
-                participantPositions[transfer.from][
-                    transfer.tokenAddress
-                ].balance = participantPositions[transfer.from][
-                    transfer.tokenAddress
-                ].balance.sub(transfer.value)
-            }
-
-            if (transfer.type !== TransferType.Burn) {
-                participantPositions[transfer.to][
-                    transfer.tokenAddress
-                ].balance = participantPositions[transfer.to][
-                    transfer.tokenAddress
-                ].balance.add(transfer.value)
-            }
+        if (
+            !participantPositions[transfer.to][transfer.tokenAddress][tokenId]
+        ) {
+            participantPositions[transfer.to][transfer.tokenAddress][tokenId] =
+                BigNumber.from(0)
         }
-        // If a NFT transfer
-        if (transfer.tokenId) {
-            if (transfer.type !== TransferType.Mint) {
-                // For the from participant
-                // add to removedIds
-                participantPositions[transfer.from][
-                    transfer.tokenAddress
-                ].removedIds.add(transfer.tokenId.toString())
-                // remove from addedIds
-                participantPositions[transfer.from][
-                    transfer.tokenAddress
-                ].addedIds.delete(transfer.tokenId.toString())
-            }
+        if (transfer.type !== TransferType.Mint) {
+            participantPositions[transfer.from][transfer.tokenAddress][
+                tokenId
+            ] = participantPositions[transfer.from][transfer.tokenAddress][
+                tokenId
+            ].sub(transfer.value || 1)
+        }
 
-            if (transfer.type !== TransferType.Burn) {
-                // For the to participant
-                // add remove removedIds
-                participantPositions[transfer.to][
-                    transfer.tokenAddress
-                ].removedIds.delete(transfer.tokenId.toString())
-                // add to addedIds
-                participantPositions[transfer.to][
-                    transfer.tokenAddress
-                ].addedIds.add(transfer.tokenId.toString())
-            }
+        if (transfer.type !== TransferType.Burn) {
+            participantPositions[transfer.to][transfer.tokenAddress][tokenId] =
+                participantPositions[transfer.to][transfer.tokenAddress][
+                    tokenId
+                ].add(transfer.value || 1)
         }
     })
 }
-
-const createEmptyPosition = (): Position => ({
-    balance: BigNumber.from(0),
-    addedIds: new Set<string>(),
-    removedIds: new Set<string>(),
-})
 
 export const writeParticipants = (
     plantUmlStream: Readable,
@@ -267,16 +242,20 @@ export const writeMessages = (
     plantUmlStream.push("\n")
     // for each trace
     for (const transfer of transfers) {
-        const displayValue = transfer.value
-            ? `${transfer.event || ""} ${commify(
-                  formatUnits(transfer.value, transfer.decimals || 0)
-              )} ${
-                  transfer.tokenSymbol ||
-                  (!transfer.tokenAddress ? networkCurrency : "")
-              }`
-            : `${transfer.event || ""} ${
-                  transfer.tokenSymbol
-              } id ${shortTokenId(transfer.tokenId)}`
+        let displayValue: string
+        if (transfer.value && !transfer.tokenId) {
+            displayValue = `${transfer.event || ""} ${commify(
+                formatUnits(transfer.value, transfer.decimals || 0)
+            )} ${
+                transfer.tokenSymbol ||
+                (!transfer.tokenAddress ? networkCurrency : "")
+            }`
+        } else {
+            const quantity = transfer.value ? `${transfer.value} ` : ``
+            displayValue = `${transfer.event || ""} ${quantity}${
+                transfer.tokenSymbol
+            }\\nid ${shortTokenId(transfer.tokenId)}`
+        }
         plantUmlStream.push(
             `${participantId(transfer.from)} ${genArrow(
                 transfer
@@ -306,12 +285,7 @@ export const writeBalances = (
                 tokenSymbol: networkCurrency,
                 decimals: 18,
             }
-            genTokenBalance(
-                plantUmlStream,
-                participantBalances[participant][tokenAddress],
-                token
-            )
-            genNftChanges(
+            genTokenBalances(
                 plantUmlStream,
                 participantBalances[participant][tokenAddress],
                 token
@@ -342,37 +316,32 @@ const genCaption = (
     }
 }
 
-const genTokenBalance = (
+const genTokenBalances = (
     plantUmlStream: Readable,
-    position: Position,
+    tokenIds: { [tokenId: string]: BigNumber },
     token: { tokenSymbol?: string; decimals?: number }
 ) => {
-    if (!position?.balance.eq(0)) {
-        plantUmlStream.push(
-            `\n${commify(formatUnits(position.balance, token.decimals || 0))} ${
-                token.tokenSymbol || ""
-            }`
-        )
-    }
-}
-
-const genNftChanges = (
-    plantUmlStream: Readable,
-    position: Position,
-    token: { tokenSymbol?: string }
-) => {
-    if (position.removedIds.size + position.addedIds.size > 0) {
-        plantUmlStream.push(`\n${token.tokenSymbol}`)
-    }
-    if (position.removedIds.size > 0) {
-        position.removedIds.forEach(id => {
-            plantUmlStream.push(`\n  -${shortTokenId(id)}`)
-        })
-    }
-    if (position.addedIds.size > 0) {
-        position.addedIds.forEach(id => {
-            plantUmlStream.push(`\n  +${shortTokenId(id)}`)
-        })
+    let lastTokenSymbol: string
+    for (const [tokenId, balance] of Object.entries(tokenIds)) {
+        if (balance.eq(0)) continue
+        const sign = balance.gt(0) ? "+" : ""
+        if (tokenId === "erc20") {
+            plantUmlStream.push(
+                `\n${sign}${commify(
+                    formatUnits(balance, token.decimals || 0)
+                )} ${token.tokenSymbol || "ETH"}`
+            )
+        } else {
+            if (lastTokenSymbol != token.tokenSymbol) {
+                plantUmlStream.push(`\n${token.tokenSymbol}`)
+            }
+            plantUmlStream.push(
+                `\n   ${sign}${commify(
+                    formatUnits(balance, token.decimals || 0)
+                )} id ${shortTokenId(tokenId)}`
+            )
+        }
+        lastTokenSymbol = token.tokenSymbol
     }
 }
 

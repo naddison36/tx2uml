@@ -20,6 +20,22 @@ tx2uml value 0x4ed0dd60431a618b336babd6699219216568b5580972bc6cc549d3073c6e97d8 
 # Moonbirds with Blur Pool token that doesn't have a symbol
 tx2uml value 0x0dc73f341aae83c1ed93e29b5ac5c658daeaad86c3db263cb4678fe7bedc7057 -v
 
+# Town Star - 2 ERC1155 TransferSingle events with different token ids and 4 ETH transfers
+tx2uml value 0x8e6215cc618e7cab2920b11c19d79c03932db5562fb41dcc6245d05f4c43b7c5 -v --onlyToken
+
+# RaribleUserToken - 1 ERC1155 TransferSingle event for 1 Bankless Locations NFT
+tx2uml value 0x5c8ad1dacb17e11f080e590d3874cf6c7471597f75deb62d51a49a1f3647f34f -v --onlyToken
+
+# 40 ERC1155 TransferSingle events of ColorLines to different participants. ALso has WETH transfers
+# ERC1155 contract has name and symbol
+tx2uml value 0x68ef22a61ee27a7dbb7ed31841b5a8a732c7edc0f32ce7abf3900524f8dc8cb2 -v --onlyToken
+
+# Looksrare 9 Metaligence TransferSingle events worth 52,453 USD each
+tx2uml value 0x3350d54d9e352b02d3e9dc27f02019817abfe942377dcc6ba3bcf06b007622c6 -v --onlyToken
+
+# Element 2 ERC1155 TransferSingle events Zerion Genesis Collection (ZGC)
+tx2uml value 0x3cf8fd116d366bcf3e3fc7e8e03e87a22fb644fef31594811dfe9e6b10b5dbf8 -v --onlyToken
+
 # Curve crvUSD Peg Keeping with fixed sized array params in AddLiquidity event
 # also has Transfer event declared in the proxy and implementation
 tx2uml 0x2f170663a580f6641ca37a326a05615ed96dfeb0ba95b08112bcb0afe415f1c4 -v

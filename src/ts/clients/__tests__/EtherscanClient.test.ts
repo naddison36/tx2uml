@@ -2,7 +2,7 @@ import EtherscanClient from "../EtherscanClient"
 
 jest.setTimeout(60000) // timeout for each test in milliseconds
 
-const etherscanClient = new EtherscanClient()
+const etherscanClient = new EtherscanClient(undefined, "mainnet")
 
 describe("Etherscan parser", () => {
     describe("1inch", () => {

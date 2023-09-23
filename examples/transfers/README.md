@@ -48,6 +48,18 @@ tx2uml value 0x720e126ea17f4e0b2fcf021e6c6b90b55c5283527cdf50d4c2eb3cdbc012dbfc 
 
 ![Chungo NFT swaps on Blur](./blurChungo.svg)
 
+## Multi-Token Transfers (ERC-1155)
+
+Transfers of token id 3 (eyes) of the [Zerion Genesis Collection](https://etherscan.io/nft/0x74ee68a33f6c9f113e22b3b77418b75f85d07d22/3).
+ERC-1155 emits `TransferSingle` events.
+
+```
+tx2uml value 0x3cf8fd116d366bcf3e3fc7e8e03e87a22fb644fef31594811dfe9e6b10b5dbf8 --onlyToken -o ./transfer-single-zerion
+```
+
+![Chungo NFT swaps on Blur](./transfer-single-zerion.svg)
+
+
 ## Mints
 
 Below is a deposit of 70k USDC into mStable's USDC Meta Vault with transaction
