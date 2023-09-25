@@ -11,8 +11,9 @@ import {
     TransferType,
 } from "./types/tx2umlTypes"
 import { participantId, shortAddress, shortTokenId } from "./utils/formatters"
-import { commify, formatUnits } from "ethers/lib/utils"
-import { BigNumber } from "ethers"
+import { commify, formatUnits, isAddress } from "ethers/lib/utils"
+import { BigNumber, utils } from "ethers"
+import { getAddress } from "@ethersproject/address"
 
 const debug = require("debug")("tx2uml")
 
@@ -159,7 +160,11 @@ const netParticipantValues = (
 ) => {
     // for each transfer
     transfers.forEach(transfer => {
-        const tokenId = transfer.tokenId?.toString() || "erc20"
+        const tokenId = !transfer.tokenId
+            ? "erc20"
+            : isAddress(transfer.tokenId.toHexString())
+            ? getAddress(transfer.tokenId.toHexString())
+            : transfer.tokenId.toString()
         // Add empty position for the from token
         if (!participantPositions[transfer.from]) {
             participantPositions[transfer.from] = {}
@@ -250,10 +255,19 @@ export const writeMessages = (
                 transfer.tokenSymbol ||
                 (!transfer.tokenAddress ? networkCurrency : "")
             }`
+        } else if (
+            transfer.value &&
+            utils.isAddress(transfer.tokenId?.toHexString())
+        ) {
+            displayValue = `${transfer.event || ""} ${commify(
+                formatUnits(transfer.value, transfer.decimals || 0)
+            )} ${transfer.tokenSymbol || ""}\\nin ${shortAddress(
+                transfer.tokenAddress
+            )}`
         } else {
             const quantity = transfer.value ? `${transfer.value} ` : ``
             displayValue = `${transfer.event || ""} ${quantity}${
-                transfer.tokenSymbol
+                transfer.tokenSymbol || ""
             }\\nid ${shortTokenId(transfer.tokenId)}`
         }
         plantUmlStream.push(
@@ -288,7 +302,11 @@ export const writeBalances = (
             genTokenBalances(
                 plantUmlStream,
                 participantBalances[participant][tokenAddress],
-                token
+                participants,
+                {
+                    ...token,
+                    address: tokenAddress,
+                }
             )
         })
         plantUmlStream.push("\nend note\n")
@@ -319,7 +337,8 @@ const genCaption = (
 const genTokenBalances = (
     plantUmlStream: Readable,
     tokenIds: { [tokenId: string]: BigNumber },
-    token: { tokenSymbol?: string; decimals?: number }
+    participants: Readonly<Participants>,
+    token: { address: string; tokenSymbol?: string; decimals?: number }
 ) => {
     let lastTokenSymbol: string
     for (const [tokenId, balance] of Object.entries(tokenIds)) {
@@ -335,11 +354,23 @@ const genTokenBalances = (
             if (lastTokenSymbol != token.tokenSymbol) {
                 plantUmlStream.push(`\n${token.tokenSymbol}`)
             }
-            plantUmlStream.push(
-                `\n   ${sign}${commify(
-                    formatUnits(balance, token.decimals || 0)
-                )} id ${shortTokenId(tokenId)}`
-            )
+            if (isAddress(tokenId)) {
+                const token1155 = participants[tokenId] || token
+                plantUmlStream.push(
+                    `\n  ${sign}${commify(
+                        formatUnits(balance, token1155.decimals || 0)
+                    )} ${token1155.tokenSymbol}\n    in ${shortAddress(
+                        token.address
+                    )}`
+                )
+                continue
+            } else {
+                plantUmlStream.push(
+                    `\n  ${sign}${commify(
+                        formatUnits(balance, token.decimals || 0)
+                    )} id ${shortTokenId(tokenId)}`
+                )
+            }
         }
         lastTokenSymbol = token.tokenSymbol
     }

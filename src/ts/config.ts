@@ -29,6 +29,7 @@ export interface JsonFragment {
 export interface ContractConfig {
     tokenName?: string
     tokenSymbol?: string
+    decimals?: number
     contractName?: string
     protocolName?: string
     nft?: boolean

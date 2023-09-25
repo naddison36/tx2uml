@@ -1,4 +1,4 @@
-import { Contract as EthersContract } from "ethers"
+import { Contract as EthersContract, utils } from "ethers"
 import { defaultAbiCoder, TransactionDescription } from "@ethersproject/abi"
 import { Log } from "@ethersproject/abstract-provider"
 import { FunctionFragment, LogDescription } from "ethers/lib/utils"
@@ -269,6 +269,9 @@ export class TransactionManager {
             addressSet.add(transfer.from)
             addressSet.add(transfer.to)
             if (transfer.tokenAddress) addressSet.add(transfer.tokenAddress)
+            // If an ERC1155 transfer of a token
+            if (utils.isAddress(transfer.tokenId?.toHexString()))
+                addressSet.add(getAddress(transfer.tokenId.toHexString()))
         })
         const uniqueAddresses = Array.from(addressSet)
 
@@ -320,7 +323,12 @@ export class TransactionManager {
                     transfer.decimals = 18
                     return
                 }
-                const participant = participants[transfer.tokenAddress]
+                const tokenAddress = utils.isAddress(
+                    transfer.tokenId?.toHexString()
+                )
+                    ? getAddress(transfer.tokenId.toHexString())
+                    : transfer.tokenAddress
+                const participant = participants[tokenAddress]
                 if (participant) {
                     transfer.tokenSymbol = participant.tokenSymbol
                     transfer.tokenName = participant.tokenName
@@ -398,7 +406,9 @@ export class TransactionManager {
                 if (config.tokenName)
                     contracts[address].tokenName = config.tokenName
                 if (config.tokenSymbol)
-                    contracts[address].symbol = config.tokenSymbol
+                    contracts[address].tokenSymbol = config.tokenSymbol
+                if (config.decimals)
+                    contracts[address].decimals = config.decimals
                 if (config.protocolName)
                     contracts[address].protocol = config.protocolName
                 if (config?.nft) contracts[address].nft = config?.nft
