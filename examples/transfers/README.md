@@ -59,7 +59,6 @@ tx2uml value 0x3cf8fd116d366bcf3e3fc7e8e03e87a22fb644fef31594811dfe9e6b10b5dbf8 
 
 ![Chungo NFT swaps on Blur](./transfer-single-zerion.svg)
 
-
 ## Mints
 
 Below is a deposit of 70k USDC into mStable's USDC Meta Vault with transaction

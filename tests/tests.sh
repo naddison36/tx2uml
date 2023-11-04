@@ -35,6 +35,7 @@ tx2uml value 0x3350d54d9e352b02d3e9dc27f02019817abfe942377dcc6ba3bcf06b007622c6 
 
 # Element 2 ERC1155 TransferSingle events Zerion Genesis Collection (ZGC)
 tx2uml value 0x3cf8fd116d366bcf3e3fc7e8e03e87a22fb644fef31594811dfe9e6b10b5dbf8 -v --onlyToken
+tx2uml value 0x3cf8fd116d366bcf3e3fc7e8e03e87a22fb644fef31594811dfe9e6b10b5dbf8 -v --onlyToken -f png -hf
 
 # Curve crvUSD Peg Keeping with fixed sized array params in AddLiquidity event
 # also has Transfer event declared in the proxy and implementation
