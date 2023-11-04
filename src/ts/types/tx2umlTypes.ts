@@ -185,6 +185,7 @@ export const networks = <const>[
     "gnosis",
     "moonbeam",
     "celo",
+    "scroll",
     "base",
 ]
 export type Network = (typeof networks)[number]
