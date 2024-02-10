@@ -58,6 +58,7 @@ Options:
   -o, --outputFileName <value>  output file name. Defaults to shortened tx hashes joined together with a 'v' prefix for value transfer diagrams.
   -u, --url <url>               URL of the archive node with trace transaction support (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
   -c, --chain <value>           blockchain explorer to get contract source code from. `none` will not get any source code. `custom` will use the `explorerUrl` option. (choices: "mainnet", "custom", "none", "goerli", "sepolia", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis", "moonbeam", "celo", "scroll", "base", default: "mainnet", env: ETH_NETWORK)
+  -k, --etherscanKey <value>   Etherscan like block explorer API key
   -e, --explorerUrl <url>       required if a `custom` chain is used. eg a testnet like Polygon Mumbai https://api-testnet.polygonscan.com/api (env: EXPLORER_URL)
   -cf, --configFile <value>     name of the json configuration file that can override contract details like name and ABI (default: "tx.config.json")
   -af, --abiFile <value>        name of the json abi file that can override contract details like ABI (default: "tx.abi.json")
@@ -87,7 +88,6 @@ Arguments:
 
 Options:
   -n, --nodeType <value>       type of Ethereum node the provider url is pointing to. This determines which trace API is used (choices: "geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", "reth", default: "geth", env: ARCHIVE_NODE_TYPE)
-  -k, --etherscanKey <value>   Etherscan like block explorer API key
   -a, --noAddresses <value>    hide calls to contracts in a list of comma-separated addresses with a 0x prefix
   -d, --depth <value>          limit the transaction call depth
   -e, --noEther                hide ether values (default: false)

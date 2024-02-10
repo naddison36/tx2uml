@@ -57,6 +57,10 @@ program
         ).env("EXPLORER_URL")
     )
     .option(
+        "-k, --etherscanKey <value>",
+        "Etherscan like block explorer API key"
+    )
+    .option(
         "-cf, --configFile <value>",
         "name of the json configuration file that can override contract details like name and ABI",
         "tx.config.json"
@@ -108,10 +112,6 @@ program
             .choices(nodeTypes)
             .env("ARCHIVE_NODE_TYPE")
             .default("geth")
-    )
-    .option(
-        "-k, --etherscanKey <value>",
-        "Etherscan like block explorer API key"
     )
     .option(
         "-a, --noAddresses <value>",
