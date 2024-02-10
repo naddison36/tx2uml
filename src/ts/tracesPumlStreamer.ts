@@ -3,6 +3,7 @@ import { formatEther, formatUnits } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
 
 import {
+    Contract,
     Contracts,
     MessageType,
     Param,
@@ -132,21 +133,42 @@ export const writeParticipants = (
         // Do not write contract as a participant if min depth greater than trace depth
         if (options.depth > 0 && contract.minDepth > options.depth) continue
 
-        let name: string = ""
-        if (contract.protocol) name += `<<${contract.protocol}>>`
-        if (contract.tokenName) name += `<<${contract.tokenName}>>`
-        if (contract.symbol) name += `<<(${contract.symbol})>>`
-        if (contract.contractName) name += `<<${contract.contractName}>>`
-        if (contract.ensName) name += `<<(${contract.ensName})>>`
+        let stereotypes: string = ""
+        if (contract.protocol) stereotypes += `<<${contract.protocol}>>`
+        if (contract.tokenName) stereotypes += `<<${contract.tokenName}>>`
+        if (contract.symbol) stereotypes += `<<(${contract.symbol})>>`
+        const contractName = getContractName(contract, options)
+        if (contractName) stereotypes += `<<${contractName}>>`
+        if (contract.ensName) stereotypes += `<<(${contract.ensName})>>`
 
-        debug(`Write lifeline ${shortAddress(address)} with stereotype ${name}`)
+        debug(
+            `Write lifeline ${shortAddress(
+                address
+            )} with stereotype ${stereotypes}`
+        )
         plantUmlStream.push(
             `${participantType} "${shortAddress(address)}" as ${participantId(
                 address
-            )} ${name}\n`
+            )} ${stereotypes}\n`
         )
         participantType = "participant"
     }
+}
+
+// Derives the contract name of a participant/contract.
+// If contract is delegating calls to another contract and the noDelegates option is set,
+// then use the contract name of the first delegated contract.
+// Note there can be multiple delegated calls to different contracts.
+// There can also be delegated calls to a library.
+// Here's an example tx on mainnet 0x7210c306842d275044789b02ae64aff4513ed812682de7b1cbeb12a4a0dd07af
+const getContractName = (
+    contract: Contract,
+    options: TracePumlGenerationOptions
+): string => {
+    return options.noDelegates
+        ? contract.delegatedToContracts?.[0]?.contractName ||
+              contract.contractName
+        : contract.contractName
 }
 
 const writeTransactionDetails = (
