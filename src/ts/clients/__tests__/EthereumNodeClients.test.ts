@@ -25,11 +25,8 @@ const previouslyFailingContract = "0xE8c060F8052E07423f71D445277c61AC5138A2e5"
 
 describe("Ethereum Node Clients", () => {
     const clients: { [clientName: string]: EthereumNodeClient } = {
-        Erigon: new GethClient(process.env.ERIGON_URL, "mainnet"),
-        Nethermind: new OpenEthereumClient(
-            process.env.NETHERMIND_URL,
-            "mainnet"
-        ),
+        Geth: new GethClient(process.env.GETH_URL, "mainnet"),
+        rETH: new OpenEthereumClient(process.env.RETH_URL, "mainnet"),
     }
     describe.each(Object.entries(clients))("%s", (clientName, nodeClient) => {
         describe("Parse Transfer events", () => {
