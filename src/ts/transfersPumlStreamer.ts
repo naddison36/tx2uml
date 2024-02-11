@@ -163,8 +163,8 @@ const netParticipantValues = (
         const tokenId = !transfer.tokenId
             ? "erc20"
             : isAddress(transfer.tokenId.toHexString())
-            ? getAddress(transfer.tokenId.toHexString())
-            : transfer.tokenId.toString()
+              ? getAddress(transfer.tokenId.toHexString())
+              : transfer.tokenId.toString()
         // Add empty position for the from token
         if (!participantPositions[transfer.from]) {
             participantPositions[transfer.from] = {}
@@ -380,5 +380,5 @@ const genArrow = (transfer: Transfer): string =>
     transfer.type === TransferType.Transfer
         ? "->"
         : transfer.type === TransferType.Burn
-        ? "-x"
-        : "o->"
+          ? "-x"
+          : "o->"

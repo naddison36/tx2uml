@@ -6,7 +6,7 @@ import type { Event, EventFilter } from "ethers"
 
 export interface TypedEvent<
     TArgsArray extends Array<any> = any,
-    TArgsObject = any
+    TArgsObject = any,
 > extends Event {
     args: TArgsArray & TArgsObject
 }

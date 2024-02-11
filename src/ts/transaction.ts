@@ -159,9 +159,8 @@ export class TransactionManager {
         })
 
         // get contract ABIs from Etherscan
-        const contracts = await this.getContractsFromAddresses(
-            remappedAddresses
-        )
+        const contracts =
+            await this.getContractsFromAddresses(remappedAddresses)
 
         // Restore the mapping
         mappedSource.forEach(ms => {
@@ -240,9 +239,8 @@ export class TransactionManager {
     async setTokenAttributes(contracts: Contracts, network: Network) {
         // get the token details
         const contractAddresses = Object.keys(contracts)
-        const tokensDetails = await this.ethereumNodeClient.getTokenDetails(
-            contractAddresses
-        )
+        const tokensDetails =
+            await this.ethereumNodeClient.getTokenDetails(contractAddresses)
 
         const labels = loadLabels(network)
         for (const [address, contract] of Object.entries(contracts)) {
@@ -276,9 +274,8 @@ export class TransactionManager {
         const uniqueAddresses = Array.from(addressSet)
 
         // get token details from on-chain
-        const tokenDetails = await this.ethereumNodeClient.getTokenDetails(
-            uniqueAddresses
-        )
+        const tokenDetails =
+            await this.ethereumNodeClient.getTokenDetails(uniqueAddresses)
 
         // Try and get Etherscan labels from local file
         const labels = loadLabels(network)
@@ -306,9 +303,8 @@ export class TransactionManager {
                 )
                 if (mappedSourceContract)
                     sourceContract = mappedSourceContract.source
-                const contract = await this.etherscanClient.getContract(
-                    sourceContract
-                )
+                const contract =
+                    await this.etherscanClient.getContract(sourceContract)
                 participants[address].contractName = contract?.contractName
             }
         }

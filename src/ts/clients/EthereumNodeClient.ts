@@ -238,8 +238,8 @@ export default abstract class EthereumNodeClient {
                             fromAddress === constants.AddressZero
                                 ? TransferType.Mint
                                 : toAddress === constants.AddressZero
-                                ? TransferType.Burn
-                                : TransferType.Transfer,
+                                  ? TransferType.Burn
+                                  : TransferType.Transfer,
                     })
                 }
                 // If Deposit(address,uint256)
@@ -298,8 +298,8 @@ export default abstract class EthereumNodeClient {
                             fromAddress === constants.AddressZero
                                 ? TransferType.Mint
                                 : toAddress === constants.AddressZero
-                                ? TransferType.Burn
-                                : TransferType.Transfer,
+                                  ? TransferType.Burn
+                                  : TransferType.Transfer,
                     })
                 }
             } catch (err) {

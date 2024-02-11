@@ -49,7 +49,10 @@ export type CallTransferResponse = {
 export default class GethClient extends EthereumNodeClient {
     private jsonRpcId = 0
 
-    constructor(public readonly url: string, network: Network) {
+    constructor(
+        public readonly url: string,
+        network: Network
+    ) {
         super(url, network)
     }
 

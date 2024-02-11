@@ -39,7 +39,7 @@ export declare namespace TokenInfo {
         BigNumber,
         boolean,
         boolean,
-        string
+        string,
     ] & {
         symbol: string
         name: string
