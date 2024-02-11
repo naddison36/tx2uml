@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { Readable } from "stream";
 import { Contracts, Param, Trace, TracePumlGenerationOptions, TransactionDetails } from "./types/tx2umlTypes";
 export declare const traces2PumlStream: (transactions: TransactionDetails[], traces: Trace[][], contracts: Contracts, options: TracePumlGenerationOptions) => Readable;

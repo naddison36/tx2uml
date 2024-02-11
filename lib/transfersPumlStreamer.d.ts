@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { Readable } from "stream";
 import { Network, ParticipantPositions, Participants, TransactionDetails, Transfer, TransferPumlGenerationOptions } from "./types/tx2umlTypes";
 export declare const transfers2PumlStream: (transactions: readonly Readonly<TransactionDetails>[], transfers: readonly Readonly<Transfer>[][], participants: Readonly<Participants>, network: Network, options?: TransferPumlGenerationOptions) => Readable;
