@@ -2,7 +2,7 @@
 # Test contract call and value transfer diagrams.
 
 ###### Mainnet
-export ARCHIVE_NODE_URL=https://api.archivenode.io/your-api-key/erigon
+export ARCHIVE_NODE_URL=your-archive-node-url
 
 ## NFT Chungo swaps using Blur with different participants with ENS names
 tx2uml 0x720e126ea17f4e0b2fcf021e6c6b90b55c5283527cdf50d4c2eb3cdbc012dbfc -v -f svg
