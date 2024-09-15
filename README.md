@@ -304,7 +304,7 @@ https://api.etherscan.io/api?module=contract&action=getsourcecode&address=0xBB9b
 
 [PlantUML](https://plantuml.com/) is a Java program that can convert Plant UML syntax into png, svg or eps images. tx2uml pipes the PlantUML to the spawned Java process which then pipes the image outputs to a file.
 
-[plantuml.jar version 1.2023.10](https://sourceforge.net/projects/plantuml/files/1.2023.10/plantuml-mit-1.2023.10.tar.gz/download) under [MIT license](https://en.wikipedia.org/wiki/MIT_License) is currently shipped in the [lib](./lib) folder.
+[plantuml.jar version 1.2024.7](https://github.com/plantuml/plantuml/releases/download/v1.2024.7/plantuml-mit-1.2024.7.jar) under [MIT license](https://en.wikipedia.org/wiki/MIT_License) is currently shipped in the [lib](./lib) folder.
 
 See [Recent changes](https://plantuml.com/changes) for PlantUML's release notes.
 
