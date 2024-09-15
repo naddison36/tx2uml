@@ -26,7 +26,7 @@ export default class EtherscanClient {
         } else if (network === "mainnet") {
             this.url = "https://api.etherscan.io/api"
             // Register your API key at https://etherscan.io/myapiKey
-            this.apiKey = apiKey || "Q35WDQ2354617I8E2Z1E4WU3MIEP89DW9H"
+            this.apiKey = apiKey || "S53TDPWT9CJ4MRMCTG1CZQ16RSYDQZJXPF"
         } else if (network === "polygon") {
             this.url = "https://api.polygonscan.com/api"
             this.apiKey = apiKey || "AMHGNTV5A7XYGX2M781JB3RC1DZFVRWQEB"
@@ -92,6 +92,9 @@ export default class EtherscanClient {
                 },
             })
 
+            // Sleep for a 1 second to avoid Etherscan rate limits
+            await sleep(1000)
+
             if (!Array.isArray(response?.data?.result)) {
                 throw new Error(
                     `Failed Etherscan API with result "${response?.data?.result}"`
@@ -105,8 +108,6 @@ export default class EtherscanClient {
                 debug(
                     `Contract ${contractAddress} is not verified on Etherscan`
                 )
-                // Sleep for a 1 second if no contract was returned to avoid Etherscan rate limits
-                await sleep(1000)
                 return {
                     address: contractAddress,
                     noContract: false,
