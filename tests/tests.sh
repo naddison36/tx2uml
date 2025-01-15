@@ -51,6 +51,9 @@ tx2uml value 0x4d2d405d380274c7a2afba7e4881be0f6ae99033597a96b237ceb83cc377615a,
 tx2uml value --hideFooter --hideBalances 0x4d2d405d380274c7a2afba7e4881be0f6ae99033597a96b237ceb83cc377615a,0x459b469609e613d95865fd08369d6f92fb4ce8ce168efd9764d75524d9711777 -v
 tx2uml value --chain none 0x4d2d405d380274c7a2afba7e4881be0f6ae99033597a96b237ceb83cc377615a,0x459b469609e613d95865fd08369d6f92fb4ce8ce168efd9764d75524d9711777 -v
 
+# Prime No delegate calls
+tx2uml call 0x3a89de87d4a039af246474e1573f4687bba402471ab83285d9aa1271edde5eda --noDelegates -v
+
 ##### Goerli
 export ARCHIVE_NODE_URL=https://eth-goerli.g.alchemy.com/v2/rU87yfwzx4Xv0HSrZAENZO0Otr1x4hqo
 

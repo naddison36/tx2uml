@@ -187,6 +187,7 @@ export const networks = <const>[
     "celo",
     "scroll",
     "base",
+    "sonic",
 ]
 export type Network = (typeof networks)[number]
 
@@ -207,7 +208,9 @@ export const setNetworkCurrency = (network: Network) =>
                     ? "GLMR"
                     : network === "celo"
                       ? "CELO"
-                      : "ETH"
+                      : network === "sonic"
+                        ? "S"
+                        : "ETH"
 
 export const outputFormats = <const>["png", "svg", "eps", "puml"]
 export type OutputFormat = (typeof outputFormats)[number]
