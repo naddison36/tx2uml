@@ -472,7 +472,7 @@ export const genParams = (
         } else if (param.type.slice(0, 5) === "bytes") {
             plantUml += `${shortBytes(param.value)},`
         } else if (param.type.match("int")) {
-            plantUml += `${formatNumber(param.value)},`
+            plantUml += `"${formatNumber(param.value)}",`
         } else {
             // Need to escape \n with \\n
             plantUml += `${escapeCarriageReturns(param.value)},`
