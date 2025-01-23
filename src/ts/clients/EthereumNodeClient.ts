@@ -68,6 +68,10 @@ const tokenInfoAddresses: {
         address: "0x04a05bE01C94d576B3eA3e824aF52668BAC606c0",
         ens: false,
     },
+    sonic: {
+        address: "0x8b39590a49569dD5489E4186b8DD43069d4Ef0cC",
+        ens: false,
+    },
 }
 
 const ProxySlot =
