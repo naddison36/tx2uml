@@ -1,10 +1,10 @@
 import { basename, join } from "path"
-import { Labels, Network } from "../types/tx2umlTypes"
+import { Labels } from "../types/tx2umlTypes"
 import fs from "fs"
 
 const debug = require("debug")("tx2uml")
 
-export const loadLabels = (network: Network): Labels => {
+export const loadLabels = (network: string): Labels => {
     const parentFolder = join(__dirname, `..`)
     // Try and get Etherscan labels from local file
     const labelsFile =

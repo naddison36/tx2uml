@@ -44,10 +44,10 @@ program
     .addOption(
         new Option(
             "-c, --chain <value>",
-            "blockchain explorer to get contract source code from. `none` will not get any source code. `custom` will use the `explorerUrl` option."
+            "Name or chain id of the blockchain explorer to get contract source code from. `none` will not get any source code. `custom` will use the `explorerUrl` option. A name like `ethereum` or `base` will map to a chain id, eg 1 or 8453. Alternatively, use an integer of the chain id. Supported names: " +
+                networks.join(", ")
         )
-            .choices(networks)
-            .default("mainnet")
+            .default("ethereum")
             .env("ETH_NETWORK")
     )
     .addOption(
@@ -56,9 +56,13 @@ program
             "required if a `custom` chain is used. eg a testnet like Polygon Mumbai https://api-testnet.polygonscan.com/api"
         ).env("EXPLORER_URL")
     )
-    .option(
-        "-k, --etherscanKey <value>",
-        "Etherscan like block explorer API key"
+    .addOption(
+        new Option(
+            "-k, --etherscanKey <value>",
+            "Etherscan like block explorer API key"
+        )
+            .env("EXPLORER_API_KEY")
+            .makeOptionMandatory()
     )
     .option(
         "-cf, --configFile <value>",

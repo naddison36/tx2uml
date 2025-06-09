@@ -11,8 +11,8 @@ export const copyTransactions = async (
     options: CopyOptions
 ) => {
     // the network doesn't matter for copy as only the JSON RPC provider from the url is used.
-    const source = new GethClient(options.url, "mainnet")
-    const destination = new GethClient(options.destUrl, "mainnet")
+    const source = new GethClient(options.url, "ethereum")
+    const destination = new GethClient(options.destUrl, "ethereum")
 
     const destSigner = options.impersonate
         ? await destination.impersonate(options.impersonate)

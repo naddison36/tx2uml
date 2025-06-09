@@ -1,4 +1,4 @@
-import { Network, Trace, TransactionDetails } from "../types/tx2umlTypes";
+import { Trace, TransactionDetails } from "../types/tx2umlTypes";
 import EthereumNodeClient from "./EthereumNodeClient";
 export type TraceResponse = {
     type: "call" | "suicide" | "create";
@@ -29,7 +29,7 @@ export type TraceResponse = {
 export default class OpenEthereumClient extends EthereumNodeClient {
     readonly url: string;
     private jsonRpcId;
-    constructor(url: string, network: Network);
+    constructor(url: string, network: string);
     getTransactionTrace(txHash: string): Promise<Trace[]>;
     getTransactionError(tx: TransactionDetails): Promise<string>;
 }

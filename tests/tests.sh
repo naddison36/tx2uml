@@ -3,6 +3,7 @@
 
 ###### Mainnet
 export ARCHIVE_NODE_URL=your-archive-node-url
+export EXPLORER_API_KEY=your-etherscan-api-key
 
 ## NFT Chungo swaps using Blur with different participants with ENS names
 tx2uml 0x720e126ea17f4e0b2fcf021e6c6b90b55c5283527cdf50d4c2eb3cdbc012dbfc -v -f svg
@@ -56,6 +57,7 @@ tx2uml call 0x3a89de87d4a039af246474e1573f4687bba402471ab83285d9aa1271edde5eda -
 
 ##### Goerli
 export ARCHIVE_NODE_URL=https://eth-goerli.g.alchemy.com/v2/rU87yfwzx4Xv0HSrZAENZO0Otr1x4hqo
+export EXPLORER_API_KEY=your-etherscan-api-key
 
 # mint NFT but token name and symbol not showing for NFT 0x23d86f0bf4900978B191378B134519371Da52f75
 # the contract isn't verified so hard to work out why
@@ -105,7 +107,8 @@ tx2uml copy 0x3afa8fe219e83fb6cc30e5db6e9e6d2ea1e701ea338c3c47c9beb18c6b7e571a
 tx2uml call 0x3afa8fe219e83fb6cc30e5db6e9e6d2ea1e701ea338c3c47c9beb18c6b7e571a -v --chain goerli -n anvil --url http://localhost:8545
 
 ###### Sepolia
-#export ARCHIVE_NODE_URL=https://sepolia.infura.io/v3/your-api
+export ARCHIVE_NODE_URL=https://sepolia.infura.io/v3/your-api
+export EXPLORER_API_KEY=your-etherscan-api-key
 # MiladyColaTest
 tx2uml value 0x4a8461847c4684b82a9faad57f63004420ef4e3a5ffeaa5c93764cef4f00631b -v --chain sepolia --onlyToken
 # Degen with ETH transfer if run against local Anvil fork
@@ -118,6 +121,7 @@ tx2uml 0x01c0f0cad5eca60e24c26639e7867c6c59f7c28288242c68c0108ec615b22be4 -v --c
 
 ###### Polygon
 export ARCHIVE_NODE_URL=https://polygon-mainnet.infura.io/v3/your-api
+export EXPLORER_API_KEY=your-etherscan-api-key
 
 ## mUSD swap on Polygon
 tx2uml value 0xd96e4fa0b545652e99b35aee027246cb14739e27e7d74d92eb3875380f1e71ea -v --onlyToken --chain polygon
@@ -128,6 +132,7 @@ tx2uml 0xfb153c572e304093023b4f9694ef39135b6ed5b2515453173e81ec02df2e2104 -v --c
 
 ##### Avalanche
 export ARCHIVE_NODE_URL=https://api.avax.network/ext/bc/C/rpc
+export EXPLORER_API_KEY=your-etherscan-api-key
 # Using an archive node
 tx2uml call 0xb145f0f6838cd75b1d9086bc52577eefb14f18ac25f443fe60c55bcaff198dde -v --chain avalanche
 ## Unwrapping WETH.e
@@ -145,6 +150,7 @@ tx2uml call 0xb210b804f269b8ecbb799ef13a5c06636aa8b7690ecd6ef595c289be691794a4 -
 
 #### Arbitrum
 export ARCHIVE_NODE_URL=https://arb-mainnet.g.alchemy.com/v2/your-key
+export EXPLORER_API_KEY=your-etherscan-api-key
 # read-only reentrancy attack
 tx2uml value 0x5db5c2400ab56db697b3cc9aa02a05deab658e1438ce2f8692ca009cc45171dd -v --onlyToken --chain arbitrum
 # Lemma Router

@@ -1,7 +1,6 @@
 import { Readable } from "stream"
 
 import {
-    Network,
     ParticipantPositions,
     Participants,
     setNetworkCurrency,
@@ -23,7 +22,7 @@ export const transfers2PumlStream = (
     transactions: readonly Readonly<TransactionDetails>[],
     transfers: readonly Readonly<Transfer>[][],
     participants: Readonly<Participants>,
-    network: Network,
+    network: string,
     options: TransferPumlGenerationOptions = {}
 ): Readable => {
     networkCurrency = setNetworkCurrency(network)

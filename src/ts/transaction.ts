@@ -13,7 +13,6 @@ import {
     Contracts,
     Event,
     MessageType,
-    Network,
     Param,
     ParamTypeInternal,
     Participants,
@@ -114,7 +113,7 @@ export class TransactionManager {
         transactionsTraces: Trace[][],
         configFilename?: string,
         abiFilename?: string,
-        network: Network = "mainnet",
+        network: string = "ethereum",
         mappedSource: SourceMap[] = []
     ): Promise<Contracts> {
         const flatTraces = transactionsTraces.flat()
@@ -236,7 +235,7 @@ export class TransactionManager {
         return contracts
     }
 
-    async setTokenAttributes(contracts: Contracts, network: Network) {
+    async setTokenAttributes(contracts: Contracts, network: string) {
         // get the token details
         const contractAddresses = Object.keys(contracts)
         const tokensDetails =
@@ -256,7 +255,7 @@ export class TransactionManager {
     async getTransferParticipants(
         transactionsTransfers: Transfer[][],
         block: number,
-        network: Network,
+        network: string,
         configFilename?: string,
         mapSource: SourceMap[] = []
     ): Promise<Participants> {

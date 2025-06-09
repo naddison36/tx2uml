@@ -170,28 +170,33 @@ export const nodeTypes = [
 ] as const
 
 export const networks = <const>[
-    "mainnet",
+    "ethereum",
     "custom",
     "none",
     "sepolia",
     "holesky",
+    "hoodi",
     "arbitrum",
     "optimisim",
     "polygon",
     "avalanche",
+    "base",
     "bsc",
     "crono",
     "fantom",
+    "sonic",
     "gnosis",
     "moonbeam",
     "celo",
     "scroll",
-    "base",
-    "sonic",
+    "linea",
+    "blast",
+    "berachain",
+    "zksync",
 ]
 export type Network = (typeof networks)[number]
 
-export const setNetworkCurrency = (network: Network) =>
+export const setNetworkCurrency = (network: string) =>
     network === "avalanche"
         ? "AVAX"
         : network === "polygon"
@@ -210,7 +215,57 @@ export const setNetworkCurrency = (network: Network) =>
                       ? "CELO"
                       : network === "sonic"
                         ? "S"
-                        : "ETH"
+                        : network === "berachain"
+                          ? "BERA"
+                          : network === "blast"
+                            ? "BLAST"
+                            : "ETH"
+
+export const setChainId = (network: string): number =>
+    // If an integer is passed, return it as is
+    /^-?(0|[1-9]\d*)$/.test(network)
+        ? parseInt(network)
+        : network === "sepolia"
+          ? 11155111
+          : network === "holesky"
+            ? 17000
+            : network === "hoodi"
+              ? 560048
+              : network === "arbitrum"
+                ? 42161
+                : network === "optimisim"
+                  ? 10
+                  : network === "polygon"
+                    ? 137
+                    : network === "avalanche"
+                      ? 43114
+                      : network === "base"
+                        ? 8453
+                        : network === "bsc"
+                          ? 56
+                          : network === "crono"
+                            ? 25
+                            : network === "fantom"
+                              ? 250
+                              : network === "sonic"
+                                ? 146
+                                : network === "gnosis"
+                                  ? 100
+                                  : network === "moonbeam"
+                                    ? 1284
+                                    : network === "celo"
+                                      ? 42220
+                                      : network === "scroll"
+                                        ? 534352
+                                        : network === "linea"
+                                          ? 59144
+                                          : network === "blast"
+                                            ? 81457
+                                            : network === "berachain"
+                                              ? 80094
+                                              : network === "zksync"
+                                                ? 324
+                                                : 1
 
 export const outputFormats = <const>["png", "svg", "eps", "puml"]
 export type OutputFormat = (typeof outputFormats)[number]
@@ -239,7 +294,7 @@ export interface TracePumlGenerationOptions extends OutputOptions {
     noTxDetails?: boolean
     noLogDetails?: boolean
     noDelegates?: boolean
-    chain?: Network
+    chain?: string
 }
 
 export interface SourceMap {
@@ -248,19 +303,19 @@ export interface SourceMap {
 }
 
 export interface CallDiagramOptions extends TracePumlGenerationOptions {
-    chain?: Network
+    chain?: string
     explorerUrl?: string
     url?: string
     nodeType: string
     noAddresses?: string[]
-    etherscanKey?: string
+    etherscanKey: string
     configFile?: string
     abiFile?: string
     mapSource?: SourceMap[]
 }
 
 export interface TransferPumlGenerationOptions extends OutputOptions {
-    chain?: Network
+    chain?: string
     explorerUrl?: string
     url?: string
     etherscanKey?: string

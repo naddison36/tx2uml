@@ -149,9 +149,10 @@ export type ParamTypeInternal = {
     components?: ParamTypeInternal[];
 };
 export declare const nodeTypes: readonly ["geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", "reth"];
-export declare const networks: readonly ["mainnet", "custom", "none", "sepolia", "holesky", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis", "moonbeam", "celo", "scroll", "base", "sonic"];
+export declare const networks: readonly ["ethereum", "custom", "none", "sepolia", "holesky", "hoodi", "arbitrum", "optimisim", "polygon", "avalanche", "base", "bsc", "crono", "fantom", "sonic", "gnosis", "moonbeam", "celo", "scroll", "linea", "blast", "berachain", "zksync"];
 export type Network = (typeof networks)[number];
-export declare const setNetworkCurrency: (network: Network) => "AVAX" | "MATIC" | "BNB" | "CRO" | "FTM" | "xDAI" | "GLMR" | "CELO" | "S" | "ETH";
+export declare const setNetworkCurrency: (network: string) => "AVAX" | "MATIC" | "BNB" | "CRO" | "FTM" | "xDAI" | "GLMR" | "CELO" | "S" | "BERA" | "BLAST" | "ETH";
+export declare const setChainId: (network: string) => number;
 export declare const outputFormats: readonly ["png", "svg", "eps", "puml"];
 export type OutputFormat = (typeof outputFormats)[number];
 export interface OutputOptions {
@@ -176,25 +177,25 @@ export interface TracePumlGenerationOptions extends OutputOptions {
     noTxDetails?: boolean;
     noLogDetails?: boolean;
     noDelegates?: boolean;
-    chain?: Network;
+    chain?: string;
 }
 export interface SourceMap {
     contract: string;
     source: string;
 }
 export interface CallDiagramOptions extends TracePumlGenerationOptions {
-    chain?: Network;
+    chain?: string;
     explorerUrl?: string;
     url?: string;
     nodeType: string;
     noAddresses?: string[];
-    etherscanKey?: string;
+    etherscanKey: string;
     configFile?: string;
     abiFile?: string;
     mapSource?: SourceMap[];
 }
 export interface TransferPumlGenerationOptions extends OutputOptions {
-    chain?: Network;
+    chain?: string;
     explorerUrl?: string;
     url?: string;
     etherscanKey?: string;
