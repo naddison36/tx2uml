@@ -440,7 +440,7 @@ export class TransactionManager {
         options: { noDelegates?: boolean; excludedContracts?: string[] }
     ): [Trace[][], Contracts] {
         const filteredTransactionTraces: Trace[][] = transactionTraces.map(
-            t => []
+            (t): Trace[] => []
         )
         let usedAddresses = new Set<string>()
 

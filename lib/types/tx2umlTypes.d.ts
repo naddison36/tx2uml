@@ -151,7 +151,7 @@ export type ParamTypeInternal = {
 export declare const nodeTypes: readonly ["geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", "reth"];
 export declare const networks: readonly ["ethereum", "custom", "none", "sepolia", "holesky", "hoodi", "arbitrum", "optimisim", "polygon", "avalanche", "base", "bsc", "crono", "fantom", "sonic", "gnosis", "moonbeam", "celo", "scroll", "linea", "blast", "berachain", "zksync"];
 export type Network = (typeof networks)[number];
-export declare const setNetworkCurrency: (network: string) => "AVAX" | "MATIC" | "BNB" | "CRO" | "FTM" | "xDAI" | "GLMR" | "CELO" | "S" | "BERA" | "BLAST" | "ETH";
+export declare const setNetworkCurrency: (network: string) => "ETH" | "AVAX" | "MATIC" | "BNB" | "CRO" | "FTM" | "xDAI" | "GLMR" | "CELO" | "S" | "BERA" | "BLAST";
 export declare const setChainId: (network: string) => number;
 export declare const outputFormats: readonly ["png", "svg", "eps", "puml"];
 export type OutputFormat = (typeof outputFormats)[number];
