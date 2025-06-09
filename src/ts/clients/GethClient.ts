@@ -3,7 +3,6 @@ import { BigNumber } from "ethers"
 
 import {
     MessageType,
-    Network,
     Trace,
     TransactionDetails,
     Transfer,
@@ -51,7 +50,7 @@ export default class GethClient extends EthereumNodeClient {
 
     constructor(
         public readonly url: string,
-        network: Network
+        network: string
     ) {
         super(url, network)
     }

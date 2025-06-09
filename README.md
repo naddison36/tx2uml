@@ -50,19 +50,19 @@ Use the `-h` option to see the `tx2uml` CLI usage options
 ```
 Usage: tx2uml [command] <options>
 
-Ethereum transaction visualizer that generates UML sequence diagrams from an Ethereum archive node and Etherscan like
-block explorer
+Ethereum transaction visualizer that generates UML sequence diagrams from an Ethereum archive node and Etherscan like block explorer
 
 Options:
   -f, --outputFormat <value>    output file format (choices: "png", "svg", "eps", "puml", default: "svg")
   -o, --outputFileName <value>  output file name. Defaults to shortened tx hashes joined together with a 'v' prefix for value transfer diagrams.
   -u, --url <url>               URL of the archive node with trace transaction support (default: "http://localhost:8545", env: ARCHIVE_NODE_URL)
-  -c, --chain <value>           blockchain explorer to get contract source code from. `none` will not get any source code. `custom` will use the `explorerUrl` option. (choices: "mainnet", "custom", "none", "sepolia", "holesky", "arbitrum", "optimisim", "polygon", "avalanche", "bsc", "crono", "fantom", "gnosis", "moonbeam", "celo", "scroll", "base", "sonic", default: "mainnet", env: ETH_NETWORK)
-  -k, --etherscanKey <value>   Etherscan like block explorer API key
+  -c, --chain <value>           Name or chain id of the blockchain explorer to get contract source code from. `none` will not get any source code. `custom` will use the `explorerUrl` option. A name like `ethereum` or `base` will map to a chain id, eg 1 or 8453. Alternatively, use an integer of the chain id. Supported names: ethereum, custom, none, sepolia, holesky, hoodi, arbitrum, optimisim, polygon, avalanche, base, bsc, crono, fantom, sonic, gnosis, moonbeam, celo, scroll, linea, blast, berachain, zksync (default: "ethereum", env: ETH_NETWORK)
   -e, --explorerUrl <url>       required if a `custom` chain is used. eg a testnet like Polygon Mumbai https://api-testnet.polygonscan.com/api (env: EXPLORER_URL)
+  -k, --etherscanKey <value>    Etherscan like block explorer API key (env: EXPLORER_API_KEY)
   -cf, --configFile <value>     name of the json configuration file that can override contract details like name and ABI (default: "tx.config.json")
   -af, --abiFile <value>        name of the json abi file that can override contract details like ABI (default: "tx.abi.json")
   -m, --memory <gigabytes>      max Java memory of PlantUML process in gigabytes. Java default is 1/4 of physical memory. Large txs in png format will need up to 12g. svg format is much better for large transactions.
+  --title <value>               Diagram title at the top (default: tx hash)
   -hf, --hideFooter             Hides the boxes at the bottom of the contract lifelines. (default: false)
   -hc, --hideCaption            Hides the network, block number and timestamp at the bottom of the diagram. (default: false)
   -v, --verbose                 run with debugging statements (default: false)
@@ -71,7 +71,7 @@ Options:
 
 Commands:
   call [options] <txHash(s)>    Generates a UML sequence diagram of transaction contract calls between contracts (default).
-  value <txHash(s)>             Generates a UML sequence diagram of token and ether value transfers between accounts and contracts. This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth, Erigon or Anvil.
+  value [options] <txHash(s)>   Generates a UML sequence diagram of token and ether value transfers between accounts and contracts. This requires an archive node that supports debug_traceTransaction with custom EVM tracers which are Geth, Erigon or Anvil.
   copy [options] <txHash(s)>    Copies one or more transactions from one chain to another. This is either relayed with the original signature or impersonated with a different signer.
   help [command]                display help for command
 ```
@@ -84,16 +84,17 @@ Usage: tx2uml call <txhash(s)> [options]
 Generates a UML sequence diagram of transaction contract calls between contracts (default).
 
 Arguments:
-  txHash(s)                   transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces
+  txHash(s)                    transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces
 
 Options:
-  -n, --nodeType <value>       type of Ethereum node the provider url is pointing to. This determines which trace API is used (choices: "geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", "reth", default: "geth", env: ARCHIVE_NODE_TYPE)
+  -n, --nodeType <value>       type of Ethereum node the provider url is pointing to. This determines which trace API is used (choices: "geth", "erigon", "nether", "openeth", "tgeth", "besu", "anvil", "reth", default: "geth", env:
+                               ARCHIVE_NODE_TYPE)
   -a, --noAddresses <value>    hide calls to contracts in a list of comma-separated addresses with a 0x prefix
   -d, --depth <value>          limit the transaction call depth
   -e, --noEther                hide ether values (default: false)
   -g, --noGas                  hide gas usages (default: false)
   -l, --noLogDetails           hide log details emitted from contract events (default: false)
-  -p, --noParams               hide function params and return values (default: false)
+  -p, --noParams               hide function parameter names and values (default: false)
   -pv, --noParamValues         only hide function parameter values, not the names. Will display "?" if the name is not specified in the ABI (default: false)
   -t, --noTxDetails            hide transaction details like nonce, gas and tx fee (default: false)
   -x, --noDelegates            hide delegate calls from proxy contracts to their implementations and calls to deployed libraries (default: false)
@@ -131,21 +132,16 @@ Options:
 ```
 Usage: tx2uml copy <txhash(s)> [options]
 
-Copies one or more transactions from one chain to another. This is either relayed with the original signature or
-impersonated with a different signer.
+Copies one or more transactions from one chain to another. This is either relayed with the original signature or impersonated with a different signer.
 
 Arguments:
-  txHash(s)                    transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If
-                               running for multiple transactions, the comma-separated list of transaction hashes must
-                               not have white spaces
+  txHash(s)                    transaction hash or an array of hashes in hexadecimal format with a 0x prefix. If running for multiple transactions, the comma-separated list of transaction hashes must not have white spaces
 
 Options:
-  -du, --destUrl <url>         url of the node provider the transaction is being copied to (default:
-                               "http://localhost:8545", env: DEST_NODE_URL)
-  -i, --impersonate <address>  Address of the account that is to be impersonated. This only works for development nodes
-                               like Hardhat and Anvil. The default is the transaction is relayed so is from the
-                               original signer.
+  -du, --destUrl <url>         url of the node provider the transaction is being copied to (default: "http://localhost:8545", env: DEST_NODE_URL)
+  -i, --impersonate <address>  Address of the account that is to be impersonated. This only works for development nodes like Hardhat and Anvil. The default is the transaction is relayed so is from the original signer.
   -h, --help                   display help for command
+
 ```
 
 ## Configuration file
@@ -297,8 +293,8 @@ Most Ethereum API providers do not provide tracing or debugging APIs as they are
 
 ## Etherscan
 
-[Etherscan](https://etherscan.io/) is used to get the Application Binary Interfaces (ABIs) for the contracts used in a transaction. Etherscan's [get contract ABI](https://etherscan.io/apis#contracts) API is used with module `contract` and action `getsourcecode`. For example
-https://api.etherscan.io/api?module=contract&action=getsourcecode&address=0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413
+[Etherscan](https://etherscan.io/) is used to get the Application Binary Interfaces (ABIs) for the contracts used in a transaction. Etherscan's V2 API [Get Contract ABI](https://docs.etherscan.io/etherscan-v2/api-endpoints/contracts) is used with module `contract`, action `getsourcecode`, `address` and `apikey`. For example
+https://api.etherscan.io/v2/api?chainid=1&module=contract&action=getsourcecode&address=0xb2a8e6e0d0bb81299897b918284a9fca68e3f081
 
 # PlantUML
 

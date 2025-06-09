@@ -1,12 +1,7 @@
 import axios from "axios"
 import { BigNumber } from "ethers"
 
-import {
-    MessageType,
-    Network,
-    Trace,
-    TransactionDetails,
-} from "../types/tx2umlTypes"
+import { MessageType, Trace, TransactionDetails } from "../types/tx2umlTypes"
 import { transactionHash } from "../utils/regEx"
 import { hexlify } from "ethers/lib/utils"
 import EthereumNodeClient from "./EthereumNodeClient"
@@ -49,7 +44,7 @@ export default class OpenEthereumClient extends EthereumNodeClient {
 
     constructor(
         public readonly url: string,
-        network: Network
+        network: string
     ) {
         super(url, network)
     }

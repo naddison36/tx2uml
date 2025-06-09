@@ -1,4 +1,4 @@
-import { Network, Trace, TransactionDetails, Transfer } from "../types/tx2umlTypes";
+import { Trace, TransactionDetails, Transfer } from "../types/tx2umlTypes";
 import EthereumNodeClient from "./EthereumNodeClient";
 export type CallTracerResponse = {
     type: "CALL" | "CALLCODE" | "CREATE" | "CREATE2" | "DELEGATECALL" | "SELFDESTRUCT" | "STATICCALL";
@@ -24,7 +24,7 @@ export type CallTransferResponse = {
 export default class GethClient extends EthereumNodeClient {
     readonly url: string;
     private jsonRpcId;
-    constructor(url: string, network: Network);
+    constructor(url: string, network: string);
     getTransactionTrace(txHash: string): Promise<Trace[]>;
     getValueTransfers(txHash: string): Promise<Transfer[]>;
     getTransactionError(tx: TransactionDetails): Promise<string>;

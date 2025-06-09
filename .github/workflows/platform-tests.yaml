@@ -20,10 +20,12 @@ jobs:
       - run: npm link
       - run: tx2uml --version
       - name: Uniswap V1 value
+        env:
+          ARCHIVE_NODE_URL: ${{ secrets.ARCHIVE_NODE_URL }}
+          EXPLORER_API_KEY: ${{ secrets.EXPLORER_API_KEY }}
         run: tx2uml 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca -v
-        env:
-          ARCHIVE_NODE_URL: ${{ secrets.ARCHIVE_NODE_URL }}
       - name: Uniswap V1 value
-        run: tx2uml value 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca -v
         env:
           ARCHIVE_NODE_URL: ${{ secrets.ARCHIVE_NODE_URL }}
+          EXPLORER_API_KEY: ${{ secrets.EXPLORER_API_KEY }}
+        run: tx2uml value 0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca -v

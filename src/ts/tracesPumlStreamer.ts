@@ -160,7 +160,7 @@ export const writeParticipants = (
 // then use the contract name of the first delegated contract.
 // Note there can be multiple delegated calls to different contracts.
 // There can also be delegated calls to a library.
-// Here's an example tx on mainnet 0x7210c306842d275044789b02ae64aff4513ed812682de7b1cbeb12a4a0dd07af
+// Here's an example tx on Ethereum 0x7210c306842d275044789b02ae64aff4513ed812682de7b1cbeb12a4a0dd07af
 const getContractName = (
     contract: Contract,
     options: TracePumlGenerationOptions

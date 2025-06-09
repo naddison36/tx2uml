@@ -10,7 +10,6 @@ import { JsonRpcProvider } from "@ethersproject/providers"
 
 import { TokenInfoABI, TokenInfoEnsABI } from "./ABIs"
 import {
-    Network,
     TokenDetails,
     Trace,
     TransactionDetails,
@@ -32,7 +31,7 @@ interface AddressEns {
 const tokenInfoAddresses: {
     [network: string]: AddressEns
 } = {
-    mainnet: {
+    ethereum: {
         address: "0xEf6B7d3885f4Af1bDfcB66FE0370D6012B38a8Db",
         ens: true,
     },
@@ -83,7 +82,7 @@ export default abstract class EthereumNodeClient {
 
     constructor(
         public readonly url: string = "http://localhost:8545",
-        public readonly network: Network
+        public readonly network: string
     ) {
         this.ethersProvider = new providers.JsonRpcProvider(url)
         this.tokenInfoAddress = tokenInfoAddresses[network]
