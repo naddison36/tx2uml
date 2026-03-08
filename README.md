@@ -1,7 +1,7 @@
 # UML for Ethereum Transactions
 
 [![npm (tag)](https://img.shields.io/npm/v/tx2uml)](https://www.npmjs.com/package/tx2uml)
-[![Twitter Follow](https://img.shields.io/twitter/follow/naddison?style=social)](https://twitter.com/naddison)
+[![X Follow](https://img.shields.io/twitter/follow/naddison?style=social)](https://x.com/naddison)
 
 [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language) sequence diagram generator for Ethereum transaction.
 
