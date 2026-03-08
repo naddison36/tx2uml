@@ -7,33 +7,33 @@ import { sleep } from "../utils/time"
 const debug = require("debug")("tx2uml")
 
 export default class EtherscanClient {
-    public readonly apiKey?: string
+    public readonly apiKey: string
     public readonly url: string
 
-    constructor(apiKey: string, network?: string, url?: string) {
+    constructor(apiKey?: string, network?: string, url?: string) {
         if (network === "none") {
             return
         }
-        if (network === "custom") {
-            if (!url || !apiKey) {
-                throw new Error(
-                    "explorerUrl and etherscanKey options must be set for a custom network"
-                )
-            }
-            this.url = url
-            this.apiKey = apiKey
-            return
-        } else {
-            if (!apiKey) {
-                throw new Error(
-                    `The etherscanKey option must be set for a "${network}" network`
-                )
-            }
-            const chainId = setChainId(network)
-            debug(`Chain id ${chainId} for network ${network}`)
-            this.url = `https://api.etherscan.io/v2/api?chainid=${chainId}`
-            this.apiKey = apiKey
+
+        if (!apiKey) {
+            throw new Error(
+                `The etherscanKey option must be set for a "${network}" network`
+            )
         }
+
+        if (network === "custom") {
+            if (!url) {
+                throw new Error(
+                    "explorerUrl options must be set for a custom network"
+                )
+            }
+            return
+        }
+
+        const chainId = setChainId(network)
+        debug(`Chain id ${chainId} for network ${network}`)
+        this.url = `https://api.etherscan.io/v2/api?chainid=${chainId}`
+        this.apiKey = apiKey
     }
 
     async getContract(contractAddress: string): Promise<Contract> {
@@ -50,7 +50,7 @@ export default class EtherscanClient {
                     module: "contract",
                     action: "getsourcecode",
                     address: contractAddress,
-                    apiKey: this.apiKey,
+                    apikey: this.apiKey,
                 },
             })
 

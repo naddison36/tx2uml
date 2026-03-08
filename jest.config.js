@@ -2,7 +2,7 @@
 module.exports = {
   verbose: true,
   transform: {
-    "^.+\\.tsx?$": 'ts-jest'
+    "^.+\\.tsx?$": require.resolve('ts-jest')
   },
   testPathIgnorePatterns: [
     "/build/",
@@ -17,14 +17,5 @@ module.exports = {
     'json',
     'node'
   ],
-  globals: {
-    'ts-jest': {
-      diagnostics: {
-        // Do not fail on TS compilation errors
-        // https://kulshekhar.github.io/ts-jest/user/config/diagnostics#do-not-fail-on-first-error
-        warnOnly: true
-      }
-    }
-  },
   testEnvironment: 'node'
 }

@@ -196,7 +196,7 @@ export const networks = <const>[
 ]
 export type Network = (typeof networks)[number]
 
-export const setNetworkCurrency = (network: string) =>
+export const setNetworkCurrency = (network?: string) =>
     network === "avalanche"
         ? "AVAX"
         : network === "polygon"
@@ -221,7 +221,7 @@ export const setNetworkCurrency = (network: string) =>
                             ? "BLAST"
                             : "ETH"
 
-export const setChainId = (network: string): number =>
+export const setChainId = (network?: string): number =>
     // If an integer is passed, return it as is
     /^-?(0|[1-9]\d*)$/.test(network)
         ? parseInt(network)
