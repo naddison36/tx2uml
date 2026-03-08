@@ -273,7 +273,7 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 
 |                                      | Alchemy | QuickNode | Chainstack | GetBlock | WatchData | Infura |
 | ------------------------------------ | ------- | --------- | ---------- | -------- | --------- | ------ |
-| trace_transaction                    | X       | X         | X          | X        | X         |        |
+| trace_transaction                    | X       | X         | X          | X        | X         | X      |
 | debug_traceTransaction               | X       | X         | X          |          |           |        |
 | debug_traceTransaction call tracer   | X       | X         | X          |          |           |        |
 | debug_traceTransaction custom tracer |         | X         | X          |          |           |        |
@@ -290,7 +290,7 @@ Most Ethereum API providers do not provide tracing or debugging APIs as they are
 
 -   [WatchData](https://www.watchdata.io/) supports [trace_transaction](https://docs.watchdata.io/powered-api/trace/trace_transaction) and is available on their free plan.
 
--   [Infura](https://infura.io/) does not support either `trace_transaction` or `debug_traceTransaction`.
+-   [Infura](https://infura.io/) supports [trace_transaction](https://docs.infura.io/networks/ethereum/json-rpc-methods/trace-methods/trace_transaction) via their Decentralized Infrastructure Network (DIN) partnerships but does not support `debug_traceTransaction`.
 
 ## Etherscan
 
