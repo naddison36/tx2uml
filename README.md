@@ -236,7 +236,7 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 }'
 ```
 
-Anvil, Hardhat and Genache all support `debug_traceTransaction` but without the `tracer` parameter so will not work with tx2uml.
+Hardhat and Ganache support `debug_traceTransaction` but without the `tracer` parameter so will not work with tx2uml.
 
 Known Ethereum node clients that support `trace_transaction` are:
 
@@ -244,6 +244,7 @@ Known Ethereum node clients that support `trace_transaction` are:
 -   [Nethermind](https://nethermind.io/client)
 -   [Hyperledger Besu](https://www.hyperledger.org/use/besu)
 -   [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil)
+-   [Reth](https://github.com/paradigmxyz/reth)
 
 You can test if your node supports `trace_transaction` with the following `curl` command
 
@@ -260,13 +261,13 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 
 ### Ethereum client trace support
 
-|                                          | OpenEthereum | Nethereum | Besu | Geth | Erigon | rETH | Akula | Anvil | Hardhat | Ganache |
-| ---------------------------------------- | ------------ | --------- | ---- | ---- | ------ | ---- | ----- | ----- | ------- | ------- |
-| trace_replayTransaction                  | X            | X         |      |      | X      | X    | X     |       |         |         |
-| trace_transaction                        | X            | X         | X    |      | X      | X    |       | X     |         |         |
-| trace_rawTransaction                     | X            | X         | X    |      |        | X    | X     |       |         |         |
-| debug_traceTransaction                   |              | X         | X    | X    | X      | X    |       | X     | X       | X       |
-| debug_traceTransaction with tracer param |              |           |      | X    | X      |      |       |       |         |         |
+|                                          | OpenEthereum | Nethermind | Besu | Geth | Erigon | Reth | Anvil | Hardhat | Ganache |
+| ---------------------------------------- | ------------ | ---------- | ---- | ---- | ------ | ---- | ----- | ------- | ------- |
+| trace_replayTransaction                  | X            | X          |      |      | X      | X    |       |         |         |
+| trace_transaction                        | X            | X          | X    |      | X      | X    | X     |         |         |
+| trace_rawTransaction                     | X            | X          | X    |      |        | X    |       |         |         |
+| debug_traceTransaction                   |              | X          | X    | X    | X      | X    | X     | X       | X       |
+| debug_traceTransaction with tracer param |              |            |      | X    | X      |      |       |         |         |
 
 ### Ethereum API provider trace support
 
