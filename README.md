@@ -312,7 +312,7 @@ See [Recent changes](https://plantuml.com/changes) for PlantUML's release notes.
 
 [Jebbs PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml) extension for VS Code is used to authoring the PlantUML diagrams.
 
-`Alt-D` on Windows, or `Option-D` on Mac, to stat PlantUML preview in VS Code.
+`Alt-D` on Windows, or `Option-D` on Mac, to start PlantUML preview in VS Code.
 
 ## Generate png files form puml
 
