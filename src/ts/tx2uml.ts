@@ -19,6 +19,16 @@ const debug = require("debug")("tx2uml")
 
 const program = new Command()
 
+program.configureOutput({
+    outputError: (str, write) =>
+        write(
+            str.replace(
+                "required option '-k, --etherscanKey <value>' not specified",
+                "required option '-k, --etherscanKey <value>' not specified or EXPLORER_API_KEY environment variable not set"
+            )
+        ),
+})
+
 program
     .usage("[command] <options>")
     .description(
