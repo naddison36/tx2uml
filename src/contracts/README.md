@@ -2,11 +2,11 @@
 
 tx2uml uses the [TokenDetails](./TokenInfo.sol) contract to get the following properties for a list of addresses:
 
--   Is it a contract?
--   Is the contract an NFT?
--   The `symbol` and `name` if they exist.
--   The `decimals` if it exists.
--   The primary ENS name if it exists.
+- Is it a contract?
+- Is the contract an NFT?
+- The `symbol` and `name` if they exist.
+- The `decimals` if it exists.
+- The primary ENS name if it exists.
 
 ## Interface
 

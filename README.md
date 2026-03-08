@@ -188,11 +188,11 @@ Stereotypes are added for the contract and token name if they can be sourced. Th
 
 There are five types of messages
 
--   **Call** is a solid or dotted line with a filled arrow head at the `to` contract.
--   **Return** is a dotted line with a filled arrow head at the `from` contract.
--   **Delegate** is a solid or dotted line with an open arrow head at the `to` contract.
--   **Create** is a filled line with a filled arrow head and a circle at the contract being created.
--   **Selfdestruct** is a solid line with a half filled arrow head looping back on itself with a `Self-Destruct` label.
+- **Call** is a solid or dotted line with a filled arrow head at the `to` contract.
+- **Return** is a dotted line with a filled arrow head at the `from` contract.
+- **Delegate** is a solid or dotted line with an open arrow head at the `to` contract.
+- **Create** is a filled line with a filled arrow head and a circle at the contract being created.
+- **Selfdestruct** is a solid line with a half filled arrow head looping back on itself with a `Self-Destruct` label.
 
 Call and delegate messages with a dotted line are proxy calls that uses the calling contract's `fallback` function.
 
@@ -218,8 +218,8 @@ The ethereum node url can be set with the `-u` or `--url` options or by exportin
 
 Known Ethereum node clients that support `debug_traceTransaction` with a `tracer` parameter are:
 
--   [Go-Ethereum (Geth)](https://github.com/ethereum/go-ethereum)
--   [Erigon (fka Turbo-Geth)](https://github.com/ledgerwatch/erigon)
+- [Go-Ethereum (Geth)](https://github.com/ethereum/go-ethereum)
+- [Erigon (fka Turbo-Geth)](https://github.com/ledgerwatch/erigon)
 
 `tx2uml` will use `--nodeType geth` as it's default option.
 
@@ -240,11 +240,11 @@ Hardhat and Ganache support `debug_traceTransaction` but without the `tracer` pa
 
 Known Ethereum node clients that support `trace_transaction` are:
 
--   [OpenEthereum](https://github.com/openethereum/openethereum)
--   [Nethermind](https://nethermind.io/client)
--   [Hyperledger Besu](https://www.hyperledger.org/use/besu)
--   [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil)
--   [Reth](https://github.com/paradigmxyz/reth)
+- [OpenEthereum](https://github.com/openethereum/openethereum)
+- [Nethermind](https://nethermind.io/client)
+- [Hyperledger Besu](https://www.hyperledger.org/use/besu)
+- [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil)
+- [Reth](https://github.com/paradigmxyz/reth)
 
 You can test if your node supports `trace_transaction` with the following `curl` command
 
@@ -280,17 +280,17 @@ curl --location --request POST 'https://your.node.url/yourApiKey' \
 
 Most Ethereum API providers do not provide tracing or debugging APIs as they are resource intensive on the server side.
 
--   [Alchemy](https://alchemyapi.io/) supports both [trace_transaction](https://docs.alchemy.com/reference/trace-transaction) and [debug_traceTransaction](https://docs.alchemy.com/reference/sdk-tracetransaction) on their paid [Growth plan](https://alchemyapi.io/pricing). Only the in-built `call` and `prestate` tracers are supported. Custom tracers is not supported.
+- [Alchemy](https://alchemyapi.io/) supports both [trace_transaction](https://docs.alchemy.com/reference/trace-transaction) and [debug_traceTransaction](https://docs.alchemy.com/reference/sdk-tracetransaction) on their paid [Growth plan](https://alchemyapi.io/pricing). Only the in-built `call` and `prestate` tracers are supported. Custom tracers is not supported.
 
--   [QuickNode](https://www.quicknode.com/) supports both [trace_transaction](https://www.quicknode.com/docs/ethereum/trace_transaction) and [debug_traceTransaction](https://www.quicknode.com/docs/ethereum/debug_traceTransaction) on their paid plan. The in-built `call` and `prestate` tracers are supported. Custom tracers can be requested via support and approved if within resourcing limits.
+- [QuickNode](https://www.quicknode.com/) supports both [trace_transaction](https://www.quicknode.com/docs/ethereum/trace_transaction) and [debug_traceTransaction](https://www.quicknode.com/docs/ethereum/debug_traceTransaction) on their paid plan. The in-built `call` and `prestate` tracers are supported. Custom tracers can be requested via support and approved if within resourcing limits.
 
--   [Chainstack](https://chainstack.com/) supports both [trace_transaction](https://docs.chainstack.com/api/ethereum/trace_transaction) and [debug_traceTransaction](https://docs.chainstack.com/api/ethereum/debug_traceTransaction) on their Growth plan when a dedicated Geth or Erigon archive node is deployed. For Erigon, this includes built-in and custom tracer support.
+- [Chainstack](https://chainstack.com/) supports both [trace_transaction](https://docs.chainstack.com/api/ethereum/trace_transaction) and [debug_traceTransaction](https://docs.chainstack.com/api/ethereum/debug_traceTransaction) on their Growth plan when a dedicated Geth or Erigon archive node is deployed. For Erigon, this includes built-in and custom tracer support.
 
--   [GetBlock](https://getblock.io/) supports [trace_transaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/trace_transaction/) but not [debug_traceTransaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/debug_traceTransaction/).
+- [GetBlock](https://getblock.io/) supports [trace_transaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/trace_transaction/) but not [debug_traceTransaction](https://getblock.io/docs/available-nodes-methods/ETH/JSON-RPC/debug_traceTransaction/).
 
--   [WatchData](https://www.watchdata.io/) supports [trace_transaction](https://docs.watchdata.io/powered-api/trace/trace_transaction) and is available on their free plan.
+- [WatchData](https://www.watchdata.io/) supports [trace_transaction](https://docs.watchdata.io/powered-api/trace/trace_transaction) and is available on their free plan.
 
--   [Infura](https://infura.io/) supports [trace_transaction](https://docs.infura.io/networks/ethereum/json-rpc-methods/trace-methods/trace_transaction) via their Decentralized Infrastructure Network (DIN) partnerships but does not support `debug_traceTransaction`.
+- [Infura](https://infura.io/) supports [trace_transaction](https://docs.infura.io/networks/ethereum/json-rpc-methods/trace-methods/trace_transaction) via their Decentralized Infrastructure Network (DIN) partnerships but does not support `debug_traceTransaction`.
 
 ## Etherscan
 
@@ -327,17 +327,17 @@ java -jar ./lib/plantuml.jar ./examples/syntax.puml ./examples/delegate.puml
 
 Good online resources for learning UML
 
--   [PlantUML Sequence diagrams](https://plantuml.com/sequence-diagram)
--   [Ashley's PlantUML Doc](https://plantuml-documentation.readthedocs.io/en/latest/diagrams/sequence.html)
--   [UML 2 Sequence Diagramming Guidelines](http://www.agilemodeling.com/style/sequenceDiagram.htm)
+- [PlantUML Sequence diagrams](https://plantuml.com/sequence-diagram)
+- [Ashley's PlantUML Doc](https://plantuml-documentation.readthedocs.io/en/latest/diagrams/sequence.html)
+- [UML 2 Sequence Diagramming Guidelines](http://www.agilemodeling.com/style/sequenceDiagram.htm)
 
 # Similar Visualisation Tools
 
--   [Transaction Tracer](https://openchain.xyz/trace)
--   [Tenderly](https://dashboard.tenderly.co/)
--   [EthTx info](http://ethtx.info/)
--   [Bloxy](https://bloxy.info/)
--   [Etherscan](https://etherscan.io/txs)
+- [Transaction Tracer](https://openchain.xyz/trace)
+- [Tenderly](https://dashboard.tenderly.co/)
+- [EthTx info](http://ethtx.info/)
+- [Bloxy](https://bloxy.info/)
+- [Etherscan](https://etherscan.io/txs)
 
 ## Development
 
@@ -361,13 +361,13 @@ The contract labels are sourced from @brianleect Brian Lee Cheow Teng's [ethersc
 
 Save the following
 
--   [data/etherscan/combined/combinedAllLabels.json ](https://github.com/brianleect/etherscan-labels/blob/main/data/etherscan/combined/combinedAllLabels.json) to [lib/labels/mainnet.json](./lib/labels/mainnet.json)
--   [data/arbiscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/arbiscan/combined/combinedAllLabels.json) to [lib/labels/arbitrum.json](./lib/labels/arbitrum.json)
--   [data/polygonscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/polygonscan/combined/combinedAllLabels.json) to [lib/labels/polygon.json](./lib/labels/polygon.json)
--   [data/avalanche/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/avalanche/combined/combinedAllLabels.json) to [lib/labels/avalanche.json](./lib/labels/avalanche.json)
--   [data/bscscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/bscscan/combined/combinedAllLabels.json) to [lib/labels/bsc.json](./lib/labels/bsc.json)
--   [data/ftmscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/ftmscan/combined/combinedAllLabels.json) to [lib/labels/fantom.json](./lib/labels/fantom.json)
--   [data/optimism/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/optimism/combined/combinedAllLabels.json) to [lib/labels/optimism.json](./lib/labels/optimism.json)
+- [data/etherscan/combined/combinedAllLabels.json ](https://github.com/brianleect/etherscan-labels/blob/main/data/etherscan/combined/combinedAllLabels.json) to [lib/labels/mainnet.json](./lib/labels/mainnet.json)
+- [data/arbiscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/arbiscan/combined/combinedAllLabels.json) to [lib/labels/arbitrum.json](./lib/labels/arbitrum.json)
+- [data/polygonscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/polygonscan/combined/combinedAllLabels.json) to [lib/labels/polygon.json](./lib/labels/polygon.json)
+- [data/avalanche/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/avalanche/combined/combinedAllLabels.json) to [lib/labels/avalanche.json](./lib/labels/avalanche.json)
+- [data/bscscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/bscscan/combined/combinedAllLabels.json) to [lib/labels/bsc.json](./lib/labels/bsc.json)
+- [data/ftmscan/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/ftmscan/combined/combinedAllLabels.json) to [lib/labels/fantom.json](./lib/labels/fantom.json)
+- [data/optimism/combined/combinedAllLabels.json](https://github.com/brianleect/etherscan-labels/blob/main/data/optimism/combined/combinedAllLabels.json) to [lib/labels/optimism.json](./lib/labels/optimism.json)
 
 ### Publishing
 
